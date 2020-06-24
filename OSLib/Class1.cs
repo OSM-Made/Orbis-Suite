@@ -8,5 +8,6 @@ namespace OSLib
 {
     public class Class1
     {
+
     }
 }
