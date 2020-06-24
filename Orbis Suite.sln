@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSLib", "Libraries\OSLib\OS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{0396DA44-6B45-4FF2-9F69-50688EBC2FFD}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Orbis Suite Installer", "Installer\Orbis Suite Installer\Orbis Suite Installer.wixproj", "{FEE34133-3D96-4F46-90A1-FDE97CA41122}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Orbis Suite Installer", "Orbis Suite Installer\Orbis Suite Installer.wixproj", "{FEE34133-3D96-4F46-90A1-FDE97CA41122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
