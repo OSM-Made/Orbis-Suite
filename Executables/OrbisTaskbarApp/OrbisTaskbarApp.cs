@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DarkUI.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,9 @@ using System.Windows.Forms;
 
 namespace OrbisTaskbarApp
 {
-    public partial class Form1 : Form
+    public partial class OrbisTaskbarApp : DarkForm
     {
-        public Form1()
+        public OrbisTaskbarApp()
         {
             InitializeComponent();
         }
