@@ -2,12 +2,14 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using DarkUI.Forms;
+using OSLib.Classes;
 
 namespace OSLib
 {
     public class OrbisLib
     {
         #region Definitions
+        internal string OrbisLib_Dir;
 
         public struct registers
         {
@@ -84,7 +86,11 @@ namespace OSLib
 
         #region Internal Class Defines
 
-
+        private TargetManagement Internal_TargetManagement;
+        public TargetManagement TargetManagement
+        {
+            get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement(this)); }
+        }
 
         #endregion
 
@@ -101,10 +107,14 @@ namespace OSLib
         {
             try
             {
-                string OrbisLib_Dir = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\");
+                OrbisLib_Dir = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\");
 
                 if (!Directory.Exists(OrbisLib_Dir))
+                {
                     DarkMessageBox.ShowError("In order to use the functionality of the OSLib.dll you need to first install Orbis Suite on this machine.", "Orbis Suite not Installed.");
+
+                    throw new System.Exception("Orbis Suite not Installed.");
+                }
 
                 SetDllDirectory(OrbisLib_Dir);
             }
