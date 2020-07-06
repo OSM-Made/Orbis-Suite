@@ -1,7 +1,7 @@
 # Orbis-Suite
 A suite of tools used for developing things on a jailbroken PS4. Aswell as an included DLL for creating 3rd party C# applications using the OrbisLib API.
 
-![UI](https://pbs.twimg.com/media/EDNZOwDVUAAoeJF?format=jpg)
+![UI](https://pbs.twimg.com/media/EDNZOwDVUAAoeJF?format=jpg&name=4096x4096)
 
 # TODO List
 ###### Windows Service
