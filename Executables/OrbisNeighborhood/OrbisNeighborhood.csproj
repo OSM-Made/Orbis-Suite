@@ -33,10 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DarkUI">
-      <HintPath>..\..\Libraries\OSLib\bin\Debug\DarkUI.dll</HintPath>
+    <Reference Include="DarkUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
     </Reference>
-    <Reference Include="OrbisLib">
+    <Reference Include="OrbisLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />

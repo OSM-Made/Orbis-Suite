@@ -18,7 +18,7 @@ namespace OrbisSuiteService
         private enum CustomCommands : int
         {
             //Target
-            CMD_GET_CURRENT_TARGET = 0,
+            CMD_GET_CURRENT_TARGET = 128,
             CMD_SET_CURRENT_TARGET,
             CMD_CONNECT_TO_TARGET,
             CMD_DISCONNECT_FROM_TARGET,
