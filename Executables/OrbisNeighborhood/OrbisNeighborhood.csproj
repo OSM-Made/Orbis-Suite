@@ -36,6 +36,9 @@
     <Reference Include="DarkUI">
       <HintPath>..\..\Libraries\OSLib\bin\Debug\DarkUI.dll</HintPath>
     </Reference>
+    <Reference Include="OrbisLib">
+      <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

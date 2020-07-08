@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OrbisSuite;
 
 namespace nsOrbisNeighborhood
 {
     public partial class OrbisNeighborhood : DarkForm
     {
+        OrbisLib PS4 = new OrbisLib();
 
         void SetStatus(string Val)
         {
@@ -43,6 +45,8 @@ namespace nsOrbisNeighborhood
 
         public void UpdateTargetList()
         {
+            //PS4.Payload.InjectPayload()
+
             SetStatus("Updating List...");
 
             try

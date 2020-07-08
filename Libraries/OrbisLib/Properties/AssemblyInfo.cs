@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OSLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("OrbisLib")]
+[assembly: AssemblyDescription("A library for interacting with the Orbis Suite API.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OSLib")]
+[assembly: AssemblyProduct("OrbisLib")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

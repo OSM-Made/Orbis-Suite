@@ -7,8 +7,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OSLib.Classes
+namespace OrbisSuite.Classes
 {
+    //TODO: Move this to windows Service for ease of use
+
     public class TargetListUpdate : EventArgs
     {
         public List<Targets> List { get; private set; }

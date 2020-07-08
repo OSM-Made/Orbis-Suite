@@ -7,11 +7,17 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OSLib.Classes
+namespace OrbisSuite.Classes
 {
     public class Payload
     {
-        public bool InjectPayload(String IP, string KernelVersion, int Socket = 9020)
+        /// <summary>
+        /// Sends Orbis Suite Payloads to Playstation 4 Console
+        /// </summary>
+        /// <param name="IP">PlayStation 4 IP address</param>
+        /// <param name="KernelVersion">PlayStation 4 Kernel Version Ex:5.05</param>
+        /// <param name="Port">Port used to recieve payload default value is 9020</param>
+        public bool InjectPayload(String IP, string KernelVersion, int Port = 9020)
         {
             try
             {
@@ -20,7 +26,7 @@ namespace OSLib.Classes
                 psocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 psocket.ReceiveTimeout = 200;
                 psocket.SendTimeout = 200;
-                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Socket));
+                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
 
                 FileStream fPayload = File.Open(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\Payload-" + KernelVersion + ".bin", FileMode.Open);
 
@@ -60,7 +66,13 @@ namespace OSLib.Classes
             }
         }
 
-        public bool InjectPayload(String IP, byte[] PayloadBuffer, int Socket = 9020)
+        /// <summary>
+        /// Sends Custom Payloads to Playstation 4 Console
+        /// </summary>
+        /// <param name="IP">PlayStation 4 IP address</param>
+        /// <param name="PayloadBuffer">Byte array of payload</param>
+        /// <param name="Port">Port used to recieve payload default value is 9020</param>
+        public bool InjectPayload(String IP, byte[] PayloadBuffer, int Port = 9020)
         {
             try
             {
@@ -69,7 +81,7 @@ namespace OSLib.Classes
                 psocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 psocket.ReceiveTimeout = 200;
                 psocket.SendTimeout = 200;
-                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Socket));
+                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
 
                 //Send Payload
                 psocket.Send(PayloadBuffer);

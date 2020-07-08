@@ -2,9 +2,9 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using DarkUI.Forms;
-using OSLib.Classes;
+using OrbisSuite.Classes;
 
-namespace OSLib
+namespace OrbisSuite
 {
     public class OrbisLib
     {
@@ -92,6 +92,12 @@ namespace OSLib
             get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement(this)); }
         }
 
+        private Payload Internal_Payload;
+        public Payload Payload
+        {
+            get { return Internal_Payload ?? (Internal_Payload = new Payload()); }
+        }
+
         #endregion
 
         #region Kernel Imports
@@ -117,6 +123,9 @@ namespace OSLib
                 }
 
                 SetDllDirectory(OrbisLib_Dir);
+
+                //check with windows service to initialize Current Target and Proc
+
             }
             catch
             {
