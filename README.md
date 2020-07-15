@@ -21,6 +21,7 @@ A suite of tools used for developing things on a jailbroken PS4. Aswell as an in
 - [ ] Implement and test Watchpoints	
 ###### Console Output
 - [ ] Implement into new project
+- [ ] Add ability to save log files
 ###### Module Manager
 - [ ] Implement into new project
 ###### SPRX Helper
