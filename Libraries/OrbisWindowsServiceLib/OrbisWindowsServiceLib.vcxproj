@@ -147,8 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="SerialComHelper.h" />
     <ClInclude Include="ServiceClient.h" />
-    <ClInclude Include="ServiceLib.h" />
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="SocketListener.h" />
     <ClInclude Include="stdafx.h" />
@@ -156,9 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="OrbisWindowsServiceLib.cpp" />
+    <ClCompile Include="SerialComHelper.cpp" />
     <ClCompile Include="ServiceClient.cpp" />
-    <ClCompile Include="ServiceLib.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="SocketListener.cpp" />
     <ClCompile Include="stdafx.cpp">

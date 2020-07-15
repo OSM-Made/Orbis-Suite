@@ -4,14 +4,23 @@
 
 class ServiceClient {
 private:
+	enum ClientCommands
+	{
+		CMD_CLIENT_CONNECT,
+		CMD_CLIENT_DISCONNECT,
+		CMD_CLIENT_PING
+	};
+
+	bool ServiceRunning = false;
+
+public:
 	struct ClientInfo_s
 	{
 		bool Used;
 		unsigned short Port;
-		int LastUpdateTime; //Milliseconds  LastUpdateTime - GetTickCount() = TimeSinceUpdate
+		int LastUpdateTime;
 	}ClientInfo[MAX_CLIENTS];
 
-public:
 	enum ClientInterrupts
 	{
 		INTERRUPT_STOP,
@@ -21,14 +30,25 @@ public:
 		INTERRUPT_TARGET_KILLED,
 	};
 
-	enum ClientCommands {
+	enum TargetMessageTypes {
 		CMD_PRINT = 0,
 		CMD_INTERRUPT,
 		CMD_PROC_CHANGE,
 		CMD_PROC_DETACH
 	};
 
-	ServiceClient();
+	struct CommandPacket_s
+	{
+		int CommandIndex;
+		int Index;
+	};
+
+	static DWORD CommandClientThread(LPVOID lpParameter, SOCKET Client);
+	SocketListener* CommandListener;
+
+	static DWORD SocketAliveCheck(LPVOID ptr);
+
+	ServiceClient(unsigned short CommandListenerPort);
 	~ServiceClient();
 
 	int AddClient();

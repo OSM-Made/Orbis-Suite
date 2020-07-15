@@ -90,6 +90,8 @@ DWORD WINAPI ThreadStartHack(LPVOID ptr)
 
 SocketListener::SocketListener(DWORD(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpParameter, unsigned short ListenPort)
 {
+	printf("SocketListener Initialization!\n");
+
 	//Store Our input varibales locally
 	this->ClientCallBack = ClientCallBack;
 	this->lpParameter = lpParameter; 
@@ -105,8 +107,9 @@ SocketListener::SocketListener(DWORD(*ClientCallBack)(LPVOID, SOCKET), LPVOID lp
 
 SocketListener::~SocketListener()
 {
+	printf("SocketListener Destruction!\n");
+
 	//Signal Clean up
 	this->ServerRunning = false;
-
 
 }

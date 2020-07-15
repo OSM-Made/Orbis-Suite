@@ -107,7 +107,7 @@ namespace OrbisSuite
 
         #endregion
 
-        #region ** DLL Creation **
+        #region ** DLL Startup **
 
         public OrbisLib()
         {
