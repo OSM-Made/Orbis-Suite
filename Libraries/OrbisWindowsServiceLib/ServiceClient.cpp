@@ -151,6 +151,7 @@ bool ServiceClient::SendClientPrint(ClientInfo_s ClientInfo, int Type, const cha
 }
 
 bool ServiceClient::SendClientInterrupt(ClientInfo_s ClientInfo, ClientInterrupts Interupt) {
+
 	return true;
 }
 

@@ -83,7 +83,7 @@ DWORD WINAPI SocketListener::ListenerThread() {
 	ExitThread(Thr_Exit);
 }
 
-DWORD WINAPI ThreadStartHack(LPVOID ptr)
+DWORD WINAPI ThreadStartHack(LPVOID ptr) //TODO Remove this
 {
 	return ((SocketListener*)ptr)->ListenerThread();
 }

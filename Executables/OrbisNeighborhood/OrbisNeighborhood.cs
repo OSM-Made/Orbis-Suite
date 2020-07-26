@@ -53,7 +53,7 @@ namespace nsOrbisNeighborhood
             {
                 TargetList.Rows.Clear();
 
-                object[] obj = { "", "OSM's Console", "5.05", "192.168.1.132", "Not Connected" };
+                object[] obj = { "", "OSM's Console", "5.05", "192.168.1.142", "Not Connected" };
                 TargetList.Rows.Add(obj);
 
                 //if (List[i].Default == 1)
@@ -61,7 +61,7 @@ namespace nsOrbisNeighborhood
                 //else
                 //    ProcessList.Rows[i].Cells["Attached"].Value = null;
 
-                object[] obj2 = { "", "OSM's Console 2", "4.05", "192.168.1.133", "Not Connected" };
+                object[] obj2 = { "", "OSM's Console 2", "6.72", "192.168.1.168", "Not Connected" };
                 TargetList.Rows.Add(obj2);
 
                 //if (List[i].Default == 1)
