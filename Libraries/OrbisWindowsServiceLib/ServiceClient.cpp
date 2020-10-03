@@ -125,40 +125,24 @@ void ServiceClient::RemoveClient(int index) {
 	this->ClientInfo[index].Used = false;
 }
 
-bool ServiceClient::SendClientPrint(ClientInfo_s ClientInfo, int Type, const char* Data, int length) {
-	Sockets* Socket = new Sockets("127.0.0.1", ClientInfo.Port);
+void ServiceClient::ForwardPacket(TargetCommandPacket_s* TargetCommandPacket)
+{
+	for (int i = 0; i < MAX_CLIENTS; i++)
+	{
+		ClientInfo_s* ClientInfo = &this->ClientInfo[i];
+		if (ClientInfo->Used)
+		{
+			Sockets* Socket = new Sockets("127.0.0.1", ClientInfo->Port);
 
-	if (!Socket->Connect())
-		return false;
+			if (!Socket->Connect())
+				continue;
 
-	if (!Socket->Send((char*)&Type, sizeof(int))) {
-		free(Socket);
-		return false;
+			if (!Socket->Send((char*)TargetCommandPacket, sizeof(TargetCommandPacket_s))) {
+				free(Socket);
+				continue;
+			}
+
+			free(Socket);
+		}
 	}
-
-	if (!Socket->Send((char*)&length, sizeof(int))) {
-		free(Socket);
-		return false;
-	}
-
-	if (!Socket->Send(Data, length)) {
-		free(Socket);
-		return false;
-	}
-
-	free(Socket);
-	return true;
-}
-
-bool ServiceClient::SendClientInterrupt(ClientInfo_s ClientInfo, ClientInterrupts Interupt) {
-
-	return true;
-}
-
-bool ServiceClient::SendProcChange(ClientInfo_s ClientInfo, const char* NewProc) {
-	return true;
-}
-
-bool ServiceClient::SendProcDetach(ClientInfo_s ClientInfo) {
-	return true;
 }

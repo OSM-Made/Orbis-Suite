@@ -14,12 +14,18 @@ namespace OrbisSuiteService
         /// </summary>
         static void Main()
         {
+#if DEBUG
+            OrbisSuiteService Service = new OrbisSuiteService();
+
+            Service.OnDebug();
+#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
                 new OrbisSuiteService()
             };
             ServiceBase.Run(ServicesToRun);
+#endif
         }
     }
 }

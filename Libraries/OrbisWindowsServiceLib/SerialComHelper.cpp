@@ -95,6 +95,13 @@ void SerialComHelper::StartListening()
 		return;
 	}
 
+	CHAR lpTargetPath[5000];
+	if (!QueryDosDeviceA(this->ComPort, (LPSTR)lpTargetPath, 5000))
+	{
+		printf("Failed to connect to COM Port \"%s\"", ComPort);
+		return;
+	}
+
 	this->SerialCOMPortListening = true;
 
 	//Start a thread to listen for data and call our call back when we recieve data

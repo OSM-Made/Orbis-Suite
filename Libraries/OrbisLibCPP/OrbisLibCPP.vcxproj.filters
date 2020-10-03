@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\OrbisLib">
+      <UniqueIdentifier>{1ca25c76-a361-4eee-81f1-7a76a88650d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OrbisLib">
+      <UniqueIdentifier>{fd1429b7-533a-462d-8181-375b55d6afc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
