@@ -122,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;ORBISLIBCPP_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -207,12 +208,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="OrbisDebugger.hpp" />
+    <ClInclude Include="OrbisDef.hpp" />
+    <ClInclude Include="OrbisLib.hpp" />
+    <ClInclude Include="OrbisProc.hpp" />
+    <ClInclude Include="OrbisTarget.hpp" />
+    <ClInclude Include="Sockets.hpp" />
+    <ClInclude Include="sqlite3.h" />
+    <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="OrbisDebugger.cpp" />
+    <ClCompile Include="OrbisLib.cpp" />
     <ClCompile Include="OrbisLibCPP.cpp" />
+    <ClCompile Include="OrbisProc.cpp" />
+    <ClCompile Include="OrbisTarget.cpp" />
+    <ClCompile Include="Sockets.cpp" />
+    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Service|x64'">Create</PrecompiledHeader>
@@ -221,6 +236,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

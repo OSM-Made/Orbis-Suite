@@ -44,6 +44,56 @@ DWORD TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 	ExitThread(Thr_Exit);
 }
 
+/*
+const char* DBname = "Orbis-User-Data.db";
+
+//Set the orbis appdata dir
+sprintf(this->OrbisPath, "%s\\Orbis Suite", getenv("APPDATA"));
+
+//Thread to watch db file for changes.
+CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FileWatcherThread, this, 3, NULL);
+
+DWORD WINAPI OrbisTarget::FileWatcherThread(LPVOID Params)
+{
+	OrbisTarget* orbisTarget = (OrbisTarget*)Params;
+
+	HANDLE hfile = CreateFileA(orbisTarget->OrbisPath,
+		FILE_LIST_DIRECTORY,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		NULL,
+		OPEN_EXISTING,
+		FILE_FLAG_BACKUP_SEMANTICS,
+		NULL
+	);
+
+	while (orbisTarget->Running)
+	{
+		FILE_NOTIFY_INFORMATION buffer[1024];
+		int returnlen;
+
+		if (ReadDirectoryChangesW(hfile, &buffer, sizeof(buffer), true, FILE_NOTIFY_CHANGE_LAST_WRITE, (LPDWORD)&returnlen, NULL, NULL))
+		{
+			char* filename = new char[buffer->FileNameLength];
+			sprintf(filename, "%ws", buffer->FileName);
+
+			if (buffer[0].Action == FILE_ACTION_MODIFIED && strstr(filename, orbisTarget->DBname))
+			{
+				orbisTarget->UpdateSettings();
+
+				//TODO: Call a call back ???
+			}
+
+			free(filename);
+		}
+		Sleep(10);
+	}
+
+	CloseHandle(hfile);
+
+	DWORD Thr_Exit = 0;
+	ExitThread(Thr_Exit);
+}*/
+
 extern "C" __declspec(dllexport) void dummy()
 {
 
