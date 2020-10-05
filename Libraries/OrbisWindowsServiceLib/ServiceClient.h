@@ -15,7 +15,10 @@ enum TargetCommands
 
 	CMD_TARGET_SUSPEND,
 	CMD_TARGET_RESUME,
-	CMD_TARGET_SHUTDOWN
+	CMD_TARGET_SHUTDOWN,
+
+	CMD_DB_TOUCHED,
+
 };
 
 enum PrintType
@@ -118,7 +121,9 @@ private:
 	{
 		CMD_CLIENT_CONNECT,
 		CMD_CLIENT_DISCONNECT,
-		CMD_CLIENT_PING
+		CMD_CLIENT_HEARTBEAT,
+		CMD_CLIENT_CHANGE_PRINT_PORT,
+		CMD_CLIENT_CHANGE_COM_PORT
 	};
 
 	struct CommandPacket_s
@@ -130,7 +135,7 @@ private:
 	bool ServiceRunning = false;
 
 public:
-	static DWORD CommandClientThread(LPVOID lpParameter, SOCKET Client);
+	static VOID CommandClientThread(LPVOID lpParameter, SOCKET Client);
 	SocketListener* CommandListener;
 	static DWORD SocketAliveCheck(LPVOID ptr);
 

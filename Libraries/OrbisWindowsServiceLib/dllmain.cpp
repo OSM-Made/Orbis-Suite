@@ -20,10 +20,12 @@ const char* TargetCommandsStr[] =
 
 	"CMD_TARGET_SUSPEND",
 	"CMD_TARGET_RESUME",
-	"CMD_TARGET_SHUTDOWN"
+	"CMD_TARGET_SHUTDOWN",
+
+	"CMD_DB_TOUCHED"
 };
 
-DWORD TargetClientThread(LPVOID lpParameter, SOCKET Socket)
+VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 {
 	//Allocate space to recieve the packet from the Target Console
 	TargetCommandPacket_s* TargetCommandPacket = (TargetCommandPacket_s*)malloc(sizeof(TargetCommandPacket_s));
@@ -38,26 +40,14 @@ DWORD TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 	
 	//Clean up.
 	free(TargetCommandPacket);
-
-	//Exit Thread.
-	DWORD Thr_Exit = 0;
-	ExitThread(Thr_Exit);
 }
 
-/*
 const char* DBname = "Orbis-User-Data.db";
+char OrbisPath[0x1000];
 
-//Set the orbis appdata dir
-sprintf(this->OrbisPath, "%s\\Orbis Suite", getenv("APPDATA"));
-
-//Thread to watch db file for changes.
-CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FileWatcherThread, this, 3, NULL);
-
-DWORD WINAPI OrbisTarget::FileWatcherThread(LPVOID Params)
+DWORD WINAPI FileWatcherThread(LPVOID Params)
 {
-	OrbisTarget* orbisTarget = (OrbisTarget*)Params;
-
-	HANDLE hfile = CreateFileA(orbisTarget->OrbisPath,
+	HANDLE hfile = CreateFileA(OrbisPath,
 		FILE_LIST_DIRECTORY,
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL,
@@ -66,7 +56,7 @@ DWORD WINAPI OrbisTarget::FileWatcherThread(LPVOID Params)
 		NULL
 	);
 
-	while (orbisTarget->Running)
+	while (ServiceRunning)
 	{
 		FILE_NOTIFY_INFORMATION buffer[1024];
 		int returnlen;
@@ -74,13 +64,18 @@ DWORD WINAPI OrbisTarget::FileWatcherThread(LPVOID Params)
 		if (ReadDirectoryChangesW(hfile, &buffer, sizeof(buffer), true, FILE_NOTIFY_CHANGE_LAST_WRITE, (LPDWORD)&returnlen, NULL, NULL))
 		{
 			char* filename = new char[buffer->FileNameLength];
-			sprintf(filename, "%ws", buffer->FileName);
+			sprintf_s(filename, buffer->FileNameLength, "%ws", buffer->FileName);
 
-			if (buffer[0].Action == FILE_ACTION_MODIFIED && strstr(filename, orbisTarget->DBname))
+			if (buffer[0].Action == FILE_ACTION_MODIFIED && strstr(filename, DBname))
 			{
-				orbisTarget->UpdateSettings();
+				//Set up packet to send.
+				TargetCommandPacket_s TargetCommandPacket;
+				TargetCommandPacket.CommandIndex = CMD_DB_TOUCHED;
 
-				//TODO: Call a call back ???
+				//Forward the packet to all the connected children processes.
+				Client->ForwardPacket(&TargetCommandPacket);
+
+				printf("Sent Command %d(CMD_DB_TOUCHED)\n", CMD_DB_TOUCHED);
 			}
 
 			free(filename);
@@ -92,11 +87,44 @@ DWORD WINAPI OrbisTarget::FileWatcherThread(LPVOID Params)
 
 	DWORD Thr_Exit = 0;
 	ExitThread(Thr_Exit);
-}*/
+}
 
 extern "C" __declspec(dllexport) void dummy()
 {
 
+}
+
+void OrbisStartService()
+{
+	ServiceRunning = true;
+
+	//Start New Client Manager
+	Client = new ServiceClient(PORT_COMMANDSERVER);
+
+	//Start up listeners
+	TargetListener = new SocketListener(TargetClientThread, 0, PORT_TARGETSERVER); //Listens for socket commands from the target PS4 ie. Interupts, Change in proc, or attach / dettach
+
+	//Set the orbis appdata dir
+	char AppdataBuffer[0x100];
+	size_t requiredSize = sizeof(AppdataBuffer);
+	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "APPDATA");
+
+	sprintf_s(OrbisPath, sizeof(OrbisPath), "%s\\Orbis Suite", AppdataBuffer);
+
+	//Thread to watch db file for changes.
+	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FileWatcherThread, NULL, 3, NULL);
+}
+
+void OrbisEndService()
+{
+	ServiceRunning = false;
+
+	//Clean up
+	if (Client)
+		delete Client;
+
+	if (TargetListener)
+		delete TargetListener;
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
@@ -105,24 +133,12 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
     {
 		
     case DLL_PROCESS_ATTACH:
-		ServiceRunning = true;
-
-		//Start New Client Manager
-		Client = new ServiceClient(PORT_COMMANDSERVER);
-
-		//Start up listeners
-		TargetListener = new SocketListener(TargetClientThread, 0, PORT_TARGETSERVER); //Listens for socket commands from the target PS4 ie. Interupts, Change in proc, or attach / dettach
+		OrbisStartService();
 
 		break;
 
 	case DLL_PROCESS_DETACH:
-		ServiceRunning = false;
-
-		//Clean up
-		if (Client)
-			delete Client;
-		if (TargetListener)
-			delete TargetListener;
+		OrbisEndService();
 
 		break;
 

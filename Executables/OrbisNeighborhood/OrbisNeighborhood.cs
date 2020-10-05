@@ -45,6 +45,7 @@ namespace nsOrbisNeighborhood
 
         public void UpdateTargetList()
         {
+            PS4.Test();
             //PS4.Payload.InjectPayload()
 
             SetStatus("Updating List...");

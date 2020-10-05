@@ -74,6 +74,12 @@
     <Folder Include="Dialogs\" />
     <Folder Include="Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
+      <Link>OrbisLibCPP.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" /out:"../../../OrbisLib.dll" OrbisLib.dll DarkUI.dll System.Data.SQLite.dll /ndebug /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"  /internalize</PostBuildEvent>

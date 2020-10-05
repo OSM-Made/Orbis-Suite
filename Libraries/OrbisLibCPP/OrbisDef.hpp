@@ -189,6 +189,7 @@ struct RESP_TargetInfo
 	int32_t SDKVersion;
 	int32_t SoftwareVersion;
 	int32_t CPUTemp;
+	int32_t SOCTemp;
 	char CurrentTitleID[10];
 	char ConsoleName[100];
 	char IDPS[16];

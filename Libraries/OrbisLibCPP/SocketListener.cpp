@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "SocketListener.h"
+#include "stdafx.hpp"
+#include "SocketListener.hpp"
 
 DWORD WINAPI ClientThreadStart(LPVOID ptr)
 {
@@ -99,7 +99,7 @@ SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpP
 
 	//Store Our input varibales locally
 	this->ClientCallBack = ClientCallBack;
-	this->lpParameter = lpParameter; 
+	this->lpParameter = lpParameter;
 	this->ServerRunning = true; //Used to signal thread to shut down
 	this->ListenPort = ListenPort;
 

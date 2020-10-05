@@ -63,12 +63,15 @@
     <ClInclude Include="OrbisDebugger.hpp">
       <Filter>Header Files\OrbisLib</Filter>
     </ClInclude>
+    <ClInclude Include="SocketListener.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbisService.hpp">
+      <Filter>Header Files\OrbisLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OrbisLibCPP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
@@ -93,6 +96,12 @@
       <Filter>Source Files\OrbisLib</Filter>
     </ClCompile>
     <ClCompile Include="OrbisDebugger.cpp">
+      <Filter>Source Files\OrbisLib</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketListener.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbisService.cpp">
       <Filter>Source Files\OrbisLib</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1075,7 +1075,6 @@ bool OrbisTarget::DoesTargetExist(const char* TargetName)
 	sqlite3* db;
 	char* ErrorMsg = 0;
 	int rc = 0;
-	int Count;
 	bool Result = false;
 
 	if (!OpenDatabase(&db))
@@ -1123,7 +1122,6 @@ bool OrbisTarget::DoesTargetExist(const char* TargetName)
 	sqlite3_close(db);
 
 	return Result;
-
 }
 
 void OrbisTarget::GetDefaultTargetInfo(DB_TargetInfo* Out)

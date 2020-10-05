@@ -7,13 +7,10 @@ OrbisLib::OrbisLib()
 	this->Proc = new OrbisProc(this);
 	this->Target = new OrbisTarget(this);
 	this->Debugger = new OrbisDebugger(this);
+	this->Service = new OrbisService(this);
 
-	//Load Default Target from DB
-	strcpy_s(this->IPAddress, "192.168.1.67");
-
-	//TODO: Start up listener for waiting for coms from windows service.
-	//		From here this should tell us if another process has changed
-	//		the current target. should save on db req.
+	//Set the default OrbisLib Port.
+	this->Port = 6900;
 
 }
 
@@ -24,7 +21,7 @@ OrbisLib::~OrbisLib()
 
 int OrbisLib::TestCommunications()
 {
-	Sockets* Sock = new Sockets(this->IPAddress, this->Port);
+	Sockets* Sock = new Sockets(Target->DefaultTarget.IPAddr, this->Port);
 
 	if (!Sock->Connect())
 		return false;

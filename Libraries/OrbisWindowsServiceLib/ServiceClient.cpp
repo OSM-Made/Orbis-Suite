@@ -2,7 +2,7 @@
 #include "ServiceClient.h"
 #include "Sockets.h"
 
-DWORD ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
+VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 	int Index = -1;
 
 	ServiceClient* serviceClient = (ServiceClient*)lpParameter;
@@ -18,7 +18,7 @@ DWORD ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 		case CMD_CLIENT_CONNECT:
 			Index = serviceClient->AddClient();
 
-			send(Client, (char*)Index, sizeof(int), 0);
+			send(Client, (char*)&Index, sizeof(int), 0);
 
 			break;
 
@@ -28,17 +28,14 @@ DWORD ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 
 			break;
 
-		case CMD_CLIENT_PING:
+		case CMD_CLIENT_HEARTBEAT:
+			printf("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
 
 			serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime = GetTickCount();
 
-			printf("Client Alive Packet took %ims to respond\n", ((GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime)));
-			
 			break;
 		}
 	}
-
-	return 0;
 }
 
 DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
@@ -50,7 +47,7 @@ DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
 		{
 			if (serviceClient->ClientInfo[i].Used && ((GetTickCount() - serviceClient->ClientInfo[i].LastUpdateTime) > 10000))
 			{
-				printf("Client %i Timed out!\n", i);
+				printf("No response from Client %i in > 10000ms. Timed out!\n", i);
 
 				serviceClient->ClientInfo[i].Used = false;
 				serviceClient->ClientInfo[i].LastUpdateTime = 0;

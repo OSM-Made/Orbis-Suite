@@ -109,6 +109,14 @@ namespace OrbisSuite
 
         #region ** DLL Startup **
 
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void dummy();
+
+        public void Test()
+        {
+            dummy();
+        }
+
         public OrbisLib()
         {
             try
@@ -123,6 +131,8 @@ namespace OrbisSuite
                 }
 
                 SetDllDirectory(OrbisLib_Dir);
+
+                dummy();
 
                 //check with windows service to initialize Current Target and Proc
 

@@ -12,6 +12,6 @@ public:
 	VOID(*ClientCallBack)(LPVOID lpParameter, SOCKET);
 	DWORD WINAPI ListenerThread();
 
-	SocketListener(VOID(*ClientCallBack)(LPVOID lpParameter, SOCKET),LPVOID lpParameter, unsigned short ListenPort);
+	SocketListener(VOID(*ClientCallBack)(LPVOID lpParameter, SOCKET), LPVOID lpParameter, unsigned short ListenPort);
 	~SocketListener();
 };
