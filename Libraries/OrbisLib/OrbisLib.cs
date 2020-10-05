@@ -110,12 +110,7 @@ namespace OrbisSuite
         #region ** DLL Startup **
 
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void dummy();
-
-        public void Test()
-        {
-            dummy();
-        }
+        internal static extern void SetupCPP(bool WinService);
 
         public OrbisLib()
         {
@@ -132,7 +127,8 @@ namespace OrbisSuite
 
                 SetDllDirectory(OrbisLib_Dir);
 
-                dummy();
+                //Set up our instance of the OrbisLibCPP.dll.
+                SetupCPP(false);
 
                 //check with windows service to initialize Current Target and Proc
 

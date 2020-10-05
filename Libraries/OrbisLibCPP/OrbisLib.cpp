@@ -7,7 +7,10 @@ OrbisLib::OrbisLib()
 	this->Proc = new OrbisProc(this);
 	this->Target = new OrbisTarget(this);
 	this->Debugger = new OrbisDebugger(this);
-	this->Service = new OrbisService(this);
+
+	//Since we need to use this dll in the windows service we need to add a check
+	if(!IsWinService)
+		this->Service = new OrbisService(this);
 
 	//Set the default OrbisLib Port.
 	this->Port = 6900;
@@ -16,7 +19,12 @@ OrbisLib::OrbisLib()
 
 OrbisLib::~OrbisLib()
 {
-
+	//Cleanup.
+	delete this->Proc;
+	delete this->Target;
+	delete this->Debugger;
+	if (!IsWinService)
+		delete this->Service;
 }
 
 int OrbisLib::TestCommunications()

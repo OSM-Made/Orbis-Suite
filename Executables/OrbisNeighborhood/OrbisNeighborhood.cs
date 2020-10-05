@@ -45,16 +45,13 @@ namespace nsOrbisNeighborhood
 
         public void UpdateTargetList()
         {
-            PS4.Test();
-            //PS4.Payload.InjectPayload()
-
             SetStatus("Updating List...");
 
             try
             {
                 TargetList.Rows.Clear();
 
-                object[] obj = { "", "OSM's Console", "5.05", "192.168.1.142", "Not Connected" };
+                object[] obj = { "", "OSM's Console", "5.05", "192.168.1.167", "Available", "XMB", "5.050.031", "PS4-881", "Retail" };
                 TargetList.Rows.Add(obj);
 
                 //if (List[i].Default == 1)
@@ -62,7 +59,7 @@ namespace nsOrbisNeighborhood
                 //else
                 //    ProcessList.Rows[i].Cells["Attached"].Value = null;
 
-                object[] obj2 = { "", "OSM's Console 2", "6.72", "192.168.1.168", "Not Connected" };
+                object[] obj2 = { "", "OSM's Console 2", "6.72", "192.168.1.168", "Not Available", "-", "-", "-", "-" };
                 TargetList.Rows.Add(obj2);
 
                 //if (List[i].Default == 1)

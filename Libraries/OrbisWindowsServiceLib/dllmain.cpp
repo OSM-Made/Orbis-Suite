@@ -94,8 +94,14 @@ extern "C" __declspec(dllexport) void dummy()
 
 }
 
+extern "C" _declspec(dllimport) void SetupCPP(bool WinService);
+extern "C" __declspec(dllimport) void DestroyCPP();
+
 void OrbisStartService()
 {
+	//Setup our OrbisLib instance for WinService.
+	SetupCPP(true);
+
 	ServiceRunning = true;
 
 	//Start New Client Manager
@@ -125,6 +131,9 @@ void OrbisEndService()
 
 	if (TargetListener)
 		delete TargetListener;
+
+	//Clean up our OrbisLib instance.
+	DestroyCPP();
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )

@@ -40,11 +40,6 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mIPAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mFirmware = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mTargetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mDefault = new System.Windows.Forms.DataGridViewImageColumn();
             this.TargetList = new System.Windows.Forms.DataGridView();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -60,10 +55,32 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.TargetContextMenu = new DarkUI.Controls.DarkContextMenu();
+            this.Target_Payload = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Reboot = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Shutdown = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_RestMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.Target_SetDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
+            this.mDefault = new System.Windows.Forms.DataGridViewImageColumn();
+            this.mTargetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mFirmware = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mIPAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mSDKVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mConsoleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Target_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.Settings_Button = new System.Windows.Forms.ToolStripButton();
             this.Target_ContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).BeginInit();
             this.darkStatusStrip1.SuspendLayout();
             this.darkToolStrip1.SuspendLayout();
+            this.TargetContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentTargetLabel
@@ -152,51 +169,15 @@
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(64, 17);
             this.toolStripStatusLabel2.Text = "Orbis Suite";
             // 
-            // mStatus
-            // 
-            this.mStatus.HeaderText = "Status";
-            this.mStatus.Name = "mStatus";
-            // 
-            // mIPAddress
-            // 
-            this.mIPAddress.FillWeight = 110F;
-            this.mIPAddress.HeaderText = "Address";
-            this.mIPAddress.MinimumWidth = 110;
-            this.mIPAddress.Name = "mIPAddress";
-            this.mIPAddress.ReadOnly = true;
-            this.mIPAddress.Width = 110;
-            // 
-            // mFirmware
-            // 
-            this.mFirmware.FillWeight = 70F;
-            this.mFirmware.HeaderText = "Firmware";
-            this.mFirmware.MinimumWidth = 70;
-            this.mFirmware.Name = "mFirmware";
-            this.mFirmware.ReadOnly = true;
-            this.mFirmware.Width = 70;
-            // 
-            // mTargetName
-            // 
-            this.mTargetName.FillWeight = 211F;
-            this.mTargetName.HeaderText = "Target Name";
-            this.mTargetName.MinimumWidth = 211;
-            this.mTargetName.Name = "mTargetName";
-            this.mTargetName.ReadOnly = true;
-            this.mTargetName.Width = 211;
-            // 
-            // mDefault
-            // 
-            this.mDefault.HeaderText = "Default";
-            this.mDefault.MinimumWidth = 50;
-            this.mDefault.Name = "mDefault";
-            this.mDefault.Width = 50;
-            // 
             // TargetList
             // 
             this.TargetList.AllowUserToAddRows = false;
             this.TargetList.AllowUserToDeleteRows = false;
             this.TargetList.AllowUserToResizeColumns = false;
             this.TargetList.AllowUserToResizeRows = false;
+            this.TargetList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TargetList.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.TargetList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TargetList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -207,8 +188,12 @@
             this.mTargetName,
             this.mFirmware,
             this.mIPAddress,
-            this.mStatus});
-            this.TargetList.ContextMenuStrip = this.Target_ContextMenu;
+            this.mStatus,
+            this.mTitle,
+            this.mSDKVersion,
+            this.mConsoleName,
+            this.mConsoleType});
+            this.TargetList.ContextMenuStrip = this.TargetContextMenu;
             this.TargetList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(60)))), ((int)(((byte)(62)))));
             this.TargetList.Location = new System.Drawing.Point(0, 33);
             this.TargetList.MultiSelect = false;
@@ -218,7 +203,7 @@
             this.TargetList.RowHeadersVisible = false;
             this.TargetList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.TargetList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TargetList.Size = new System.Drawing.Size(544, 306);
+            this.TargetList.Size = new System.Drawing.Size(1004, 386);
             this.TargetList.TabIndex = 8;
             this.TargetList.Click += new System.EventHandler(this.TargetList_Click);
             this.TargetList.Enter += new System.EventHandler(this.TargetList_Enter);
@@ -279,10 +264,10 @@
             this.toolStripStatusLabel6,
             this.toolStripStatusLabel7,
             this.toolStripStatusLabel8});
-            this.darkStatusStrip1.Location = new System.Drawing.Point(0, 242);
+            this.darkStatusStrip1.Location = new System.Drawing.Point(0, 422);
             this.darkStatusStrip1.Name = "darkStatusStrip1";
             this.darkStatusStrip1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 3);
-            this.darkStatusStrip1.Size = new System.Drawing.Size(540, 30);
+            this.darkStatusStrip1.Size = new System.Drawing.Size(1004, 30);
             this.darkStatusStrip1.SizingGrip = false;
             this.darkStatusStrip1.TabIndex = 9;
             this.darkStatusStrip1.Text = "darkStatusStrip1";
@@ -298,7 +283,7 @@
             // 
             this.toolStripStatusLabel7.Margin = new System.Windows.Forms.Padding(0, 0, 50, 2);
             this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(384, 20);
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(848, 20);
             this.toolStripStatusLabel7.Spring = true;
             this.toolStripStatusLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -317,13 +302,15 @@
             this.darkToolStrip1.GripMargin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.darkToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.darkToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Settings_Button,
             this.toolStripLabel3,
             this.toolStripSeparator3,
-            this.toolStripLabel4});
+            this.toolStripLabel4,
+            this.AddTarget_Button});
             this.darkToolStrip1.Location = new System.Drawing.Point(0, 0);
             this.darkToolStrip1.Name = "darkToolStrip1";
             this.darkToolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 2);
-            this.darkToolStrip1.Size = new System.Drawing.Size(540, 30);
+            this.darkToolStrip1.Size = new System.Drawing.Size(1004, 30);
             this.darkToolStrip1.TabIndex = 10;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
@@ -351,15 +338,177 @@
             this.toolStripLabel4.Size = new System.Drawing.Size(75, 25);
             this.toolStripLabel4.Text = "Process: N/A";
             // 
+            // TargetContextMenu
+            // 
+            this.TargetContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.TargetContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.TargetContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Target_Payload,
+            this.toolStripSeparator4,
+            this.Target_Reboot,
+            this.Target_Shutdown,
+            this.Target_RestMode,
+            this.toolStripSeparator5,
+            this.Target_SetDefault,
+            this.Target_Edit,
+            this.Target_Delete});
+            this.TargetContextMenu.Name = "TargetContextMenu";
+            this.TargetContextMenu.Size = new System.Drawing.Size(146, 172);
+            // 
+            // Target_Payload
+            // 
+            this.Target_Payload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Payload.Name = "Target_Payload";
+            this.Target_Payload.Size = new System.Drawing.Size(145, 22);
+            this.Target_Payload.Text = "Send Payload";
+            // 
+            // Target_Reboot
+            // 
+            this.Target_Reboot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Reboot.Name = "Target_Reboot";
+            this.Target_Reboot.Size = new System.Drawing.Size(145, 22);
+            this.Target_Reboot.Text = "Reboot";
+            // 
+            // Target_Shutdown
+            // 
+            this.Target_Shutdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Shutdown.Name = "Target_Shutdown";
+            this.Target_Shutdown.Size = new System.Drawing.Size(145, 22);
+            this.Target_Shutdown.Text = "Shutdown";
+            // 
+            // Target_RestMode
+            // 
+            this.Target_RestMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_RestMode.Name = "Target_RestMode";
+            this.Target_RestMode.Size = new System.Drawing.Size(145, 22);
+            this.Target_RestMode.Text = "Restmode";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(142, 6);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(142, 6);
+            // 
+            // Target_SetDefault
+            // 
+            this.Target_SetDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_SetDefault.Name = "Target_SetDefault";
+            this.Target_SetDefault.Size = new System.Drawing.Size(145, 22);
+            this.Target_SetDefault.Text = "Default";
+            // 
+            // Target_Edit
+            // 
+            this.Target_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Edit.Name = "Target_Edit";
+            this.Target_Edit.Size = new System.Drawing.Size(145, 22);
+            this.Target_Edit.Text = "Edit";
+            // 
+            // AddTarget_Button
+            // 
+            this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.AddTarget_Button.Image = ((System.Drawing.Image)(resources.GetObject("AddTarget_Button.Image")));
+            this.AddTarget_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddTarget_Button.Name = "AddTarget_Button";
+            this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
+            this.AddTarget_Button.Text = "Add Target";
+            // 
+            // mDefault
+            // 
+            this.mDefault.HeaderText = "Default";
+            this.mDefault.MinimumWidth = 50;
+            this.mDefault.Name = "mDefault";
+            this.mDefault.Width = 50;
+            // 
+            // mTargetName
+            // 
+            this.mTargetName.FillWeight = 211F;
+            this.mTargetName.HeaderText = "Target Name";
+            this.mTargetName.MinimumWidth = 211;
+            this.mTargetName.Name = "mTargetName";
+            this.mTargetName.ReadOnly = true;
+            this.mTargetName.Width = 211;
+            // 
+            // mFirmware
+            // 
+            this.mFirmware.FillWeight = 70F;
+            this.mFirmware.HeaderText = "Firmware";
+            this.mFirmware.MinimumWidth = 70;
+            this.mFirmware.Name = "mFirmware";
+            this.mFirmware.ReadOnly = true;
+            this.mFirmware.Width = 70;
+            // 
+            // mIPAddress
+            // 
+            this.mIPAddress.FillWeight = 110F;
+            this.mIPAddress.HeaderText = "Address";
+            this.mIPAddress.MinimumWidth = 110;
+            this.mIPAddress.Name = "mIPAddress";
+            this.mIPAddress.ReadOnly = true;
+            this.mIPAddress.Width = 110;
+            // 
+            // mStatus
+            // 
+            this.mStatus.HeaderText = "Status";
+            this.mStatus.Name = "mStatus";
+            // 
+            // mTitle
+            // 
+            this.mTitle.HeaderText = "Title";
+            this.mTitle.Name = "mTitle";
+            // 
+            // mSDKVersion
+            // 
+            this.mSDKVersion.HeaderText = "SDK Version";
+            this.mSDKVersion.Name = "mSDKVersion";
+            // 
+            // mConsoleName
+            // 
+            this.mConsoleName.HeaderText = "Console Name";
+            this.mConsoleName.MinimumWidth = 162;
+            this.mConsoleName.Name = "mConsoleName";
+            this.mConsoleName.Width = 162;
+            // 
+            // mConsoleType
+            // 
+            this.mConsoleType.HeaderText = "Console Type";
+            this.mConsoleType.Name = "mConsoleType";
+            // 
+            // Target_Delete
+            // 
+            this.Target_Delete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Delete.Name = "Target_Delete";
+            this.Target_Delete.Size = new System.Drawing.Size(145, 22);
+            this.Target_Delete.Text = "Delete";
+            // 
+            // Settings_Button
+            // 
+            this.Settings_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Settings_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Settings_Button.Image = ((System.Drawing.Image)(resources.GetObject("Settings_Button.Image")));
+            this.Settings_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Settings_Button.Name = "Settings_Button";
+            this.Settings_Button.Size = new System.Drawing.Size(23, 25);
+            this.Settings_Button.Text = "Settings";
+            // 
             // OrbisNeighborhood
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 272);
+            this.ClientSize = new System.Drawing.Size(1004, 452);
             this.Controls.Add(this.darkToolStrip1);
             this.Controls.Add(this.darkStatusStrip1);
             this.Controls.Add(this.TargetList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1020, 600);
+            this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "OrbisNeighborhood";
             this.Text = "Orbis Neighborhood";
             this.Target_ContextMenu.ResumeLayout(false);
@@ -368,6 +517,7 @@
             this.darkStatusStrip1.PerformLayout();
             this.darkToolStrip1.ResumeLayout(false);
             this.darkToolStrip1.PerformLayout();
+            this.TargetContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -384,11 +534,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteTargetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editTargetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTargetToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mIPAddress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mFirmware;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mTargetName;
-        private System.Windows.Forms.DataGridViewImageColumn mDefault;
         private System.Windows.Forms.DataGridView TargetList;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
@@ -404,6 +549,27 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.DataGridViewImageColumn mDefault;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mTargetName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mFirmware;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mIPAddress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mSDKVersion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleType;
+        private System.Windows.Forms.ToolStripButton Settings_Button;
+        private System.Windows.Forms.ToolStripButton AddTarget_Button;
+        private DarkUI.Controls.DarkContextMenu TargetContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem Target_Payload;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem Target_Reboot;
+        private System.Windows.Forms.ToolStripMenuItem Target_Shutdown;
+        private System.Windows.Forms.ToolStripMenuItem Target_RestMode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem Target_SetDefault;
+        private System.Windows.Forms.ToolStripMenuItem Target_Edit;
+        private System.Windows.Forms.ToolStripMenuItem Target_Delete;
     }
 }
 

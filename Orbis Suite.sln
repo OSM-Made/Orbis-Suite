@@ -33,6 +33,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisSuiteService", "Executables\OrbisSuiteService\OrbisSuiteService.csproj", "{A560264B-AECB-4FE5-B330-7BB8E9C7CD5B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5EA1C774-A532-48A8-A9A2-49130403E110} = {5EA1C774-A532-48A8-A9A2-49130403E110}
+		{4F776AAC-2760-435F-B4BF-758776426FA7} = {4F776AAC-2760-435F-B4BF-758776426FA7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OrbisWindowsServiceLib", "Libraries\OrbisWindowsServiceLib\OrbisWindowsServiceLib.vcxproj", "{5EA1C774-A532-48A8-A9A2-49130403E110}"
