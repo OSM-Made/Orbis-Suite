@@ -32,15 +32,29 @@
             this.CurrentTargetLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.CurrentProcLabel = new System.Windows.Forms.ToolStripLabel();
-            this.Target_ContextMenu = new DarkUI.Controls.DarkContextMenu();
-            this.connectToTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.TargetList = new System.Windows.Forms.DataGridView();
+            this.mDefault = new System.Windows.Forms.DataGridViewImageColumn();
+            this.mTargetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mFirmware = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mIPAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mSDKVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mConsoleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TargetContextMenu = new DarkUI.Controls.DarkContextMenu();
+            this.Target_Payload = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.Target_Reboot = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Shutdown = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_RestMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.Target_SetDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -52,35 +66,20 @@
             this.toolStripStatusLabel7 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel8 = new System.Windows.Forms.ToolStripStatusLabel();
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.DefaultTargetLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.TargetContextMenu = new DarkUI.Controls.DarkContextMenu();
-            this.Target_Payload = new System.Windows.Forms.ToolStripMenuItem();
-            this.Target_Reboot = new System.Windows.Forms.ToolStripMenuItem();
-            this.Target_Shutdown = new System.Windows.Forms.ToolStripMenuItem();
-            this.Target_RestMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.Target_SetDefault = new System.Windows.Forms.ToolStripMenuItem();
-            this.Target_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
-            this.mDefault = new System.Windows.Forms.DataGridViewImageColumn();
-            this.mTargetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mFirmware = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mIPAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mSDKVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mConsoleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Target_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.Settings_Button = new System.Windows.Forms.ToolStripButton();
-            this.Target_ContextMenu.SuspendLayout();
+            this.Target_Details = new System.Windows.Forms.ToolStripMenuItem();
+            this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.LoadOnBoot_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoLoadPayload_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).BeginInit();
+            this.TargetContextMenu.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
             this.darkToolStrip1.SuspendLayout();
-            this.TargetContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentTargetLabel
@@ -106,46 +105,6 @@
             this.CurrentProcLabel.Name = "CurrentProcLabel";
             this.CurrentProcLabel.Size = new System.Drawing.Size(75, 25);
             this.CurrentProcLabel.Text = "Process: N/A";
-            // 
-            // Target_ContextMenu
-            // 
-            this.Target_ContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.Target_ContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectToTargetToolStripMenuItem,
-            this.deleteTargetToolStripMenuItem,
-            this.editTargetToolStripMenuItem,
-            this.addTargetToolStripMenuItem});
-            this.Target_ContextMenu.Name = "Target_ContextMenu";
-            this.Target_ContextMenu.Size = new System.Drawing.Size(169, 92);
-            // 
-            // connectToTargetToolStripMenuItem
-            // 
-            this.connectToTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.connectToTargetToolStripMenuItem.Name = "connectToTargetToolStripMenuItem";
-            this.connectToTargetToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.connectToTargetToolStripMenuItem.Text = "Connect to Target";
-            // 
-            // deleteTargetToolStripMenuItem
-            // 
-            this.deleteTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.deleteTargetToolStripMenuItem.Name = "deleteTargetToolStripMenuItem";
-            this.deleteTargetToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.deleteTargetToolStripMenuItem.Text = "Delete Target";
-            // 
-            // editTargetToolStripMenuItem
-            // 
-            this.editTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.editTargetToolStripMenuItem.Name = "editTargetToolStripMenuItem";
-            this.editTargetToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.editTargetToolStripMenuItem.Text = "Edit Target";
-            // 
-            // addTargetToolStripMenuItem
-            // 
-            this.addTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.addTargetToolStripMenuItem.Name = "addTargetToolStripMenuItem";
-            this.addTargetToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.addTargetToolStripMenuItem.Text = "Add Target";
             // 
             // StatusLabel
             // 
@@ -208,6 +167,149 @@
             this.TargetList.Click += new System.EventHandler(this.TargetList_Click);
             this.TargetList.Enter += new System.EventHandler(this.TargetList_Enter);
             this.TargetList.Leave += new System.EventHandler(this.TargetList_Leave);
+            // 
+            // mDefault
+            // 
+            this.mDefault.HeaderText = "Default";
+            this.mDefault.MinimumWidth = 50;
+            this.mDefault.Name = "mDefault";
+            this.mDefault.Width = 50;
+            // 
+            // mTargetName
+            // 
+            this.mTargetName.FillWeight = 211F;
+            this.mTargetName.HeaderText = "Target Name";
+            this.mTargetName.MinimumWidth = 211;
+            this.mTargetName.Name = "mTargetName";
+            this.mTargetName.ReadOnly = true;
+            this.mTargetName.Width = 211;
+            // 
+            // mFirmware
+            // 
+            this.mFirmware.FillWeight = 70F;
+            this.mFirmware.HeaderText = "Firmware";
+            this.mFirmware.MinimumWidth = 70;
+            this.mFirmware.Name = "mFirmware";
+            this.mFirmware.ReadOnly = true;
+            this.mFirmware.Width = 70;
+            // 
+            // mIPAddress
+            // 
+            this.mIPAddress.FillWeight = 110F;
+            this.mIPAddress.HeaderText = "Address";
+            this.mIPAddress.MinimumWidth = 110;
+            this.mIPAddress.Name = "mIPAddress";
+            this.mIPAddress.ReadOnly = true;
+            this.mIPAddress.Width = 110;
+            // 
+            // mStatus
+            // 
+            this.mStatus.HeaderText = "Status";
+            this.mStatus.Name = "mStatus";
+            // 
+            // mTitle
+            // 
+            this.mTitle.HeaderText = "Title";
+            this.mTitle.Name = "mTitle";
+            // 
+            // mSDKVersion
+            // 
+            this.mSDKVersion.HeaderText = "SDK Version";
+            this.mSDKVersion.Name = "mSDKVersion";
+            // 
+            // mConsoleName
+            // 
+            this.mConsoleName.HeaderText = "Console Name";
+            this.mConsoleName.MinimumWidth = 162;
+            this.mConsoleName.Name = "mConsoleName";
+            this.mConsoleName.Width = 162;
+            // 
+            // mConsoleType
+            // 
+            this.mConsoleType.HeaderText = "Console Type";
+            this.mConsoleType.Name = "mConsoleType";
+            // 
+            // TargetContextMenu
+            // 
+            this.TargetContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.TargetContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.TargetContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Target_Payload,
+            this.toolStripSeparator4,
+            this.Target_Reboot,
+            this.Target_Shutdown,
+            this.Target_RestMode,
+            this.toolStripSeparator5,
+            this.Target_SetDefault,
+            this.Target_Edit,
+            this.Target_Delete,
+            this.Target_Details});
+            this.TargetContextMenu.Name = "TargetContextMenu";
+            this.TargetContextMenu.Size = new System.Drawing.Size(181, 216);
+            // 
+            // Target_Payload
+            // 
+            this.Target_Payload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Payload.Name = "Target_Payload";
+            this.Target_Payload.Size = new System.Drawing.Size(145, 22);
+            this.Target_Payload.Text = "Send Payload";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(142, 6);
+            // 
+            // Target_Reboot
+            // 
+            this.Target_Reboot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Reboot.Name = "Target_Reboot";
+            this.Target_Reboot.Size = new System.Drawing.Size(145, 22);
+            this.Target_Reboot.Text = "Reboot";
+            // 
+            // Target_Shutdown
+            // 
+            this.Target_Shutdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Shutdown.Name = "Target_Shutdown";
+            this.Target_Shutdown.Size = new System.Drawing.Size(145, 22);
+            this.Target_Shutdown.Text = "Shutdown";
+            // 
+            // Target_RestMode
+            // 
+            this.Target_RestMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_RestMode.Name = "Target_RestMode";
+            this.Target_RestMode.Size = new System.Drawing.Size(145, 22);
+            this.Target_RestMode.Text = "Restmode";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(142, 6);
+            // 
+            // Target_SetDefault
+            // 
+            this.Target_SetDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_SetDefault.Name = "Target_SetDefault";
+            this.Target_SetDefault.Size = new System.Drawing.Size(180, 22);
+            this.Target_SetDefault.Text = "Default";
+            this.Target_SetDefault.Click += new System.EventHandler(this.Target_SetDefault_Click);
+            // 
+            // Target_Edit
+            // 
+            this.Target_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Edit.Name = "Target_Edit";
+            this.Target_Edit.Size = new System.Drawing.Size(145, 22);
+            this.Target_Edit.Text = "Edit";
+            // 
+            // Target_Delete
+            // 
+            this.Target_Delete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Delete.Name = "Target_Delete";
+            this.Target_Delete.Size = new System.Drawing.Size(145, 22);
+            this.Target_Delete.Text = "Delete";
             // 
             // toolStripStatusLabel1
             // 
@@ -302,10 +404,10 @@
             this.darkToolStrip1.GripMargin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.darkToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.darkToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Settings_Button,
-            this.toolStripLabel3,
+            this.DefaultTargetLabel,
             this.toolStripSeparator3,
             this.toolStripLabel4,
+            this.Settings_DropDown,
             this.AddTarget_Button});
             this.darkToolStrip1.Location = new System.Drawing.Point(0, 0);
             this.darkToolStrip1.Name = "darkToolStrip1";
@@ -314,13 +416,13 @@
             this.darkToolStrip1.TabIndex = 10;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
-            // toolStripLabel3
+            // DefaultTargetLabel
             // 
-            this.toolStripLabel3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(67, 25);
-            this.toolStripLabel3.Text = "Target: N/A";
+            this.DefaultTargetLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.DefaultTargetLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.DefaultTargetLabel.Name = "DefaultTargetLabel";
+            this.DefaultTargetLabel.Size = new System.Drawing.Size(67, 25);
+            this.DefaultTargetLabel.Text = "Target: N/A";
             // 
             // toolStripSeparator3
             // 
@@ -338,79 +440,6 @@
             this.toolStripLabel4.Size = new System.Drawing.Size(75, 25);
             this.toolStripLabel4.Text = "Process: N/A";
             // 
-            // TargetContextMenu
-            // 
-            this.TargetContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.TargetContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.TargetContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Target_Payload,
-            this.toolStripSeparator4,
-            this.Target_Reboot,
-            this.Target_Shutdown,
-            this.Target_RestMode,
-            this.toolStripSeparator5,
-            this.Target_SetDefault,
-            this.Target_Edit,
-            this.Target_Delete});
-            this.TargetContextMenu.Name = "TargetContextMenu";
-            this.TargetContextMenu.Size = new System.Drawing.Size(146, 172);
-            // 
-            // Target_Payload
-            // 
-            this.Target_Payload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Payload.Name = "Target_Payload";
-            this.Target_Payload.Size = new System.Drawing.Size(145, 22);
-            this.Target_Payload.Text = "Send Payload";
-            // 
-            // Target_Reboot
-            // 
-            this.Target_Reboot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Reboot.Name = "Target_Reboot";
-            this.Target_Reboot.Size = new System.Drawing.Size(145, 22);
-            this.Target_Reboot.Text = "Reboot";
-            // 
-            // Target_Shutdown
-            // 
-            this.Target_Shutdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Shutdown.Name = "Target_Shutdown";
-            this.Target_Shutdown.Size = new System.Drawing.Size(145, 22);
-            this.Target_Shutdown.Text = "Shutdown";
-            // 
-            // Target_RestMode
-            // 
-            this.Target_RestMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_RestMode.Name = "Target_RestMode";
-            this.Target_RestMode.Size = new System.Drawing.Size(145, 22);
-            this.Target_RestMode.Text = "Restmode";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(142, 6);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(142, 6);
-            // 
-            // Target_SetDefault
-            // 
-            this.Target_SetDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_SetDefault.Name = "Target_SetDefault";
-            this.Target_SetDefault.Size = new System.Drawing.Size(145, 22);
-            this.Target_SetDefault.Text = "Default";
-            // 
-            // Target_Edit
-            // 
-            this.Target_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Edit.Name = "Target_Edit";
-            this.Target_Edit.Size = new System.Drawing.Size(145, 22);
-            this.Target_Edit.Text = "Edit";
-            // 
             // AddTarget_Button
             // 
             this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -420,83 +449,57 @@
             this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
             this.AddTarget_Button.Text = "Add Target";
             // 
-            // mDefault
+            // Target_Details
             // 
-            this.mDefault.HeaderText = "Default";
-            this.mDefault.MinimumWidth = 50;
-            this.mDefault.Name = "mDefault";
-            this.mDefault.Width = 50;
+            this.Target_Details.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Details.Name = "Target_Details";
+            this.Target_Details.Size = new System.Drawing.Size(145, 22);
+            this.Target_Details.Text = "Details";
             // 
-            // mTargetName
+            // Settings_DropDown
             // 
-            this.mTargetName.FillWeight = 211F;
-            this.mTargetName.HeaderText = "Target Name";
-            this.mTargetName.MinimumWidth = 211;
-            this.mTargetName.Name = "mTargetName";
-            this.mTargetName.ReadOnly = true;
-            this.mTargetName.Width = 211;
+            this.Settings_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Settings_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AutoLoadPayload_Button,
+            this.LoadOnBoot_Button,
+            this.toolStripSeparator6,
+            this.About_Button});
+            this.Settings_DropDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Settings_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Settings_DropDown.Image")));
+            this.Settings_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Settings_DropDown.Name = "Settings_DropDown";
+            this.Settings_DropDown.Size = new System.Drawing.Size(29, 25);
+            this.Settings_DropDown.Text = "Settings";
             // 
-            // mFirmware
+            // LoadOnBoot_Button
             // 
-            this.mFirmware.FillWeight = 70F;
-            this.mFirmware.HeaderText = "Firmware";
-            this.mFirmware.MinimumWidth = 70;
-            this.mFirmware.Name = "mFirmware";
-            this.mFirmware.ReadOnly = true;
-            this.mFirmware.Width = 70;
+            this.LoadOnBoot_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.LoadOnBoot_Button.Name = "LoadOnBoot_Button";
+            this.LoadOnBoot_Button.Size = new System.Drawing.Size(205, 22);
+            this.LoadOnBoot_Button.Text = "Load Orbis Suite on boot";
+            this.LoadOnBoot_Button.Click += new System.EventHandler(this.LoadOnBoot_Button_Click);
             // 
-            // mIPAddress
+            // AutoLoadPayload_Button
             // 
-            this.mIPAddress.FillWeight = 110F;
-            this.mIPAddress.HeaderText = "Address";
-            this.mIPAddress.MinimumWidth = 110;
-            this.mIPAddress.Name = "mIPAddress";
-            this.mIPAddress.ReadOnly = true;
-            this.mIPAddress.Width = 110;
+            this.AutoLoadPayload_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.AutoLoadPayload_Button.Name = "AutoLoadPayload_Button";
+            this.AutoLoadPayload_Button.Size = new System.Drawing.Size(205, 22);
+            this.AutoLoadPayload_Button.Text = "Auto Load Payload";
+            this.AutoLoadPayload_Button.Click += new System.EventHandler(this.AutoLoadPayload_Button_Click);
             // 
-            // mStatus
+            // toolStripSeparator6
             // 
-            this.mStatus.HeaderText = "Status";
-            this.mStatus.Name = "mStatus";
+            this.toolStripSeparator6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
             // 
-            // mTitle
+            // About_Button
             // 
-            this.mTitle.HeaderText = "Title";
-            this.mTitle.Name = "mTitle";
-            // 
-            // mSDKVersion
-            // 
-            this.mSDKVersion.HeaderText = "SDK Version";
-            this.mSDKVersion.Name = "mSDKVersion";
-            // 
-            // mConsoleName
-            // 
-            this.mConsoleName.HeaderText = "Console Name";
-            this.mConsoleName.MinimumWidth = 162;
-            this.mConsoleName.Name = "mConsoleName";
-            this.mConsoleName.Width = 162;
-            // 
-            // mConsoleType
-            // 
-            this.mConsoleType.HeaderText = "Console Type";
-            this.mConsoleType.Name = "mConsoleType";
-            // 
-            // Target_Delete
-            // 
-            this.Target_Delete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Delete.Name = "Target_Delete";
-            this.Target_Delete.Size = new System.Drawing.Size(145, 22);
-            this.Target_Delete.Text = "Delete";
-            // 
-            // Settings_Button
-            // 
-            this.Settings_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Settings_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Settings_Button.Image = ((System.Drawing.Image)(resources.GetObject("Settings_Button.Image")));
-            this.Settings_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Settings_Button.Name = "Settings_Button";
-            this.Settings_Button.Size = new System.Drawing.Size(23, 25);
-            this.Settings_Button.Text = "Settings";
+            this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.About_Button.Name = "About_Button";
+            this.About_Button.Size = new System.Drawing.Size(205, 22);
+            this.About_Button.Text = "About";
             // 
             // OrbisNeighborhood
             // 
@@ -511,13 +514,12 @@
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "OrbisNeighborhood";
             this.Text = "Orbis Neighborhood";
-            this.Target_ContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).EndInit();
+            this.TargetContextMenu.ResumeLayout(false);
             this.darkStatusStrip1.ResumeLayout(false);
             this.darkStatusStrip1.PerformLayout();
             this.darkToolStrip1.ResumeLayout(false);
             this.darkToolStrip1.PerformLayout();
-            this.TargetContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -529,11 +531,6 @@
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private DarkUI.Controls.DarkContextMenu Target_ContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem connectToTargetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteTargetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editTargetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addTargetToolStripMenuItem;
         private System.Windows.Forms.DataGridView TargetList;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
@@ -546,7 +543,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel7;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel8;
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripLabel DefaultTargetLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.DataGridViewImageColumn mDefault;
@@ -558,7 +555,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mSDKVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleType;
-        private System.Windows.Forms.ToolStripButton Settings_Button;
         private System.Windows.Forms.ToolStripButton AddTarget_Button;
         private DarkUI.Controls.DarkContextMenu TargetContextMenu;
         private System.Windows.Forms.ToolStripMenuItem Target_Payload;
@@ -570,6 +566,12 @@
         private System.Windows.Forms.ToolStripMenuItem Target_SetDefault;
         private System.Windows.Forms.ToolStripMenuItem Target_Edit;
         private System.Windows.Forms.ToolStripMenuItem Target_Delete;
+        private System.Windows.Forms.ToolStripMenuItem Target_Details;
+        private System.Windows.Forms.ToolStripDropDownButton Settings_DropDown;
+        private System.Windows.Forms.ToolStripMenuItem AutoLoadPayload_Button;
+        private System.Windows.Forms.ToolStripMenuItem LoadOnBoot_Button;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem About_Button;
     }
 }
 

@@ -184,6 +184,8 @@ enum ConsoleTypes
 	KRATOS, //0xA0 IMPOSSIBLE??
 };
 
+extern const char* ConsoleTypeNames[];
+
 struct RESP_TargetInfo
 {
 	int32_t SDKVersion;
@@ -199,7 +201,16 @@ struct RESP_TargetInfo
 
 struct DB_TargetInfo
 {
-	char Name[0x100];
+	int Default;
+	char Name[256];
 	char IPAddr[16];
 	int Firmware;
+	int Available;
+	char SDKVersion[14];
+	char SoftwareVersion[10];
+	char CurrentTitleID[10];
+	char ConsoleName[100];
+	char IDPS[40];
+	char PSID[40];
+	char ConsoleType[20];
 };

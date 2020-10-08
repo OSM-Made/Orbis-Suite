@@ -64,43 +64,65 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 
 
 	case CMD_INTERCEPT:
-		printf("TODO: Implement.\n");
+		if (orbisService->Proc_Intercept)
+			orbisService->Proc_Intercept(Packet->Break.Reason, &Packet->Break.Registers);
 		break;
 
 	case CMD_CONTINUE:
-		printf("TODO: Implement.\n");
+		if (orbisService->Proc_Continue)
+			orbisService->Proc_Continue();
 		break;
 
 
 	case CMD_PROC_DIE:
-		printf("TODO: Implement.\n");
+		if (orbisService->Proc_Die)
+			orbisService->Proc_Die();
 		break;
 
 	case CMD_PROC_ATTACH:
-		printf("TODO: Implement.\n");
+		if (orbisService->Proc_Attach)
+			orbisService->Proc_Attach(Packet->ProcName);
 		break;
 
 	case CMD_PROC_DETACH:
-		printf("TODO: Implement.\n");
+		if (orbisService->Proc_Detach)
+			orbisService->Proc_Detach();
 		break;
 
 
 	case CMD_TARGET_SUSPEND:
-		printf("TODO: Implement.\n");
+		if (orbisService->Target_Suspend)
+			orbisService->Target_Suspend();
 		break;
 
 	case CMD_TARGET_RESUME:
-		printf("TODO: Implement.\n");
+		if (orbisService->Target_Resume)
+			orbisService->Target_Resume();
 		break;
 
 	case CMD_TARGET_SHUTDOWN:
-		printf("TODO: Implement.\n");
+		if (orbisService->Target_Shutdown)
+			orbisService->Target_Shutdown();
 		break;
 
 
 	case CMD_DB_TOUCHED:
-		printf("heh DB was touched.\n");
 		orbisService->orbisLib->Target->UpdateSettings();
+
+		if (orbisService->DB_Touched)
+			orbisService->DB_Touched();
+		break;
+
+	case CMD_TARGET_NEWTITLE:
+		if (orbisService->Target_NewTitle)
+			orbisService->Target_NewTitle(Packet->TitleChange.TitleID);
+		break;
+
+	case CMD_TARGET_AVAILABILITY:
+		orbisService->orbisLib->Target->UpdateSettings();
+
+		if(orbisService->Target_Availability)
+			orbisService->Target_Availability(Packet->Target.Available, (char*)Packet->Target.TargetName);
 		break;
 	}
 
@@ -288,15 +310,8 @@ void OrbisService::HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket)
 		return;
 	}
 
-	//Do Callbacks for printing data.
-	if (Packet->Print.Type == PT_SOCK)
-	{
-		//TODO: Implement.
-	}
-	else
-	{
-		//TODO: Implement.
-	}
+	if (this->Target_Print)
+		this->Target_Print(Packet->Print.Type, Packet->Print.Len, Data);
 
 	free(Data);
 }

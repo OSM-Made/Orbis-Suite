@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OrbisSuite;
+using static OrbisSuite.Classes.Target;
+using OrbisSuite.Classes;
 
 namespace nsOrbisNeighborhood
 {
@@ -41,6 +43,35 @@ namespace nsOrbisNeighborhood
             TargetList.BackColor = Color.FromArgb(122, 128, 132);
 
             UpdateTargetList();
+            UpdateSettings();
+
+            //Register Events
+            PS4.Events.TargetAvailable += PS4_TargetAvailable;
+            PS4.Events.TargetUnAvailable += PS4_TargetUnAvailable;
+            PS4.Events.TargetNewTitle += Events_TargetNewTitle;
+            //PS4.Events.DBTouched += Events_DBTouched;
+        }
+
+        private void Events_DBTouched(object sender, DBTouchedEvent e)
+        {
+            Console.WriteLine("Events_DBTouched");
+            //UpdateSettings();
+            //UpdateTargetList();
+        }
+
+        private void Events_TargetNewTitle(object sender, TargetNewTitleEvent e)
+        {
+            UpdateTargetList();
+        }
+
+        private void PS4_TargetUnAvailable(object sender, TargetUnAvailableEvent e)
+        {
+            UpdateTargetList();
+        }
+
+        private void PS4_TargetAvailable(object sender, TargetAvailableEvent e)
+        {
+            UpdateTargetList();
         }
 
         public void UpdateTargetList()
@@ -49,22 +80,47 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                TargetList.Rows.Clear();
+                //TargetList.Rows.Clear();
+                DefaultTargetLabel.Text = "N/A";
 
-                object[] obj = { "", "OSM's Console", "5.05", "192.168.1.167", "Available", "XMB", "5.050.031", "PS4-881", "Retail" };
-                TargetList.Rows.Add(obj);
+                int LoopCount = 0;
+                List<TargetInfo> Targets = PS4.Target.GetTargetList();
 
-                //if (List[i].Default == 1)
-                TargetList.Rows[0].Cells["mDefault"].Value = nsOrbisNeighborhood.Properties.Resources.Default;
-                //else
-                //    ProcessList.Rows[i].Cells["Attached"].Value = null;
+                foreach (TargetInfo Target in Targets)
+                {
+                    object[] obj = { Target.Name.Equals(PS4.Target.GetDefault().Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
+                    if (TargetList.Rows.Count <= LoopCount)
+                        TargetList.Rows.Add(obj);
+                    else
+                        TargetList.Rows[LoopCount].SetValues(obj);
 
-                object[] obj2 = { "", "OSM's Console 2", "6.72", "192.168.1.168", "Not Available", "-", "-", "-", "-" };
-                TargetList.Rows.Add(obj2);
+                    /*if (Target.Name.Equals(PS4.Target.GetDefault().Name))
+                    {
+                        DefaultTargetLabel.Text = Target.Name;
+                        TargetList.Rows[LoopCount].Cells["mDefault"].Value = nsOrbisNeighborhood.Properties.Resources.Default;
+                    }
+                    else
+                        TargetList.Rows[LoopCount].Cells["mDefault"].Value = nsOrbisNeighborhood.Properties.Resources.NotDefault;*/
 
-                //if (List[i].Default == 1)
-                TargetList.Rows[1].Cells["mDefault"].Value = nsOrbisNeighborhood.Properties.Resources.NotDefault;
+                    LoopCount++;
+                }
+            }
+            catch
+            {
 
+            }
+
+            SetStatus("Ready");
+        }
+
+        public void UpdateSettings()
+        {
+            SetStatus("Updating Settings...");
+
+            try
+            {
+                AutoLoadPayload_Button.Checked = PS4.Target.GetAutoLoadPayload();
+                LoadOnBoot_Button.Checked = PS4.Target.GetStartOnBoot();
             }
             catch
             {
@@ -87,6 +143,54 @@ namespace nsOrbisNeighborhood
         private void TargetList_Click(object sender, EventArgs e)
         {
             //check if currently selecting then hide or show options
+        }
+
+        private void AutoLoadPayload_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AutoLoadPayload_Button.Checked = !AutoLoadPayload_Button.Checked;
+                PS4.Target.SetAutoLoadPayload(AutoLoadPayload_Button.Checked);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void LoadOnBoot_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadOnBoot_Button.Checked = !LoadOnBoot_Button.Checked;
+                PS4.Target.SetStartOnBoot(LoadOnBoot_Button.Checked);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void Target_SetDefault_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Int32 selectedCellCount = TargetList.GetCellCount(DataGridViewElementStates.Selected);
+                if (selectedCellCount > 0)
+                {
+                    int index = TargetList.SelectedRows[0].Index;
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
+
+                    PS4.Target.SetDefault(TargetName);
+
+                    UpdateTargetList();
+                }
+            }
+            catch
+            {
+
+            }
+            //PS4.Target.
         }
     }
 }

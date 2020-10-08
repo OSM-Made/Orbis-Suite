@@ -7,21 +7,29 @@ class OrbisLib;
 
 enum TargetCommands
 {
+	//Print Server
 	CMD_PRINT,
 
+	//Debugging
 	CMD_INTERCEPT,
 	CMD_CONTINUE,
 
+	//Proc States
 	CMD_PROC_DIE,
 	CMD_PROC_ATTACH,
 	CMD_PROC_DETACH,
 
+	//Target State
 	CMD_TARGET_SUSPEND,
 	CMD_TARGET_RESUME,
 	CMD_TARGET_SHUTDOWN,
+	CMD_TARGET_NEWTITLE,
 
+	//DB Watcher
 	CMD_DB_TOUCHED,
 
+	//Target Availability
+	CMD_TARGET_AVAILABILITY,
 };
 
 enum PrintType
@@ -68,6 +76,10 @@ struct TargetCommandPacket_s
 		char ProcName[0x20];
 		struct
 		{
+			char TitleID[0x20];
+		}TitleChange;
+		struct
+		{
 			int Type;
 			int Len;
 		}Print;
@@ -76,8 +88,27 @@ struct TargetCommandPacket_s
 			int Reason;
 			reg Registers;
 		}Break;
+		struct
+		{
+			bool Available;
+			char TargetName[0x100];
+		}Target;
 	};
 };
+
+typedef void(*Target_Print_Callback)(int Type, int Len, char* Data);
+typedef void(*Proc_Intercept_Callback)(int Reason, reg* Registers);
+typedef void(*Proc_Continue_Callback)();
+typedef void(*Proc_Die_Callback)();
+typedef void(*Proc_Attach_Callback)(char* NewProc);
+typedef void(*Proc_Detach_Callback)();
+typedef void(*Target_Suspend_Callback)();
+typedef void(*Target_Resume_Callback)();
+typedef void(*Target_Shutdown_Callback)();
+typedef void(*Target_NewTitle_Callback)(char* NewTitle);
+typedef void(*DB_Touched_Callback)();
+typedef void(*Target_Availability_Callback)(bool Available, char* NewTargetData);
+
 
 class OrbisService
 {
@@ -86,9 +117,9 @@ private:
 	bool IsConnectedtoService;
 	bool IsRunning;
 	int ClientIndex;
+
 	SocketListener* ServiceListener;
 	static VOID ServiceCallback(LPVOID lpParameter, SOCKET Socket);
-
 	static DWORD WINAPI HeartBeatThread(LPVOID Params);
 
 	bool Connect();
@@ -98,6 +129,20 @@ private:
 	void HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket);
 
 public:
+	//Call Backs
+	Target_Print_Callback Target_Print;
+	Proc_Intercept_Callback Proc_Intercept;
+	Proc_Continue_Callback Proc_Continue;
+	Proc_Die_Callback Proc_Die;
+	Proc_Attach_Callback Proc_Attach;
+	Proc_Detach_Callback Proc_Detach;
+	Target_Suspend_Callback Target_Suspend;
+	Target_Resume_Callback Target_Resume;
+	Target_Shutdown_Callback Target_Shutdown;
+	Target_NewTitle_Callback Target_NewTitle;
+	DB_Touched_Callback DB_Touched;
+	Target_Availability_Callback Target_Availability;
+
 	OrbisService(OrbisLib* orbisLib);
 	~OrbisService();
 };

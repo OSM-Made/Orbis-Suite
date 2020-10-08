@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using DarkUI.Forms;
 using OrbisSuite.Classes;
 
@@ -11,6 +12,24 @@ namespace OrbisSuite
         #region Definitions
         internal string OrbisLib_Dir;
 
+        public enum API_ERRORS
+        {
+            API_OK = 0,
+            API_ERROR_NOT_CONNECTED,
+            API_ERROR_FAILED_TO_CONNNECT,
+            API_ERROR_NOT_REACHABLE,
+            API_ERROR_NOT_ATTACHED,
+            API_ERROR_LOST_PROC,
+
+            API_ERROR_FAIL,
+            API_ERROR_INVALID_ADDRESS,
+
+            //Debugger
+            API_ERROR_PROC_RUNNING,
+            API_ERROR_DEBUGGER_NOT_ATTACHED,
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Ansi)]
         public struct registers
         {
             public ulong r_r15;
@@ -86,16 +105,22 @@ namespace OrbisSuite
 
         #region Internal Class Defines
 
-        private TargetManagement Internal_TargetManagement;
-        public TargetManagement TargetManagement
+        private Events Internal_Events;
+        public Events Events
         {
-            get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement(this)); }
+            get { return Internal_Events ?? (Internal_Events = new Events(this)); }
         }
 
         private Payload Internal_Payload;
         public Payload Payload
         {
             get { return Internal_Payload ?? (Internal_Payload = new Payload()); }
+        }
+
+        private Target Internal_Target;
+        public Target Target
+        {
+            get { return Internal_Target ?? (Internal_Target = new Target(this)); }
         }
 
         #endregion
@@ -131,13 +156,14 @@ namespace OrbisSuite
                 SetupCPP(false);
 
                 //check with windows service to initialize Current Target and Proc
-
             }
             catch
             {
 
             }
         }
+
+        
 
         #endregion
     }

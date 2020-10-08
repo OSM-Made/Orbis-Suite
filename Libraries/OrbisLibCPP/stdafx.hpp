@@ -35,5 +35,6 @@ using namespace std;
 #include "OrbisTarget.hpp"
 #include "OrbisDebugger.hpp"
 #include "OrbisService.hpp"
+#include "OrbisAPI.hpp"
 
 extern bool IsWinService;

@@ -69,6 +69,12 @@
     <ClInclude Include="OrbisService.hpp">
       <Filter>Header Files\OrbisLib</Filter>
     </ClInclude>
+    <ClInclude Include="Export.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbisAPI.hpp">
+      <Filter>Header Files\OrbisLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +108,12 @@
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="OrbisService.cpp">
+      <Filter>Source Files\OrbisLib</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbisAPI.cpp">
+      <Filter>Source Files\OrbisLib</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbisDef.cpp">
       <Filter>Source Files\OrbisLib</Filter>
     </ClCompile>
   </ItemGroup>

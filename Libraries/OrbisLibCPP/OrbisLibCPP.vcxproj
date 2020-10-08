@@ -120,7 +120,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;ORBISLIBCPP_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;ORBISLIBCPP_EXPORTS;_WINDOWS;_USRDLL;MAKEDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
@@ -208,6 +208,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Export.hpp" />
+    <ClInclude Include="OrbisAPI.hpp" />
     <ClInclude Include="OrbisDebugger.hpp" />
     <ClInclude Include="OrbisDef.hpp" />
     <ClInclude Include="OrbisLib.hpp" />
@@ -223,7 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="OrbisAPI.cpp" />
     <ClCompile Include="OrbisDebugger.cpp" />
+    <ClCompile Include="OrbisDef.cpp" />
     <ClCompile Include="OrbisLib.cpp" />
     <ClCompile Include="OrbisProc.cpp" />
     <ClCompile Include="OrbisService.cpp" />

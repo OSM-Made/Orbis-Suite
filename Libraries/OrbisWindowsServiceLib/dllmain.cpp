@@ -1,5 +1,13 @@
 #include "stdafx.h"
 
+#include "../OrbisLibCPP/OrbisDef.hpp"
+#include "../OrbisLibCPP/OrbisLib.hpp"
+#include "../OrbisLibCPP/OrbisTarget.hpp"
+
+extern "C" _declspec(dllimport) void SetupCPP(bool WinService);
+extern "C" __declspec(dllimport) void DestroyCPP();
+extern __declspec(dllimport) OrbisLib* orbisLib;
+
 #define PORT_COMMANDSERVER 6902
 #define PORT_TARGETSERVER 6901
 
@@ -21,17 +29,32 @@ const char* TargetCommandsStr[] =
 	"CMD_TARGET_SUSPEND",
 	"CMD_TARGET_RESUME",
 	"CMD_TARGET_SHUTDOWN",
+	"CMD_TARGET_NEWTITLE",
 
 	"CMD_DB_TOUCHED"
+
+	"CMD_TARGET_AVAILABILITY",
 };
 
-VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
+VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket) //TODO: Should probably add like a IP Block so if the ip doesnt match the default target we wont listen
 {
 	//Allocate space to recieve the packet from the Target Console
 	TargetCommandPacket_s* TargetCommandPacket = (TargetCommandPacket_s*)malloc(sizeof(TargetCommandPacket_s));
 
 	//Recieve the Targets command packet.
 	recv(Socket, (char*)TargetCommandPacket, sizeof(TargetCommandPacket_s), 0);
+
+	if (TargetCommandPacket->CommandIndex == CMD_TARGET_NEWTITLE)
+	{
+		int TargetCount = orbisLib->Target->GetTargetCount();
+		if (TargetCount > 0)
+		{
+			for (int i = 0; i < TargetCount; i++)
+			{
+				orbisLib->Target->UpdateTargetExtInfo(i);
+			}
+		}
+	}
 
 	printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
 
@@ -76,6 +99,9 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 				Client->ForwardPacket(&TargetCommandPacket);
 
 				printf("Sent Command %d(CMD_DB_TOUCHED)\n", CMD_DB_TOUCHED);
+
+				//Update our local DB aswell.
+				orbisLib->Target->UpdateSettings();
 			}
 
 			free(filename);
@@ -89,19 +115,75 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 	ExitThread(Thr_Exit);
 }
 
+DWORD WINAPI TargetWatcherThread(LPVOID Params)
+{
+	static bool LastTargetValue[20];
+
+	while (ServiceRunning)
+	{
+		int TargetCount = orbisLib->Target->GetTargetCount();
+		if (TargetCount == 0)
+		{
+			Sleep(1000);
+			continue;
+		}
+
+		for (int i = 0; i < TargetCount; i++)
+		{
+			orbisLib->Target->UpdateTargetExtInfo(i);
+
+			if (orbisLib->Target->Targets[i].Available)
+			{
+				if (LastTargetValue[i] == false)
+				{
+					printf("Target: %s Available.\n", orbisLib->Target->Targets[i].Name);
+
+					//Set up packet to send.
+					TargetCommandPacket_s TargetCommandPacket;
+					TargetCommandPacket.CommandIndex = CMD_TARGET_AVAILABILITY;
+					TargetCommandPacket.Target.Available = true;
+					strcpy_s(TargetCommandPacket.Target.TargetName, 0x100, orbisLib->Target->Targets[i].Name);
+
+					//Forward the packet to all the connected children processes.
+					Client->ForwardPacket(&TargetCommandPacket);
+
+					LastTargetValue[i] = true;
+				}
+			}
+			else
+			{
+				if (LastTargetValue[i] == true)
+				{
+					printf("Target: %s no longer Available.\n", orbisLib->Target->Targets[i].Name);
+					
+					//Set up packet to send.
+					TargetCommandPacket_s TargetCommandPacket;
+					TargetCommandPacket.CommandIndex = CMD_TARGET_AVAILABILITY;
+					TargetCommandPacket.Target.Available = false;
+					strcpy_s(TargetCommandPacket.Target.TargetName, 0x100, orbisLib->Target->Targets[i].Name);
+
+					//Forward the packet to all the connected children processes.
+					Client->ForwardPacket(&TargetCommandPacket);
+
+					LastTargetValue[i] = false;
+				}
+			}
+		}
+
+		Sleep(10);
+	}
+
+	DWORD Thr_Exit = 0;
+	ExitThread(Thr_Exit);
+}
+
 extern "C" __declspec(dllexport) void dummy()
 {
 
 }
 
-extern "C" _declspec(dllimport) void SetupCPP(bool WinService);
-extern "C" __declspec(dllimport) void DestroyCPP();
-
 void OrbisStartService()
 {
-	//Setup our OrbisLib instance for WinService.
-	SetupCPP(true);
-
 	ServiceRunning = true;
 
 	//Start New Client Manager
@@ -119,6 +201,12 @@ void OrbisStartService()
 
 	//Thread to watch db file for changes.
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FileWatcherThread, NULL, 3, NULL);
+
+	//Setup our OrbisLib instance for WinService.
+	SetupCPP(true);
+
+	//Thread to check for Target Availability
+	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)TargetWatcherThread, NULL, 3, NULL);
 }
 
 void OrbisEndService()

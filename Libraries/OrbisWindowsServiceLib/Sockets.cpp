@@ -4,10 +4,6 @@
 bool Sockets::Connect() {
 	struct sockaddr_in addr = { 0 };
 
-	TIMEVAL Timeout = { 0 };
-	Timeout.tv_sec = 1;
-	Timeout.tv_usec = 0;
-
 	WSADATA wsaData;
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -31,14 +27,51 @@ bool Sockets::Connect() {
 	addr.sin_port = this->port;
 	addr.sin_addr.s_addr = inet_addr(this->IP);
 
-	DWORD sock_timeout = 10000;
+	DWORD sock_timeout = 1200;
 
 	setsockopt(Socket, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
 	setsockopt(Socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
 
-	if (!connect(Socket, (sockaddr*)&addr, sizeof(addr))) {
-		printf("Failed to connect\n");
-		return false;
+	if (connect(Socket, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR)
+	{
+		if (WSAGetLastError() != WSAEWOULDBLOCK)
+		{
+			wprintf(L"connect function failed with error: %ld\n", WSAGetLastError());
+
+			// connection failed
+			closesocket(Socket);
+			return false;
+		}
+
+		// connection pending
+
+		fd_set setW, setE;
+
+		FD_ZERO(&setW);
+		FD_SET(Socket, &setW);
+		FD_ZERO(&setE);
+		FD_SET(Socket, &setE);
+
+		timeval time_out = { 0 };
+		time_out.tv_sec = 1;
+		time_out.tv_usec = 0;
+
+		int ret = select(0, NULL, &setW, &setE, &time_out);
+		if (ret <= 0)
+		{
+			// select() failed or connection timed out
+			closesocket(Socket);
+			if (ret == 0)
+				WSASetLastError(WSAETIMEDOUT);
+			return false;
+		}
+
+		if (FD_ISSET(Socket, &setE))
+		{
+			// connection failed
+			closesocket(Socket);
+			return false;
+		}
 	}
 
 	iMode = 0;
@@ -48,17 +81,6 @@ bool Sockets::Connect() {
 		printf("Failed to Set to Blocking Mode!\n");
 		return false;
 	}
-
-	fd_set Write, Err;
-	FD_ZERO(&Write);
-	FD_ZERO(&Err);
-	FD_SET(Socket, &Write);
-	FD_SET(Socket, &Err);
-
-	select(0, NULL, &Write, &Err, &Timeout);
-
-	if (FD_ISSET(Socket, &Write))
-		return true;
 
 	return true;
 }

@@ -1,10 +1,16 @@
 #pragma once
 class OrbisLib;
+
+#include "Export.hpp"
 #include "sqlite3.h"
 
-class OrbisTarget
+#define MAX_TARGETS 20
+
+class EXPORT OrbisTarget
 {
 private:
+	OrbisLib* orbisLib;
+
 	static unsigned char DefaultDB[12288];
 	const char* DBname = "Orbis-User-Data.db";
 	char DBPath[0x200];
@@ -12,16 +18,18 @@ private:
 
 	bool OpenDatabase(sqlite3** db);
 	bool DoesTargetExist(const char* TargetName);
-	bool GetDefaultTarget(char* NameOut);
+	bool GetDefaultTarget(DB_TargetInfo* Out);
 
 	//Depreciated
 	static DWORD WINAPI FileWatcherThread(LPVOID Params);
 
 public:
-	bool AutoConnect;
 	bool AutoLoadPayload;
-	bool AutoLoadOrbisLib;
+	bool StartOnBoot;
 	DB_TargetInfo DefaultTarget;
+
+	DB_TargetInfo Targets[MAX_TARGETS];
+	int TargetCount;
 
 	OrbisTarget(OrbisLib* OrbisLib);
 	~OrbisTarget();
@@ -29,6 +37,7 @@ public:
 	//Target Management
 	bool GetTarget(const char* TargetName, DB_TargetInfo* Out);
 	bool SetTarget(const char* TargetName, DB_TargetInfo In);
+	bool UpdateTargetExtInfo(int Target);
 	bool DeleteTarget(const char* TargetName);
 	bool NewTarget(DB_TargetInfo In);
 
@@ -38,10 +47,10 @@ public:
 
 	//Settings
 	void UpdateSettings();
-	bool SetAutoConnect(bool Value);
 	bool SetAutoLoadPayload(bool Value);
-	bool SetAutoLoadOrbisLib(bool Value);
+	bool SetStartOnBoot(bool Value);
 	bool SetDefaultTarget(const char* Name);
-	void GetDefaultTargetInfo(DB_TargetInfo* Out);
 
+	//API Calls
+	int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo);
 };

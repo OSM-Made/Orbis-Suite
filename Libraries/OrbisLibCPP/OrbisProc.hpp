@@ -1,5 +1,7 @@
 #pragma once
-class OrbisLib;
+#include "Export.hpp"
+
+class EXPORT OrbisLib;
 
 class OrbisProc
 {

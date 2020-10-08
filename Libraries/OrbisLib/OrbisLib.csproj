@@ -65,8 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Events.cs" />
+    <Compile Include="Classes\Imports.cs" />
+    <Compile Include="Classes\OrbisDef.cs" />
     <Compile Include="Classes\Payload.cs" />
-    <Compile Include="Classes\TargetManagement.cs" />
+    <Compile Include="Classes\Target.cs" />
+    <Compile Include="Classes\Utilities.cs" />
     <Compile Include="OrbisLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
