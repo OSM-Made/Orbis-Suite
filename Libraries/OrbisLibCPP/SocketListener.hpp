@@ -3,7 +3,10 @@
 class SocketListener
 {
 private:
+	HANDLE hThread;
+	SOCKET ServerSocket;
 	bool ServerRunning;
+	bool ThreadCleanedUp;
 	unsigned short ListenPort;
 
 public:

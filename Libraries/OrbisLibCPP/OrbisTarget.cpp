@@ -3,6 +3,7 @@
 #include "OrbisLib.hpp"
 #include "OrbisTarget.hpp"
 
+//TODO: Update the Default DB bytes.
 unsigned char OrbisTarget::DefaultDB[12288] = {
 	0x53, 0x51, 0x4C, 0x69, 0x74, 0x65, 0x20, 0x66, 0x6F, 0x72, 0x6D, 0x61,
 	0x74, 0x20, 0x33, 0x00, 0x10, 0x00, 0x01, 0x01, 0x00, 0x40, 0x20, 0x20,
@@ -1126,6 +1127,60 @@ bool OrbisTarget::DoesTargetExist(const char* TargetName)
 	return Result;
 }
 
+bool OrbisTarget::DoesTargetExistIP(const char* IPAddr)
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+	bool Result = false;
+
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return false;
+	}
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM Targets WHERE IPaddress=?", -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 1, IPAddr, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_step(stmt);
+	if (rc != SQLITE_ERROR)
+	{
+		if (sqlite3_column_int(stmt, 0) > 0)
+			Result = true;
+		else
+			Result = false;
+	}
+	else
+	{
+		printf("Failed to read row: %s\n", sqlite3_errmsg(db));
+
+		Result = false;
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	return Result;
+}
+
 bool OrbisTarget::GetTarget(const char* TargetName, DB_TargetInfo* Out)
 {
 	sqlite3* db;
@@ -1177,11 +1232,13 @@ bool OrbisTarget::GetTarget(const char* TargetName, DB_TargetInfo* Out)
 		Out->Available = sqlite3_column_int(stmt, 4);
 		strcpy_s(Out->SDKVersion, (const char*)sqlite3_column_text(stmt, 5));
 		strcpy_s(Out->SoftwareVersion, (const char*)sqlite3_column_text(stmt, 6));
-		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 7));
-		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 8));
-		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 9));
-		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 11));
+		Out->CPUTemp = sqlite3_column_int(stmt, 7);
+		Out->SOCTemp = sqlite3_column_int(stmt, 8);
+		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 9));
+		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 10));
+		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 13));
 
 		Result = true;
 	}
@@ -1219,7 +1276,7 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Targets set DefaultTarget=?, TargetName=?, IPAddress=?, Firmware=? WHERE TargetName=?", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "UPDATE Targets set TargetName=?, IPAddress=?, Firmware=? WHERE TargetName=?", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -1228,16 +1285,7 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 1, In.Default);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to bind Default: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_bind_text(stmt, 2, In.Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 1, In.Name, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind TargetName: %s\n", sqlite3_errmsg(db));
@@ -1246,7 +1294,7 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 3, In.IPAddr, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 2, In.IPAddr, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind IPAddress: %s\n", sqlite3_errmsg(db));
@@ -1255,7 +1303,7 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 4, In.Firmware);
+	rc = sqlite3_bind_int(stmt, 3, In.Firmware);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Firmware: %s\n", sqlite3_errmsg(db));
@@ -1264,7 +1312,7 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 5, TargetName, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 4, TargetName, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind OldTargetName: %s\n", sqlite3_errmsg(db));
@@ -1285,6 +1333,9 @@ bool OrbisTarget::SetTarget(const char* TargetName, DB_TargetInfo In)
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
+
+	if (In.Default)
+		this->SetDefaultTarget(In.Name);
 
 	UpdateSettings();
 
@@ -1309,12 +1360,16 @@ bool OrbisTarget::UpdateTargetExtInfo(int ID)
 	{
 		Targets[ID].Available = false;
 		strcpy_s(Targets[ID].CurrentTitleID, "-");
+		Targets[ID].CPUTemp = 0;
+		Targets[ID].SOCTemp = 0;
 	}
 	else
 	{
 		Targets[ID].Available = true;
 		sprintf_s(Targets[ID].SDKVersion, "%01X.%03X.%03X", (TargetInfo.SDKVersion >> 24) & 0xFF, (TargetInfo.SDKVersion >> 12) & 0xFFF, TargetInfo.SDKVersion & 0xFFF);
 		sprintf_s(Targets[ID].SoftwareVersion, "%01X.%02X", (TargetInfo.SoftwareVersion >> 24) & 0xFF, (TargetInfo.SoftwareVersion >> 16) & 0xFF);
+		Targets[ID].CPUTemp = TargetInfo.CPUTemp;
+		Targets[ID].SOCTemp = TargetInfo.SOCTemp;
 		strcpy_s(Targets[ID].CurrentTitleID, TargetInfo.CurrentTitleID);
 		strcpy_s(Targets[ID].ConsoleName, TargetInfo.ConsoleName);
 		sprintf_s(Targets[ID].IDPS, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
@@ -1362,7 +1417,7 @@ bool OrbisTarget::UpdateTargetExtInfo(int ID)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, CurrentTitleID=?, ConsoleName=?, IDPS=?, PSID=?, ConsoleType=? WHERE TargetName=?", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, CPUTemp=?, SOCTemp=?, CurrentTitleID=?, ConsoleName=?, IDPS=?, PSID=?, ConsoleType=? WHERE TargetName=?", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -1374,7 +1429,7 @@ bool OrbisTarget::UpdateTargetExtInfo(int ID)
 	rc = sqlite3_bind_int(stmt, 1, Targets[ID].Available);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind Available: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
@@ -1383,7 +1438,7 @@ bool OrbisTarget::UpdateTargetExtInfo(int ID)
 	rc = sqlite3_bind_text(stmt, 2, Targets[ID].SDKVersion, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind SDKVersion: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
@@ -1392,61 +1447,79 @@ bool OrbisTarget::UpdateTargetExtInfo(int ID)
 	rc = sqlite3_bind_text(stmt, 3, Targets[ID].SoftwareVersion, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind SoftwareVersion: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 4, Targets[ID].CurrentTitleID, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_int(stmt, 4, Targets[ID].CPUTemp);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind CPUTemp: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 5, Targets[ID].ConsoleName, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_int(stmt, 5, Targets[ID].SOCTemp);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind SOCTemp: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 6, Targets[ID].IDPS, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 6, Targets[ID].CurrentTitleID, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind CurrentTitleID: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 7, Targets[ID].PSID, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 7, Targets[ID].ConsoleName, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind ConsoleName: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 8, Targets[ID].ConsoleType, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 8, Targets[ID].IDPS, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind IDPS: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 9, Targets[ID].Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 9, Targets[ID].PSID, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
+		printf("Failed to bind PSID: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 10, Targets[ID].ConsoleType, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind ConsoleType: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 11, Targets[ID].Name, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Name: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
 		return false;
@@ -1553,7 +1626,7 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "INSERT INTO Targets (DefaultTarget, TargetName, IPAddress, Firmware) VALUES (?, ?, ?, ?)", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "INSERT INTO Targets (TargetName, IPAddress, Firmware) VALUES (?, ?, ?)", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -1562,16 +1635,7 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 1, In.Default);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to bind Default: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_bind_text(stmt, 2, In.Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 1, In.Name, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind TargetName: %s\n", sqlite3_errmsg(db));
@@ -1580,7 +1644,7 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 3, In.IPAddr, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 2, In.IPAddr, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind IPAddress: %s\n", sqlite3_errmsg(db));
@@ -1589,7 +1653,7 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 4, In.Firmware);
+	rc = sqlite3_bind_int(stmt, 3, In.Firmware);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Firmware: %s\n", sqlite3_errmsg(db));
@@ -1610,6 +1674,9 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
+
+	if (In.Default)
+		this->SetDefaultTarget(In.Name);
 
 	UpdateSettings();
 
@@ -1688,11 +1755,13 @@ bool OrbisTarget::GetTargetList(DB_TargetInfo Out[])
 		Out[LoopCount].Available = sqlite3_column_int(stmt, 4);
 		strcpy_s(Out[LoopCount].SDKVersion, (const char*)sqlite3_column_text(stmt, 5));
 		strcpy_s(Out[LoopCount].SoftwareVersion, (const char*)sqlite3_column_text(stmt, 6));
-		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 7));
-		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 8));
-		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 9));
-		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 11));
+		Out[LoopCount].CPUTemp = sqlite3_column_int(stmt, 7);
+		Out[LoopCount].SOCTemp = sqlite3_column_int(stmt, 8);
+		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 9));
+		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 10));
+		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 13));
 
 		LoopCount++;
 	}
@@ -1956,11 +2025,13 @@ bool OrbisTarget::GetDefaultTarget(DB_TargetInfo* Out)
 		Out->Available = sqlite3_column_int(stmt, 4);
 		strcpy_s(Out->SDKVersion, (const char*)sqlite3_column_text(stmt, 5));
 		strcpy_s(Out->SoftwareVersion, (const char*)sqlite3_column_text(stmt, 6));
-		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 7));
-		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 8));
-		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 9));
-		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 11));
+		Out->CPUTemp = sqlite3_column_int(stmt, 7);
+		Out->SOCTemp = sqlite3_column_int(stmt, 8);
+		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 9));
+		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 10));
+		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 13));
 
 		Result = true;
 	}
@@ -2000,5 +2071,100 @@ int OrbisTarget::GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
 
 	orbisLib->API->FinishCall(&Sock);
 
+	return API_OK;
+}
+
+int OrbisTarget::Shutdown(char* IPAddr)
+{
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_SHUTDOWN;
+
+	return orbisLib->API->Call(IPAddr, &API_Packet);
+}
+
+int OrbisTarget::Reboot(char* IPAddr)
+{
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_REBOOT;
+
+	return orbisLib->API->Call(IPAddr, &API_Packet);
+}
+
+int OrbisTarget::Suspend(char* IPAddr)
+{
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_SHUTDOWN;
+
+	return orbisLib->API->Call(IPAddr, &API_Packet);
+}
+
+int OrbisTarget::Notify(char* IPAddr, int Type, const char* Message)
+{
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_NOTIFY;
+	API_Packet.Target_Notify.MessageType = Type;
+	strcpy_s(API_Packet.Target_Notify.Message, Message);
+
+	return orbisLib->API->Call(IPAddr, &API_Packet);
+}
+
+int OrbisTarget::Beep(char* IPAddr, int Count)
+{
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_BEEP;
+	API_Packet.Target_Beep.Count = Count;
+
+	return orbisLib->API->Call(IPAddr, &API_Packet);
+}
+
+int OrbisTarget::SetLED(char* IPAddr, char R, char G, char B, char A)
+{
+	return API_ERROR_FAIL;
+}
+
+int OrbisTarget::GetLED(char* IPAddr, char* R, char* G, char* B, char* A)
+{
+	return API_ERROR_FAIL;
+}
+
+int OrbisTarget::DumpProcess(char* IPAddr, const char* ProcName, uint64_t* Size, char* Out)
+{
+	int Status = API_OK;
+
+	API_Packet_s API_Packet;
+	memset(&API_Packet, 0, sizeof(API_Packet_s));
+	API_Packet.cmd = API_TARGET_DUMP_PROC;
+
+	Sockets* Sock;
+	Status = orbisLib->API->CallLong(&Sock, IPAddr, &API_Packet);
+
+	if (Status)
+		return Status;
+
+	//Recieve the size of the dumped module.
+	if (!Sock->Receive((char*)Size, sizeof(uint64_t)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	//Recieve the data.
+	if (!Sock->Receive((char*)Out, (int)*Size))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	//Finish up the API call and clean up.
+	orbisLib->API->FinishCall(&Sock);
+
+	//Return our sucess 
 	return API_OK;
 }

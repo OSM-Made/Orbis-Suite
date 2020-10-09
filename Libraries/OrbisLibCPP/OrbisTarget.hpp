@@ -17,7 +17,6 @@ private:
 	bool Running;
 
 	bool OpenDatabase(sqlite3** db);
-	bool DoesTargetExist(const char* TargetName);
 	bool GetDefaultTarget(DB_TargetInfo* Out);
 
 	//Depreciated
@@ -35,6 +34,8 @@ public:
 	~OrbisTarget();
 
 	//Target Management
+	bool DoesTargetExist(const char* TargetName);
+	bool DoesTargetExistIP(const char* IPAddr);
 	bool GetTarget(const char* TargetName, DB_TargetInfo* Out);
 	bool SetTarget(const char* TargetName, DB_TargetInfo In);
 	bool UpdateTargetExtInfo(int Target);
@@ -53,4 +54,13 @@ public:
 
 	//API Calls
 	int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo);
+	int Shutdown(char* IPAddr);
+	int Reboot(char* IPAddr);
+	int Suspend(char* IPAddr);
+	int Notify(char* IPAddr, int Type, const char* Message);
+	int Beep(char* IPAddr, int Count);
+	int SetLED(char* IPAddr, char R, char G, char B, char A);
+	int GetLED(char* IPAddr, char* R, char* G, char* B, char* A);
+	int DumpProcess(char* IPAddr, const char* ProcName, uint64_t* Size, char* Out);
+
 };

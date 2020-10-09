@@ -14,8 +14,14 @@ OrbisAPI::~OrbisAPI()
 int OrbisAPI::Connect(Sockets** Sockin, char* IPAddr)
 {
 	Sockets* Sock;
-	if (IPAddr == NULL)
+	//Get the default Target IP or custom set IP if neither we return fail.
+	if (IPAddr == NULL || !strcmp(IPAddr, ""))
+	{
+		if (orbisLib->Target->DefaultTarget.IPAddr == NULL || !strcmp(orbisLib->Target->DefaultTarget.IPAddr, ""))
+			return API_ERROR_NOTARGET;
+
 		Sock = new Sockets(orbisLib->Target->DefaultTarget.IPAddr, this->Port);
+	}
 	else
 		Sock = new Sockets(IPAddr, this->Port);
 

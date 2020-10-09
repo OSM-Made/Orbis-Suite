@@ -105,6 +105,8 @@ enum API_ERRORS
 	//Debugger
 	API_ERROR_PROC_RUNNING,
 	API_ERROR_DEBUGGER_NOT_ATTACHED,
+
+	API_ERROR_NOTARGET,
 };
 
 struct API_Packet_s
@@ -208,6 +210,8 @@ struct DB_TargetInfo
 	int Available;
 	char SDKVersion[14];
 	char SoftwareVersion[10];
+	int32_t CPUTemp;
+	int32_t SOCTemp;
 	char CurrentTitleID[10];
 	char ConsoleName[100];
 	char IDPS[40];

@@ -20,6 +20,54 @@ namespace OrbisSuite.Classes
 
         }
 
+        public bool DoesTargetExist(string TargetName)
+        {
+            return Imports.DoesTargetExist(TargetName);
+        }
+
+        public bool DoesTargetExistIP(string IPAddr)
+        {
+            return Imports.DoesTargetExistIP(IPAddr);
+        }
+
+        public bool GetTarget(string TargetName, out TargetInfo Out)
+        {
+            DB_TargetInfo RawTargetInfo;
+            bool Result = Imports.GetTarget(TargetName, out RawTargetInfo);
+
+            Out = new TargetInfo(RawTargetInfo.Default, 
+                    Utilities.CleanByteToString(RawTargetInfo.Name),
+                    Utilities.CleanByteToString(RawTargetInfo.IPAddr),
+                    (RawTargetInfo.Firmware / 100.0).ToString(),
+                    RawTargetInfo.Available,
+                    Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
+                    Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType));
+
+            return Result;
+        }
+
+        public bool SetTarget(string TargetName, bool Default, string NewTargetName, string IPAddr, int Firmware)
+        {
+            return Imports.SetTarget(TargetName, Default, NewTargetName, IPAddr, Firmware);
+        }
+
+        public bool DeleteTarget(string TargetName)
+        {
+            return Imports.DeleteTarget(TargetName);
+        }
+
+        public bool NewTarget(bool Default, string TargetName, string IPAddr, int Firmware)
+        {
+            return Imports.NewTarget(Default, TargetName, IPAddr, Firmware);
+        }
+
+        public int GetTargetCount()
+        {
+            return Imports.GetTargetCount();
+        }
+
         public List<TargetInfo> GetTargetList()
         {
             List<TargetInfo> List = new List<TargetInfo>();
@@ -32,7 +80,8 @@ namespace OrbisSuite.Classes
                 DB_TargetInfo RawTargetInfo = (DB_TargetInfo)Marshal.PtrToStructure(ptr, typeof(DB_TargetInfo));
                 ptr += Marshal.SizeOf(typeof(DB_TargetInfo));
 
-                List.Add(new TargetInfo(Utilities.CleanByteToString(RawTargetInfo.Name), 
+                List.Add(new TargetInfo(RawTargetInfo.Default, 
+                    Utilities.CleanByteToString(RawTargetInfo.Name), 
                     Utilities.CleanByteToString(RawTargetInfo.IPAddr), 
                     (RawTargetInfo.Firmware / 100.0).ToString(), 
                     RawTargetInfo.Available, 
@@ -70,7 +119,8 @@ namespace OrbisSuite.Classes
             DB_TargetInfo RawTargetInfo;
             Imports.GetDefaultTarget(out RawTargetInfo);
 
-            return new TargetInfo(Utilities.CleanByteToString(RawTargetInfo.Name),
+            return new TargetInfo(RawTargetInfo.Default, 
+                    Utilities.CleanByteToString(RawTargetInfo.Name),
                     Utilities.CleanByteToString(RawTargetInfo.IPAddr),
                     (RawTargetInfo.Firmware / 100.0).ToString(),
                     RawTargetInfo.Available,
@@ -85,28 +135,65 @@ namespace OrbisSuite.Classes
             Imports.SetDefault(TargetName);
         }
 
-        public int GetInfo(string IPAddr, out DetailedTargetInfo TargetInfo)
+        public DetailedTargetInfo GetInfo(string TargetName)
         {
-            RESP_TargetInfo RawTargetInfo;
-            int Status = Imports.GetInfo(IPAddr, out RawTargetInfo);
+            DB_TargetInfo RawTargetInfo;
+            Imports.GetTarget(TargetName, out RawTargetInfo);
 
+            return new DetailedTargetInfo(Utilities.CleanByteToString(RawTargetInfo.SDKVersion), 
+                Utilities.CleanByteToString(RawTargetInfo.SoftwareVersion), 
+                RawTargetInfo.CPUTemp, 
+                RawTargetInfo.SOCTemp,
+                Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
+                Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                Utilities.CleanByteToString(RawTargetInfo.IDPS),
+                Utilities.CleanByteToString(RawTargetInfo.PSID),
+                Utilities.CleanByteToString(RawTargetInfo.ConsoleType));
+        }
 
-            string SDKVersion = "-", SoftwareVersion = "-", CurrentTitleID = "-", ConsoleName = "-", IDPS = "-", PSID = "-";
+        public int Shutdown(string IPAddr)
+        {
+            return Imports.Shutdown(IPAddr);
+        }
 
-            SDKVersion = string.Format("{0}.{1}.{2}", ((RawTargetInfo.SDKVersion >> 24) & 0xFF).ToString("X1"), ((RawTargetInfo.SDKVersion >> 12) & 0xFFF).ToString("X3"), (RawTargetInfo.SDKVersion & 0xFFF).ToString("X3"));
-            SoftwareVersion = string.Format("{0}.{1}", ((RawTargetInfo.SoftwareVersion >> 24) & 0xFF).ToString("X1"), ((RawTargetInfo.SoftwareVersion >> 16) & 0xFF).ToString("X2"));
+        public int Reboot(string IPAddr)
+        {
+            return Imports.Reboot(IPAddr);
+        }
 
-            CurrentTitleID = Encoding.Default.GetString(RawTargetInfo.CurrentTitleID);
-            CurrentTitleID = CurrentTitleID.Substring(0, CurrentTitleID.IndexOf('\0'));
+        public int Suspend(string IPAddr)
+        {
+            return Imports.Suspend(IPAddr);
+        }
 
-            ConsoleName = Encoding.Default.GetString(RawTargetInfo.ConsoleName);
-            ConsoleName = ConsoleName.Substring(0, ConsoleName.IndexOf('\0'));
+        public int Notify(string IPAddr, string Message)
+        {
+            return Imports.Notify(IPAddr, -1, Message);
+        }
 
-            Console.WriteLine("{0}.{1}", ((RawTargetInfo.SoftwareVersion >> 24) & 0xFF).ToString("X1"), ((RawTargetInfo.SoftwareVersion >> 16) & 0xFF).ToString("X2"));
+        public int Notify(string IPAddr, int Type, string Message)
+        {
+            return Imports.Notify(IPAddr, Type, Message);
+        }
 
-            TargetInfo = new DetailedTargetInfo(SDKVersion, SoftwareVersion, RawTargetInfo.CPUTemp, RawTargetInfo.SOCTemp, CurrentTitleID, ConsoleName, IDPS, PSID, OrbisDef.ConsoleTypesNames[RawTargetInfo.ConsoleType]);
+        public int Beep(string IPAddr, int Count)
+        {
+            return Imports.DoBeep(IPAddr, Count);
+        }
 
-            return Status;
+        public int SetLED(string IPAddr, byte R, byte G, byte B, byte A)
+        {
+            return Imports.SetLED(IPAddr, R, G, B, A);
+        }
+
+        public int GetLED(string IPAddr, out byte R, out byte G, out byte B, out byte A)
+        {
+            return Imports.GetLED(IPAddr, out R, out G, out B, out A);
+        }
+
+        public int DumpProcess(string IPAddr, string ProcName, out UInt64 Size, byte[] Out)
+        {
+            return Imports.DumpProcess(IPAddr, ProcName, out Size, Out);
         }
     }
 

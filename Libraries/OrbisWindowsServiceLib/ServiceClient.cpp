@@ -29,10 +29,21 @@ VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 			break;
 
 		case CMD_CLIENT_HEARTBEAT:
-			printf("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
+			if ((serviceClient->ClientInfo[CommandPacket->Index].Used == false) || (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime) > 10000) 
+			{
+				printf("Client has timed out Sending reconnect request.\n");
+				int Status = 1;
+				send(Client, (char*)&Status, sizeof(int), 0);
+			}
+			else
+			{
+				printf("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
 
-			serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime = GetTickCount();
+				serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime = GetTickCount();
 
+				int Status = 2;
+				send(Client, (char*)&Status, sizeof(int), 0);
+			}
 			break;
 		}
 	}

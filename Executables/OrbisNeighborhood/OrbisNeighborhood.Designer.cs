@@ -50,11 +50,12 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.Target_Reboot = new System.Windows.Forms.ToolStripMenuItem();
             this.Target_Shutdown = new System.Windows.Forms.ToolStripMenuItem();
-            this.Target_RestMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Suspend = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.Target_SetDefault = new System.Windows.Forms.ToolStripMenuItem();
             this.Target_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.Target_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.Target_Details = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -69,13 +70,13 @@
             this.DefaultTargetLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
-            this.Target_Details = new System.Windows.Forms.ToolStripMenuItem();
             this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.LoadOnBoot_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoLoadPayload_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoadOnBoot_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
+            this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).BeginInit();
             this.TargetContextMenu.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
@@ -164,7 +165,6 @@
             this.TargetList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.TargetList.Size = new System.Drawing.Size(1004, 386);
             this.TargetList.TabIndex = 8;
-            this.TargetList.Click += new System.EventHandler(this.TargetList_Click);
             this.TargetList.Enter += new System.EventHandler(this.TargetList_Enter);
             this.TargetList.Leave += new System.EventHandler(this.TargetList_Leave);
             // 
@@ -238,14 +238,15 @@
             this.toolStripSeparator4,
             this.Target_Reboot,
             this.Target_Shutdown,
-            this.Target_RestMode,
+            this.Target_Suspend,
             this.toolStripSeparator5,
             this.Target_SetDefault,
             this.Target_Edit,
             this.Target_Delete,
             this.Target_Details});
             this.TargetContextMenu.Name = "TargetContextMenu";
-            this.TargetContextMenu.Size = new System.Drawing.Size(181, 216);
+            this.TargetContextMenu.Size = new System.Drawing.Size(146, 194);
+            this.TargetContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.TargetContextMenu_Opening);
             // 
             // Target_Payload
             // 
@@ -253,6 +254,7 @@
             this.Target_Payload.Name = "Target_Payload";
             this.Target_Payload.Size = new System.Drawing.Size(145, 22);
             this.Target_Payload.Text = "Send Payload";
+            this.Target_Payload.Click += new System.EventHandler(this.Target_Payload_Click);
             // 
             // toolStripSeparator4
             // 
@@ -267,6 +269,7 @@
             this.Target_Reboot.Name = "Target_Reboot";
             this.Target_Reboot.Size = new System.Drawing.Size(145, 22);
             this.Target_Reboot.Text = "Reboot";
+            this.Target_Reboot.Click += new System.EventHandler(this.Target_Reboot_Click);
             // 
             // Target_Shutdown
             // 
@@ -274,13 +277,15 @@
             this.Target_Shutdown.Name = "Target_Shutdown";
             this.Target_Shutdown.Size = new System.Drawing.Size(145, 22);
             this.Target_Shutdown.Text = "Shutdown";
+            this.Target_Shutdown.Click += new System.EventHandler(this.Target_Shutdown_Click);
             // 
-            // Target_RestMode
+            // Target_Suspend
             // 
-            this.Target_RestMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_RestMode.Name = "Target_RestMode";
-            this.Target_RestMode.Size = new System.Drawing.Size(145, 22);
-            this.Target_RestMode.Text = "Restmode";
+            this.Target_Suspend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Suspend.Name = "Target_Suspend";
+            this.Target_Suspend.Size = new System.Drawing.Size(145, 22);
+            this.Target_Suspend.Text = "Suspend";
+            this.Target_Suspend.Click += new System.EventHandler(this.Target_Suspend_Click);
             // 
             // toolStripSeparator5
             // 
@@ -293,7 +298,7 @@
             // 
             this.Target_SetDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.Target_SetDefault.Name = "Target_SetDefault";
-            this.Target_SetDefault.Size = new System.Drawing.Size(180, 22);
+            this.Target_SetDefault.Size = new System.Drawing.Size(145, 22);
             this.Target_SetDefault.Text = "Default";
             this.Target_SetDefault.Click += new System.EventHandler(this.Target_SetDefault_Click);
             // 
@@ -303,6 +308,7 @@
             this.Target_Edit.Name = "Target_Edit";
             this.Target_Edit.Size = new System.Drawing.Size(145, 22);
             this.Target_Edit.Text = "Edit";
+            this.Target_Edit.Click += new System.EventHandler(this.Target_Edit_Click);
             // 
             // Target_Delete
             // 
@@ -310,6 +316,15 @@
             this.Target_Delete.Name = "Target_Delete";
             this.Target_Delete.Size = new System.Drawing.Size(145, 22);
             this.Target_Delete.Text = "Delete";
+            this.Target_Delete.Click += new System.EventHandler(this.Target_Delete_Click);
+            // 
+            // Target_Details
+            // 
+            this.Target_Details.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Details.Name = "Target_Details";
+            this.Target_Details.Size = new System.Drawing.Size(145, 22);
+            this.Target_Details.Text = "Details";
+            this.Target_Details.Click += new System.EventHandler(this.Target_Details_Click);
             // 
             // toolStripStatusLabel1
             // 
@@ -440,22 +455,6 @@
             this.toolStripLabel4.Size = new System.Drawing.Size(75, 25);
             this.toolStripLabel4.Text = "Process: N/A";
             // 
-            // AddTarget_Button
-            // 
-            this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.AddTarget_Button.Image = ((System.Drawing.Image)(resources.GetObject("AddTarget_Button.Image")));
-            this.AddTarget_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.AddTarget_Button.Name = "AddTarget_Button";
-            this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
-            this.AddTarget_Button.Text = "Add Target";
-            // 
-            // Target_Details
-            // 
-            this.Target_Details.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Target_Details.Name = "Target_Details";
-            this.Target_Details.Size = new System.Drawing.Size(145, 22);
-            this.Target_Details.Text = "Details";
-            // 
             // Settings_DropDown
             // 
             this.Settings_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -463,6 +462,7 @@
             this.AutoLoadPayload_Button,
             this.LoadOnBoot_Button,
             this.toolStripSeparator6,
+            this.SettingsButton,
             this.About_Button});
             this.Settings_DropDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.Settings_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Settings_DropDown.Image")));
@@ -471,14 +471,6 @@
             this.Settings_DropDown.Size = new System.Drawing.Size(29, 25);
             this.Settings_DropDown.Text = "Settings";
             // 
-            // LoadOnBoot_Button
-            // 
-            this.LoadOnBoot_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.LoadOnBoot_Button.Name = "LoadOnBoot_Button";
-            this.LoadOnBoot_Button.Size = new System.Drawing.Size(205, 22);
-            this.LoadOnBoot_Button.Text = "Load Orbis Suite on boot";
-            this.LoadOnBoot_Button.Click += new System.EventHandler(this.LoadOnBoot_Button_Click);
-            // 
             // AutoLoadPayload_Button
             // 
             this.AutoLoadPayload_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -486,6 +478,14 @@
             this.AutoLoadPayload_Button.Size = new System.Drawing.Size(205, 22);
             this.AutoLoadPayload_Button.Text = "Auto Load Payload";
             this.AutoLoadPayload_Button.Click += new System.EventHandler(this.AutoLoadPayload_Button_Click);
+            // 
+            // LoadOnBoot_Button
+            // 
+            this.LoadOnBoot_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.LoadOnBoot_Button.Name = "LoadOnBoot_Button";
+            this.LoadOnBoot_Button.Size = new System.Drawing.Size(205, 22);
+            this.LoadOnBoot_Button.Text = "Load Orbis Suite on boot";
+            this.LoadOnBoot_Button.Click += new System.EventHandler(this.LoadOnBoot_Button_Click);
             // 
             // toolStripSeparator6
             // 
@@ -500,6 +500,25 @@
             this.About_Button.Name = "About_Button";
             this.About_Button.Size = new System.Drawing.Size(205, 22);
             this.About_Button.Text = "About";
+            this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
+            // 
+            // AddTarget_Button
+            // 
+            this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.AddTarget_Button.Image = ((System.Drawing.Image)(resources.GetObject("AddTarget_Button.Image")));
+            this.AddTarget_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddTarget_Button.Name = "AddTarget_Button";
+            this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
+            this.AddTarget_Button.Text = "Add Target";
+            this.AddTarget_Button.Click += new System.EventHandler(this.AddTarget_Button_Click);
+            // 
+            // SettingsButton
+            // 
+            this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(205, 22);
+            this.SettingsButton.Text = "Settings";
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // OrbisNeighborhood
             // 
@@ -561,7 +580,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem Target_Reboot;
         private System.Windows.Forms.ToolStripMenuItem Target_Shutdown;
-        private System.Windows.Forms.ToolStripMenuItem Target_RestMode;
+        private System.Windows.Forms.ToolStripMenuItem Target_Suspend;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem Target_SetDefault;
         private System.Windows.Forms.ToolStripMenuItem Target_Edit;
@@ -572,6 +591,7 @@
         private System.Windows.Forms.ToolStripMenuItem LoadOnBoot_Button;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem About_Button;
+        private System.Windows.Forms.ToolStripMenuItem SettingsButton;
     }
 }
 

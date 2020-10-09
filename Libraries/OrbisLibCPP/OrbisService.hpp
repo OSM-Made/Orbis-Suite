@@ -124,7 +124,7 @@ private:
 
 	bool Connect();
 	void Disconnect();
-	void SendHeartBeat();
+	bool SendHeartBeat();
 
 	void HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket);
 

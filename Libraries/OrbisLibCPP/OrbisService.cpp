@@ -205,8 +205,23 @@ DWORD WINAPI OrbisService::HeartBeatThread(LPVOID Params)
 
 	while (orbisService->IsRunning && orbisService->IsConnectedtoService)
 	{
-		orbisService->SendHeartBeat();
-		Sleep(8000);
+		if (orbisService->SendHeartBeat())
+		{
+			Sleep(8000);
+		}
+		else
+		{
+			orbisService->Disconnect();
+			while (!orbisService->Connect())
+			{
+				Sleep(1000);
+			}
+
+			printf("Reconnection to Service Sucessful.\n");
+
+			break;
+		}
+		
 	}
 	
 	DWORD Thr_Exit = 0;
@@ -258,14 +273,14 @@ void OrbisService::Disconnect()
 	free(Socket);
 }
 
-void OrbisService::SendHeartBeat()
+bool OrbisService::SendHeartBeat()
 {
 	//Make sure we are actually connected before trying to disconnect.
 	if (!this->IsConnectedtoService)
 	{
 		printf("ServiceClient not connected!\n");
 
-		return;
+		return false;
 	}
 
 	//Set up socket for local host on the command server port
@@ -276,7 +291,7 @@ void OrbisService::SendHeartBeat()
 	{
 		printf("ServiceClient failed to SendHeartBeat. OrbisService failed to connect to the windows service. Is the windows service running?\n");
 
-		return;
+		return false;
 	}
 
 	//Set up the packet for our command.
@@ -291,10 +306,25 @@ void OrbisService::SendHeartBeat()
 
 		free(Socket);
 
-		return;
+		return false;
+	}
+
+	int Status = 0;
+	if (!Socket->Receive((char*)&Status, sizeof(int))) {
+		Socket->Close();
+		return false;
+	}
+
+	if (Status <= 1)
+	{
+		printf("Lost comms to Service. Reconnecting...\n");
+
+		return false;
 	}
 
 	free(Socket);
+
+	return true;
 }
 
 void OrbisService::HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket)

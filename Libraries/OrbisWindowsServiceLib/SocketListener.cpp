@@ -23,18 +23,18 @@ DWORD WINAPI SocketListener::ListenerThread() {
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 
 	//Make new TCP Socket
-	SOCKET Server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	this->ServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 	//Set Sending and reciving time out to 1000 ms
 	DWORD sock_timeout = 10000;
-	setsockopt(Server, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
-	setsockopt(Server, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
+	setsockopt(this->ServerSocket, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
+	setsockopt(this->ServerSocket, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
 
 	//Bind our socket
-	if (bind(Server, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
+	if (bind(this->ServerSocket, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
 		printf("Failed to bind Listener to Port %i\n", this->ListenPort);
 
-		closesocket(Server);
+		closesocket(this->ServerSocket);
 		WSACleanup();
 
 		DWORD Thr_Exit = 0;
@@ -44,10 +44,10 @@ DWORD WINAPI SocketListener::ListenerThread() {
 	}
 
 	//Start listening for incoming socket connections
-	if (listen(Server, SOMAXCONN) == SOCKET_ERROR) {
+	if (listen(this->ServerSocket, SOMAXCONN) == SOCKET_ERROR) {
 		printf("[Error] Failed to start listen on Socket\n");
 
-		closesocket(Server);
+		closesocket(this->ServerSocket);
 		WSACleanup();
 
 		DWORD Thr_Exit = 0;
@@ -58,30 +58,54 @@ DWORD WINAPI SocketListener::ListenerThread() {
 
 	while (this->ServerRunning)
 	{
-		//Accept incoming socket connections Clientaddr can be used if we want to know the client address
-		struct sockaddr_in Clientaddr = { 0 };
-		int addrlen = sizeof(sockaddr_in);
-		SOCKET ClientSocket = accept(Server, (sockaddr*)&Clientaddr, &addrlen);
+		fd_set set;
+		struct timeval timeout;
+		int rv;
+		FD_ZERO(&set); /* clear the set */
+		FD_SET(this->ServerSocket, &set); /* add our file descriptor to the set */
 
-		if (ClientSocket)
+		timeout.tv_sec = 2;
+		timeout.tv_usec = 0;
+
+		rv = select((int)this->ServerSocket + 1, &set, NULL, NULL, &timeout);
+		if (rv == -1)
+			goto Cleanup;
+		else if (rv == 0)
 		{
-			//Store ClientSocket
-			this->ClientSocket = ClientSocket;
+			if (!this->ServerRunning)
+				goto Cleanup;
+			continue;
+		}
+		else
+		{
+			//Accept incoming socket connections Clientaddr can be used if we want to know the client address
+			struct sockaddr_in Clientaddr = { 0 };
+			int addrlen = sizeof(sockaddr_in);
+			SOCKET ClientSocket = accept(this->ServerSocket, (sockaddr*)&Clientaddr, &addrlen);
 
-			//Create thread to handle our socket client
-			DWORD hThreadID;
-			HANDLE hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThreadStart, (LPVOID)this, 3, &hThreadID);
-			ResumeThread(hThread);
-			CloseHandle(hThread);
+			if (ClientSocket)
+			{
+				//Store ClientSocket
+				this->ClientSocket = ClientSocket;
 
-			//Reset our local socket variable for next client
-			ClientSocket = -1;
+				//Create thread to handle our socket client
+				DWORD hThreadID;
+				HANDLE hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThreadStart, (LPVOID)this, 3, &hThreadID);
+				ResumeThread(hThread);
+				CloseHandle(hThread);
+
+				//Reset our local socket variable for next client
+				ClientSocket = -1;
+			}
 		}
 	}
 
+Cleanup:
 	//Clean Up
-	closesocket(Server);
+	closesocket(this->ServerSocket);
 	WSACleanup();
+
+	this->ThreadCleanedUp = true;
 
 	//Exit Thread
 	DWORD Thr_Exit = 0;
@@ -99,13 +123,14 @@ SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpP
 
 	//Store Our input varibales locally
 	this->ClientCallBack = ClientCallBack;
-	this->lpParameter = lpParameter; 
+	this->lpParameter = lpParameter;
 	this->ServerRunning = true; //Used to signal thread to shut down
+	this->ThreadCleanedUp = false; //Used to see when listen thread has closed.
 	this->ListenPort = ListenPort;
 
 	//Start Our Listeners Server thread
 	DWORD hThreadID;
-	HANDLE hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ThreadStartHack, this, 3, &hThreadID);
+	hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ThreadStartHack, this, 3, &hThreadID);
 	ResumeThread(hThread);
 	CloseHandle(hThread);
 }
@@ -116,4 +141,8 @@ SocketListener::~SocketListener()
 
 	//Signal Clean up
 	this->ServerRunning = false;
+
+	while (this->ThreadCleanedUp == false) {}
+
+	printf("Destruction sucessful.\n");
 }

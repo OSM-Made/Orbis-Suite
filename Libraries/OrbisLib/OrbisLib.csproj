@@ -13,6 +13,16 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>
+    </AssemblyVersionSettings>
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +66,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,11 +82,35 @@
     <Compile Include="Classes\Payload.cs" />
     <Compile Include="Classes\Target.cs" />
     <Compile Include="Classes\Utilities.cs" />
+    <Compile Include="Dialog\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\AddTarget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\AddTarget.Designer.cs">
+      <DependentUpon>AddTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\Dialogs.cs" />
+    <Compile Include="Dialog\EditTarget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\EditTarget.Designer.cs">
+      <DependentUpon>EditTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\TargetDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\TargetDetails.Designer.cs">
+      <DependentUpon>TargetDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrbisLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dialogs\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +118,20 @@
       <Link>OrbisLibCPP.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dialog\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\AddTarget.resx">
+      <DependentUpon>AddTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\EditTarget.resx">
+      <DependentUpon>EditTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\TargetDetails.resx">
+      <DependentUpon>TargetDetails.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

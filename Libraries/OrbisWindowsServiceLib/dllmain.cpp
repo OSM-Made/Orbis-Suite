@@ -170,7 +170,7 @@ DWORD WINAPI TargetWatcherThread(LPVOID Params)
 			}
 		}
 
-		Sleep(10);
+		Sleep(3000);
 	}
 
 	DWORD Thr_Exit = 0;

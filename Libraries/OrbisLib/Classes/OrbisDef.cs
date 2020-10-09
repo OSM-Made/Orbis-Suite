@@ -9,6 +9,7 @@ namespace OrbisSuite.Classes
 {
     public class TargetInfo
     {
+        public bool Default;
         public string Name;
         public string IPAddr;
         public string Firmware;
@@ -18,8 +19,9 @@ namespace OrbisSuite.Classes
         public string ConsoleName;
         public string ConsoleType;
 
-        public TargetInfo(string Name, string IPAddr, string Firmware, bool Available, string Title, string SDKVersion, string ConsoleName, string ConsoleType)
+        public TargetInfo(bool Default, string Name, string IPAddr, string Firmware, bool Available, string Title, string SDKVersion, string ConsoleName, string ConsoleType)
         {
+            this.Default = Default;
             this.Name = Name;
             this.IPAddr = IPAddr;
             this.Firmware = Firmware;
@@ -47,7 +49,7 @@ namespace OrbisSuite.Classes
     [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Ansi)]
     public struct DB_TargetInfo
     {
-        public bool Defualt;
+        public bool Default;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public byte[] Name;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
@@ -58,6 +60,8 @@ namespace OrbisSuite.Classes
         public byte[] SDKVersion;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public byte[] SoftwareVersion;
+        public int CPUTemp;
+        public int SOCTemp;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public byte[] CurrentTitleID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 100)]
@@ -68,24 +72,6 @@ namespace OrbisSuite.Classes
         public byte[] PSID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
         public byte[] ConsoleType;
-    };
-
-    [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Ansi)]
-    struct RESP_TargetInfo
-    {
-        public int SDKVersion;
-        public int SoftwareVersion;
-        public int CPUTemp;
-        public int SOCTemp;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-        public byte[] CurrentTitleID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 100)]
-        public byte[] ConsoleName;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public byte[] IDPS;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public byte[] PSID;
-        public int ConsoleType;
     };
 
     public enum ConsoleTypes

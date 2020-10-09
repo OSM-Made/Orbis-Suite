@@ -47,6 +47,48 @@ extern "C" __declspec(dllexport) int TestCommunications(const char* IPAddr)
 
 #pragma region OrbisTarget
 
+extern "C" __declspec(dllexport) bool DoesTargetExist(const char* TargetName)
+{
+	return orbisLib->Target->DoesTargetExist(TargetName);
+}
+
+extern "C" __declspec(dllexport) bool DoesTargetExistIP(const char* IPAddr)
+{
+	return orbisLib->Target->DoesTargetExistIP(IPAddr);
+}
+
+extern "C" __declspec(dllexport) bool GetTarget(const char* TargetName, DB_TargetInfo* Out)
+{
+	return orbisLib->Target->GetTarget(TargetName, Out);
+}
+
+extern "C" __declspec(dllexport) bool SetTarget(const char* TargetName, bool Default, const char* NewTargetName, const char* IPAddr, int Firmware)
+{
+	DB_TargetInfo In;
+	In.Default = Default;
+	strcpy_s(In.Name, NewTargetName);
+	strcpy_s(In.IPAddr, IPAddr);
+	In.Firmware = Firmware;
+
+	return orbisLib->Target->SetTarget(TargetName, In);
+}
+
+extern "C" __declspec(dllexport) bool DeleteTarget(const char* TargetName)
+{
+	return orbisLib->Target->DeleteTarget(TargetName);
+}
+
+extern "C" __declspec(dllexport) bool NewTarget(bool Default, const char* TargetName, const char* IPAddr, int Firmware)
+{
+	DB_TargetInfo In;
+	In.Default = Default;
+	strcpy_s(In.Name, TargetName);
+	strcpy_s(In.IPAddr, IPAddr);
+	In.Firmware = Firmware;
+
+	return orbisLib->Target->NewTarget(In);
+}
+
 extern "C" __declspec(dllexport) int GetTargetCount()
 {
 	return orbisLib->Target->TargetCount;
@@ -88,9 +130,50 @@ extern "C" __declspec(dllexport) void SetDefault(const char* TargetName)
 	orbisLib->Target->SetDefaultTarget(TargetName);
 }
 
-extern "C" __declspec(dllexport) int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
+//TODO: Remove
+/*extern "C" __declspec(dllexport) int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
 {
 	return orbisLib->Target->GetInfo(IPAddr, TargetInfo);
+}*/
+
+extern "C" __declspec(dllexport) int Shutdown(char* IPAddr)
+{
+	return orbisLib->Target->Shutdown(IPAddr);
+}
+
+extern "C" __declspec(dllexport) int Reboot(char* IPAddr)
+{
+	return orbisLib->Target->Reboot(IPAddr);
+}
+
+extern "C" __declspec(dllexport) int Suspend(char* IPAddr)
+{
+	return orbisLib->Target->Suspend(IPAddr);
+}
+
+extern "C" __declspec(dllexport) int Notify(char* IPAddr, int Type, const char* Message)
+{
+	return orbisLib->Target->Notify(IPAddr, Type, Message);
+}
+
+extern "C" __declspec(dllexport) int DoBeep(char* IPAddr, int Count)
+{
+	return orbisLib->Target->Beep(IPAddr, Count);
+}
+
+extern "C" __declspec(dllexport) int SetLED(char* IPAddr, char R, char G, char B, char A)
+{
+	return orbisLib->Target->SetLED(IPAddr, R, G, B, A);
+}
+
+extern "C" __declspec(dllexport) int GetLED(char* IPAddr, char* R, char* G, char* B, char* A)
+{
+	return orbisLib->Target->GetLED(IPAddr, R, G, B, A);
+}
+
+extern "C" __declspec(dllexport) int DumpProcess(char* IPAddr, const char* ProcName, uint64_t* Size, char* Out)
+{
+	return orbisLib->Target->DumpProcess(IPAddr, ProcName, Size, Out);
 }
 
 #pragma endregion

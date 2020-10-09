@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using DarkUI.Forms;
 using OrbisSuite.Classes;
+using OrbisSuite.Dialog;
 
 namespace OrbisSuite
 {
@@ -121,6 +122,12 @@ namespace OrbisSuite
         public Target Target
         {
             get { return Internal_Target ?? (Internal_Target = new Target(this)); }
+        }
+
+        private Dialogs Internal_Dialogs;
+        public Dialogs Dialogs
+        {
+            get { return Internal_Dialogs ?? (Internal_Dialogs = new Dialogs(this)); }
         }
 
         #endregion
