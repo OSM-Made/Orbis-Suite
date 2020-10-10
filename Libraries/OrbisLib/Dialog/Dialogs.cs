@@ -10,9 +10,9 @@ namespace OrbisSuite.Dialog
     {
         internal OrbisLib PS4;
 
-        public Dialogs(OrbisLib InPS4)
+        public Dialogs(OrbisLib PS4)
         {
-            PS4 = InPS4;
+            this.PS4 = PS4;
         }
 
         public System.Windows.Forms.DialogResult AddTarget()
@@ -44,6 +44,14 @@ namespace OrbisSuite.Dialog
             About About = new About();
             System.Windows.Forms.DialogResult Result = About.ShowDialog();
             About.Close();
+            return Result;
+        }
+
+        public System.Windows.Forms.DialogResult Settings()
+        {
+            Settings Settings = new Settings(PS4);
+            System.Windows.Forms.DialogResult Result = Settings.ShowDialog();
+            Settings.Close();
             return Result;
         }
     }

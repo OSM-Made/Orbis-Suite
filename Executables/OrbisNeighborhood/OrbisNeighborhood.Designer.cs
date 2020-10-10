@@ -74,9 +74,9 @@
             this.AutoLoadPayload_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.LoadOnBoot_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
-            this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).BeginInit();
             this.TargetContextMenu.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
@@ -494,6 +494,14 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
             // 
+            // SettingsButton
+            // 
+            this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(205, 22);
+            this.SettingsButton.Text = "Settings";
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
             // About_Button
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -512,14 +520,6 @@
             this.AddTarget_Button.Text = "Add Target";
             this.AddTarget_Button.Click += new System.EventHandler(this.AddTarget_Button_Click);
             // 
-            // SettingsButton
-            // 
-            this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(205, 22);
-            this.SettingsButton.Text = "Settings";
-            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
-            // 
             // OrbisNeighborhood
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,6 +532,7 @@
             this.MaximumSize = new System.Drawing.Size(1020, 600);
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "OrbisNeighborhood";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Orbis Neighborhood";
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).EndInit();
             this.TargetContextMenu.ResumeLayout(false);

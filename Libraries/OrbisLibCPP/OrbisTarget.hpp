@@ -19,13 +19,25 @@ private:
 	bool OpenDatabase(sqlite3** db);
 	bool GetDefaultTarget(DB_TargetInfo* Out);
 
-	//Depreciated
-	static DWORD WINAPI FileWatcherThread(LPVOID Params);
-
 public:
-	bool AutoLoadPayload;
-	bool StartOnBoot;
-	DB_TargetInfo DefaultTarget;
+	struct 
+	{
+		bool AutoLoadPayload;
+		bool StartOnBoot;
+		bool DetectGame;
+		DB_TargetInfo DefaultTarget;
+		char COMPort[0x50];
+		short ServicePort;
+		short APIPort;
+		bool CensorIDPS;
+		bool CensorPSID;
+		bool Debug;
+		bool CreateLogs;
+		bool ShowTimestamps;
+		bool WordWrap;
+	}Settings;
+	
+
 
 	DB_TargetInfo Targets[MAX_TARGETS];
 	int TargetCount;
@@ -41,6 +53,7 @@ public:
 	bool UpdateTargetExtInfo(int Target);
 	bool DeleteTarget(const char* TargetName);
 	bool NewTarget(DB_TargetInfo In);
+	bool SetDefaultTarget(const char* Name);
 
 	//Target List
 	int GetTargetCount();
@@ -48,9 +61,76 @@ public:
 
 	//Settings
 	void UpdateSettings();
+	template<typename p1>
+	bool SetSettingbyName(const char* Name, p1 Value)
+	{
+		sqlite3* db;
+		char* ErrorMsg = 0;
+		int rc = 0;
+
+		if (!OpenDatabase(&db))
+		{
+			printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+			return false;
+		}
+
+		char stmtString[0x200];
+		sprintf_s(stmtString, "UPDATE Settings SET %s=?", Name);
+
+		sqlite3_stmt *stmt;
+		rc = sqlite3_prepare_v2(db, stmtString, -1, &stmt, NULL);
+		if (rc != SQLITE_OK)
+		{
+			printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+			sqlite3_close(db);
+			return false;
+		}
+
+		if ((std::is_same<p1, int>::value) || (std::is_same<p1, bool>::value))
+		{
+			rc = sqlite3_bind_int(stmt, 1, (int)Value);
+			if (rc != SQLITE_OK)
+			{
+				printf("Failed to bind Value(int/bool): %s\n", sqlite3_errmsg(db));
+
+				sqlite3_close(db);
+				return false;
+			}
+		}
+		else
+		{
+			rc = sqlite3_bind_text(stmt, 1, (const char*)Value, -1, SQLITE_TRANSIENT);
+			if (rc != SQLITE_OK)
+			{
+				printf("Failed to bind Value(text): %s\n", sqlite3_errmsg(db));
+
+				sqlite3_close(db);
+				return false;
+			}
+		}
+
+		rc = sqlite3_step(stmt);
+		if (rc != SQLITE_DONE)
+		{
+			printf("Failed to step: %s\n", sqlite3_errmsg(db));
+
+			sqlite3_finalize(stmt);
+			sqlite3_close(db);
+			return false;
+		}
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+
+		UpdateSettings();
+
+		return true;
+	}
 	bool SetAutoLoadPayload(bool Value);
 	bool SetStartOnBoot(bool Value);
-	bool SetDefaultTarget(const char* Name);
+	
 
 	//API Calls
 	int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo);

@@ -121,8 +121,8 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                AutoLoadPayload_Button.Checked = PS4.Target.GetAutoLoadPayload();
-                LoadOnBoot_Button.Checked = PS4.Target.GetStartOnBoot();
+                AutoLoadPayload_Button.Checked = PS4.Settings.GetAutoLoadPayload();
+                LoadOnBoot_Button.Checked = PS4.Settings.GetStartOnBoot();
             }
             catch
             {
@@ -147,7 +147,7 @@ namespace nsOrbisNeighborhood
             try
             {
                 AutoLoadPayload_Button.Checked = !AutoLoadPayload_Button.Checked;
-                PS4.Target.SetAutoLoadPayload(AutoLoadPayload_Button.Checked);
+                PS4.Settings.SetAutoLoadPayload(AutoLoadPayload_Button.Checked);
             }
             catch
             {
@@ -160,7 +160,7 @@ namespace nsOrbisNeighborhood
             try
             {
                 LoadOnBoot_Button.Checked = !LoadOnBoot_Button.Checked;
-                PS4.Target.SetStartOnBoot(LoadOnBoot_Button.Checked);
+                PS4.Settings.SetStartOnBoot(LoadOnBoot_Button.Checked);
             }
             catch
             {
@@ -176,7 +176,14 @@ namespace nsOrbisNeighborhood
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                PS4.Dialogs.Settings(); 
+            }
+            catch
+            {
 
+            }
         }
 
         private void About_Button_Click(object sender, EventArgs e)

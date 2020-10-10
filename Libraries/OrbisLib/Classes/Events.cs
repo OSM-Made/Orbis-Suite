@@ -95,9 +95,9 @@ namespace OrbisSuite
 
         #endregion
 
-        public Events(OrbisLib InPS4)
+        public Events(OrbisLib PS4)
         {
-            PS4 = InPS4;
+            this.PS4 = PS4;
 
             pTarget_PrintCallback = new Target_Print_Callback(Target_PrintCallback);
             pProc_InterceptCallback = new Proc_Intercept_Callback(Proc_InterceptCallback);

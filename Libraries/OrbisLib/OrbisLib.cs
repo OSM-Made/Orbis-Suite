@@ -124,6 +124,12 @@ namespace OrbisSuite
             get { return Internal_Target ?? (Internal_Target = new Target(this)); }
         }
 
+        private Classes.Settings Internal_Settings;
+        public Classes.Settings Settings
+        {
+            get { return Internal_Settings ?? (Internal_Settings = new Classes.Settings(this)); }
+        }
+
         private Dialogs Internal_Dialogs;
         public Dialogs Dialogs
         {

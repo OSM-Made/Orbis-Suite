@@ -14,10 +14,9 @@ namespace OrbisSuite.Classes
     {
         internal OrbisLib PS4;
 
-        public Target(OrbisLib InPS4)
+        public Target(OrbisLib PS4)
         {
-            PS4 = InPS4;
-
+            this.PS4 = PS4;
         }
 
         public bool DoesTargetExist(string TargetName)
@@ -92,26 +91,6 @@ namespace OrbisSuite.Classes
             }
 
             return List;
-        }
-
-        public bool GetAutoLoadPayload()
-        {
-            return Imports.GetAutoLoadPayload();
-        }
-
-        public void SetAutoLoadPayload(bool Value)
-        {
-            Imports.SetAutoLoadPayload(Value);
-        }
-
-        public bool GetStartOnBoot()
-        {
-            return Imports.GetStartOnBoot();
-        }
-
-        public void SetStartOnBoot(bool Value)
-        {
-            Imports.SetStartOnBoot(Value);
         }
 
         public TargetInfo GetDefault()

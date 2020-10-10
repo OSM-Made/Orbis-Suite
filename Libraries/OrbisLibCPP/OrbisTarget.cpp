@@ -3,7 +3,7 @@
 #include "OrbisLib.hpp"
 #include "OrbisTarget.hpp"
 
-//TODO: Update the Default DB bytes.
+//TODO: Update the Default DB bytes. could use as a resource maybe?
 unsigned char OrbisTarget::DefaultDB[12288] = {
 	0x53, 0x51, 0x4C, 0x69, 0x74, 0x65, 0x20, 0x66, 0x6F, 0x72, 0x6D, 0x61,
 	0x74, 0x20, 0x33, 0x00, 0x10, 0x00, 0x01, 0x01, 0x00, 0x40, 0x20, 0x20,
@@ -1683,237 +1683,6 @@ bool OrbisTarget::NewTarget(DB_TargetInfo In)
 	return true;
 }
 
-int OrbisTarget::GetTargetCount()
-{
-	sqlite3* db;
-	char* ErrorMsg = 0;
-	int rc = 0;
-	int Count = 0;
-
-	if (!OpenDatabase(&db))
-	{
-		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
-
-		return false;
-	}
-
-	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM Targets", -1, &stmt, NULL);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_step(stmt);
-	if (rc != SQLITE_ERROR)
-		Count = sqlite3_column_int(stmt, 0);
-	else
-		printf("Failed to read row: %s\n", sqlite3_errmsg(db));
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-	return Count;
-}
-
-bool OrbisTarget::GetTargetList(DB_TargetInfo Out[])
-{
-	sqlite3* db;
-	char* ErrorMsg = 0;
-	int rc = 0;
-	int LoopCount = 0;
-
-	if (!OpenDatabase(&db))
-	{
-		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
-
-		return false;
-	}
-
-	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "SELECT * FROM Targets", -1, &stmt, NULL);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	while (sqlite3_step(stmt) == SQLITE_ROW)
-	{
-		if (LoopCount > MAX_TARGETS)
-			break;
-
-		Out[LoopCount].Default = sqlite3_column_int(stmt, 0);
-		strcpy_s(Out[LoopCount].Name, (const char*)sqlite3_column_text(stmt, 1));
-		strcpy_s(Out[LoopCount].IPAddr, (const char*)sqlite3_column_text(stmt, 2));
-		Out[LoopCount].Firmware = sqlite3_column_int(stmt, 3);
-		Out[LoopCount].Available = sqlite3_column_int(stmt, 4);
-		strcpy_s(Out[LoopCount].SDKVersion, (const char*)sqlite3_column_text(stmt, 5));
-		strcpy_s(Out[LoopCount].SoftwareVersion, (const char*)sqlite3_column_text(stmt, 6));
-		Out[LoopCount].CPUTemp = sqlite3_column_int(stmt, 7);
-		Out[LoopCount].SOCTemp = sqlite3_column_int(stmt, 8);
-		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 9));
-		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 11));
-		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 12));
-		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 13));
-
-		LoopCount++;
-	}
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-	return true;
-}
-
-void OrbisTarget::UpdateSettings()
-{
-	sqlite3* db;
-	char* ErrorMsg = 0;
-	int rc = 0;
-
-	//Update the settings.
-	if (!OpenDatabase(&db))
-	{
-		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
-
-		return;
-	}
-
-	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "SELECT * FROM Settings", -1, &stmt, NULL);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return;
-	}
-
-	rc = sqlite3_step(stmt);
-	if (rc == SQLITE_ROW)
-	{
-		this->AutoLoadPayload = sqlite3_column_int(stmt, 0);
-		this->StartOnBoot = sqlite3_column_int(stmt, 1);
-	}
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-	//Update the TargetList.
-	GetTargetList(this->Targets);
-	this->TargetCount = GetTargetCount();
-
-	//Get the target struct for default Target.
-	GetDefaultTarget(&this->DefaultTarget);
-}
-
-bool OrbisTarget::SetAutoLoadPayload(bool Value)
-{
-	sqlite3* db;
-	char* ErrorMsg = 0;
-	int rc = 0;
-
-	if (!OpenDatabase(&db))
-	{
-		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
-
-		return false;
-	}
-
-	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Settings SET AutoLoadPayload=?", -1, &stmt, NULL);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_bind_int(stmt, 1, Value);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_step(stmt);
-	if (rc != SQLITE_DONE)
-	{
-		printf("Failed to step: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return false;
-	}
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-	UpdateSettings();
-
-	return true;
-}
-
-bool OrbisTarget::SetStartOnBoot(bool Value)
-{
-	sqlite3* db;
-	char* ErrorMsg = 0;
-	int rc = 0;
-
-	if (!OpenDatabase(&db))
-	{
-		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
-
-		return false;
-	}
-
-	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Settings SET StartOnBoot=?", -1, &stmt, NULL);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_bind_int(stmt, 1, Value);
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to bind text: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_close(db);
-		return false;
-	}
-
-	rc = sqlite3_step(stmt);
-	if (rc != SQLITE_DONE)
-	{
-		printf("Failed to step: %s\n", sqlite3_errmsg(db));
-
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return false;
-	}
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-
-	UpdateSettings();
-
-	return true;
-}
-
 bool OrbisTarget::SetDefaultTarget(const char* Name)
 {
 	sqlite3* db;
@@ -2047,6 +1816,162 @@ bool OrbisTarget::GetDefaultTarget(DB_TargetInfo* Out)
 
 	return Result;
 }
+
+int OrbisTarget::GetTargetCount()
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+	int Count = 0;
+
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return false;
+	}
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM Targets", -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_step(stmt);
+	if (rc != SQLITE_ERROR)
+		Count = sqlite3_column_int(stmt, 0);
+	else
+		printf("Failed to read row: %s\n", sqlite3_errmsg(db));
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	return Count;
+}
+
+bool OrbisTarget::GetTargetList(DB_TargetInfo Out[])
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+	int LoopCount = 0;
+
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return false;
+	}
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, "SELECT * FROM Targets", -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	while (sqlite3_step(stmt) == SQLITE_ROW)
+	{
+		if (LoopCount > MAX_TARGETS)
+			break;
+
+		Out[LoopCount].Default = sqlite3_column_int(stmt, 0);
+		strcpy_s(Out[LoopCount].Name, (const char*)sqlite3_column_text(stmt, 1));
+		strcpy_s(Out[LoopCount].IPAddr, (const char*)sqlite3_column_text(stmt, 2));
+		Out[LoopCount].Firmware = sqlite3_column_int(stmt, 3);
+		Out[LoopCount].Available = sqlite3_column_int(stmt, 4);
+		strcpy_s(Out[LoopCount].SDKVersion, (const char*)sqlite3_column_text(stmt, 5));
+		strcpy_s(Out[LoopCount].SoftwareVersion, (const char*)sqlite3_column_text(stmt, 6));
+		Out[LoopCount].CPUTemp = sqlite3_column_int(stmt, 7);
+		Out[LoopCount].SOCTemp = sqlite3_column_int(stmt, 8);
+		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 9));
+		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 10));
+		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 13));
+
+		LoopCount++;
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	return true;
+}
+
+void OrbisTarget::UpdateSettings()
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+
+	//Update the settings.
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return;
+	}
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, "SELECT * FROM Settings", -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return;
+	}
+
+	rc = sqlite3_step(stmt);
+	if (rc == SQLITE_ROW)
+	{
+		this->Settings.AutoLoadPayload = sqlite3_column_int(stmt, 0);
+		this->Settings.StartOnBoot = sqlite3_column_int(stmt, 1);
+		this->Settings.DetectGame = sqlite3_column_int(stmt, 2);
+		//DefaultTarget 3
+		strcpy_s(this->Settings.COMPort, (const char*)sqlite3_column_text(stmt, 4));
+		this->Settings.ServicePort = sqlite3_column_int(stmt, 5);
+		this->Settings.APIPort = sqlite3_column_int(stmt, 6);
+		this->Settings.CensorIDPS = sqlite3_column_int(stmt, 7);
+		this->Settings.CensorPSID = sqlite3_column_int(stmt, 8);
+		this->Settings.Debug = sqlite3_column_int(stmt, 9);
+		this->Settings.CreateLogs = sqlite3_column_int(stmt, 10);
+		this->Settings.ShowTimestamps = sqlite3_column_int(stmt, 11);
+		this->Settings.WordWrap = sqlite3_column_int(stmt, 12);
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	//Update the TargetList.
+	GetTargetList(this->Targets);
+	this->TargetCount = GetTargetCount();
+
+	//Get the target struct for default Target.
+	GetDefaultTarget(&this->Settings.DefaultTarget);
+}
+
+
+
+bool OrbisTarget::SetAutoLoadPayload(bool Value)
+{
+	return SetSettingbyName("AutoLoadPayload", Value);
+}
+
+bool OrbisTarget::SetStartOnBoot(bool Value)
+{
+	return SetSettingbyName("StartOnBoot", Value);
+}
+
+
 
 int OrbisTarget::GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
 {

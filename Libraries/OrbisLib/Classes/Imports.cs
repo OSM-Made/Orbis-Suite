@@ -10,8 +10,9 @@ namespace OrbisSuite.Classes
 
     class Imports
     {
-
+        //
         //Target
+        //
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool DoesTargetExist(string TargetName);
 
@@ -35,18 +36,6 @@ namespace OrbisSuite.Classes
 
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetTargets([Out] out IntPtr Targets);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool GetAutoLoadPayload();
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetAutoLoadPayload(bool Value);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool GetStartOnBoot();
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetStartOnBoot(bool Value);
 
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void GetDefaultTarget([MarshalAs(UnmanagedType.Struct)] out DB_TargetInfo DefaultTarget);
@@ -78,7 +67,84 @@ namespace OrbisSuite.Classes
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern int DumpProcess(string IPAddr, string ProcName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, byte[] Out);
 
+        //
+        //Settings
+        //
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetAutoLoadPayload();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetAutoLoadPayload(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetStartOnBoot();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetStartOnBoot(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetDetectGame();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetDetectGame(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern string GetCOMPort();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCOMPort(string Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetServicePort();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetServicePort(int Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetAPIPort();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetAPIPort(int Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetCensorIDPS();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCensorIDPS(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetCensorPSID();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCensorPSID(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetDebug();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetDebug(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetCreateLogs();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCreateLogs(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetShowTimestamps();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetShowTimestamps(bool Value);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetWordWrap();
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetWordWrap(bool Value);
+
+        //
         //OrbisLib
+        //
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int TestCommunications(string IPAddr);
 

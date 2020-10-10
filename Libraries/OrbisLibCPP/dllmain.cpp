@@ -100,29 +100,9 @@ extern "C" __declspec(dllexport) int GetTargets(uint64_t* Targets)
 	return orbisLib->Target->TargetCount;
 }
 
-extern "C" __declspec(dllexport) bool GetAutoLoadPayload()
-{
-	return orbisLib->Target->AutoLoadPayload;
-}
-
-extern "C" __declspec(dllexport) void SetAutoLoadPayload(bool Value)
-{
-	orbisLib->Target->SetAutoLoadPayload(Value);
-}
-
-extern "C" __declspec(dllexport) bool GetStartOnBoot()
-{
-	return orbisLib->Target->StartOnBoot;
-}
-
-extern "C" __declspec(dllexport) void SetStartOnBoot(bool Value)
-{
-	orbisLib->Target->SetStartOnBoot(Value);
-}
-
 extern "C" __declspec(dllexport) void GetDefaultTarget(DB_TargetInfo* DefaultTarget)
 {
-	*DefaultTarget = orbisLib->Target->DefaultTarget;
+	*DefaultTarget = orbisLib->Target->Settings.DefaultTarget;
 }
 
 extern "C" __declspec(dllexport) void SetDefault(const char* TargetName)
@@ -174,6 +154,127 @@ extern "C" __declspec(dllexport) int GetLED(char* IPAddr, char* R, char* G, char
 extern "C" __declspec(dllexport) int DumpProcess(char* IPAddr, const char* ProcName, uint64_t* Size, char* Out)
 {
 	return orbisLib->Target->DumpProcess(IPAddr, ProcName, Size, Out);
+}
+
+#pragma endregion
+
+#pragma region Settings
+
+extern "C" __declspec(dllexport) bool GetAutoLoadPayload()
+{
+	return orbisLib->Target->Settings.AutoLoadPayload;
+}
+
+extern "C" __declspec(dllexport) void SetAutoLoadPayload(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("AutoLoadPayload", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetStartOnBoot()
+{
+	return orbisLib->Target->Settings.StartOnBoot;
+}
+
+extern "C" __declspec(dllexport) void SetStartOnBoot(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("StartOnBoot", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetDetectGame()
+{
+	return orbisLib->Target->Settings.DetectGame;
+}
+
+extern "C" __declspec(dllexport) void SetDetectGame(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("DetectGame", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetCOMPort()
+{
+	return &orbisLib->Target->Settings.COMPort;
+}
+
+extern "C" __declspec(dllexport) void SetCOMPort(const char* Value)
+{
+	orbisLib->Target->SetSettingbyName("COMPort", (char*)Value);
+}
+
+extern "C" __declspec(dllexport) int GetServicePort()
+{
+	return orbisLib->Target->Settings.ServicePort;
+}
+
+extern "C" __declspec(dllexport) void SetServicePort(int Value)
+{
+	orbisLib->Target->SetSettingbyName("ServicePort", Value);
+}
+
+extern "C" __declspec(dllexport) int GetAPIPort()
+{
+	return orbisLib->Target->Settings.APIPort;
+}
+
+extern "C" __declspec(dllexport) void SetAPIPort(int Value)
+{
+	orbisLib->Target->SetSettingbyName("APIPort", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetCensorIDPS()
+{
+	return orbisLib->Target->Settings.CensorIDPS;
+}
+
+extern "C" __declspec(dllexport) void SetCensorIDPS(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("CensorIDPS", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetCensorPSID()
+{
+	return orbisLib->Target->Settings.CensorPSID;
+}
+
+extern "C" __declspec(dllexport) void SetCensorPSID(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("CensorPSID", Value);
+}
+
+extern "C" __declspec(dllexport) bool GetDebug()
+{
+	return orbisLib->Target->Settings.Debug;
+}
+
+extern "C" __declspec(dllexport) void SetDebug(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("Debug", Value);
+}
+extern "C" __declspec(dllexport) bool GetCreateLogs()
+{
+	return orbisLib->Target->Settings.CreateLogs;
+}
+
+extern "C" __declspec(dllexport) void SetCreateLogs(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("CreateLogs", Value);
+}
+extern "C" __declspec(dllexport) bool GetShowTimestamps()
+{
+	return orbisLib->Target->Settings.ShowTimestamps;
+}
+
+extern "C" __declspec(dllexport) void SetShowTimestamps(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("ShowTimestamps", Value);
+}
+extern "C" __declspec(dllexport) bool GetWordWrap()
+{
+	return orbisLib->Target->Settings.WordWrap;
+}
+
+extern "C" __declspec(dllexport) void SetWordWrap(bool Value)
+{
+	orbisLib->Target->SetSettingbyName("WordWrap", Value);
 }
 
 #pragma endregion

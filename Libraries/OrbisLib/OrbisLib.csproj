@@ -80,6 +80,7 @@
     <Compile Include="Classes\Imports.cs" />
     <Compile Include="Classes\OrbisDef.cs" />
     <Compile Include="Classes\Payload.cs" />
+    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\Target.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Dialog\About.cs">
@@ -100,6 +101,12 @@
     </Compile>
     <Compile Include="Dialog\EditTarget.Designer.cs">
       <DependentUpon>EditTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialog\TargetDetails.cs">
       <SubType>Form</SubType>
@@ -128,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\EditTarget.resx">
       <DependentUpon>EditTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\TargetDetails.resx">
       <DependentUpon>TargetDetails.cs</DependentUpon>
