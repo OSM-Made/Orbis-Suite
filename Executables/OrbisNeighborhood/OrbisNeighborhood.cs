@@ -175,8 +175,9 @@ namespace nsOrbisNeighborhood
 
         private void AddTarget_Button_Click(object sender, EventArgs e)
         {
-            if (PS4.Dialogs.AddTarget() == DialogResult.OK)
-                UpdateTargetList();
+            PS4.DefaultTarget.Process.SelectProcess();
+            //if (PS4.Dialogs.AddTarget() == DialogResult.OK)
+            //    UpdateTargetList();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)

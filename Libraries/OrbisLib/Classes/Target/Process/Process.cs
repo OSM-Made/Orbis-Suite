@@ -28,7 +28,9 @@ namespace OrbisSuite.Classes
 
         public List<ProcessInfo> GetList()
         {
+            //Allocate unmanaged memory.
             IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)) * 100);
+
             int ProcCount = 0;
             List<ProcessInfo> ProcList = new List<ProcessInfo>();
 
@@ -54,7 +56,11 @@ namespace OrbisSuite.Classes
                     ));
             }
 
-            //Marshal.FreeHGlobal(ptr);
+            //Weird shit requires you to be at the start to free it.
+            ptr -= Marshal.SizeOf(typeof(RESP_Proc)) * ProcCount;
+
+            //free unmanageed memory.
+            Marshal.FreeHGlobal(ptr);
 
             return ProcList;
         }
