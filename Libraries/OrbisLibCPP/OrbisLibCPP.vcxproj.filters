@@ -33,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OrbisLib.hpp">
       <Filter>Header Files\OrbisLib</Filter>
     </ClInclude>
@@ -73,6 +70,12 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="OrbisAPI.hpp">
+      <Filter>Header Files\OrbisLib</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbisTargetManagement.hpp">
+      <Filter>Header Files\OrbisLib</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbisSettings.hpp">
       <Filter>Header Files\OrbisLib</Filter>
     </ClInclude>
   </ItemGroup>
@@ -114,6 +117,12 @@
       <Filter>Source Files\OrbisLib</Filter>
     </ClCompile>
     <ClCompile Include="OrbisDef.cpp">
+      <Filter>Source Files\OrbisLib</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbisTargetManagement.cpp">
+      <Filter>Source Files\OrbisLib</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbisSettings.cpp">
       <Filter>Source Files\OrbisLib</Filter>
     </ClCompile>
   </ItemGroup>

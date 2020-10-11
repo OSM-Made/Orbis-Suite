@@ -37,7 +37,7 @@ namespace OrbisSuite.Dialog
                 return;
             }
 
-            if (PS4.Target.DoesTargetExistIP(TargetIPAddress.Text))
+            if (PS4.TargetManagement.DoesTargetExistIP(TargetIPAddress.Text))
             {
                 DarkMessageBox.ShowError("A Target with this IP Address already exists!", "Invalid Target IP Address");
                 return;
@@ -55,7 +55,7 @@ namespace OrbisSuite.Dialog
                 return;
             }
 
-            if (PS4.Target.DoesTargetExist(TargetName.Text))
+            if (PS4.TargetManagement.DoesTargetExist(TargetName.Text))
             {
                 DarkMessageBox.ShowError("A Target with this Name already exists!", "Invalid Target Name");
                 return;
@@ -75,7 +75,7 @@ namespace OrbisSuite.Dialog
             else if (TargetFW702.Checked)
                 Firmware = 702;
 
-            if (PS4.Target.NewTarget(IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware))
+            if (PS4.TargetManagement.NewTarget(IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware))
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             else
                 DarkMessageBox.ShowError("An unknown error caused the target to not be saved. Please try again.", "Failed to save target.");

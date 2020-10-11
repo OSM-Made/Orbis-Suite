@@ -10,9 +10,44 @@ namespace OrbisSuite.Classes
 
     class Imports
     {
-        //
-        //Target
-        //
+
+        #region Process
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int GetProcList(string IPAddr, [MarshalAs(UnmanagedType.I4)] out int ProcCount, [MarshalAs(UnmanagedType.SysUInt)] IntPtr List);
+
+        #endregion
+
+        #region Target
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int Shutdown(string IPAddr);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int Reboot(string IPAddr);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int Suspend(string IPAddr);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int Notify(string IPAddr, int Type, string Message);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int DoBeep(string IPAddr, int Count);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SetLED(string IPAddr, byte R, byte G, byte B, byte A);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int GetLED(string IPAddr, [MarshalAs(UnmanagedType.U1)] out byte R, [MarshalAs(UnmanagedType.U1)] out byte G, [MarshalAs(UnmanagedType.U1)] out byte B, [MarshalAs(UnmanagedType.U1)] out byte A);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int DumpProcess(string IPAddr, string ProcName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, byte[] Out);
+
+        #endregion
+
+        #region Target Management
+
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool DoesTargetExist(string TargetName);
 
@@ -43,33 +78,10 @@ namespace OrbisSuite.Classes
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetDefault(string TargetName);
 
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int Shutdown(string IPAddr);
+        #endregion
 
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int Reboot(string IPAddr);
+        #region Settings
 
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int Suspend(string IPAddr);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int Notify(string IPAddr, int Type, string Message);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int DoBeep(string IPAddr, int Count);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int SetLED(string IPAddr, byte R, byte G, byte B, byte A);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int GetLED(string IPAddr, [MarshalAs(UnmanagedType.U1)] out byte R, [MarshalAs(UnmanagedType.U1)] out byte G, [MarshalAs(UnmanagedType.U1)] out byte B, [MarshalAs(UnmanagedType.U1)] out byte A);
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int DumpProcess(string IPAddr, string ProcName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, byte[] Out);
-
-        //
-        //Settings
-        //
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool GetAutoLoadPayload();
 
@@ -142,12 +154,13 @@ namespace OrbisSuite.Classes
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetWordWrap(bool Value);
 
-        //
-        //OrbisLib
-        //
+        #endregion
+
+        #region OrbisLib
+
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int TestCommunications(string IPAddr);
 
-
+        #endregion
     }
 }

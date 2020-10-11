@@ -79,9 +79,16 @@
     <Compile Include="Classes\Events.cs" />
     <Compile Include="Classes\Imports.cs" />
     <Compile Include="Classes\OrbisDef.cs" />
-    <Compile Include="Classes\Payload.cs" />
+    <Compile Include="Classes\Target\FTP.cs" />
+    <Compile Include="Classes\Target\Payload.cs" />
     <Compile Include="Classes\Settings.cs" />
-    <Compile Include="Classes\Target.cs" />
+    <Compile Include="Classes\Target\Debug.cs" />
+    <Compile Include="Classes\Target\Process\Extension.cs" />
+    <Compile Include="Classes\Target\Process\Memory.cs" />
+    <Compile Include="Classes\Target\Process\Process.cs" />
+    <Compile Include="Classes\Target\Target.cs" />
+    <Compile Include="Classes\TargetManagement.cs" />
+    <Compile Include="Classes\Target\TargetEvents.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Dialog\About.cs">
       <SubType>Form</SubType>

@@ -7,55 +7,57 @@ using System.Threading.Tasks;
 
 namespace OrbisSuite
 {
+    /// <summary>
+    /// Events that are thrown from the Orbis Suite API
+    /// </summary>
     public class Events
     {
         internal OrbisLib PS4;
 
-        //Events
-        public event EventHandler<ProcPrintEvent> ProcPrint;
-        public event EventHandler<ProcInterceptEvent> ProcIntercept;
-        public event EventHandler<ProcContinueEvent> ProcContinue;
-        public event EventHandler<ProcDieEvent> ProcDie;
-        public event EventHandler<ProcAttachEvent> ProcAttach;
-        public event EventHandler<ProcDetachEvent> ProcDetach;
-        public event EventHandler<TargetSuspendEvent> TargetSuspend;
-        public event EventHandler<TargetResumeEvent> TargetResume;
-        public event EventHandler<TargetShutdownEvent> TargetShutdown;
-        public event EventHandler<TargetAvailableEvent> TargetAvailable;
-        public event EventHandler<TargetNewTitleEvent> TargetNewTitle;
+        //Global Events
+        /// <summary>
+        /// The DBTouched Event gets invoked when the Database used to store target specific info is changed.
+        /// </summary>
         public event EventHandler<DBTouchedEvent> DBTouched;
+        /// <summary>
+        /// The TargetAvailable Event gets invoked when a target becomes available.
+        /// </summary>
+        public event EventHandler<TargetAvailableEvent> TargetAvailable;
+        /// <summary>
+        /// The TargetUnAvailable Event gets invoked when a target becomes no longer available.
+        /// </summary>
         public event EventHandler<TargetUnAvailableEvent> TargetUnAvailable;
 
         #region CallBacks
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_Print_Callback(int Type, int Len, string Data);
+        internal delegate void Target_Print_Callback(string IPAddr, int Type, int Len, string Data);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Proc_Intercept_Callback(int Reason, IntPtr Registers);
+        internal delegate void Proc_Intercept_Callback(string IPAddr, int Reason, IntPtr Registers);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Proc_Continue_Callback();
+        internal delegate void Proc_Continue_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Proc_Die_Callback();
+        internal delegate void Proc_Die_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Proc_Attach_Callback(string NewProcName);
+        internal delegate void Proc_Attach_Callback(string IPAddr, string NewProcName);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Proc_Detach_Callback();
+        internal delegate void Proc_Detach_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_Suspend_Callback();
+        internal delegate void Target_Suspend_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_Resume_Callback();
+        internal delegate void Target_Resume_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_Shutdown_Callback();
+        internal delegate void Target_Shutdown_Callback(string IPAddr);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_NewTitle_Callback(string TitleID);
+        internal delegate void Target_NewTitle_Callback(string IPAddr, string TitleID);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate void DB_Touched_Callback();
@@ -94,7 +96,9 @@ namespace OrbisSuite
         Target_Availability_Callback pTarget_AvailabilityCallback;
 
         #endregion
-
+        /// <summary>
+        /// 
+        /// </summary>
         public Events(OrbisLib PS4)
         {
             this.PS4 = PS4;
@@ -128,56 +132,65 @@ namespace OrbisSuite
                 Marshal.GetFunctionPointerForDelegate(pTarget_AvailabilityCallback));
         }
 
-        internal void Target_PrintCallback(int Type, int Len, string Data)
+        internal void Target_PrintCallback(string IPAddr, int Type, int Len, string Data)
         {
-            ProcPrint?.Invoke(null, new ProcPrintEvent(Type, Len, Data));
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
         }
 
-        internal void Proc_InterceptCallback(int Reason, IntPtr Registers)
+        internal void Proc_InterceptCallback(string IPAddr, int Reason, IntPtr Registers)
         {
-            OrbisLib.registers reg = (OrbisLib.registers)Marshal.PtrToStructure(Registers, typeof(OrbisLib.registers));
-
-            ProcIntercept?.Invoke(null, new ProcInterceptEvent(Reason, reg));
+            
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
         }
 
-        internal void Proc_ContinueCallback()
+        internal void Proc_ContinueCallback(string IPAddr)
         {
-            ProcContinue?.Invoke(null, new ProcContinueEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcContinueEvent(IPAddr);
         }
 
-        internal void Proc_DieCallback()
+        internal void Proc_DieCallback(string IPAddr)
         {
-            ProcDie?.Invoke(null, new ProcDieEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcDieEvent(IPAddr);
         }
 
-        internal void Proc_AttachCallback(string NewProcName)
+        internal void Proc_AttachCallback(string IPAddr, string NewProcName)
         {
-            ProcAttach?.Invoke(null, new ProcAttachEvent(NewProcName));
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName);
         }
 
-        internal void Proc_DetachCallback()
+        internal void Proc_DetachCallback(string IPAddr)
         {
-            ProcDetach?.Invoke(null, new ProcDetachEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseProcDetachEvent(IPAddr);
         }
 
-        internal void Target_SuspendCallback()
+        internal void Target_SuspendCallback(string IPAddr)
         {
-            TargetSuspend?.Invoke(null, new TargetSuspendEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseTargetSuspendEvent(IPAddr);
         }
 
-        internal void Target_ResumeCallback()
+        internal void Target_ResumeCallback(string IPAddr)
         {
-            TargetResume?.Invoke(null, new TargetResumeEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseTargetResumeEvent(IPAddr);
         }
 
-        internal void Target_ShutdownCallback()
+        internal void Target_ShutdownCallback(string IPAddr)
         {
-            TargetShutdown?.Invoke(null, new TargetShutdownEvent());
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseTargetShutdownEvent(IPAddr);
         }
 
-        internal void Target_NewTitleCallback(string TitleID)
+        internal void Target_NewTitleCallback(string IPAddr, string TitleID)
         {
-            TargetNewTitle?.Invoke(null, new TargetNewTitleEvent(TitleID));
+            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+                Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID);
         }
 
         internal void DB_TouchedCallback()
@@ -195,83 +208,6 @@ namespace OrbisSuite
             {
                 TargetUnAvailable?.Invoke(null, new TargetUnAvailableEvent(TargetName));
             }
-        }
-
-        
-    }
-    public class ProcPrintEvent : EventArgs
-    {
-        public int Type { get; private set; }
-        public int Len { get; private set; }
-        public string Data { get; private set; }
-
-        public ProcPrintEvent(int Type, int Len, string Data)
-        {
-            this.Type = Type;
-            this.Len = Len;
-            this.Data = Data;
-        }
-    }
-
-    public class ProcInterceptEvent : EventArgs
-    {
-        public int Reason { get; private set; }
-        public OrbisLib.registers reg { get; private set; }
-
-        public ProcInterceptEvent(int Reason, OrbisLib.registers reg)
-        {
-            this.Reason = Reason;
-            this.reg = reg;
-        }
-    }
-
-    public class ProcContinueEvent : EventArgs
-    {
-        public ProcContinueEvent() { }
-    }
-
-    public class ProcDieEvent : EventArgs
-    {
-        public ProcDieEvent() { }
-    }
-
-    public class ProcAttachEvent : EventArgs
-    {
-        public string NewProcName { get; private set; }
-
-        public ProcAttachEvent(string NewProcName)
-        {
-            this.NewProcName = NewProcName;
-        }
-    }
-
-    public class ProcDetachEvent : EventArgs
-    {
-        public ProcDetachEvent() { }
-    }
-
-    public class TargetSuspendEvent : EventArgs
-    {
-        public TargetSuspendEvent() { }
-    }
-
-    public class TargetResumeEvent : EventArgs
-    {
-        public TargetResumeEvent() { }
-    }
-
-    public class TargetShutdownEvent : EventArgs
-    { 
-        public TargetShutdownEvent() { }
-    }
-
-    public class TargetNewTitleEvent : EventArgs
-    {
-        public string TitleID { get; private set; }
-
-        public TargetNewTitleEvent(string TitleID)
-        {
-            this.TitleID = TitleID;
         }
     }
 

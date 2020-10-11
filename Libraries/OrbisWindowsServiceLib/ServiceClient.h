@@ -70,6 +70,7 @@ struct reg {
 struct TargetCommandPacket_s
 {
 	int CommandIndex;
+	char IPAddr[16];
 	union
 	{
 		char ProcName[0x20];

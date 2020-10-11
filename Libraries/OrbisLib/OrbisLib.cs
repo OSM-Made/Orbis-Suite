@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -106,22 +107,53 @@ namespace OrbisSuite
 
         #region Internal Class Defines
 
+        private Target Internal_DefaultTarget;
+        public Target DefaultTarget
+        {
+            get
+            {
+                if (Internal_DefaultTarget == null)
+                    return Internal_DefaultTarget = new Target(TargetManagement.GetDefault());
+                else
+                {
+                    Internal_DefaultTarget.Info = TargetManagement.GetDefault();
+                    return Internal_DefaultTarget;
+                }
+            }
+        }
+
+        private Dictionary<string, Target> Internal_Targets = new Dictionary<string, Target>();
+        public Dictionary<string, Target> Target
+        {
+            get
+            {
+                //Updates the dictionary every time its referenced to make sure its up to date.
+                //Need to test and see if the overhead on this is too much.
+                Internal_Targets.Clear();
+                List<TargetInfo> TargetList = TargetManagement.GetTargetList();
+
+                foreach(TargetInfo TargetInfo in TargetList)
+                {
+                    if (Internal_Targets.ContainsKey(TargetInfo.Name))
+                        Internal_Targets[TargetInfo.Name].Info = TargetInfo;
+                    else
+                        Internal_Targets.Add(TargetInfo.Name, new Target(TargetInfo));
+                }
+
+                return Internal_Targets;
+            }
+        }
+
         private Events Internal_Events;
         public Events Events
         {
             get { return Internal_Events ?? (Internal_Events = new Events(this)); }
         }
 
-        private Payload Internal_Payload;
-        public Payload Payload
+        private TargetManagement Internal_TargetManagement;
+        public TargetManagement TargetManagement
         {
-            get { return Internal_Payload ?? (Internal_Payload = new Payload()); }
-        }
-
-        private Target Internal_Target;
-        public Target Target
-        {
-            get { return Internal_Target ?? (Internal_Target = new Target(this)); }
+            get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement()); }
         }
 
         private Classes.Settings Internal_Settings;

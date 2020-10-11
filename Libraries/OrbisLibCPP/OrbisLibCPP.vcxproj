@@ -215,12 +215,13 @@
     <ClInclude Include="OrbisLib.hpp" />
     <ClInclude Include="OrbisProc.hpp" />
     <ClInclude Include="OrbisService.hpp" />
+    <ClInclude Include="OrbisSettings.hpp" />
     <ClInclude Include="OrbisTarget.hpp" />
+    <ClInclude Include="OrbisTargetManagement.hpp" />
     <ClInclude Include="SocketListener.hpp" />
     <ClInclude Include="Sockets.hpp" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="stdafx.hpp" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="Utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +232,9 @@
     <ClCompile Include="OrbisLib.cpp" />
     <ClCompile Include="OrbisProc.cpp" />
     <ClCompile Include="OrbisService.cpp" />
+    <ClCompile Include="OrbisSettings.cpp" />
     <ClCompile Include="OrbisTarget.cpp" />
+    <ClCompile Include="OrbisTargetManagement.cpp" />
     <ClCompile Include="SocketListener.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="sqlite3.c">

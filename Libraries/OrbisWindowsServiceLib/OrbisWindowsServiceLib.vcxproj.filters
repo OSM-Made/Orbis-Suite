@@ -39,6 +39,9 @@
     <ClInclude Include="ServiceClient.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceTargetWatcher.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -57,6 +60,9 @@
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="ServiceClient.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceTargetWatcher.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>

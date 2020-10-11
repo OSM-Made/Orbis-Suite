@@ -27,7 +27,7 @@ namespace OrbisSuite.Dialog
 
         public void UpdateDetails()
         {
-            DetailedTargetInfo Info = PS4.Target.GetInfo(TargetName);
+            DetailedTargetInfo Info = PS4.TargetManagement.GetInfo(TargetName);
 
             SDKVersion.Text = Info.SDKVersion;
             SoftwareVersion.Text = Info.SoftwareVersion;

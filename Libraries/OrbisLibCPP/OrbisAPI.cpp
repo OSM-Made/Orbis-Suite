@@ -17,10 +17,10 @@ int OrbisAPI::Connect(Sockets** Sockin, char* IPAddr)
 	//Get the default Target IP or custom set IP if neither we return fail.
 	if (IPAddr == NULL || !strcmp(IPAddr, ""))
 	{
-		if (orbisLib->Target->Settings.DefaultTarget.IPAddr == NULL || !strcmp(orbisLib->Target->Settings.DefaultTarget.IPAddr, ""))
+		if (orbisLib->Settings->DefaultTarget.IPAddr == NULL || !strcmp(orbisLib->Settings->DefaultTarget.IPAddr, ""))
 			return API_ERROR_NOTARGET;
 
-		Sock = new Sockets(orbisLib->Target->Settings.DefaultTarget.IPAddr, this->Port);
+		Sock = new Sockets(orbisLib->Settings->DefaultTarget.IPAddr, this->Port);
 	}
 	else
 		Sock = new Sockets(IPAddr, this->Port);

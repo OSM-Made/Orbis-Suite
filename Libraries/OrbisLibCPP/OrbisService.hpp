@@ -71,6 +71,7 @@ struct reg {
 struct TargetCommandPacket_s
 {
 	int CommandIndex;
+	char IPAddr[16];
 	union
 	{
 		char ProcName[0x20];
@@ -96,16 +97,16 @@ struct TargetCommandPacket_s
 	};
 };
 
-typedef void(*Target_Print_Callback)(int Type, int Len, char* Data);
-typedef void(*Proc_Intercept_Callback)(int Reason, reg* Registers);
-typedef void(*Proc_Continue_Callback)();
-typedef void(*Proc_Die_Callback)();
-typedef void(*Proc_Attach_Callback)(char* NewProc);
-typedef void(*Proc_Detach_Callback)();
-typedef void(*Target_Suspend_Callback)();
-typedef void(*Target_Resume_Callback)();
-typedef void(*Target_Shutdown_Callback)();
-typedef void(*Target_NewTitle_Callback)(char* NewTitle);
+typedef void(*Target_Print_Callback)(char* IPAddr, int Type, int Len, char* Data);
+typedef void(*Proc_Intercept_Callback)(char* IPAddr, int Reason, reg* Registers);
+typedef void(*Proc_Continue_Callback)(char* IPAddr);
+typedef void(*Proc_Die_Callback)(char* IPAddr);
+typedef void(*Proc_Attach_Callback)(char* IPAddr, char* NewProc);
+typedef void(*Proc_Detach_Callback)(char* IPAddr);
+typedef void(*Target_Suspend_Callback)(char* IPAddr);
+typedef void(*Target_Resume_Callback)(char* IPAddr);
+typedef void(*Target_Shutdown_Callback)(char* IPAddr);
+typedef void(*Target_NewTitle_Callback)(char* IPAddr, char* NewTitle);
 typedef void(*DB_Touched_Callback)();
 typedef void(*Target_Availability_Callback)(bool Available, char* NewTargetData);
 

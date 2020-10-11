@@ -30,7 +30,7 @@ namespace OrbisSuite.Dialog
         public void RefreshTargetList()
         {
             DefaultTargetComboBox.Items.Clear();
-            List<TargetInfo> TargetList = PS4.Target.GetTargetList();
+            List<TargetInfo> TargetList = PS4.TargetManagement.GetTargetList();
             foreach (TargetInfo Target in TargetList)
             {
                 if (Target.Default)

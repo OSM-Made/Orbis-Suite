@@ -211,6 +211,7 @@
   <ItemGroup>
     <ClInclude Include="SerialComHelper.h" />
     <ClInclude Include="ServiceClient.h" />
+    <ClInclude Include="ServiceTargetWatcher.h" />
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="SocketListener.h" />
     <ClInclude Include="stdafx.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SerialComHelper.cpp" />
     <ClCompile Include="ServiceClient.cpp" />
+    <ClCompile Include="ServiceTargetWatcher.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="SocketListener.cpp" />
     <ClCompile Include="stdafx.cpp">

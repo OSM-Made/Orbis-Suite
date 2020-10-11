@@ -51,21 +51,15 @@ namespace nsOrbisNeighborhood
             UpdateTargetList();
             UpdateSettings();
 
-            //Register Events
+            //Register Global Events
             PS4.Events.TargetAvailable += PS4_TargetAvailable;
             PS4.Events.TargetUnAvailable += PS4_TargetUnAvailable;
-            PS4.Events.TargetNewTitle += Events_TargetNewTitle;
             PS4.Events.DBTouched += Events_DBTouched;
         }
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
         {
             ExecuteSecure(() => UpdateSettings());
-            ExecuteSecure(() => UpdateTargetList());
-        }
-
-        private void Events_TargetNewTitle(object sender, TargetNewTitleEvent e)
-        {
             ExecuteSecure(() => UpdateTargetList());
         }
 
@@ -79,30 +73,41 @@ namespace nsOrbisNeighborhood
             ExecuteSecure(() => UpdateTargetList());
         }
 
+        public void UpdateCurrentProc()
+        {
+            
+        }
+
         public void UpdateTargetList()
         {
             SetStatus("Updating List...");
 
             try
             {
-                if(TargetList.Rows.Count > PS4.Target.GetTargetCount())
+                if(TargetList.Rows.Count > PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
 
-                DefaultTargetLabel.Text = "N/A";
+                DefaultTargetLabel.Text = "Target: N/A";
 
                 int LoopCount = 0;
-                List<TargetInfo> Targets = PS4.Target.GetTargetList();
+                List<TargetInfo> Targets = PS4.TargetManagement.GetTargetList();
 
                 foreach (TargetInfo Target in Targets)
                 {
-                    object[] obj = { Target.Name.Equals(PS4.Target.GetDefault().Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
+                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.GetDefault().Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
                     if (TargetList.Rows.Count <= LoopCount)
                         TargetList.Rows.Add(obj);
                     else
                         TargetList.Rows[LoopCount].SetValues(obj);
 
-                    if(Target.Name.Equals(PS4.Target.GetDefault().Name))
+                    if (Target.Name.Equals(PS4.TargetManagement.GetDefault().Name))
+                    {
                         DefaultTargetLabel.Text = Target.Name;
+                        if (Target.Attached)
+                            CurrentProcLabel.Text = "Process: " + Target.CurrentProc;
+                        else
+                            CurrentProcLabel.Text = "Process: N/A";
+                    }
 
                     LoopCount++;
                 }
@@ -170,8 +175,12 @@ namespace nsOrbisNeighborhood
 
         private void AddTarget_Button_Click(object sender, EventArgs e)
         {
-            if (PS4.Dialogs.AddTarget() == DialogResult.OK)
-                UpdateTargetList();
+            List<ProcessInfo> ProcList = PS4.DefaultTarget.Process.GetList();
+            foreach (ProcessInfo Proc in ProcList)
+                Console.WriteLine("{0} {1}", Proc.PID, Proc.Name);
+
+            //if (PS4.Dialogs.AddTarget() == DialogResult.OK)
+            //    UpdateTargetList();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
@@ -204,10 +213,10 @@ namespace nsOrbisNeighborhood
                 if (selectedCellCount > 0)
                 {
                     int index = TargetList.SelectedRows[0].Index;
-                    string IPAddress = Convert.ToString(TargetList.Rows[index].Cells["mIPAddress"].Value);
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
 
 
-                    PS4.Target.Reboot(IPAddress);
+                    PS4.Target[TargetName].Reboot();
                 }
             }
             catch
@@ -224,9 +233,9 @@ namespace nsOrbisNeighborhood
                 if (selectedCellCount > 0)
                 {
                     int index = TargetList.SelectedRows[0].Index;
-                    string IPAddress = Convert.ToString(TargetList.Rows[index].Cells["mIPAddress"].Value);
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
 
-                    PS4.Target.Reboot(IPAddress);
+                    PS4.Target[TargetName].Reboot();
                 }
             }
             catch
@@ -243,9 +252,9 @@ namespace nsOrbisNeighborhood
                 if (selectedCellCount > 0)
                 {
                     int index = TargetList.SelectedRows[0].Index;
-                    string IPAddress = Convert.ToString(TargetList.Rows[index].Cells["mIPAddress"].Value);
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
 
-                    PS4.Target.Shutdown(IPAddress);
+                    PS4.Target[TargetName].Shutdown();
                 }
             }
             catch
@@ -262,9 +271,9 @@ namespace nsOrbisNeighborhood
                 if (selectedCellCount > 0)
                 {
                     int index = TargetList.SelectedRows[0].Index;
-                    string IPAddress = Convert.ToString(TargetList.Rows[index].Cells["mIPAddress"].Value);
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
 
-                    PS4.Target.Suspend(IPAddress);
+                    PS4.Target[TargetName].Suspend();
                 }
             }
             catch
@@ -283,7 +292,7 @@ namespace nsOrbisNeighborhood
                     int index = TargetList.SelectedRows[0].Index;
                     string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
 
-                    PS4.Target.SetDefault(TargetName);
+                    PS4.Target[TargetName].SetDefault();
 
                     UpdateTargetList();
                 }
@@ -326,7 +335,8 @@ namespace nsOrbisNeighborhood
 
                     if (DarkMessageBox.ShowInformation("Are you sure you want to delete Target \"" + TargetName + "\"?", "Delete Target?", DarkDialogButton.YesNo) == DialogResult.Yes)
                     {
-                        PS4.Target.DeleteTarget(TargetName);
+                        PS4.Target[TargetName].Delete();
+
                         UpdateTargetList();
                     }
                 }

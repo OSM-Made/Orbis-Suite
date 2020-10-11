@@ -65,61 +65,62 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 
 	case CMD_INTERCEPT:
 		if (orbisService->Proc_Intercept)
-			orbisService->Proc_Intercept(Packet->Break.Reason, &Packet->Break.Registers);
+			orbisService->Proc_Intercept(Packet->IPAddr, Packet->Break.Reason, &Packet->Break.Registers);
 		break;
 
 	case CMD_CONTINUE:
 		if (orbisService->Proc_Continue)
-			orbisService->Proc_Continue();
+			orbisService->Proc_Continue(Packet->IPAddr);
 		break;
 
 
 	case CMD_PROC_DIE:
 		if (orbisService->Proc_Die)
-			orbisService->Proc_Die();
+			orbisService->Proc_Die(Packet->IPAddr);
 		break;
 
 	case CMD_PROC_ATTACH:
 		if (orbisService->Proc_Attach)
-			orbisService->Proc_Attach(Packet->ProcName);
+			orbisService->Proc_Attach(Packet->IPAddr, Packet->ProcName);
 		break;
 
 	case CMD_PROC_DETACH:
 		if (orbisService->Proc_Detach)
-			orbisService->Proc_Detach();
+			orbisService->Proc_Detach(Packet->IPAddr);
 		break;
 
 
 	case CMD_TARGET_SUSPEND:
 		if (orbisService->Target_Suspend)
-			orbisService->Target_Suspend();
+			orbisService->Target_Suspend(Packet->IPAddr);
 		break;
 
 	case CMD_TARGET_RESUME:
 		if (orbisService->Target_Resume)
-			orbisService->Target_Resume();
+			orbisService->Target_Resume(Packet->IPAddr);
 		break;
 
 	case CMD_TARGET_SHUTDOWN:
 		if (orbisService->Target_Shutdown)
-			orbisService->Target_Shutdown();
+			orbisService->Target_Shutdown(Packet->IPAddr);
+		break;
+
+	case CMD_TARGET_NEWTITLE:
+		if (orbisService->Target_NewTitle)
+			orbisService->Target_NewTitle(Packet->IPAddr, Packet->TitleChange.TitleID);
 		break;
 
 
 	case CMD_DB_TOUCHED:
-		orbisService->orbisLib->Target->UpdateSettings();
+		orbisService->orbisLib->Settings->UpdateSettings();
+		orbisService->orbisLib->TargetManagement->UpdateTargets();
 
 		if (orbisService->DB_Touched)
 			orbisService->DB_Touched();
 		break;
 
-	case CMD_TARGET_NEWTITLE:
-		if (orbisService->Target_NewTitle)
-			orbisService->Target_NewTitle(Packet->TitleChange.TitleID);
-		break;
-
 	case CMD_TARGET_AVAILABILITY:
-		orbisService->orbisLib->Target->UpdateSettings();
+		orbisService->orbisLib->TargetManagement->UpdateTargets();
 
 		if(orbisService->Target_Availability)
 			orbisService->Target_Availability(Packet->Target.Available, (char*)Packet->Target.TargetName);
@@ -341,7 +342,7 @@ void OrbisService::HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket)
 	}
 
 	if (this->Target_Print)
-		this->Target_Print(Packet->Print.Type, Packet->Print.Len, Data);
+		this->Target_Print(Packet->IPAddr, Packet->Print.Type, Packet->Print.Len, Data);
 
 	free(Data);
 }

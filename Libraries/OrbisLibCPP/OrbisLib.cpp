@@ -8,6 +8,8 @@ OrbisLib::OrbisLib()
 	this->Target = new OrbisTarget(this);
 	this->Debugger = new OrbisDebugger(this);
 	this->API = new OrbisAPI(this);
+	this->Settings = new OrbisSettings(this);
+	this->TargetManagement = new OrbisTargetManagement(this);
 
 	//Since we need to use this dll in the windows service we need to add a check
 	if(!IsWinService)

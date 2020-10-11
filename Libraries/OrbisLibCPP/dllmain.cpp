@@ -38,83 +38,23 @@ extern "C"  __declspec(dllexport) void OrbisService_RegisterCallBacks(
 
 #pragma region OrbisLib
 
-extern "C" __declspec(dllexport) int TestCommunications(const char* IPAddr)
+extern "C" __declspec(dllexport) int TestCommunications(char* IPAddr)
 {
-	return orbisLib->TestCommunications((char*)IPAddr);
+	return orbisLib->TestCommunications(IPAddr);
+}
+
+#pragma endregion
+
+#pragma region OrbisProc
+
+extern "C" __declspec(dllexport) int GetProcList(char* IPAddr, int32_t* ProcCount, char* List)
+{
+	return orbisLib->Proc->GetList(IPAddr, ProcCount, List);
 }
 
 #pragma endregion
 
 #pragma region OrbisTarget
-
-extern "C" __declspec(dllexport) bool DoesTargetExist(const char* TargetName)
-{
-	return orbisLib->Target->DoesTargetExist(TargetName);
-}
-
-extern "C" __declspec(dllexport) bool DoesTargetExistIP(const char* IPAddr)
-{
-	return orbisLib->Target->DoesTargetExistIP(IPAddr);
-}
-
-extern "C" __declspec(dllexport) bool GetTarget(const char* TargetName, DB_TargetInfo* Out)
-{
-	return orbisLib->Target->GetTarget(TargetName, Out);
-}
-
-extern "C" __declspec(dllexport) bool SetTarget(const char* TargetName, bool Default, const char* NewTargetName, const char* IPAddr, int Firmware)
-{
-	DB_TargetInfo In;
-	In.Default = Default;
-	strcpy_s(In.Name, NewTargetName);
-	strcpy_s(In.IPAddr, IPAddr);
-	In.Firmware = Firmware;
-
-	return orbisLib->Target->SetTarget(TargetName, In);
-}
-
-extern "C" __declspec(dllexport) bool DeleteTarget(const char* TargetName)
-{
-	return orbisLib->Target->DeleteTarget(TargetName);
-}
-
-extern "C" __declspec(dllexport) bool NewTarget(bool Default, const char* TargetName, const char* IPAddr, int Firmware)
-{
-	DB_TargetInfo In;
-	In.Default = Default;
-	strcpy_s(In.Name, TargetName);
-	strcpy_s(In.IPAddr, IPAddr);
-	In.Firmware = Firmware;
-
-	return orbisLib->Target->NewTarget(In);
-}
-
-extern "C" __declspec(dllexport) int GetTargetCount()
-{
-	return orbisLib->Target->TargetCount;
-}
-
-extern "C" __declspec(dllexport) int GetTargets(uint64_t* Targets)
-{
-	*Targets = (uint64_t)&orbisLib->Target->Targets;
-	return orbisLib->Target->TargetCount;
-}
-
-extern "C" __declspec(dllexport) void GetDefaultTarget(DB_TargetInfo* DefaultTarget)
-{
-	*DefaultTarget = orbisLib->Target->Settings.DefaultTarget;
-}
-
-extern "C" __declspec(dllexport) void SetDefault(const char* TargetName)
-{
-	orbisLib->Target->SetDefaultTarget(TargetName);
-}
-
-//TODO: Remove
-/*extern "C" __declspec(dllexport) int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
-{
-	return orbisLib->Target->GetInfo(IPAddr, TargetInfo);
-}*/
 
 extern "C" __declspec(dllexport) int Shutdown(char* IPAddr)
 {
@@ -158,123 +98,190 @@ extern "C" __declspec(dllexport) int DumpProcess(char* IPAddr, const char* ProcN
 
 #pragma endregion
 
+#pragma region TargetManagement
+
+extern "C" __declspec(dllexport) bool DoesTargetExist(const char* TargetName)
+{
+	return orbisLib->TargetManagement->DoesTargetExist(TargetName);
+}
+
+extern "C" __declspec(dllexport) bool DoesTargetExistIP(const char* IPAddr)
+{
+	return orbisLib->TargetManagement->DoesTargetExistIP(IPAddr);
+}
+
+extern "C" __declspec(dllexport) bool GetTarget(const char* TargetName, DB_TargetInfo* Out)
+{
+	return orbisLib->TargetManagement->GetTarget(TargetName, Out);
+}
+
+extern "C" __declspec(dllexport) bool SetTarget(const char* TargetName, bool Default, const char* NewTargetName, const char* IPAddr, int Firmware)
+{
+	DB_TargetInfo In;
+	In.Default = Default;
+	strcpy_s(In.Name, NewTargetName);
+	strcpy_s(In.IPAddr, IPAddr);
+	In.Firmware = Firmware;
+
+	return orbisLib->TargetManagement->SetTarget(TargetName, In);
+}
+
+extern "C" __declspec(dllexport) bool DeleteTarget(const char* TargetName)
+{
+	return orbisLib->TargetManagement->DeleteTarget(TargetName);
+}
+
+extern "C" __declspec(dllexport) bool NewTarget(bool Default, const char* TargetName, const char* IPAddr, int Firmware)
+{
+	DB_TargetInfo In;
+	In.Default = Default;
+	strcpy_s(In.Name, TargetName);
+	strcpy_s(In.IPAddr, IPAddr);
+	In.Firmware = Firmware;
+
+	return orbisLib->TargetManagement->NewTarget(In);
+}
+
+extern "C" __declspec(dllexport) int GetTargetCount()
+{
+	return orbisLib->TargetManagement->TargetCount;
+}
+
+extern "C" __declspec(dllexport) int GetTargets(uint64_t* Targets)
+{
+	*Targets = (uint64_t)&orbisLib->TargetManagement->Targets;
+	return orbisLib->TargetManagement->TargetCount;
+}
+
+extern "C" __declspec(dllexport) void GetDefaultTarget(DB_TargetInfo* DefaultTarget)
+{
+	*DefaultTarget = orbisLib->Settings->DefaultTarget;
+}
+
+extern "C" __declspec(dllexport) void SetDefault(const char* TargetName)
+{
+	orbisLib->TargetManagement->SetDefaultTarget(TargetName);
+}
+
+#pragma endregion
+
 #pragma region Settings
 
 extern "C" __declspec(dllexport) bool GetAutoLoadPayload()
 {
-	return orbisLib->Target->Settings.AutoLoadPayload;
+	return orbisLib->Settings->AutoLoadPayload;
 }
 
 extern "C" __declspec(dllexport) void SetAutoLoadPayload(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("AutoLoadPayload", Value);
+	orbisLib->Settings->SetSettingbyName("AutoLoadPayload", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetStartOnBoot()
 {
-	return orbisLib->Target->Settings.StartOnBoot;
+	return orbisLib->Settings->StartOnBoot;
 }
 
 extern "C" __declspec(dllexport) void SetStartOnBoot(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("StartOnBoot", Value);
+	orbisLib->Settings->SetSettingbyName("StartOnBoot", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetDetectGame()
 {
-	return orbisLib->Target->Settings.DetectGame;
+	return orbisLib->Settings->DetectGame;
 }
 
 extern "C" __declspec(dllexport) void SetDetectGame(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("DetectGame", Value);
+	orbisLib->Settings->SetSettingbyName("DetectGame", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetCOMPort()
 {
-	return &orbisLib->Target->Settings.COMPort;
+	return &orbisLib->Settings->COMPort;
 }
 
 extern "C" __declspec(dllexport) void SetCOMPort(const char* Value)
 {
-	orbisLib->Target->SetSettingbyName("COMPort", (char*)Value);
+	orbisLib->Settings->SetSettingbyName("COMPort", (char*)Value);
 }
 
 extern "C" __declspec(dllexport) int GetServicePort()
 {
-	return orbisLib->Target->Settings.ServicePort;
+	return orbisLib->Settings->ServicePort;
 }
 
 extern "C" __declspec(dllexport) void SetServicePort(int Value)
 {
-	orbisLib->Target->SetSettingbyName("ServicePort", Value);
+	orbisLib->Settings->SetSettingbyName("ServicePort", Value);
 }
 
 extern "C" __declspec(dllexport) int GetAPIPort()
 {
-	return orbisLib->Target->Settings.APIPort;
+	return orbisLib->Settings->APIPort;
 }
 
 extern "C" __declspec(dllexport) void SetAPIPort(int Value)
 {
-	orbisLib->Target->SetSettingbyName("APIPort", Value);
+	orbisLib->Settings->SetSettingbyName("APIPort", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetCensorIDPS()
 {
-	return orbisLib->Target->Settings.CensorIDPS;
+	return orbisLib->Settings->CensorIDPS;
 }
 
 extern "C" __declspec(dllexport) void SetCensorIDPS(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("CensorIDPS", Value);
+	orbisLib->Settings->SetSettingbyName("CensorIDPS", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetCensorPSID()
 {
-	return orbisLib->Target->Settings.CensorPSID;
+	return orbisLib->Settings->CensorPSID;
 }
 
 extern "C" __declspec(dllexport) void SetCensorPSID(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("CensorPSID", Value);
+	orbisLib->Settings->SetSettingbyName("CensorPSID", Value);
 }
 
 extern "C" __declspec(dllexport) bool GetDebug()
 {
-	return orbisLib->Target->Settings.Debug;
+	return orbisLib->Settings->Debug;
 }
 
 extern "C" __declspec(dllexport) void SetDebug(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("Debug", Value);
+	orbisLib->Settings->SetSettingbyName("Debug", Value);
 }
 extern "C" __declspec(dllexport) bool GetCreateLogs()
 {
-	return orbisLib->Target->Settings.CreateLogs;
+	return orbisLib->Settings->CreateLogs;
 }
 
 extern "C" __declspec(dllexport) void SetCreateLogs(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("CreateLogs", Value);
+	orbisLib->Settings->SetSettingbyName("CreateLogs", Value);
 }
 extern "C" __declspec(dllexport) bool GetShowTimestamps()
 {
-	return orbisLib->Target->Settings.ShowTimestamps;
+	return orbisLib->Settings->ShowTimestamps;
 }
 
 extern "C" __declspec(dllexport) void SetShowTimestamps(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("ShowTimestamps", Value);
+	orbisLib->Settings->SetSettingbyName("ShowTimestamps", Value);
 }
 extern "C" __declspec(dllexport) bool GetWordWrap()
 {
-	return orbisLib->Target->Settings.WordWrap;
+	return orbisLib->Settings->WordWrap;
 }
 
 extern "C" __declspec(dllexport) void SetWordWrap(bool Value)
 {
-	orbisLib->Target->SetSettingbyName("WordWrap", Value);
+	orbisLib->Settings->SetSettingbyName("WordWrap", Value);
 }
 
 #pragma endregion

@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OrbisSuite.Classes
 {
-    public class Target
+    public class TargetManagement
     {
-        internal OrbisLib PS4;
-
-        public Target(OrbisLib PS4)
+        public TargetManagement()
         {
-            this.PS4 = PS4;
+
         }
 
         public bool DoesTargetExist(string TargetName)
@@ -34,7 +29,7 @@ namespace OrbisSuite.Classes
             DB_TargetInfo RawTargetInfo;
             bool Result = Imports.GetTarget(TargetName, out RawTargetInfo);
 
-            Out = new TargetInfo(RawTargetInfo.Default, 
+            Out = new TargetInfo(RawTargetInfo.Default,
                     Utilities.CleanByteToString(RawTargetInfo.Name),
                     Utilities.CleanByteToString(RawTargetInfo.IPAddr),
                     (RawTargetInfo.Firmware / 100.0).ToString(),
@@ -42,7 +37,9 @@ namespace OrbisSuite.Classes
                     Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
                     Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
                     Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType));
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
+                    RawTargetInfo.Attached,
+                    Utilities.CleanByteToString(RawTargetInfo.CurrentProc));
 
             return Result;
         }
@@ -79,15 +76,17 @@ namespace OrbisSuite.Classes
                 DB_TargetInfo RawTargetInfo = (DB_TargetInfo)Marshal.PtrToStructure(ptr, typeof(DB_TargetInfo));
                 ptr += Marshal.SizeOf(typeof(DB_TargetInfo));
 
-                List.Add(new TargetInfo(RawTargetInfo.Default, 
-                    Utilities.CleanByteToString(RawTargetInfo.Name), 
-                    Utilities.CleanByteToString(RawTargetInfo.IPAddr), 
-                    (RawTargetInfo.Firmware / 100.0).ToString(), 
-                    RawTargetInfo.Available, 
-                    Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID), 
-                    Utilities.CleanByteToString(RawTargetInfo.SDKVersion), 
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleName), 
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType)));
+                List.Add(new TargetInfo(RawTargetInfo.Default,
+                    Utilities.CleanByteToString(RawTargetInfo.Name),
+                    Utilities.CleanByteToString(RawTargetInfo.IPAddr),
+                    (RawTargetInfo.Firmware / 100.0).ToString(),
+                    RawTargetInfo.Available,
+                    Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
+                    Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
+                    RawTargetInfo.Attached,
+                    Utilities.CleanByteToString(RawTargetInfo.CurrentProc)));
             }
 
             return List;
@@ -98,7 +97,7 @@ namespace OrbisSuite.Classes
             DB_TargetInfo RawTargetInfo;
             Imports.GetDefaultTarget(out RawTargetInfo);
 
-            return new TargetInfo(RawTargetInfo.Default, 
+            return new TargetInfo(RawTargetInfo.Default,
                     Utilities.CleanByteToString(RawTargetInfo.Name),
                     Utilities.CleanByteToString(RawTargetInfo.IPAddr),
                     (RawTargetInfo.Firmware / 100.0).ToString(),
@@ -106,7 +105,9 @@ namespace OrbisSuite.Classes
                     Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
                     Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
                     Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType));
+                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
+                    RawTargetInfo.Attached,
+                    Utilities.CleanByteToString(RawTargetInfo.CurrentProc));
         }
 
         public void SetDefault(string TargetName)
@@ -119,74 +120,15 @@ namespace OrbisSuite.Classes
             DB_TargetInfo RawTargetInfo;
             Imports.GetTarget(TargetName, out RawTargetInfo);
 
-            return new DetailedTargetInfo(Utilities.CleanByteToString(RawTargetInfo.SDKVersion), 
-                Utilities.CleanByteToString(RawTargetInfo.SoftwareVersion), 
-                RawTargetInfo.CPUTemp, 
+            return new DetailedTargetInfo(Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+                Utilities.CleanByteToString(RawTargetInfo.SoftwareVersion),
+                RawTargetInfo.CPUTemp,
                 RawTargetInfo.SOCTemp,
                 Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
                 Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
                 Utilities.CleanByteToString(RawTargetInfo.IDPS),
                 Utilities.CleanByteToString(RawTargetInfo.PSID),
                 Utilities.CleanByteToString(RawTargetInfo.ConsoleType));
-        }
-
-        public int Shutdown(string IPAddr)
-        {
-            return Imports.Shutdown(IPAddr);
-        }
-
-        public int Reboot(string IPAddr)
-        {
-            return Imports.Reboot(IPAddr);
-        }
-
-        public int Suspend(string IPAddr)
-        {
-            return Imports.Suspend(IPAddr);
-        }
-
-        public int Notify(string IPAddr, string Message)
-        {
-            return Imports.Notify(IPAddr, -1, Message);
-        }
-
-        public int Notify(string IPAddr, int Type, string Message)
-        {
-            return Imports.Notify(IPAddr, Type, Message);
-        }
-
-        public int Beep(string IPAddr, int Count)
-        {
-            return Imports.DoBeep(IPAddr, Count);
-        }
-
-        public int SetLED(string IPAddr, byte R, byte G, byte B, byte A)
-        {
-            return Imports.SetLED(IPAddr, R, G, B, A);
-        }
-
-        public int GetLED(string IPAddr, out byte R, out byte G, out byte B, out byte A)
-        {
-            return Imports.GetLED(IPAddr, out R, out G, out B, out A);
-        }
-
-        public int DumpProcess(string IPAddr, string ProcName, out UInt64 Size, byte[] Out)
-        {
-            return Imports.DumpProcess(IPAddr, ProcName, out Size, Out);
-        }
-    }
-
-    public class Targets
-    {
-        public string Name;
-        public string IPAddress;
-        public int FirmWare;
-
-        public Targets(string Name, string IPAddress, int FirmWare)
-        {
-            this.Name = Name;
-            this.IPAddress = IPAddress;
-            this.FirmWare = FirmWare;
         }
     }
 }

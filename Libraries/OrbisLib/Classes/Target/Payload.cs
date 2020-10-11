@@ -11,13 +11,20 @@ namespace OrbisSuite.Classes
 {
     public class Payload
     {
+        private Target Target;
+
+        public Payload(Target Target)
+        {
+            this.Target = Target;
+        }
+
         /// <summary>
         /// Sends Orbis Suite Payloads to Playstation 4 Console
         /// </summary>
         /// <param name="IP">PlayStation 4 IP address</param>
         /// <param name="KernelVersion">PlayStation 4 Kernel Version Ex:5.05</param>
         /// <param name="Port">Port used to recieve payload default value is 9020</param>
-        public bool InjectPayload(String IP, string KernelVersion, int Port = 9020)
+        public bool InjectPayload(int Port = 9020)
         {
             try
             {
@@ -26,9 +33,9 @@ namespace OrbisSuite.Classes
                 psocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 psocket.ReceiveTimeout = 200;
                 psocket.SendTimeout = 200;
-                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
+                psocket.Connect(new IPEndPoint(IPAddress.Parse(Target.Info.IPAddr), Port));
 
-                FileStream fPayload = File.Open(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\Payload-" + KernelVersion + ".bin", FileMode.Open);
+                FileStream fPayload = File.Open(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\Payload-" + Target.Info.Firmware + ".bin", FileMode.Open);
 
                 if (fPayload.CanRead)
                 {
@@ -72,7 +79,7 @@ namespace OrbisSuite.Classes
         /// <param name="IP">PlayStation 4 IP address</param>
         /// <param name="PayloadBuffer">Byte array of payload</param>
         /// <param name="Port">Port used to recieve payload default value is 9020</param>
-        public bool InjectPayload(String IP, byte[] PayloadBuffer, int Port = 9020)
+        public bool InjectPayload(byte[] PayloadBuffer, int Port = 9020)
         {
             try
             {
@@ -81,7 +88,7 @@ namespace OrbisSuite.Classes
                 psocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 psocket.ReceiveTimeout = 200;
                 psocket.SendTimeout = 200;
-                psocket.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
+                psocket.Connect(new IPEndPoint(IPAddress.Parse(Target.Info.IPAddr), Port));
 
                 //Send Payload
                 psocket.Send(PayloadBuffer);

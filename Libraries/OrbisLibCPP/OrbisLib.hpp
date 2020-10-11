@@ -6,6 +6,8 @@ class OrbisTarget;
 class OrbisDebugger;
 class OrbisService;
 class OrbisAPI;
+class OrbisSettings;
+class OrbisTargetManagement;
 
 class EXPORT OrbisLib
 {
@@ -17,6 +19,8 @@ public:
 	OrbisDebugger* Debugger;
 	OrbisService* Service;
 	OrbisAPI* API;
+	OrbisSettings* Settings;
+	OrbisTargetManagement* TargetManagement;
 
 	OrbisLib();
 	~OrbisLib();
