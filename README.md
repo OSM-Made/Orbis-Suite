@@ -5,14 +5,14 @@ A suite of tools used for developing things on a jailbroken PS4. Aswell as an in
 
 # TODO List
 ###### Windows Service
-- [ ] Implement into new project and recode to c++
-- [ ] Manage Callbacks
-- [ ] Signal hang to C# apps
-- [ ] Manage Socket/UART Output
-- [ ] Signal System Status to C# apps
+- [X] Implement into new project and recode to c++
+- [X] Manage Callbacks
+- [X] Signal hang to C# apps
+- [X] Manage Socket/UART Output
+- [X] Signal System Status to C# apps
 ###### Orbis Neighborhood
 - [x] Implement into new project
-- [ ] Implement Functionality
+- [X] Implement Functionality
 ###### Debugger
 - [ ] Implement into new project
 - [ ] Implement and test Breakpoints
@@ -29,20 +29,20 @@ A suite of tools used for developing things on a jailbroken PS4. Aswell as an in
 ###### Taskbar App
 - [ ] Implement into new project
 ###### C++ DLL Helper
-- [ ] Implement into new project
-- [ ] Clean up and organize code
+- [X] Implement into new project
+- [X] Clean up and organize code
 ###### OrbisLib DLL
 - [ ] Finish Implementing old features and cleaning up code
 - [ ] Add More error handling 
-- [ ] Move more functionality to the c++ DLL for better effeciency
+- [X] Move more functionality to the c++ DLL for better effeciency
 ###### Orbis Kernel ELF
 - [ ] Impliment into github project / new repository
-- [ ] Clean up unessisary code
-- [ ] Clean up Packets and make naming more consistant
-- [ ] clean up shellcode for userland processes
-- [ ] clean up call back thread
-- [ ] clean up connection management
-- [ ] clean up process management
+- [X] Clean up unessisary code
+- [X] Clean up Packets and make naming more consistant
+- [X] clean up shellcode for userland processes
+- [X] clean up call back thread
+- [X] clean up connection management
+- [X] clean up process management
 ###### Future Features
 - [ ] Callback for Remote Procedure Calls
 - [ ] module loader for games (auto load modules for games on start up with config to tell what to load)
