@@ -7,6 +7,28 @@ using System.Threading.Tasks;
 
 namespace OrbisSuite.Classes
 {
+    public class OrbisDef
+    {
+        public static string[] API_ERROR_STR =
+        {
+            "API_OK",
+            "API_ERROR_NOT_CONNECTED",
+            "API_ERROR_FAILED_TO_CONNNECT",
+            "API_ERROR_NOT_REACHABLE",
+            "API_ERROR_NOT_ATTACHED",
+            "API_ERROR_LOST_PROC",
+
+            "API_ERROR_FAIL",
+            "API_ERROR_INVALID_ADDRESS",
+
+            //Debugger
+            "API_ERROR_PROC_RUNNING",
+            "API_ERROR_DEBUGGER_NOT_ATTACHED",
+
+            "API_ERROR_NOTARGET",
+        };
+    }
+
     public class TargetInfo
     {
         public bool Default;
@@ -137,6 +159,8 @@ namespace OrbisSuite.Classes
 
         API_ERROR_NOTARGET,
     };
+
+    
 
     public class DetailedTargetInfo
     {

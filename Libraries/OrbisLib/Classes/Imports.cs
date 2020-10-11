@@ -16,6 +16,12 @@ namespace OrbisSuite.Classes
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern int GetProcList(string IPAddr, [MarshalAs(UnmanagedType.I4)] out int ProcCount, [MarshalAs(UnmanagedType.SysUInt)] IntPtr List);
 
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern API_ERRORS Attach(string IPAddr, string ProcName);
+
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern API_ERRORS Detach(string IPAddr, string ProcName);
+
         #endregion
 
         #region Target

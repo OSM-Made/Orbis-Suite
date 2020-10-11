@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.darkCheckBox9 = new DarkUI.Controls.DarkCheckBox();
             this.darkTextBox2 = new DarkUI.Controls.DarkTextBox();
             this.darkTitle3 = new DarkUI.Controls.DarkTitle();
             this.darkTitle4 = new DarkUI.Controls.DarkTitle();
@@ -48,7 +50,6 @@
             this.darkSectionPanel4 = new DarkUI.Controls.DarkSectionPanel();
             this.darkCheckBox7 = new DarkUI.Controls.DarkCheckBox();
             this.darkCheckBox8 = new DarkUI.Controls.DarkCheckBox();
-            this.darkCheckBox9 = new DarkUI.Controls.DarkCheckBox();
             this.darkSectionPanel1.SuspendLayout();
             this.darkSectionPanel2.SuspendLayout();
             this.darkSectionPanel3.SuspendLayout();
@@ -74,6 +75,15 @@
             this.darkSectionPanel1.Size = new System.Drawing.Size(236, 276);
             this.darkSectionPanel1.TabIndex = 2;
             this.darkSectionPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.darkSectionPanel1_Paint);
+            // 
+            // darkCheckBox9
+            // 
+            this.darkCheckBox9.AutoSize = true;
+            this.darkCheckBox9.Location = new System.Drawing.Point(11, 79);
+            this.darkCheckBox9.Name = "darkCheckBox9";
+            this.darkCheckBox9.Size = new System.Drawing.Size(197, 17);
+            this.darkCheckBox9.TabIndex = 11;
+            this.darkCheckBox9.Text = "Prompt attach when game Detected";
             // 
             // darkTextBox2
             // 
@@ -264,15 +274,6 @@
             this.darkCheckBox8.TabIndex = 1;
             this.darkCheckBox8.Text = "Show Timestamps";
             // 
-            // darkCheckBox9
-            // 
-            this.darkCheckBox9.AutoSize = true;
-            this.darkCheckBox9.Location = new System.Drawing.Point(11, 79);
-            this.darkCheckBox9.Name = "darkCheckBox9";
-            this.darkCheckBox9.Size = new System.Drawing.Size(197, 17);
-            this.darkCheckBox9.TabIndex = 11;
-            this.darkCheckBox9.Text = "Prompt attach when game Detected";
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +285,7 @@
             this.Controls.Add(this.darkSectionPanel1);
             this.DialogButtons = DarkUI.Forms.DarkDialogButton.OkCancel;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Settings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Orbis Suite Settings";

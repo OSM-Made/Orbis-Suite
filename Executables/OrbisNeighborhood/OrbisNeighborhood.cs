@@ -87,7 +87,7 @@ namespace nsOrbisNeighborhood
                 if(TargetList.Rows.Count > PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
 
-                DefaultTargetLabel.Text = "Target: N/A";
+                CurrentTarget.Text = "Target: N/A";
 
                 int LoopCount = 0;
                 List<TargetInfo> Targets = PS4.TargetManagement.GetTargetList();
@@ -102,11 +102,11 @@ namespace nsOrbisNeighborhood
 
                     if (Target.Name.Equals(PS4.TargetManagement.GetDefault().Name))
                     {
-                        DefaultTargetLabel.Text = Target.Name;
+                        CurrentTarget.Text = Target.Name;
                         if (Target.Attached)
-                            CurrentProcLabel.Text = "Process: " + Target.CurrentProc;
+                            CurrentProc.Text = "Process: " + Target.CurrentProc;
                         else
-                            CurrentProcLabel.Text = "Process: N/A";
+                            CurrentProc.Text = "Process: N/A";
                     }
 
                     LoopCount++;
@@ -175,12 +175,8 @@ namespace nsOrbisNeighborhood
 
         private void AddTarget_Button_Click(object sender, EventArgs e)
         {
-            List<ProcessInfo> ProcList = PS4.DefaultTarget.Process.GetList();
-            foreach (ProcessInfo Proc in ProcList)
-                Console.WriteLine("{0} {1}", Proc.PID, Proc.Name);
-
-            //if (PS4.Dialogs.AddTarget() == DialogResult.OK)
-            //    UpdateTargetList();
+            if (PS4.Dialogs.AddTarget() == DialogResult.OK)
+                UpdateTargetList();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)

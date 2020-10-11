@@ -113,7 +113,7 @@ namespace OrbisSuite
             get
             {
                 if (Internal_DefaultTarget == null)
-                    return Internal_DefaultTarget = new Target(TargetManagement.GetDefault());
+                    return Internal_DefaultTarget = new Target(this, TargetManagement.GetDefault());
                 else
                 {
                     Internal_DefaultTarget.Info = TargetManagement.GetDefault();
@@ -137,7 +137,7 @@ namespace OrbisSuite
                     if (Internal_Targets.ContainsKey(TargetInfo.Name))
                         Internal_Targets[TargetInfo.Name].Info = TargetInfo;
                     else
-                        Internal_Targets.Add(TargetInfo.Name, new Target(TargetInfo));
+                        Internal_Targets.Add(TargetInfo.Name, new Target(this, TargetInfo));
                 }
 
                 return Internal_Targets;

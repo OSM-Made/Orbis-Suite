@@ -109,6 +109,12 @@
     <Compile Include="Dialog\EditTarget.Designer.cs">
       <DependentUpon>EditTarget.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\SelectProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\SelectProcess.Designer.cs">
+      <DependentUpon>SelectProcess.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,15 +129,20 @@
     </Compile>
     <Compile Include="OrbisLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
       <Link>OrbisLibCPP.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Process_Detached.png" />
+    <None Include="Resources\Process_Attached.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Dialog\About.resx">
@@ -143,11 +154,18 @@
     <EmbeddedResource Include="Dialog\EditTarget.resx">
       <DependentUpon>EditTarget.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\SelectProcess.resx">
+      <DependentUpon>SelectProcess.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialog\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\TargetDetails.resx">
       <DependentUpon>TargetDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

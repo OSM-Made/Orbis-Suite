@@ -55,11 +55,12 @@ int OrbisProc::Attach(char* IPAddr, char* ProcName)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::Detach(char* IPAddr)
+int OrbisProc::Detach(char* IPAddr, char* ProcName)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
 	Packet.cmd = API_PROC_DETACH;
+	strcpy_s(Packet.ProcName, ProcName);
 
 	return orbisLib->API->Call(IPAddr, &Packet);
 }

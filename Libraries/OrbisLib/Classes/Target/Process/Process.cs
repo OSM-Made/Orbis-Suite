@@ -10,13 +10,20 @@ namespace OrbisSuite.Classes
     public class Process
     {
         public Memory Memory;
+        private OrbisLib PS4;
         private Target Target;
 
-        public Process(Target Target)
+        public Process(OrbisLib PS4, Target Target)
         {
+            this.PS4 = PS4;
             this.Target = Target;
 
             Memory = new Memory(Target, this);
+        }
+
+        public void SelectProcess()
+        {
+            PS4.Dialogs.SelectProcess(Target.Info.Name);
         }
 
         public List<ProcessInfo> GetList()
@@ -47,20 +54,21 @@ namespace OrbisSuite.Classes
                     ));
             }
 
-            Marshal.FreeHGlobal(ptr);
+            //Marshal.FreeHGlobal(ptr);
 
             return ProcList;
         }
 
         public API_ERRORS Attach(string ProcName)
         {
-
+            return Imports.Attach(Target.Info.IPAddr, ProcName);
         }
 
-        public API_ERRORS Detach()
+        public API_ERRORS Detach(string ProcName)
         {
-
+            return Imports.Detach(Target.Info.IPAddr, ProcName);
         }
+
     }
 
     

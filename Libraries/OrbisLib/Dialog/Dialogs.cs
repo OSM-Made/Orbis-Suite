@@ -54,5 +54,13 @@ namespace OrbisSuite.Dialog
             Settings.Close();
             return Result;
         }
+
+        public System.Windows.Forms.DialogResult SelectProcess(string TargetName)
+        {
+            SelectProcess SelectProcess = new SelectProcess(PS4, TargetName);
+            System.Windows.Forms.DialogResult Result = SelectProcess.ShowDialog();
+            SelectProcess.Close();
+            return Result;
+        }
     }
 }

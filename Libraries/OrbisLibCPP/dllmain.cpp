@@ -52,6 +52,16 @@ extern "C" __declspec(dllexport) int GetProcList(char* IPAddr, int32_t* ProcCoun
 	return orbisLib->Proc->GetList(IPAddr, ProcCount, List);
 }
 
+extern "C" __declspec(dllexport) int Attach(char* IPAddr, char* ProcName)
+{
+	return orbisLib->Proc->Attach(IPAddr, ProcName);
+}
+
+extern "C" __declspec(dllexport) int Detach(char* IPAddr, char* ProcName)
+{
+	return orbisLib->Proc->Detach(IPAddr, ProcName);
+}
+
 #pragma endregion
 
 #pragma region OrbisTarget
@@ -202,9 +212,9 @@ extern "C" __declspec(dllexport) bool GetCOMPort()
 	return &orbisLib->Settings->COMPort;
 }
 
-extern "C" __declspec(dllexport) void SetCOMPort(const char* Value)
+extern "C" __declspec(dllexport) void SetCOMPort(char* Value)
 {
-	orbisLib->Settings->SetSettingbyName("COMPort", (char*)Value);
+	orbisLib->Settings->SetSettingbyName("COMPort", Value);
 }
 
 extern "C" __declspec(dllexport) int GetServicePort()

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TargetDetails));
             this.SOCTemp = new DarkUI.Controls.DarkLabel();
             this.CPUTemp = new DarkUI.Controls.DarkLabel();
             this.ConsoleType = new DarkUI.Controls.DarkTextBox();
@@ -231,6 +232,7 @@
             this.Controls.Add(this.darkTitle3);
             this.Controls.Add(this.darkTitle1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TargetDetails";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Target Details";

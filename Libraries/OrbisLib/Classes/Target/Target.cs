@@ -12,6 +12,7 @@ namespace OrbisSuite.Classes
 {
     public class Target
     {
+        private OrbisLib PS4;
         public TargetEvents Events;
         public Debug Debug;
         public Payload Payload;
@@ -19,13 +20,14 @@ namespace OrbisSuite.Classes
         public FTP FTP;
         public TargetInfo Info;
 
-        public Target(TargetInfo TargetInfo)
+        public Target(OrbisLib PS4, TargetInfo TargetInfo)
         {
             Info = TargetInfo;
+            this.PS4 = PS4;
             Events = new TargetEvents(this);
             Debug = new Debug(this);
             Payload = new Payload(this);
-            Process = new Process(this);
+            Process = new Process(PS4, this);
             FTP = new FTP(this);
         }
 

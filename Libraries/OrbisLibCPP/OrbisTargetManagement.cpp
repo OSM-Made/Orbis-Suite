@@ -394,7 +394,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, CPUTemp=?, SOCTemp=?, CurrentTitleID=?, ConsoleName=?, IDPS=?, PSID=?, ConsoleType=? WHERE TargetName=?", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, CPUTemp=?, SOCTemp=?, CurrentTitleID=?, ConsoleName=?, IDPS=?, PSID=?, ConsoleType=?, Attached=?, CurrentProc=? WHERE TargetName=?", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -493,7 +493,25 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 11, Targets[ID].Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_int(stmt, 11, Targets[ID].Attached);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Attached: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 12, Targets[ID].CurrentProc, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind CurrentProc: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 13, Targets[ID].Name, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Name: %s\n", sqlite3_errmsg(db));

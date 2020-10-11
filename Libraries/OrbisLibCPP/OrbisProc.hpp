@@ -14,7 +14,7 @@ public:
 
 	int GetList(char* IPAddr, int32_t* ProcCount, char* List);
 	int Attach(char* IPAddr, char* ProcName);
-	int Detach(char* IPAddr);
+	int Detach(char* IPAddr, char* ProcName);
 	int GetCurrent(char* IPAddr, RESP_Proc* Out);
 	int Read(char* IPAddr, uint64_t Address, size_t Len, char* Data);
 	int Write(char* IPAddr, uint64_t Address, size_t Len, char* Data);

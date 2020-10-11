@@ -117,65 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="mDefault.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="PID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="mTargetName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ProcName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="mFirmware.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TitleID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="mIPAddress.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="Attached.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="mStatus.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mTitle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mSDKVersion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mConsoleName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mConsoleType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="TargetContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>722, 23</value>
-  </metadata>
-  <metadata name="darkStatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>450, 23</value>
-  </metadata>
-  <metadata name="darkToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>591, 23</value>
+  <metadata name="darkContextMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Settings_DropDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHTSURBVDhPrZLNK0RhFMbHGMOYssFQVj5rZmWJzFINpWxk
-        4SMLTQpF9pL8B/JRlkM2klmo8Q8oKWVLiHyV70xjZu69c/3OO+8VkpWnns55n/Occ+5773UJbNt2w/Zc
-        LtemBEBejxYl9kOfln8HhirYCoPQT2MRcYpop9PpZ0Iz9KBVEit0Wx6IPtgII5ZlbRAnMPWSx4kygNSa
-        I+0hLsMFPEHOBc6AAIc6CluYM+Aum81ekCdlgID83jCMc6294J0nlqoBDhg0juFRdWgw7OanZprmId4u
-        UrduVc1+2M2WUzHxBFdsWUIb4hgl32XQu9TIt9FrST1Oc4jDLIVNTK8wpZtrlAGQh9m8LwNkCfVFtEmn
-        OCYFB2y/RutTxS+gaUVbFFhkqgLmAQ5vshla8IF6VBU1OHsYENONBkzyJCeqyIBy2AFn5AtQNDEnOId1
-        vRiOOu9HrsJ5ELaoAQ4QOjGd6S0pjHsMWoVroqPlpMY5jvfz/SggBCisY8qI6S/IF8Iv782r29UdqxkQ
-        4wq3bD4gT2C8VB1Avj3ajtwbHjNA/tYS3Z4HYhOchhEYokG9dXl0IHeW330EaZhYptu+Q6bCQsmlieYn
-        th+RN+i6Vyj5P8Hl+gCNkZYjHqz/DwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="AddTarget_Button.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABYSURBVDhPY6AZ+P//vwAQO4AwVIg0ANUMBlAh0gBQ31Ay
-        AKgGHmAw/O/fvwIgDQMockBsANUKAVBBUsABqFYIAApQZgA2AFQENxQqRBoA6hvxBtAJMDAAABL5/4Vh
-        6nvLAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABABYAICACAAEAAQAwAQAAZgEAABAQAgABAAEAsAAAAJYCAAAwMBAAAQAEAGgGAABGAwAAICAQAAEA

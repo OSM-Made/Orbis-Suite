@@ -87,3 +87,109 @@ void OrbisSettings::UpdateSettings()
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
 }
+
+bool OrbisSettings::SetSettingbyName(const char* Name, int Value)
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return false;
+	}
+
+	char stmtString[0x200];
+	sprintf_s(stmtString, "UPDATE Settings SET %s=?", Name);
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, stmtString, -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_int(stmt, 1, (int)Value);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Value(int/bool): %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_step(stmt);
+	if (rc != SQLITE_DONE)
+	{
+		printf("Failed to step: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return false;
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	UpdateSettings();
+
+	return true;
+}
+
+bool OrbisSettings::SetSettingbyName(const char* Name, const char* Value)
+{
+	sqlite3* db;
+	char* ErrorMsg = 0;
+	int rc = 0;
+
+	if (!OpenDatabase(&db))
+	{
+		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
+
+		return false;
+	}
+
+	char stmtString[0x200];
+	sprintf_s(stmtString, "UPDATE Settings SET %s=?", Name);
+
+	sqlite3_stmt *stmt;
+	rc = sqlite3_prepare_v2(db, stmtString, -1, &stmt, NULL);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 1, (const char*)Value, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Value(text): %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_step(stmt);
+	if (rc != SQLITE_DONE)
+	{
+		printf("Failed to step: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return false;
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	UpdateSettings();
+
+	return true;
+}
