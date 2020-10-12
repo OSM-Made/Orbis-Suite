@@ -62,6 +62,66 @@ extern "C" __declspec(dllexport) int Detach(char* IPAddr, char* ProcName)
 	return orbisLib->Proc->Detach(IPAddr, ProcName);
 }
 
+extern "C" __declspec(dllexport) int GetCurrent(char* IPAddr, RESP_Proc* Out)
+{
+	return orbisLib->Proc->GetCurrent(IPAddr, Out);
+}
+
+extern "C" __declspec(dllexport) int Read(char* IPAddr, uint64_t Address, size_t Len, char* Data)
+{
+	return orbisLib->Proc->Read(IPAddr, Address, Len, Data);
+}
+
+extern "C" __declspec(dllexport) int Write(char* IPAddr, uint64_t Address, size_t Len, char* Data)
+{
+	return orbisLib->Proc->Write(IPAddr, Address, Len, Data);
+}
+
+extern "C" __declspec(dllexport) int Kill(char* IPAddr, char* ProcName)
+{
+	return orbisLib->Proc->Kill(IPAddr, ProcName);
+}
+
+extern "C" __declspec(dllexport) int LoadELF(char* IPAddr, char* ProcName, char* Buffer, size_t Len)
+{
+	return orbisLib->Proc->LoadELF(IPAddr, ProcName, Buffer, Len);
+}
+
+//TODO: Add RPC Call.
+
+/*
+Libraries
+*/
+extern "C" __declspec(dllexport) int LoadSPRX(char* IPAddr, char* Path, uint32_t Flags)
+{
+	return orbisLib->Proc->LoadSPRX(IPAddr, Path, Flags);
+}
+
+int UnloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+{
+	return orbisLib->Proc->UnloadSPRX(IPAddr, Handle, Flags);
+}
+
+int UnloadSPRX(char* IPAddr, char* Name, uint32_t Flags) 
+{
+	return orbisLib->Proc->UnloadSPRX(IPAddr, Name, Flags);
+}
+
+int ReloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
+{
+	return orbisLib->Proc->ReloadSPRX(IPAddr, Name, Flags);
+}
+
+int ReloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+{
+	return orbisLib->Proc->ReloadSPRX(IPAddr, Handle, Flags);
+}
+
+int GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out)
+{
+	return orbisLib->Proc->GetLibraryList(IPAddr, LibraryCount, Out);
+}
+
 #pragma endregion
 
 #pragma region OrbisTarget

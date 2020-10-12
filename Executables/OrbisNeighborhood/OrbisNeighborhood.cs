@@ -175,7 +175,7 @@ namespace nsOrbisNeighborhood
 
         private void AddTarget_Button_Click(object sender, EventArgs e)
         {
-            PS4.DefaultTarget.Process.SelectProcess();
+            PS4.Target["OSM's Console"].Process.SelectProcess();
             //if (PS4.Dialogs.AddTarget() == DialogResult.OK)
             //    UpdateTargetList();
         }

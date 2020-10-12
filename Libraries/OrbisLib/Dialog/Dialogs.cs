@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DarkUI.Forms;
+using OrbisSuite.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,6 +61,15 @@ namespace OrbisSuite.Dialog
         {
             SelectProcess SelectProcess = new SelectProcess(PS4, TargetName);
             System.Windows.Forms.DialogResult Result = SelectProcess.ShowDialog();
+
+            if(Result == System.Windows.Forms.DialogResult.OK)
+            {
+                API_ERRORS res = PS4.Target[TargetName].Process.Attach(SelectProcess.SelectedProcess);
+
+                if (res != API_ERRORS.API_OK)
+                    DarkMessageBox.ShowError(OrbisDef.API_ERROR_STR[(int)res], "Error: Failed to Attach!");
+            }
+
             SelectProcess.Close();
             return Result;
         }

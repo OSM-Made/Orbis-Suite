@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace OrbisSuite.Dialog
 {
-    public partial class SelectProcess : DarkForm
+    public partial class SelectProcess : DarkDialog
     {
         public string SelectedProcess { get; set; }
         public OrbisLib PS4;
@@ -77,6 +77,8 @@ namespace OrbisSuite.Dialog
             this.PS4 = PS4;
             this.TargetName = TargetName;
 
+            btnOk.Text = "Select";
+
             PS4.Target[TargetName].Events.ProcDetach += Events_ProcDetach;
             PS4.Target[TargetName].Events.ProcAttach += Events_ProcAttach;
             PS4.Target[TargetName].Events.ProcDie += Events_ProcDie;
@@ -119,34 +121,16 @@ namespace OrbisSuite.Dialog
             LoadProcList();
         }
 
-        private void Button_Cancel_Click(object sender, EventArgs e)
+        private void SelectProcess_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult = System.Windows.Forms.DialogResult.Cancel;
-        }
+            ShouldStopThreads = true;
 
-        private void Button_SelectProcess_Click(object sender, EventArgs e)
-        {
             Int32 selectedCellCount = ProcessList.GetCellCount(DataGridViewElementStates.Selected);
             if (selectedCellCount > 0)
             {
                 int index = ProcessList.SelectedRows[0].Index;
                 SelectedProcess = Convert.ToString(ProcessList.Rows[index].Cells["ProcName"].Value);
-
-                API_ERRORS res = PS4.Target[TargetName].Process.Attach(SelectedProcess);
-
-                if (res == API_ERRORS.API_OK)
-                    DialogResult = System.Windows.Forms.DialogResult.OK;
-                else
-                    DarkMessageBox.ShowError(OrbisDef.API_ERROR_STR[(int)res], "Error: Failed to Attach!");
-
             }
-            else
-                DarkMessageBox.ShowError("Please Select a Process", "Error: No Process Selected!");
-        }
-
-        private void SelectProcess_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            ShouldStopThreads = true;
         }
 
         bool LockThread = false;
@@ -215,8 +199,13 @@ namespace OrbisSuite.Dialog
             {
                 int index = ProcessList.SelectedRows[0].Index;
                 SelectedProcess = Convert.ToString(ProcessList.Rows[index].Cells["ProcName"].Value);
-                PS4.Target[TargetName].Process.Attach(SelectedProcess);
-                DialogResult = System.Windows.Forms.DialogResult.OK;
+                API_ERRORS res = PS4.Target[TargetName].Process.Attach(SelectedProcess);
+
+                if (res == API_ERRORS.API_OK)
+                    DialogResult = System.Windows.Forms.DialogResult.OK;
+                else
+                    DarkMessageBox.ShowError(OrbisDef.API_ERROR_STR[(int)res], "Error: Failed to Attach!");
+                
             }
             else
                 DarkMessageBox.ShowError("Please Select a Process", "Error: No Process Selected!");
