@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -103,17 +105,19 @@ namespace OrbisModuleManager
                 {
                     //Enable Controls
                     Button_Detach.Enabled = true;
-                    CurrentProc.Text = "Process: " + PS4.DefaultTarget.Info.CurrentProc;
+                    CurrentProc.Text = string.Format("Process: {0}", PS4.DefaultTarget.Info.CurrentProc);
+
+                    Button_Detach.Enabled = true;
 
                     MenuStrip_Unload.Enabled = true;
                     MenuStrip_Reload.Enabled = true;
+                    MenuStrip_Dump.Enabled = true;
                     MenuStrip_Refresh.Enabled = true;
 
                     FTPStrip_LoadModule.Enabled = true;
 
                     Button_ReloadModule.Enabled = true;
                     Button_UnloadModule.Enabled = true;
-                    MenuStrip_Dump.Enabled = true;
                     Button_LoadModule.Enabled = true;
 
                     Button_OpenELF.Enabled = true;
@@ -134,6 +138,23 @@ namespace OrbisModuleManager
                     darkScrollBar1.Maximum = 100;
                     darkScrollBar1.ViewSize = 99;
                     darkScrollBar1.Enabled = false;
+
+                    Button_Detach.Enabled = false;
+
+                    MenuStrip_Unload.Enabled = false;
+                    MenuStrip_Reload.Enabled = false;
+                    MenuStrip_Dump.Enabled = false;
+                    MenuStrip_Refresh.Enabled = false;
+
+                    FTPStrip_LoadModule.Enabled = false;
+
+                    Button_ReloadModule.Enabled = false;
+                    Button_UnloadModule.Enabled = false;
+                    Button_LoadModule.Enabled = false;
+
+
+                    Button_OpenELF.Enabled = false;
+                    Button_LoadELF.Enabled = false;
                 }
             }
             else
@@ -164,8 +185,10 @@ namespace OrbisModuleManager
 
                 FTPStrip_LoadModule.Enabled = false;
 
+                Button_ReloadModule.Enabled = false;
                 Button_UnloadModule.Enabled = false;
                 Button_LoadModule.Enabled = false;
+                
 
                 Button_OpenELF.Enabled = false;
                 Button_LoadELF.Enabled = false;
@@ -183,7 +206,7 @@ namespace OrbisModuleManager
                     else
                         EnableProgram(false);
 
-                    CurrentTarget.Text = PS4.DefaultTarget.Info.Name;
+                    CurrentTarget.Text = string.Format("Target: {0}", PS4.DefaultTarget.Info.Name);
                 }
                 else
                 {
@@ -217,6 +240,7 @@ namespace OrbisModuleManager
         private void Events_ProcAttach(object sender, OrbisSuite.Classes.ProcAttachEvent e)
         {
             ExecuteSecure(() => UpdateTarget());
+            ExecuteSecure(() => UpdateModuleList());
         }
 
         #endregion
@@ -225,8 +249,8 @@ namespace OrbisModuleManager
 
         public void UpdateModuleList()
         {
-            //Make sure the target is available and we are attached.
-            if (!PS4.DefaultTarget.Info.Available || !PS4.DefaultTarget.Info.Attached)
+            ProcessInfo Info;
+            if (PS4.DefaultTarget.Process.GetCurrent(out Info) != API_ERRORS.API_OK)
                 return;
 
             SetStatus("Updating List...");
@@ -264,6 +288,8 @@ namespace OrbisModuleManager
             {
 
             }
+
+            SetStatus("Ready");
         }
 
         private void ModuleList_Enter(object sender, EventArgs e)
@@ -307,7 +333,30 @@ namespace OrbisModuleManager
 
         private void MenuStrip_Unload_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Int32 selectedCellCount = ModuleList.GetCellCount(DataGridViewElementStates.Selected);
+                if (selectedCellCount > 0)
+                {
+                    int index = ModuleList.SelectedRows[0].Index;
+                    int ModuleHandle = Convert.ToInt32(ModuleList.Rows[index].Cells["mHandle"].Value);
+                    string ModuleName = Convert.ToString(ModuleList.Rows[index].Cells["ModuleName"].Value);
 
+                    SetStatus("Unloading Module " + ModuleName + "...");
+
+                    PS4.DefaultTarget.Process.UnloadSPRX(ModuleHandle, 0);
+
+                    Thread.Sleep(100);
+
+                    UpdateModuleList();
+
+                    SetStatus("Ready");
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         private void MenuStrip_Reload_Click(object sender, EventArgs e)
@@ -323,6 +372,47 @@ namespace OrbisModuleManager
         private void MenuStrip_Refresh_Click(object sender, EventArgs e)
         {
             UpdateModuleList();
+        }
+
+
+        Int32 ModuleHandle = 0;
+        private void Button_ReloadModule_Click(object sender, EventArgs e)
+        {
+            SetStatus("ReLoading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
+
+            PS4.DefaultTarget.Process.ReloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
+
+            Thread.Sleep(100);
+
+            UpdateModuleList();
+
+            SetStatus("Ready");
+        }
+
+        private void Button_UnloadModule_Click(object sender, EventArgs e)
+        {
+            SetStatus("UnLoading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
+
+            PS4.DefaultTarget.Process.UnloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
+
+            Thread.Sleep(100);
+
+            UpdateModuleList();
+
+            SetStatus("Ready");
+        }
+
+        private void Button_LoadModule_Click(object sender, EventArgs e)
+        {
+            SetStatus("Loading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
+
+            PS4.DefaultTarget.Process.LoadSPRX(SPRXDirectory.Text, 0);
+
+            Thread.Sleep(100);
+
+            UpdateModuleList();
+
+            SetStatus("Ready");
         }
     }
 }

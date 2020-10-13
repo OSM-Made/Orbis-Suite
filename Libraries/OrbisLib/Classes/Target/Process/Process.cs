@@ -149,17 +149,17 @@ namespace OrbisSuite.Classes
             return Imports.Process.UnloadSPRX(Target.Info.IPAddr, Handle, Flags);
         }
 
-        public API_ERRORS UnloadSPRX(string IPAddr, string Name, Int32 Flags)
+        public API_ERRORS UnloadSPRX(string Name, Int32 Flags)
         {
             return Imports.Process.UnloadSPRXbyName(Target.Info.IPAddr, Name, Flags);
         }
 
-        public API_ERRORS ReloadSPRX(string IPAddr, string Name, Int32 Flags)
+        public API_ERRORS ReloadSPRX(string Name, Int32 Flags)
         {
             return Imports.Process.ReloadSPRXbyName(Target.Info.IPAddr, Name, Flags);
         }
 
-        public API_ERRORS ReloadSPRX(string IPAddr, Int32 Handle, Int32 Flags)
+        public API_ERRORS ReloadSPRX(Int32 Handle, Int32 Flags)
         {
             return Imports.Process.ReloadSPRX(Target.Info.IPAddr, Handle, Flags);
         }

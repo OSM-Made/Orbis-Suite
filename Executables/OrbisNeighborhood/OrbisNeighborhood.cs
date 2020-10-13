@@ -123,7 +123,7 @@ namespace nsOrbisNeighborhood
                     else
                         Button_Attach.Enabled = false;
 
-                    CurrentTarget.Text = PS4.DefaultTarget.Info.Name;
+                    CurrentTarget.Text = string.Format("Target: {0}", PS4.DefaultTarget.Info.Name);
 
                     if (PS4.DefaultTarget.Info.Attached)
                     {

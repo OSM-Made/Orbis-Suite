@@ -362,6 +362,7 @@
             this.Button_ReloadModule.Size = new System.Drawing.Size(55, 23);
             this.Button_ReloadModule.TabIndex = 12;
             this.Button_ReloadModule.Text = "Reload";
+            this.Button_ReloadModule.Click += new System.EventHandler(this.Button_ReloadModule_Click);
             // 
             // Button_UnloadModule
             // 
@@ -372,6 +373,7 @@
             this.Button_UnloadModule.Size = new System.Drawing.Size(55, 23);
             this.Button_UnloadModule.TabIndex = 11;
             this.Button_UnloadModule.Text = "Unload";
+            this.Button_UnloadModule.Click += new System.EventHandler(this.Button_UnloadModule_Click);
             // 
             // Button_LoadModule
             // 
@@ -382,6 +384,7 @@
             this.Button_LoadModule.Size = new System.Drawing.Size(63, 23);
             this.Button_LoadModule.TabIndex = 10;
             this.Button_LoadModule.Text = "Load";
+            this.Button_LoadModule.Click += new System.EventHandler(this.Button_LoadModule_Click);
             // 
             // pictureBox2
             // 
@@ -514,23 +517,23 @@
             this.toolStripSeparator2,
             this.MenuStrip_Refresh});
             this.EditModule.Name = "EditModule";
-            this.EditModule.Size = new System.Drawing.Size(181, 128);
+            this.EditModule.Size = new System.Drawing.Size(157, 106);
             // 
             // MenuStrip_Unload
             // 
             this.MenuStrip_Unload.Enabled = false;
-            this.MenuStrip_Unload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.MenuStrip_Unload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.MenuStrip_Unload.Name = "MenuStrip_Unload";
-            this.MenuStrip_Unload.Size = new System.Drawing.Size(180, 22);
+            this.MenuStrip_Unload.Size = new System.Drawing.Size(156, 22);
             this.MenuStrip_Unload.Text = "Unload Module";
             this.MenuStrip_Unload.Click += new System.EventHandler(this.MenuStrip_Unload_Click);
             // 
             // MenuStrip_Reload
             // 
             this.MenuStrip_Reload.Enabled = false;
-            this.MenuStrip_Reload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.MenuStrip_Reload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.MenuStrip_Reload.Name = "MenuStrip_Reload";
-            this.MenuStrip_Reload.Size = new System.Drawing.Size(180, 22);
+            this.MenuStrip_Reload.Size = new System.Drawing.Size(156, 22);
             this.MenuStrip_Reload.Text = "Reload Module";
             this.MenuStrip_Reload.Click += new System.EventHandler(this.MenuStrip_Reload_Click);
             // 
@@ -539,14 +542,14 @@
             this.toolStripSeparator3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(153, 6);
             // 
             // MenuStrip_Dump
             // 
             this.MenuStrip_Dump.Enabled = false;
-            this.MenuStrip_Dump.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.MenuStrip_Dump.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.MenuStrip_Dump.Name = "MenuStrip_Dump";
-            this.MenuStrip_Dump.Size = new System.Drawing.Size(180, 22);
+            this.MenuStrip_Dump.Size = new System.Drawing.Size(156, 22);
             this.MenuStrip_Dump.Text = "Dump Module";
             this.MenuStrip_Dump.Click += new System.EventHandler(this.MenuStrip_Dump_Click);
             // 
@@ -555,14 +558,14 @@
             this.toolStripSeparator2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(153, 6);
             // 
             // MenuStrip_Refresh
             // 
             this.MenuStrip_Refresh.Enabled = false;
-            this.MenuStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.MenuStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.MenuStrip_Refresh.Name = "MenuStrip_Refresh";
-            this.MenuStrip_Refresh.Size = new System.Drawing.Size(180, 22);
+            this.MenuStrip_Refresh.Size = new System.Drawing.Size(156, 22);
             this.MenuStrip_Refresh.Text = "Refresh List";
             this.MenuStrip_Refresh.Click += new System.EventHandler(this.MenuStrip_Refresh_Click);
             // 
@@ -598,7 +601,7 @@
             // FTPStrip_LoadModule
             // 
             this.FTPStrip_LoadModule.Enabled = false;
-            this.FTPStrip_LoadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_LoadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.FTPStrip_LoadModule.Name = "FTPStrip_LoadModule";
             this.FTPStrip_LoadModule.Size = new System.Drawing.Size(144, 22);
             this.FTPStrip_LoadModule.Text = "Load Module";
@@ -606,7 +609,7 @@
             // FTPStrip_Refresh
             // 
             this.FTPStrip_Refresh.Enabled = false;
-            this.FTPStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.FTPStrip_Refresh.Name = "FTPStrip_Refresh";
             this.FTPStrip_Refresh.Size = new System.Drawing.Size(144, 22);
             this.FTPStrip_Refresh.Text = "Refresh";

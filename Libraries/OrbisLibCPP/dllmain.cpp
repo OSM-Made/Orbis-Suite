@@ -368,8 +368,7 @@ extern "C" __declspec(dllexport) void SetWordWrap(bool Value)
 extern "C"  __declspec(dllexport) void SetupCPP(bool WinService)
 {
 	IsWinService = WinService;
-	orbisLib = new OrbisLib();
-}
+	orbisLib = new OrbisLib();}
 
 extern "C" __declspec(dllexport) void DestroyCPP()
 {
