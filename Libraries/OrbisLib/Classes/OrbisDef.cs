@@ -35,6 +35,7 @@ namespace OrbisSuite.Classes
         public string Name;
         public string IPAddr;
         public string Firmware;
+        public int PayloadPort;
         public bool Available;
         public string Title;
         public string SDKVersion;
@@ -43,12 +44,13 @@ namespace OrbisSuite.Classes
         public bool Attached;
         public string CurrentProc;
 
-        public TargetInfo(bool Default, string Name, string IPAddr, string Firmware, bool Available, string Title, string SDKVersion, string ConsoleName, string ConsoleType, bool Attached, string CurrentProc)
+        public TargetInfo(bool Default, string Name, string IPAddr, string Firmware, int PayloadPort, bool Available, string Title, string SDKVersion, string ConsoleName, string ConsoleType, bool Attached, string CurrentProc)
         {
             this.Default = Default;
             this.Name = Name;
             this.IPAddr = IPAddr;
             this.Firmware = Firmware;
+            this.PayloadPort = PayloadPort;
             this.Available = Available;
             this.Title = Title;
             this.SDKVersion = SDKVersion;
@@ -109,6 +111,7 @@ namespace OrbisSuite.Classes
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public byte[] IPAddr;
         public int Firmware;
+        public int PayloadPort;
         public bool Available;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
         public byte[] SDKVersion;
@@ -160,7 +163,77 @@ namespace OrbisSuite.Classes
         API_ERROR_NOTARGET,
     };
 
-    
+    [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Ansi)]
+    public struct registers
+    {
+        public ulong r_r15;
+        public ulong r_r14;
+        public ulong r_r13;
+        public ulong r_r12;
+        public ulong r_r11;
+        public ulong r_r10;
+        public ulong r_r9;
+        public ulong r_r8;
+        public ulong r_rdi;
+        public ulong r_rsi;
+        public ulong r_rbp;
+        public ulong r_rbx;
+        public ulong r_rdx;
+        public ulong r_rcx;
+        public ulong r_rax;
+        public uint r_trapno;
+        public ushort r_fs;
+        public ushort r_gs;
+        public uint r_err;
+        public ushort r_es;
+        public ushort r_ds;
+        public ulong r_rip;
+        public ulong r_cs;
+        public ulong r_rflags;
+        public ulong r_rsp;
+        public ulong r_ss;
+    }
+
+    public enum SIGNALS
+    {
+        SIGHUP = 1,
+        SIGINT = 2,
+        SIGQUIT = 3,
+        SIGILL = 4,
+        SIGTRAP = 5,
+        SIGABRT = 6,
+        SIGEMT = 7,
+        SIGFPE = 8,
+        SIGKILL = 9,
+        SIGBUS = 10,
+        SIGSEGV = 11,
+        SIGSYS = 12,
+        SIGPIPE = 13,
+        SIGALRM = 14,
+        SIGTERM = 15,
+        SIGURG = 16,
+        SIGSTOP = 17,
+        SIGTSTP = 18,
+        SIGCONT = 19,
+        SIGCHLD = 20,
+        SIGTTIN = 21,
+        SIGTTOU = 22,
+        SIGIO = 23,
+        SIGXCPU = 24,
+        SIGXFSZ = 25,
+        SIGVTALRM = 26,
+        SIGPROF = 27,
+        SIGWINCH = 28,
+        SIGINFO = 29,
+        SIGUSR1 = 30,
+        SIGUSR2 = 31,
+    };
+
+    public enum PRFLAGS
+    {
+        PR_ATTACHED = 0x800,
+        PR_STOPPED = 0x20000,
+    }
 
     public class DetailedTargetInfo
     {
@@ -200,4 +273,40 @@ namespace OrbisSuite.Classes
             ConsoleType = "-";
         }
     };
+
+    [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Ansi)]
+    public struct RESP_ModuleList
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x24)]
+        public byte[] Name;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+        public byte[] Path;
+        public Int32 Handle;
+        public UInt64 TextSegmentBase;
+        public UInt64 TextSegmentLen;
+        public UInt64 DataSegmentBase;
+        public UInt64 DataSegmentLen;
+    };
+
+    public class ModuleInfo
+    {
+        public string Name;
+        public string Path;
+        public Int32 Handle;
+        public UInt64 TextSegmentBase;
+        public UInt64 TextSegmentLen;
+        public UInt64 DataSegmentBase;
+        public UInt64 DataSegmentLen;
+
+        public ModuleInfo(string Name, string Path, Int32 Handle, UInt64 TextSegmentBase, UInt64 TextSegmentLen, UInt64 DataSegmentBase, UInt64 DataSegmentLen)
+        {
+            this.Name = Name;
+            this.Path = Path;
+            this.Handle = Handle;
+            this.TextSegmentBase = TextSegmentBase;
+            this.TextSegmentLen = TextSegmentLen;
+            this.DataSegmentBase = DataSegmentBase;
+            this.DataSegmentLen = DataSegmentLen;
+        }
+    }
 }

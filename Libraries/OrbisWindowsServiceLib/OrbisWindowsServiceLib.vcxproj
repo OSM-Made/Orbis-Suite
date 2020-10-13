@@ -215,7 +215,6 @@
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="SocketListener.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

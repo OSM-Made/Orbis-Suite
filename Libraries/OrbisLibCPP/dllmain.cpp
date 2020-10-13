@@ -82,44 +82,44 @@ extern "C" __declspec(dllexport) int Kill(char* IPAddr, char* ProcName)
 	return orbisLib->Proc->Kill(IPAddr, ProcName);
 }
 
-extern "C" __declspec(dllexport) int LoadELF(char* IPAddr, char* ProcName, char* Buffer, size_t Len)
+extern "C" __declspec(dllexport) int LoadELF(char* IPAddr, char* Buffer, size_t Len)
 {
-	return orbisLib->Proc->LoadELF(IPAddr, ProcName, Buffer, Len);
+	return orbisLib->Proc->LoadELF(IPAddr, Buffer, Len);
 }
 
 //TODO: Add RPC Call.
 
 /*
-Libraries
+Modules
 */
-extern "C" __declspec(dllexport) int LoadSPRX(char* IPAddr, char* Path, uint32_t Flags)
+extern "C" __declspec(dllexport) int LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
 {
 	return orbisLib->Proc->LoadSPRX(IPAddr, Path, Flags);
 }
 
-int UnloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+extern "C" __declspec(dllexport) int UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	return orbisLib->Proc->UnloadSPRX(IPAddr, Handle, Flags);
 }
 
-int UnloadSPRX(char* IPAddr, char* Name, uint32_t Flags) 
+extern "C" __declspec(dllexport) int UnloadSPRXbyName(char* IPAddr, char* Name, int32_t Flags)
 {
 	return orbisLib->Proc->UnloadSPRX(IPAddr, Name, Flags);
 }
 
-int ReloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
+extern "C" __declspec(dllexport) int ReloadSPRXbyName(char* IPAddr, char* Name, int32_t Flags)
 {
 	return orbisLib->Proc->ReloadSPRX(IPAddr, Name, Flags);
 }
 
-int ReloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+extern "C" __declspec(dllexport) int ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	return orbisLib->Proc->ReloadSPRX(IPAddr, Handle, Flags);
 }
 
-int GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out)
+extern "C" __declspec(dllexport) int GetLibraryList(char* IPAddr, int32_t* ModuleCount, char* Out)
 {
-	return orbisLib->Proc->GetLibraryList(IPAddr, LibraryCount, Out);
+	return orbisLib->Proc->GetLibraryList(IPAddr, ModuleCount, Out);
 }
 
 #pragma endregion
@@ -170,6 +170,11 @@ extern "C" __declspec(dllexport) int DumpProcess(char* IPAddr, const char* ProcN
 
 #pragma region TargetManagement
 
+extern "C" __declspec(dllexport) bool DoesDefaultTargetExist()
+{
+	return orbisLib->TargetManagement->DoesDefaultTargetExist();
+}
+
 extern "C" __declspec(dllexport) bool DoesTargetExist(const char* TargetName)
 {
 	return orbisLib->TargetManagement->DoesTargetExist(TargetName);
@@ -185,13 +190,14 @@ extern "C" __declspec(dllexport) bool GetTarget(const char* TargetName, DB_Targe
 	return orbisLib->TargetManagement->GetTarget(TargetName, Out);
 }
 
-extern "C" __declspec(dllexport) bool SetTarget(const char* TargetName, bool Default, const char* NewTargetName, const char* IPAddr, int Firmware)
+extern "C" __declspec(dllexport) bool SetTarget(const char* TargetName, bool Default, const char* NewTargetName, const char* IPAddr, int Firmware, int PayloadPort)
 {
 	DB_TargetInfo In;
 	In.Default = Default;
 	strcpy_s(In.Name, NewTargetName);
 	strcpy_s(In.IPAddr, IPAddr);
 	In.Firmware = Firmware;
+	In.PayloadPort = PayloadPort;
 
 	return orbisLib->TargetManagement->SetTarget(TargetName, In);
 }
@@ -201,13 +207,14 @@ extern "C" __declspec(dllexport) bool DeleteTarget(const char* TargetName)
 	return orbisLib->TargetManagement->DeleteTarget(TargetName);
 }
 
-extern "C" __declspec(dllexport) bool NewTarget(bool Default, const char* TargetName, const char* IPAddr, int Firmware)
+extern "C" __declspec(dllexport) bool NewTarget(bool Default, const char* TargetName, const char* IPAddr, int Firmware, int PayloadPort)
 {
 	DB_TargetInfo In;
 	In.Default = Default;
 	strcpy_s(In.Name, TargetName);
 	strcpy_s(In.IPAddr, IPAddr);
 	In.Firmware = Firmware;
+	In.PayloadPort = PayloadPort;
 
 	return orbisLib->TargetManagement->NewTarget(In);
 }
@@ -267,9 +274,9 @@ extern "C" __declspec(dllexport) void SetDetectGame(bool Value)
 	orbisLib->Settings->SetSettingbyName("DetectGame", Value);
 }
 
-extern "C" __declspec(dllexport) bool GetCOMPort()
+extern "C" __declspec(dllexport) char* GetCOMPort()
 {
-	return &orbisLib->Settings->COMPort;
+	return (char*)&orbisLib->Settings->COMPort;
 }
 
 extern "C" __declspec(dllexport) void SetCOMPort(char* Value)

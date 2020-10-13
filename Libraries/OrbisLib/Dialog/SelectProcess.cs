@@ -30,30 +30,37 @@ namespace OrbisSuite.Dialog
 
         void LoadProcList()
         {
-            ProcessList.Rows.Clear();
-
-            List<ProcessInfo> List = PS4.Target[TargetName].Process.GetList();
-
-            for (int i = 0; i < List.Count; i++)
+            try
             {
-                object[] obj = { List[i].PID.ToString(), List[i].Name, List[i].TitleID, List[i].Attached ? OrbisSuite.Properties.Resources.Process_Attached : OrbisSuite.Properties.Resources.Process_Detached };
-                ProcessList.Rows.Add(obj);
+                ProcessList.Rows.Clear();
+
+                List<ProcessInfo> List = PS4.Target[TargetName].Process.GetList();
+
+                for (int i = 0; i < List.Count; i++)
+                {
+                    object[] obj = { List[i].PID.ToString(), List[i].Name, List[i].TitleID, List[i].Attached ? OrbisSuite.Properties.Resources.Process_Attached : OrbisSuite.Properties.Resources.Process_Detached };
+                    ProcessList.Rows.Add(obj);
+                }
+
+                if (ProcessList.Rows.Count <= 16)
+                {
+                    darkScrollBar1.Minimum = 0;
+                    darkScrollBar1.Maximum = 100;
+                    darkScrollBar1.ViewSize = 99;
+
+                    darkScrollBar1.Enabled = false;
+                }
+                else
+                {
+                    darkScrollBar1.Minimum = 0;
+                    darkScrollBar1.Maximum = ProcessList.Rows.Count;
+                    darkScrollBar1.ViewSize = 17;
+                    darkScrollBar1.Enabled = true;
+                }
             }
-
-            if (ProcessList.Rows.Count <= 16)
+            catch
             {
-                darkScrollBar1.Minimum = 0;
-                darkScrollBar1.Maximum = 100;
-                darkScrollBar1.ViewSize = 99;
 
-                darkScrollBar1.Enabled = false;
-            }
-            else
-            {
-                darkScrollBar1.Minimum = 0;
-                darkScrollBar1.Maximum = ProcessList.Rows.Count;
-                darkScrollBar1.ViewSize = 17;
-                darkScrollBar1.Enabled = true;
             }
         }
 
@@ -125,6 +132,11 @@ namespace OrbisSuite.Dialog
         {
             ShouldStopThreads = true;
 
+            PS4.Target[TargetName].Events.ProcDetach -= Events_ProcDetach;
+            PS4.Target[TargetName].Events.ProcAttach -= Events_ProcAttach;
+            PS4.Target[TargetName].Events.ProcDie -= Events_ProcDie;
+            PS4.Target[TargetName].Events.TargetNewTitle -= Events_TargetNewTitle;
+
             Int32 selectedCellCount = ProcessList.GetCellCount(DataGridViewElementStates.Selected);
             if (selectedCellCount > 0)
             {
@@ -192,7 +204,7 @@ namespace OrbisSuite.Dialog
             LockThread = false;
         }
 
-        private void ProcessList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        public void AttachtoSelected()
         {
             Int32 selectedCellCount = ProcessList.GetCellCount(DataGridViewElementStates.Selected);
             if (selectedCellCount > 0)
@@ -205,10 +217,15 @@ namespace OrbisSuite.Dialog
                     DialogResult = System.Windows.Forms.DialogResult.OK;
                 else
                     DarkMessageBox.ShowError(OrbisDef.API_ERROR_STR[(int)res], "Error: Failed to Attach!");
-                
+
             }
             else
                 DarkMessageBox.ShowError("Please Select a Process", "Error: No Process Selected!");
+        }
+
+        private void ProcessList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            AttachtoSelected();
         }
     }
 }

@@ -53,6 +53,8 @@ namespace OrbisSuite.Dialog
         {
             Settings Settings = new Settings(PS4);
             System.Windows.Forms.DialogResult Result = Settings.ShowDialog();
+            if (Result == System.Windows.Forms.DialogResult.OK)
+                Settings.SaveSettings();
             Settings.Close();
             return Result;
         }
@@ -63,12 +65,7 @@ namespace OrbisSuite.Dialog
             System.Windows.Forms.DialogResult Result = SelectProcess.ShowDialog();
 
             if(Result == System.Windows.Forms.DialogResult.OK)
-            {
-                API_ERRORS res = PS4.Target[TargetName].Process.Attach(SelectProcess.SelectedProcess);
-
-                if (res != API_ERRORS.API_OK)
-                    DarkMessageBox.ShowError(OrbisDef.API_ERROR_STR[(int)res], "Error: Failed to Attach!");
-            }
+                SelectProcess.AttachtoSelected();
 
             SelectProcess.Close();
             return Result;

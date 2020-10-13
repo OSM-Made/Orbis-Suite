@@ -211,6 +211,7 @@ struct DB_TargetInfo
 	char Name[256];
 	char IPAddr[16];
 	int Firmware;
+	int PayloadPort;
 	int Available;
 	char SDKVersion[14];
 	char SoftwareVersion[10];

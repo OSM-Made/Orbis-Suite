@@ -70,8 +70,6 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 				//Forward the packet to all the connected children processes.
 				Client->ForwardPacket(&TargetCommandPacket);
 
-				printf("Sent Command %d(CMD_DB_TOUCHED)\n", CMD_DB_TOUCHED);
-
 				//Update our local DB aswell.
 				orbisLib->TargetManagement->UpdateTargets();
 				orbisLib->Settings->UpdateSettings();

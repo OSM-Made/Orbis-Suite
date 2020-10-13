@@ -24,9 +24,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Sockets.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>

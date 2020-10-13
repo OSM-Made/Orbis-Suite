@@ -17,122 +17,122 @@ namespace OrbisSuite.Classes
 
         public bool GetAutoLoadPayload()
         {
-            return Imports.GetAutoLoadPayload();
+            return Imports.Settings.GetAutoLoadPayload();
         }
 
         public void SetAutoLoadPayload(bool Value)
         {
-            Imports.SetAutoLoadPayload(Value);
+            Imports.Settings.SetAutoLoadPayload(Value);
         }
 
         public bool GetStartOnBoot()
         {
-            return Imports.GetStartOnBoot();
+            return Imports.Settings.GetStartOnBoot();
         }
 
         public void SetStartOnBoot(bool Value)
         {
-            Imports.SetStartOnBoot(Value);
+            Imports.Settings.SetStartOnBoot(Value);
         }
 
         public bool GetDetectGame()
         {
-            return Imports.GetDetectGame();
+            return Imports.Settings.GetDetectGame();
         }
 
         public void SetDetectGame(bool Value)
         {
-            Imports.SetDetectGame(Value);
+            Imports.Settings.SetDetectGame(Value);
         }
 
         public string GetCOMPort()
         {
-            return Imports.GetCOMPort();
+            return Imports.Settings.GetCOMPort();
         }
 
         public void SetCOMPort(string Value)
         {
-            Imports.SetCOMPort(Value);
+            Imports.Settings.SetCOMPort(Value);
         }
 
         public int GetServicePort()
         {
-            return Imports.GetServicePort();
+            return Imports.Settings.GetServicePort();
         }
 
         public void SetServicePort(int Value)
         {
-            Imports.SetServicePort(Value);
+            Imports.Settings.SetServicePort(Value);
         }
 
         public int GetAPIPort()
         {
-            return Imports.GetAPIPort();
+            return Imports.Settings.GetAPIPort();
         }
 
         public void SetAPIPort(int Value)
         {
-            Imports.SetAPIPort(Value);
+            Imports.Settings.SetAPIPort(Value);
         }
 
         public bool GetCensorIDPS()
         {
-            return Imports.GetCensorIDPS();
+            return Imports.Settings.GetCensorIDPS();
         }
 
         public void SetCensorIDPS(bool Value)
         {
-            Imports.SetCensorIDPS(Value);
+            Imports.Settings.SetCensorIDPS(Value);
         }
 
         public bool GetCensorPSID()
         {
-            return Imports.GetCensorPSID();
+            return Imports.Settings.GetCensorPSID();
         }
 
         public void SetCensorPSID(bool Value)
         {
-            Imports.SetCensorPSID(Value);
+            Imports.Settings.SetCensorPSID(Value);
         }
 
         public bool GetDebug()
         {
-            return Imports.GetDebug();
+            return Imports.Settings.GetDebug();
         }
 
         public void SetDebug(bool Value)
         {
-            Imports.SetDebug(Value);
+            Imports.Settings.SetDebug(Value);
         }
 
         public bool GetCreateLogs()
         {
-            return Imports.GetCreateLogs();
+            return Imports.Settings.GetCreateLogs();
         }
 
         public void SetCreateLogs(bool Value)
         {
-            Imports.SetCreateLogs(Value);
+            Imports.Settings.SetCreateLogs(Value);
         }
 
         public bool GetShowTimestamps()
         {
-            return Imports.GetShowTimestamps();
+            return Imports.Settings.GetShowTimestamps();
         }
 
         public void SetShowTimestamps(bool Value)
         {
-            Imports.SetShowTimestamps(Value);
+            Imports.Settings.SetShowTimestamps(Value);
         }
 
         public bool GetWordWrap()
         {
-            return Imports.GetWordWrap();
+            return Imports.Settings.GetWordWrap();
         }
 
         public void SetWordWrap(bool Value)
         {
-            Imports.SetWordWrap(Value);
+            Imports.Settings.SetWordWrap(Value);
         }
     }
 }

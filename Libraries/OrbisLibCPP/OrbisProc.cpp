@@ -164,7 +164,7 @@ int OrbisProc::Kill(char* IPAddr, char* ProcName)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::LoadELF(char* IPAddr, char* ProcName, char* Data, size_t Len)
+int OrbisProc::LoadELF(char* IPAddr, char* Data, size_t Len)
 {
 	int Status = API_OK;
 
@@ -201,7 +201,7 @@ int OrbisProc::LoadELF(char* IPAddr, char* ProcName, char* Data, size_t Len)
 //TODO:Implement RPC
 
 
-int OrbisProc::LoadSPRX(char* IPAddr, char* Path, uint32_t Flags)
+int OrbisProc::LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -212,7 +212,7 @@ int OrbisProc::LoadSPRX(char* IPAddr, char* Path, uint32_t Flags)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+int OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -223,7 +223,7 @@ int OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::UnloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
+int OrbisProc::UnloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -234,7 +234,7 @@ int OrbisProc::UnloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::ReloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
+int OrbisProc::ReloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -245,7 +245,7 @@ int OrbisProc::ReloadSPRX(char* IPAddr, char* Name, uint32_t Flags)
 	return orbisLib->API->Call(IPAddr, &Packet);
 }
 
-int OrbisProc::ReloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags)
+int OrbisProc::ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -262,7 +262,7 @@ int OrbisProc::GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out)
 
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
-	Packet.cmd = API_PROC_GET_LIST;
+	Packet.cmd = API_PROC_MODULE_LIST;
 
 	Sockets* Sock;
 	Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
@@ -270,15 +270,14 @@ int OrbisProc::GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out)
 	if (Status)
 		return Status;
 
-	int ModuleCount = 0;
-	if (!Sock->Receive((char*)&ModuleCount, sizeof(int)))
+	if (!Sock->Receive((char*)LibraryCount, sizeof(int)))
 	{
 		orbisLib->API->FinishCall(&Sock);
 
 		return API_ERROR_FAIL;
 	}
 
-	if (!Sock->Receive(Out, ModuleCount * sizeof(RESP_ModuleList)))
+	if (!Sock->Receive(Out, *LibraryCount * sizeof(RESP_ModuleList)))
 	{
 		orbisLib->API->FinishCall(&Sock);
 

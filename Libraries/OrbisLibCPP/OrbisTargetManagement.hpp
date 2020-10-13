@@ -23,6 +23,7 @@ public:
 	int TargetCount;
 
 	//Target Management
+	bool DoesDefaultTargetExist();
 	bool DoesTargetExist(const char* TargetName);
 	bool DoesTargetExistIP(const char* IPAddr);
 	bool GetTarget(const char* TargetName, DB_TargetInfo* Out);

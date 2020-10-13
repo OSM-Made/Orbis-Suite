@@ -81,7 +81,7 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 
 	case CMD_PROC_ATTACH:
 		if (orbisService->Proc_Attach)
-			orbisService->Proc_Attach(Packet->IPAddr, Packet->ProcName);
+			orbisService->Proc_Attach(Packet->IPAddr, (char*)&Packet->ProcName);
 		break;
 
 	case CMD_PROC_DETACH:
@@ -107,7 +107,7 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 
 	case CMD_TARGET_NEWTITLE:
 		if (orbisService->Target_NewTitle)
-			orbisService->Target_NewTitle(Packet->IPAddr, Packet->TitleChange.TitleID);
+			orbisService->Target_NewTitle(Packet->IPAddr, (char*)&Packet->TitleChange.TitleID);
 		break;
 
 
@@ -123,7 +123,7 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 		orbisService->orbisLib->TargetManagement->UpdateTargets();
 
 		if(orbisService->Target_Availability)
-			orbisService->Target_Availability(Packet->Target.Available, (char*)Packet->Target.TargetName);
+			orbisService->Target_Availability(Packet->Target.Available, (char*)&Packet->Target.TargetName);
 		break;
 	}
 

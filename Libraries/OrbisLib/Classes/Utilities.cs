@@ -10,15 +10,32 @@ namespace OrbisSuite.Classes
     {
         public static string CleanByteToString(byte[] bIn)
         {
-            string Out = Encoding.Default.GetString(bIn);
-            return Out.Substring(0, Out.IndexOf('\0'));
+            try
+            {
+                if (bIn.Length <= 0)
+                    return string.Empty;
+
+                string Out = Encoding.Default.GetString(bIn);
+                return Out.Substring(0, Out.IndexOf('\0'));
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         public static string CensorString(string In, char CensorChar, int AllowedCount)
         {
-            string Out = In.Substring(0, AllowedCount);
-            Out += new string(CensorChar, In.Length - AllowedCount);
-            return Out;
+            try
+            {
+                string Out = In.Substring(0, AllowedCount);
+                Out += new string(CensorChar, In.Length - AllowedCount);
+                return Out;
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 }

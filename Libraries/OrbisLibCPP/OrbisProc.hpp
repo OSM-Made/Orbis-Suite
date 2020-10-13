@@ -19,14 +19,14 @@ public:
 	int Read(char* IPAddr, uint64_t Address, size_t Len, char* Data);
 	int Write(char* IPAddr, uint64_t Address, size_t Len, char* Data);
 	int Kill(char* IPAddr, char* ProcName);
-	int LoadELF(char* IPAddr, char* ProcName, char* Buffer, size_t Len);
+	int LoadELF(char* IPAddr, char* Buffer, size_t Len);
 	//TODO: Implement RPC Call
 
 	//Libraries
-	int LoadSPRX(char* IPAddr, char* Path, uint32_t Flags);
-	int UnloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags);
-	int UnloadSPRX(char* IPAddr, char* Name, uint32_t Flags);
-	int ReloadSPRX(char* IPAddr, char* Name, uint32_t Flags);
-	int ReloadSPRX(char* IPAddr, int32_t Handle, uint32_t Flags);
+	int LoadSPRX(char* IPAddr, char* Path, int32_t Flags);
+	int UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags);
+	int UnloadSPRX(char* IPAddr, char* Name, int32_t Flags);
+	int ReloadSPRX(char* IPAddr, char* Name, int32_t Flags);
+	int ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags);
 	int GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out);
 };

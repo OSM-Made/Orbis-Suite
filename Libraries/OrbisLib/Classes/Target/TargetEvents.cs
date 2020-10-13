@@ -37,7 +37,7 @@ namespace OrbisSuite.Classes
         {
             if (IPAddr.Equals(Target.Info.IPAddr))
             {
-                OrbisLib.registers reg = (OrbisLib.registers)Marshal.PtrToStructure(Registers, typeof(OrbisLib.registers));
+                registers reg = (registers)Marshal.PtrToStructure(Registers, typeof(registers));
 
                 ProcIntercept?.Invoke(null, new ProcInterceptEvent(Reason, reg));
             }
@@ -109,9 +109,9 @@ namespace OrbisSuite.Classes
     public class ProcInterceptEvent : EventArgs
     {
         public int Reason { get; private set; }
-        public OrbisLib.registers reg { get; private set; }
+        public registers reg { get; private set; }
 
-        public ProcInterceptEvent(int Reason, OrbisLib.registers reg)
+        public ProcInterceptEvent(int Reason, registers reg)
         {
             this.Reason = Reason;
             this.reg = reg;

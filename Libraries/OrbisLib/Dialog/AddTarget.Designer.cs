@@ -48,6 +48,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.IsDefaultTarget = new DarkUI.Controls.DarkCheckBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
+            this.PayloadPort = new DarkUI.Controls.DarkTextBox();
+            this.darkTitle5 = new DarkUI.Controls.DarkTitle();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -225,12 +227,14 @@
             // panel2
             // 
             this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.PayloadPort);
+            this.panel2.Controls.Add(this.darkTitle5);
             this.panel2.Controls.Add(this.IsDefaultTarget);
             this.panel2.Controls.Add(this.darkTitle1);
             this.panel2.Location = new System.Drawing.Point(10, 220);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.panel2.Size = new System.Drawing.Size(252, 54);
+            this.panel2.Size = new System.Drawing.Size(252, 56);
             this.panel2.TabIndex = 30;
             // 
             // IsDefaultTarget
@@ -244,12 +248,32 @@
             // 
             // darkTitle1
             // 
-            this.darkTitle1.Dock = System.Windows.Forms.DockStyle.Top;
             this.darkTitle1.Location = new System.Drawing.Point(0, 0);
             this.darkTitle1.Name = "darkTitle1";
-            this.darkTitle1.Size = new System.Drawing.Size(252, 26);
+            this.darkTitle1.Size = new System.Drawing.Size(133, 20);
             this.darkTitle1.TabIndex = 15;
             this.darkTitle1.Text = "Default Target";
+            // 
+            // PayloadPort
+            // 
+            this.PayloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.PayloadPort.Location = new System.Drawing.Point(138, 23);
+            this.PayloadPort.MaxLength = 5;
+            this.PayloadPort.Name = "PayloadPort";
+            this.PayloadPort.Size = new System.Drawing.Size(111, 20);
+            this.PayloadPort.TabIndex = 20;
+            this.PayloadPort.Text = "9020";
+            this.PayloadPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PayloadPort_KeyPress);
+            // 
+            // darkTitle5
+            // 
+            this.darkTitle5.Location = new System.Drawing.Point(138, 0);
+            this.darkTitle5.Name = "darkTitle5";
+            this.darkTitle5.Size = new System.Drawing.Size(111, 20);
+            this.darkTitle5.TabIndex = 19;
+            this.darkTitle5.Text = "Payload Port";
             // 
             // AddTarget
             // 
@@ -301,5 +325,7 @@
         private System.Windows.Forms.Panel panel2;
         private DarkUI.Controls.DarkCheckBox IsDefaultTarget;
         private DarkUI.Controls.DarkTitle darkTitle1;
+        private DarkUI.Controls.DarkTextBox PayloadPort;
+        private DarkUI.Controls.DarkTitle darkTitle5;
     }
 }

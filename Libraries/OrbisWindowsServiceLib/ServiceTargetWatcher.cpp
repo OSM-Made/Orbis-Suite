@@ -76,7 +76,7 @@ void ServiceTargetWatcher::WatcherThread()
 			CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)StartChildThread, ThreadParam, 3, NULL);
 		}
 
-		Sleep(3000);
+		Sleep(1000);
 	}
 }
 

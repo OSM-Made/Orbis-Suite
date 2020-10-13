@@ -75,10 +75,18 @@ namespace OrbisSuite.Dialog
             else if (TargetFW702.Checked)
                 Firmware = 702;
 
-            if (PS4.TargetManagement.NewTarget(IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware))
+            if (PS4.TargetManagement.NewTarget(IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             else
                 DarkMessageBox.ShowError("An unknown error caused the target to not be saved. Please try again.", "Failed to save target.");
+        }
+
+        private void PayloadPort_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

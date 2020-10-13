@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using OrbisSuite;
 using static OrbisSuite.Classes.Target;
 using OrbisSuite.Classes;
+using System.IO;
 
 namespace nsOrbisNeighborhood
 {
@@ -55,6 +56,25 @@ namespace nsOrbisNeighborhood
             PS4.Events.TargetAvailable += PS4_TargetAvailable;
             PS4.Events.TargetUnAvailable += PS4_TargetUnAvailable;
             PS4.Events.DBTouched += Events_DBTouched;
+
+            PS4.DefaultTarget.Events.ProcAttach += Events_ProcAttach;
+        }
+
+        private void Events_ProcAttach(object sender, ProcAttachEvent e)
+        {
+            ExecuteSecure(() => CurrentProc.Text = "Process: " + e.NewProcName);
+        }
+
+        private void Button_Attach_Click(object sender, EventArgs e)
+        {
+            if(PS4.DefaultTarget.Info.Available)
+                PS4.DefaultTarget.Process.SelectProcess();
+        }
+
+        private void Button_Detach_Click(object sender, EventArgs e)
+        {
+            if (PS4.DefaultTarget.Info.Available && PS4.DefaultTarget.Info.Attached)
+                PS4.DefaultTarget.Process.Detach();
         }
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
@@ -73,11 +93,6 @@ namespace nsOrbisNeighborhood
             ExecuteSecure(() => UpdateTargetList());
         }
 
-        public void UpdateCurrentProc()
-        {
-            
-        }
-
         public void UpdateTargetList()
         {
             SetStatus("Updating List...");
@@ -86,8 +101,6 @@ namespace nsOrbisNeighborhood
             {
                 if(TargetList.Rows.Count > PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
-
-                CurrentTarget.Text = "Target: N/A";
 
                 int LoopCount = 0;
                 List<TargetInfo> Targets = PS4.TargetManagement.GetTargetList();
@@ -100,16 +113,34 @@ namespace nsOrbisNeighborhood
                     else
                         TargetList.Rows[LoopCount].SetValues(obj);
 
-                    if (Target.Name.Equals(PS4.TargetManagement.GetDefault().Name))
-                    {
-                        CurrentTarget.Text = Target.Name;
-                        if (Target.Attached)
-                            CurrentProc.Text = "Process: " + Target.CurrentProc;
-                        else
-                            CurrentProc.Text = "Process: N/A";
-                    }
-
                     LoopCount++;
+                }
+
+                if (PS4.TargetManagement.DoesDefaultTargetExist())
+                {
+                    if (PS4.DefaultTarget.Info.Available)
+                        Button_Attach.Enabled = true;
+                    else
+                        Button_Attach.Enabled = false;
+
+                    CurrentTarget.Text = PS4.DefaultTarget.Info.Name;
+
+                    if (PS4.DefaultTarget.Info.Attached)
+                    {
+                        CurrentProc.Text = "Process: " + PS4.DefaultTarget.Info.CurrentProc;
+                        Button_Detach.Enabled = true;
+                    }
+                    else
+                    {
+                        CurrentProc.Text = "Process: N/A";
+                        Button_Detach.Enabled = false;
+                    }
+                }
+                else
+                {
+                    CurrentTarget.Text = "Target: N/A";
+                    CurrentProc.Text = "Process: N/A";
+                    Button_Detach.Enabled = false;
                 }
             }
             catch
@@ -175,9 +206,8 @@ namespace nsOrbisNeighborhood
 
         private void AddTarget_Button_Click(object sender, EventArgs e)
         {
-            PS4.Target["OSM's Console"].Process.SelectProcess();
-            //if (PS4.Dialogs.AddTarget() == DialogResult.OK)
-            //    UpdateTargetList();
+            if (PS4.Dialogs.AddTarget() == DialogResult.OK)
+                UpdateTargetList();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
@@ -200,10 +230,60 @@ namespace nsOrbisNeighborhood
         //
         // Target Context Menu
         //
-        private void Target_Payload_Click(object sender, EventArgs e)
+        private void SendPayload_Click(object sender, EventArgs e)
         {
-            //TODO:Add the send payload function.
+            try
+            {
+                string PayloadPath = string.Empty;
 
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Title = "Open BIN File...";
+                    openFileDialog.CheckFileExists = true;
+                    openFileDialog.CheckPathExists = true;
+                    openFileDialog.InitialDirectory = Properties.Settings.Default.BINDirectory;
+                    openFileDialog.Filter = "BIN files (*.BIN)|*.BIN";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        PayloadPath = openFileDialog.FileName;
+                        Properties.Settings.Default.BINDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                        Properties.Settings.Default.Save();
+                    }
+                }
+
+                FileStream fPayload = File.Open(PayloadPath, FileMode.Open);
+                if (fPayload.CanRead)
+                {
+                    byte[] PayloadBuffer = new byte[fPayload.Length];
+
+                    if (fPayload.Read(PayloadBuffer, 0, (int)fPayload.Length) == fPayload.Length)
+                    {
+                        Int32 selectedCellCount = TargetList.GetCellCount(DataGridViewElementStates.Selected);
+                        if (selectedCellCount > 0)
+                        {
+                            int index = TargetList.SelectedRows[0].Index;
+                            string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
+                            if (!PS4.Target[TargetName].Payload.InjectPayload(PayloadBuffer))
+                                DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.");
+                        }
+                    }
+                    else
+                        DarkMessageBox.ShowError("Failed read payload from disc to target please try again.", "Error: Failed to inject payload.");
+                }
+
+                fPayload.Close();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void SendOrbisPayload_Click(object sender, EventArgs e)
+        {
             try
             {
                 Int32 selectedCellCount = TargetList.GetCellCount(DataGridViewElementStates.Selected);
@@ -211,9 +291,8 @@ namespace nsOrbisNeighborhood
                 {
                     int index = TargetList.SelectedRows[0].Index;
                     string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
-
-
-                    PS4.Target[TargetName].Reboot();
+                    if (!PS4.Target[TargetName].Payload.InjectPayload())
+                        DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.");
                 }
             }
             catch
@@ -373,7 +452,7 @@ namespace nsOrbisNeighborhood
                 if(Available)
                 {
                     Target_Details.Enabled = true;
-                    Target_Payload.Enabled = false;
+                    SendOrbisPayload.Enabled = false;
                     Target_Reboot.Enabled = true;
                     Target_Shutdown.Enabled = true;
                     Target_Suspend.Enabled = true;
@@ -381,7 +460,7 @@ namespace nsOrbisNeighborhood
                 else
                 {
                     Target_Details.Enabled = false;
-                    Target_Payload.Enabled = true;
+                    SendOrbisPayload.Enabled = true;
                     Target_Reboot.Enabled = false;
                     Target_Shutdown.Enabled = false;
                     Target_Suspend.Enabled = false;

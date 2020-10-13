@@ -72,16 +72,15 @@ void OrbisSettings::UpdateSettings()
 		this->AutoLoadPayload = sqlite3_column_int(stmt, 0);
 		this->StartOnBoot = sqlite3_column_int(stmt, 1);
 		this->DetectGame = sqlite3_column_int(stmt, 2);
-		//DefaultTarget 3
-		strcpy_s(this->COMPort, (const char*)sqlite3_column_text(stmt, 4));
-		this->ServicePort = sqlite3_column_int(stmt, 5);
-		this->APIPort = sqlite3_column_int(stmt, 6);
-		this->CensorIDPS = sqlite3_column_int(stmt, 7);
-		this->CensorPSID = sqlite3_column_int(stmt, 8);
-		this->Debug = sqlite3_column_int(stmt, 9);
-		this->CreateLogs = sqlite3_column_int(stmt, 10);
-		this->ShowTimestamps = sqlite3_column_int(stmt, 11);
-		this->WordWrap = sqlite3_column_int(stmt, 12);
+		strcpy_s(this->COMPort, (const char*)sqlite3_column_text(stmt, 3));
+		this->ServicePort = sqlite3_column_int(stmt, 4);
+		this->APIPort = sqlite3_column_int(stmt, 5);
+		this->CensorIDPS = sqlite3_column_int(stmt, 6);
+		this->CensorPSID = sqlite3_column_int(stmt, 7);
+		this->Debug = sqlite3_column_int(stmt, 8);
+		this->CreateLogs = sqlite3_column_int(stmt, 9);
+		this->ShowTimestamps = sqlite3_column_int(stmt, 10);
+		this->WordWrap = sqlite3_column_int(stmt, 11);
 	}
 
 	sqlite3_finalize(stmt);

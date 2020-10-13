@@ -56,8 +56,8 @@
             this.darkLabel3.Name = "darkLabel3";
             this.darkLabel3.Size = new System.Drawing.Size(343, 40);
             this.darkLabel3.TabIndex = 16;
-            this.darkLabel3.Text = "Special thanks to Matrox, John V, Fub, Sabotage, Krazaki, Nigel, Reap and my Cat." +
-    "";
+            this.darkLabel3.Text = "Special thanks to Matrox, John V, Zenco, Fub, Sabotage, Krazaki, Nigel, Reap and " +
+    "my Cat.";
             this.darkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // darkLabel2

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace nsOrbisNeighborhood.Properties {
+namespace OrbisModuleManager.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,12 +26,12 @@ namespace nsOrbisNeighborhood.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BINDirectory {
+        public string SPRXDir {
             get {
-                return ((string)(this["BINDirectory"]));
+                return ((string)(this["SPRXDir"]));
             }
             set {
-                this["BINDirectory"] = value;
+                this["SPRXDir"] = value;
             }
         }
     }

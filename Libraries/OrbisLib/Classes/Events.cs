@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrbisSuite.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -160,7 +161,7 @@ namespace OrbisSuite
         internal void Proc_AttachCallback(string IPAddr, string NewProcName)
         {
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
-                Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName);
+                Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
         }
 
         internal void Proc_DetachCallback(string IPAddr)
@@ -190,7 +191,7 @@ namespace OrbisSuite
         internal void Target_NewTitleCallback(string IPAddr, string TitleID)
         {
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
-                Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID);
+                Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
         }
 
         internal void DB_TouchedCallback()
