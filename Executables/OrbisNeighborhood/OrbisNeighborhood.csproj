@@ -46,7 +46,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Orbis.ico</ApplicationIcon>
+    <ApplicationIcon>OrbisNeighborhoodx64_4055.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DarkUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -116,6 +116,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Orbis.ico" />
+    <Content Include="OrbisNeighborhoodx64_4055.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

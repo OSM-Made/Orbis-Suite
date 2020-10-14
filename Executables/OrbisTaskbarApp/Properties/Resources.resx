@@ -121,4 +121,22 @@
   <data name="Default" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Default.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OrbisConsoleOutput_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OrbisConsoleOutput_100.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrbisNeighborhoodx64_4055" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OrbisNeighborhoodx64_4055.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="orbis-razorCpuLiveUIx64_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\orbis-razorCpuLiveUIx64_100.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrbisSettings_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OrbisSettings_100.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrbisSettings_4496" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OrbisSettings_4496.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrbisTaskbarApp_1908" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OrbisTaskbarApp_1908.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

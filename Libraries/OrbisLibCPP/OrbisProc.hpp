@@ -28,5 +28,6 @@ public:
 	int UnloadSPRX(char* IPAddr, char* Name, int32_t Flags);
 	int ReloadSPRX(char* IPAddr, char* Name, int32_t Flags);
 	int ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags);
+	int DumpModule(char* IPAddr, char* ModuleName, int* Len, char* Out);
 	int GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out);
 };

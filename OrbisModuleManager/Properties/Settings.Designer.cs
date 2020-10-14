@@ -25,13 +25,25 @@ namespace OrbisModuleManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SPRXDir {
+        [global::System.Configuration.DefaultSettingValueAttribute("/mnt/usb0/")]
+        public string SPRXDirectory {
             get {
-                return ((string)(this["SPRXDir"]));
+                return ((string)(this["SPRXDirectory"]));
             }
             set {
-                this["SPRXDir"] = value;
+                this["SPRXDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ELFDirectory {
+            get {
+                return ((string)(this["ELFDirectory"]));
+            }
+            set {
+                this["ELFDirectory"] = value;
             }
         }
     }

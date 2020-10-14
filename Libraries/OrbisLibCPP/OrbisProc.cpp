@@ -142,7 +142,7 @@ int OrbisProc::Write(char* IPAddr, uint64_t Address, size_t Len, char* Data)
 		return API_ERROR_FAIL;
 	}
 
-	if (!Sock->Send((char*)&Status, sizeof(int)))
+	if (!Sock->Receive((char*)&Status, sizeof(int)))
 	{
 		orbisLib->API->FinishCall(&Sock);
 
@@ -186,7 +186,7 @@ int OrbisProc::LoadELF(char* IPAddr, char* Data, size_t Len)
 		return API_ERROR_FAIL;
 	}
 
-	if (!Sock->Send((char*)&Status, sizeof(int)))
+	if (!Sock->Receive((char*)&Status, sizeof(int)))
 	{
 		orbisLib->API->FinishCall(&Sock);
 
@@ -201,7 +201,7 @@ int OrbisProc::LoadELF(char* IPAddr, char* Data, size_t Len)
 //TODO:Implement RPC
 
 
-int OrbisProc::LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
+int32_t OrbisProc::LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -209,10 +209,26 @@ int OrbisProc::LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
 	strcpy_s(Packet.Proc_SPRX.ModuleDir, Path);
 	Packet.Proc_SPRX.Flags = Flags;
 
-	return orbisLib->API->Call(IPAddr, &Packet);
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	if (Status)
+		return Status;
+
+	int32_t ModuleHandle = 0;
+	if (!Sock->Receive((char*)&ModuleHandle, sizeof(int32_t)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return ModuleHandle;
 }
 
-int OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
+int32_t OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -220,10 +236,23 @@ int OrbisProc::UnloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 	Packet.Proc_SPRX.hModule = Handle;
 	Packet.Proc_SPRX.Flags = Flags;
 
-	return orbisLib->API->Call(IPAddr, &Packet);
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	int Result = 0;
+	if (!Sock->Receive((char*)&Result, sizeof(int)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return Result;
 }
 
-int OrbisProc::UnloadSPRX(char* IPAddr, char* Name, int32_t Flags)
+int32_t OrbisProc::UnloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -231,10 +260,23 @@ int OrbisProc::UnloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 	strcpy_s(Packet.Proc_SPRX.ModuleName, Name);
 	Packet.Proc_SPRX.Flags = Flags;
 
-	return orbisLib->API->Call(IPAddr, &Packet);
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	int Result = 0;
+	if (!Sock->Receive((char*)&Result, sizeof(int)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return Result;
 }
 
-int OrbisProc::ReloadSPRX(char* IPAddr, char* Name, int32_t Flags)
+int32_t OrbisProc::ReloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -242,10 +284,26 @@ int OrbisProc::ReloadSPRX(char* IPAddr, char* Name, int32_t Flags)
 	strcpy_s(Packet.Proc_SPRX.ModuleName, Name);
 	Packet.Proc_SPRX.Flags = Flags;
 
-	return orbisLib->API->Call(IPAddr, &Packet);
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	if (Status)
+		return Status;
+
+	int32_t ModuleHandle = 0;
+	if (!Sock->Receive((char*)&ModuleHandle, sizeof(int32_t)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return ModuleHandle;
 }
 
-int OrbisProc::ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
+int32_t OrbisProc::ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	API_Packet_s Packet;
 	memset(&Packet, 0, sizeof(API_Packet_s));
@@ -253,7 +311,56 @@ int OrbisProc::ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 	Packet.Proc_SPRX.hModule = Handle;
 	Packet.Proc_SPRX.Flags = Flags;
 
-	return orbisLib->API->Call(IPAddr, &Packet);
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	if (Status)
+		return Status;
+
+	int32_t ModuleHandle = 0;
+	if (!Sock->Receive((char*)&ModuleHandle, sizeof(int32_t)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return ModuleHandle;
+}
+
+int OrbisProc::DumpModule(char* IPAddr, char* ModuleName, int* Len, char* Out)
+{
+	API_Packet_s Packet;
+	memset(&Packet, 0, sizeof(API_Packet_s));
+	Packet.cmd = API_PROC_DUMP_MODULE;
+	strcpy_s(Packet.Proc_SPRX.ModuleName, ModuleName);
+
+	Sockets* Sock;
+	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
+
+	if (!Sock->Receive((char*)Len, sizeof(int)))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	printf("GotSize = 0x%X\n", *Len);
+
+	if (!Sock->Receive(Out, *Len))
+	{
+		orbisLib->API->FinishCall(&Sock);
+
+		return API_ERROR_FAIL;
+	}
+
+	printf("Finished Dump\n");
+
+	orbisLib->API->FinishCall(&Sock);
+
+	return API_OK;
 }
 
 int OrbisProc::GetLibraryList(char* IPAddr, int32_t* LibraryCount, char* Out)

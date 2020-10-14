@@ -92,7 +92,7 @@ extern "C" __declspec(dllexport) int LoadELF(char* IPAddr, char* Buffer, size_t 
 /*
 Modules
 */
-extern "C" __declspec(dllexport) int LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
+extern "C" __declspec(dllexport) int32_t LoadSPRX(char* IPAddr, char* Path, int32_t Flags)
 {
 	return orbisLib->Proc->LoadSPRX(IPAddr, Path, Flags);
 }
@@ -107,14 +107,19 @@ extern "C" __declspec(dllexport) int UnloadSPRXbyName(char* IPAddr, char* Name, 
 	return orbisLib->Proc->UnloadSPRX(IPAddr, Name, Flags);
 }
 
-extern "C" __declspec(dllexport) int ReloadSPRXbyName(char* IPAddr, char* Name, int32_t Flags)
+extern "C" __declspec(dllexport) int32_t ReloadSPRXbyName(char* IPAddr, char* Name, int32_t Flags)
 {
 	return orbisLib->Proc->ReloadSPRX(IPAddr, Name, Flags);
 }
 
-extern "C" __declspec(dllexport) int ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
+extern "C" __declspec(dllexport) int32_t ReloadSPRX(char* IPAddr, int32_t Handle, int32_t Flags)
 {
 	return orbisLib->Proc->ReloadSPRX(IPAddr, Handle, Flags);
+}
+
+extern "C" __declspec(dllexport) int DumpModule(char* IPAddr, char* ModuleName, int* Len, char* Out)
+{
+	return orbisLib->Proc->DumpModule(IPAddr, ModuleName, Len, Out);
 }
 
 extern "C" __declspec(dllexport) int GetLibraryList(char* IPAddr, int32_t* ModuleCount, char* Out)

@@ -75,6 +75,9 @@ namespace OrbisSuite.Classes
             IntPtr ptr = IntPtr.Zero;
             int TargetCount = Imports.TargetManagement.GetTargets(out ptr);
 
+            if (TargetCount == 0)
+                return List;
+
             for (int i = 0; i < TargetCount; i++)
             {
                 //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.

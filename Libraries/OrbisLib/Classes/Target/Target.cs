@@ -46,49 +46,59 @@ namespace OrbisSuite.Classes
             return Imports.TargetManagement.DeleteTarget(Info.Name);
         }
 
-        public int Shutdown()
+        public API_ERRORS Shutdown()
         {
             return Imports.Target.Shutdown(Info.IPAddr);
         }
 
-        public int Reboot()
+        public API_ERRORS Reboot()
         {
             return Imports.Target.Reboot(Info.IPAddr);
         }
 
-        public int Suspend()
+        public API_ERRORS Suspend()
         {
             return Imports.Target.Suspend(Info.IPAddr);
         }
 
-        public int Notify(string Message)
+        public API_ERRORS Notify(string Message)
         {
             return Imports.Target.Notify(Info.IPAddr, -1, Message);
         }
 
-        public int Notify(int Type, string Message)
+        public API_ERRORS Notify(int Type, string Message)
         {
             return Imports.Target.Notify(Info.IPAddr, Type, Message);
         }
 
-        public int Beep(int Count)
+        public API_ERRORS Beep(int Count)
         {
             return Imports.Target.DoBeep(Info.IPAddr, Count);
         }
 
-        public int SetLED(byte R, byte G, byte B, byte A)
+        public API_ERRORS SetLED(byte R, byte G, byte B, byte A)
         {
             return Imports.Target.SetLED(Info.IPAddr, R, G, B, A);
         }
 
-        public int GetLED(out byte R, out byte G, out byte B, out byte A)
+        public API_ERRORS GetLED(out byte R, out byte G, out byte B, out byte A)
         {
             return Imports.Target.GetLED(Info.IPAddr, out R, out G, out B, out A);
         }
 
-        public int DumpProcess(string ProcName, out UInt64 Size, byte[] Out)
+        public API_ERRORS DumpProcess(string ProcName, int Length, byte[] Out)
         {
-            return Imports.Target.DumpProcess(Info.IPAddr, ProcName, out Size, Out);
+            IntPtr ptr = Marshal.AllocHGlobal(Length);
+
+            UInt64 RealLength = 0;
+            API_ERRORS Result = Imports.Target.DumpProcess(Info.IPAddr, ProcName, out RealLength, ptr);
+
+            Marshal.Copy(ptr, Out, 0, Length);
+
+            //free unmanageed memory.
+            Marshal.FreeHGlobal(ptr);
+
+            return Result;
         }
     }
 }

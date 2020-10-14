@@ -45,6 +45,9 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.darkSectionPanel4 = new DarkUI.Controls.DarkSectionPanel();
             this.FTPDataTree = new DarkUI.Controls.DarkTreeView();
+            this.FTPContextMenu = new DarkUI.Controls.DarkContextMenu();
+            this.FTPStrip_LoadModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.FTPStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.darkTitle4 = new DarkUI.Controls.DarkTitle();
             this.darkSectionPanel3 = new DarkUI.Controls.DarkSectionPanel();
@@ -67,6 +70,7 @@
             this.ModuleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TextSegmentAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DataSegmentAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditModule = new DarkUI.Controls.DarkContextMenu();
             this.MenuStrip_Unload = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip_Reload = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,12 +80,13 @@
             this.MenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
-            this.FTPContextMenu = new DarkUI.Controls.DarkContextMenu();
-            this.FTPStrip_LoadModule = new System.Windows.Forms.ToolStripMenuItem();
-            this.FTPStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.FTPStrip_UnloadModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.FTPStrip_ReloadModule = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStrip1.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
             this.darkSectionPanel4.SuspendLayout();
+            this.FTPContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.darkSectionPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -91,7 +96,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ModuleList)).BeginInit();
             this.EditModule.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.FTPContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // darkToolStrip1
@@ -112,7 +116,7 @@
             this.darkToolStrip1.Location = new System.Drawing.Point(0, 0);
             this.darkToolStrip1.Name = "darkToolStrip1";
             this.darkToolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 2);
-            this.darkToolStrip1.Size = new System.Drawing.Size(844, 30);
+            this.darkToolStrip1.Size = new System.Drawing.Size(938, 30);
             this.darkToolStrip1.TabIndex = 3;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
@@ -212,7 +216,7 @@
             this.darkStatusStrip1.Location = new System.Drawing.Point(0, 460);
             this.darkStatusStrip1.Name = "darkStatusStrip1";
             this.darkStatusStrip1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 3);
-            this.darkStatusStrip1.Size = new System.Drawing.Size(844, 30);
+            this.darkStatusStrip1.Size = new System.Drawing.Size(938, 30);
             this.darkStatusStrip1.SizingGrip = false;
             this.darkStatusStrip1.TabIndex = 4;
             this.darkStatusStrip1.Text = "darkStatusStrip1";
@@ -228,7 +232,7 @@
             // 
             this.toolStripStatusLabel4.Margin = new System.Windows.Forms.Padding(0, 0, 50, 2);
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(688, 20);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(782, 20);
             this.toolStripStatusLabel4.Spring = true;
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -244,7 +248,7 @@
             this.darkSectionPanel4.Controls.Add(this.FTPDataTree);
             this.darkSectionPanel4.Controls.Add(this.pictureBox4);
             this.darkSectionPanel4.Controls.Add(this.darkTitle4);
-            this.darkSectionPanel4.Location = new System.Drawing.Point(572, 266);
+            this.darkSectionPanel4.Location = new System.Drawing.Point(659, 266);
             this.darkSectionPanel4.Name = "darkSectionPanel4";
             this.darkSectionPanel4.SectionHeader = null;
             this.darkSectionPanel4.Size = new System.Drawing.Size(267, 191);
@@ -252,6 +256,7 @@
             // 
             // FTPDataTree
             // 
+            this.FTPDataTree.ContextMenuStrip = this.FTPContextMenu;
             this.FTPDataTree.Location = new System.Drawing.Point(4, 28);
             this.FTPDataTree.MaxDragChange = 20;
             this.FTPDataTree.Name = "FTPDataTree";
@@ -259,6 +264,37 @@
             this.FTPDataTree.Size = new System.Drawing.Size(258, 159);
             this.FTPDataTree.TabIndex = 2;
             this.FTPDataTree.Text = "darkTreeView1";
+            // 
+            // FTPContextMenu
+            // 
+            this.FTPContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.FTPContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.FTPContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FTPStrip_UnloadModule,
+            this.FTPStrip_ReloadModule,
+            this.FTPStrip_LoadModule,
+            this.toolStripSeparator4,
+            this.FTPStrip_Refresh});
+            this.FTPContextMenu.Name = "FTPContextMenu";
+            this.FTPContextMenu.Size = new System.Drawing.Size(181, 121);
+            // 
+            // FTPStrip_LoadModule
+            // 
+            this.FTPStrip_LoadModule.Enabled = false;
+            this.FTPStrip_LoadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_LoadModule.Name = "FTPStrip_LoadModule";
+            this.FTPStrip_LoadModule.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_LoadModule.Text = "Load Module";
+            this.FTPStrip_LoadModule.Click += new System.EventHandler(this.FTPStrip_LoadModule_Click);
+            // 
+            // FTPStrip_Refresh
+            // 
+            this.FTPStrip_Refresh.Enabled = false;
+            this.FTPStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_Refresh.Name = "FTPStrip_Refresh";
+            this.FTPStrip_Refresh.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_Refresh.Text = "Refresh";
+            this.FTPStrip_Refresh.Click += new System.EventHandler(this.FTPStrip_Refresh_Click);
             // 
             // pictureBox4
             // 
@@ -285,7 +321,7 @@
             this.darkSectionPanel3.Controls.Add(this.pictureBox3);
             this.darkSectionPanel3.Controls.Add(this.ELFDirectory);
             this.darkSectionPanel3.Controls.Add(this.darkTitle3);
-            this.darkSectionPanel3.Location = new System.Drawing.Point(572, 150);
+            this.darkSectionPanel3.Location = new System.Drawing.Point(659, 150);
             this.darkSectionPanel3.Name = "darkSectionPanel3";
             this.darkSectionPanel3.SectionHeader = null;
             this.darkSectionPanel3.Size = new System.Drawing.Size(267, 110);
@@ -300,6 +336,7 @@
             this.Button_OpenELF.Size = new System.Drawing.Size(55, 23);
             this.Button_OpenELF.TabIndex = 11;
             this.Button_OpenELF.Text = "Open";
+            this.Button_OpenELF.Click += new System.EventHandler(this.Button_OpenELF_Click);
             // 
             // Button_LoadELF
             // 
@@ -310,6 +347,7 @@
             this.Button_LoadELF.Size = new System.Drawing.Size(63, 23);
             this.Button_LoadELF.TabIndex = 10;
             this.Button_LoadELF.Text = "Load";
+            this.Button_LoadELF.Click += new System.EventHandler(this.Button_LoadELF_Click);
             // 
             // pictureBox3
             // 
@@ -329,6 +367,7 @@
             this.ELFDirectory.Name = "ELFDirectory";
             this.ELFDirectory.Size = new System.Drawing.Size(228, 20);
             this.ELFDirectory.TabIndex = 9;
+            this.ELFDirectory.TextChanged += new System.EventHandler(this.ELFDirectory_TextChanged);
             // 
             // darkTitle3
             // 
@@ -347,7 +386,7 @@
             this.darkSectionPanel2.Controls.Add(this.pictureBox2);
             this.darkSectionPanel2.Controls.Add(this.SPRXDirectory);
             this.darkSectionPanel2.Controls.Add(this.darkTitle2);
-            this.darkSectionPanel2.Location = new System.Drawing.Point(572, 33);
+            this.darkSectionPanel2.Location = new System.Drawing.Point(659, 33);
             this.darkSectionPanel2.Name = "darkSectionPanel2";
             this.darkSectionPanel2.SectionHeader = null;
             this.darkSectionPanel2.Size = new System.Drawing.Size(267, 110);
@@ -404,6 +443,7 @@
             this.SPRXDirectory.Name = "SPRXDirectory";
             this.SPRXDirectory.Size = new System.Drawing.Size(228, 20);
             this.SPRXDirectory.TabIndex = 9;
+            this.SPRXDirectory.TextChanged += new System.EventHandler(this.SPRXDirectory_TextChanged);
             // 
             // darkTitle2
             // 
@@ -423,13 +463,13 @@
             this.darkSectionPanel1.Location = new System.Drawing.Point(5, 33);
             this.darkSectionPanel1.Name = "darkSectionPanel1";
             this.darkSectionPanel1.SectionHeader = null;
-            this.darkSectionPanel1.Size = new System.Drawing.Size(561, 424);
+            this.darkSectionPanel1.Size = new System.Drawing.Size(648, 424);
             this.darkSectionPanel1.TabIndex = 7;
             // 
             // darkScrollBar1
             // 
             this.darkScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.darkScrollBar1.Location = new System.Drawing.Point(543, 25);
+            this.darkScrollBar1.Location = new System.Drawing.Point(630, 25);
             this.darkScrollBar1.Name = "darkScrollBar1";
             this.darkScrollBar1.Size = new System.Drawing.Size(17, 398);
             this.darkScrollBar1.TabIndex = 3;
@@ -452,7 +492,8 @@
             this.mHandle,
             this.ModuleName,
             this.TextSegmentAddress,
-            this.DataSegmentAddress});
+            this.DataSegmentAddress,
+            this.mSize});
             this.ModuleList.ContextMenuStrip = this.EditModule;
             this.ModuleList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ModuleList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(60)))), ((int)(((byte)(62)))));
@@ -464,7 +505,7 @@
             this.ModuleList.RowHeadersVisible = false;
             this.ModuleList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.ModuleList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ModuleList.Size = new System.Drawing.Size(559, 398);
+            this.ModuleList.Size = new System.Drawing.Size(646, 398);
             this.ModuleList.TabIndex = 2;
             this.ModuleList.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ModuleList_Scroll);
             this.ModuleList.Enter += new System.EventHandler(this.ModuleList_Enter);
@@ -504,6 +545,13 @@
             this.DataSegmentAddress.Name = "DataSegmentAddress";
             this.DataSegmentAddress.ReadOnly = true;
             this.DataSegmentAddress.Width = 140;
+            // 
+            // mSize
+            // 
+            this.mSize.FillWeight = 85F;
+            this.mSize.HeaderText = "Size";
+            this.mSize.Name = "mSize";
+            this.mSize.Width = 85;
             // 
             // EditModule
             // 
@@ -588,37 +636,36 @@
             this.darkTitle1.TabIndex = 0;
             this.darkTitle1.Text = "Module List";
             // 
-            // FTPContextMenu
+            // toolStripSeparator4
             // 
-            this.FTPContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.FTPContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.FTPContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FTPStrip_LoadModule,
-            this.FTPStrip_Refresh});
-            this.FTPContextMenu.Name = "FTPContextMenu";
-            this.FTPContextMenu.Size = new System.Drawing.Size(145, 48);
+            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
-            // FTPStrip_LoadModule
+            // FTPStrip_UnloadModule
             // 
-            this.FTPStrip_LoadModule.Enabled = false;
-            this.FTPStrip_LoadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.FTPStrip_LoadModule.Name = "FTPStrip_LoadModule";
-            this.FTPStrip_LoadModule.Size = new System.Drawing.Size(144, 22);
-            this.FTPStrip_LoadModule.Text = "Load Module";
+            this.FTPStrip_UnloadModule.Enabled = false;
+            this.FTPStrip_UnloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_UnloadModule.Name = "FTPStrip_UnloadModule";
+            this.FTPStrip_UnloadModule.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_UnloadModule.Text = "Unload Module";
+            this.FTPStrip_UnloadModule.Click += new System.EventHandler(this.FTPStrip_UnloadModule_Click);
             // 
-            // FTPStrip_Refresh
+            // FTPStrip_ReloadModule
             // 
-            this.FTPStrip_Refresh.Enabled = false;
-            this.FTPStrip_Refresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.FTPStrip_Refresh.Name = "FTPStrip_Refresh";
-            this.FTPStrip_Refresh.Size = new System.Drawing.Size(144, 22);
-            this.FTPStrip_Refresh.Text = "Refresh";
+            this.FTPStrip_ReloadModule.Enabled = false;
+            this.FTPStrip_ReloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_ReloadModule.Name = "FTPStrip_ReloadModule";
+            this.FTPStrip_ReloadModule.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_ReloadModule.Text = "Reload Module";
+            this.FTPStrip_ReloadModule.Click += new System.EventHandler(this.FTPStrip_ReloadModule_Click);
             // 
             // OrbisModuleManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 490);
+            this.ClientSize = new System.Drawing.Size(938, 490);
             this.Controls.Add(this.darkSectionPanel4);
             this.Controls.Add(this.darkSectionPanel3);
             this.Controls.Add(this.darkSectionPanel2);
@@ -627,8 +674,6 @@
             this.Controls.Add(this.darkToolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(860, 529);
-            this.MinimumSize = new System.Drawing.Size(860, 529);
             this.Name = "OrbisModuleManager";
             this.Text = "Orbis Module Manager";
             this.darkToolStrip1.ResumeLayout(false);
@@ -637,6 +682,7 @@
             this.darkStatusStrip1.PerformLayout();
             this.darkSectionPanel4.ResumeLayout(false);
             this.darkSectionPanel4.PerformLayout();
+            this.FTPContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.darkSectionPanel3.ResumeLayout(false);
             this.darkSectionPanel3.PerformLayout();
@@ -649,7 +695,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ModuleList)).EndInit();
             this.EditModule.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.FTPContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -686,10 +731,6 @@
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
         private DarkUI.Controls.DarkScrollBar darkScrollBar1;
         private System.Windows.Forms.DataGridView ModuleList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mHandle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ModuleName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TextSegmentAddress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DataSegmentAddress;
         private System.Windows.Forms.PictureBox pictureBox1;
         private DarkUI.Controls.DarkTitle darkTitle1;
         private DarkUI.Controls.DarkContextMenu EditModule;
@@ -706,6 +747,14 @@
         private DarkUI.Controls.DarkContextMenu FTPContextMenu;
         private System.Windows.Forms.ToolStripMenuItem FTPStrip_LoadModule;
         private System.Windows.Forms.ToolStripMenuItem FTPStrip_Refresh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mHandle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ModuleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TextSegmentAddress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DataSegmentAddress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mSize;
+        private System.Windows.Forms.ToolStripMenuItem FTPStrip_UnloadModule;
+        private System.Windows.Forms.ToolStripMenuItem FTPStrip_ReloadModule;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

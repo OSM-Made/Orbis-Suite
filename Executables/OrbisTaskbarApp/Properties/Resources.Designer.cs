@@ -69,5 +69,65 @@ namespace OrbisTaskbarApp.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap orbis_razorCpuLiveUIx64_100 {
+            get {
+                object obj = ResourceManager.GetObject("orbis-razorCpuLiveUIx64_100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisConsoleOutput_100 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisConsoleOutput_100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisNeighborhoodx64_4055 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisNeighborhoodx64_4055", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisSettings_100 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisSettings_100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisSettings_4496 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisSettings_4496", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisTaskbarApp_1908 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisTaskbarApp_1908", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

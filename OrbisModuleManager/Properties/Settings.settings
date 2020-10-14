@@ -2,7 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OrbisModuleManager.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SPRXDir" Type="System.String" Scope="User">
+    <Setting Name="SPRXDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/mnt/usb0/</Value>
+    </Setting>
+    <Setting Name="ELFDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

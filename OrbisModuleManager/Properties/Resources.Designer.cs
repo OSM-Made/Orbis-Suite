@@ -73,9 +73,39 @@ namespace OrbisModuleManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap document_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("document_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Files_7954 {
             get {
                 object obj = ResourceManager.GetObject("Files_7954", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_16x {
+            get {
+                object obj = ResourceManager.GetObject("folder_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_Closed_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("folder_Closed_16xLG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

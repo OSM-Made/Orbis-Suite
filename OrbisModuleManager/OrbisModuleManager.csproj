@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>orbis-razorCpuLiveUIx64_100.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DarkUI">
       <HintPath>..\Libraries\DarkUI.dll</HintPath>
@@ -52,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Utilities.cs" />
     <Compile Include="OrbisModuleManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +111,11 @@
       <Link>OrbisLibCPP.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="orbis-razorCpuLiveUIx64_100.ico" />
+    <Content Include="Orbis.ico" />
+    <None Include="Resources\folder_Closed_16xLG.png" />
+    <None Include="Resources\folder_16x.png" />
+    <None Include="Resources\document_16xLG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

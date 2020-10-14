@@ -37,6 +37,9 @@ namespace OrbisSuite.Classes
             if (Imports.Process.GetProcList(Target.Info.IPAddr, out ProcCount, ptr) != (int)API_ERRORS.API_OK)
                 return ProcList;
 
+            if (ProcCount == 0)
+                return ProcList;
+
             for (int i = 0; i < ProcCount; i++)
             {
                 //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.
@@ -139,29 +142,44 @@ namespace OrbisSuite.Classes
         //
 
         //Modules
-        public API_ERRORS LoadSPRX(string Path, Int32 Flags)
+        public Int32 LoadSPRX(string Path, Int32 Flags)
         {
             return Imports.Process.LoadSPRX(Target.Info.IPAddr, Path, Flags);
         }
 
-        public API_ERRORS UnloadSPRX(Int32 Handle, Int32 Flags)
+        public int UnloadSPRX(Int32 Handle, Int32 Flags)
         {
             return Imports.Process.UnloadSPRX(Target.Info.IPAddr, Handle, Flags);
         }
 
-        public API_ERRORS UnloadSPRX(string Name, Int32 Flags)
+        public int UnloadSPRX(string Name, Int32 Flags)
         {
             return Imports.Process.UnloadSPRXbyName(Target.Info.IPAddr, Name, Flags);
         }
 
-        public API_ERRORS ReloadSPRX(string Name, Int32 Flags)
+        public Int32 ReloadSPRX(string Name, Int32 Flags)
         {
             return Imports.Process.ReloadSPRXbyName(Target.Info.IPAddr, Name, Flags);
         }
 
-        public API_ERRORS ReloadSPRX(Int32 Handle, Int32 Flags)
+        public Int32 ReloadSPRX(Int32 Handle, Int32 Flags)
         {
             return Imports.Process.ReloadSPRX(Target.Info.IPAddr, Handle, Flags);
+        }
+
+        public API_ERRORS DumpModule(string Name, int Length, byte[] Out)
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(Length);
+
+            int RealLength = 0;
+            API_ERRORS Result = Imports.Process.DumpModule(Target.Info.IPAddr, Name, out RealLength, ptr);
+
+            Marshal.Copy(ptr, Out, 0, Length);
+
+            //free unmanageed memory.
+            Marshal.FreeHGlobal(ptr);
+
+            return Result;
         }
 
         public API_ERRORS GetLibraryList(out List<ModuleInfo> List)
@@ -173,6 +191,13 @@ namespace OrbisSuite.Classes
 
             int ModuleCount = 0;
             API_ERRORS res = Imports.Process.GetLibraryList(Target.Info.IPAddr, out ModuleCount, ptr);
+
+            if (ModuleCount == 0)
+            {
+                List = ModuleList;
+                return API_ERRORS.API_ERROR_FAIL;
+            }
+                
 
             for (int i = 0; i < ModuleCount; i++)
             {

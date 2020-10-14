@@ -99,5 +99,35 @@
   <ItemGroup>
     <None Include="Resources\Default.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OrbisConsoleOutput_100.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OrbisNeighborhoodx64_4055.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\orbis-razorCpuLiveUIx64_100.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OrbisSettings_100.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OrbisSettings_4496.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OrbisTaskbarApp_1908.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
+      <Link>OrbisLibCPP.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\OrbisLib\OrbisLib.csproj">
+      <Project>{D0D0036E-990F-4C2B-B95E-97882208E6B8}</Project>
+      <Name>OrbisLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

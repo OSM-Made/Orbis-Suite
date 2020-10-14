@@ -42,52 +42,52 @@ namespace OrbisSuite.Classes
             //
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS LoadSPRX(string IPAddr, string Path, Int32 Flags);
+            internal static extern Int32 LoadSPRX(string IPAddr, string Path, Int32 Flags);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS UnloadSPRX(string IPAddr, Int32 Handle, Int32 Flags);
+            internal static extern int UnloadSPRX(string IPAddr, Int32 Handle, Int32 Flags);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS UnloadSPRXbyName(string IPAddr, string Name, Int32 Flags);
+            internal static extern int UnloadSPRXbyName(string IPAddr, string Name, Int32 Flags);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS ReloadSPRXbyName(string IPAddr, string Name, Int32 Flags);
+            internal static extern Int32 ReloadSPRXbyName(string IPAddr, string Name, Int32 Flags);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS ReloadSPRX(string IPAddr, Int32 Handle, Int32 Flags);
+            internal static extern Int32 ReloadSPRX(string IPAddr, Int32 Handle, Int32 Flags);
+
+            [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+            internal static extern API_ERRORS DumpModule(string IPAddr, string ModuleName, [MarshalAs(UnmanagedType.I4)] out int Length, [MarshalAs(UnmanagedType.SysUInt)] IntPtr Out);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
             internal static extern API_ERRORS GetLibraryList(string IPAddr, [MarshalAs(UnmanagedType.I4)] out int ModuleCount, [MarshalAs(UnmanagedType.SysUInt)] IntPtr List);
-
-            //[DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            //internal static extern int DumpModule(string IPAddr, string LibraryName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, byte[] Out);
         }
 
         public class Target
         {
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int Shutdown(string IPAddr);
+            internal static extern API_ERRORS Shutdown(string IPAddr);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int Reboot(string IPAddr);
+            internal static extern API_ERRORS Reboot(string IPAddr);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int Suspend(string IPAddr);
+            internal static extern API_ERRORS Suspend(string IPAddr);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int Notify(string IPAddr, int Type, string Message);
+            internal static extern API_ERRORS Notify(string IPAddr, int Type, string Message);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int DoBeep(string IPAddr, int Count);
+            internal static extern API_ERRORS DoBeep(string IPAddr, int Count);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int SetLED(string IPAddr, byte R, byte G, byte B, byte A);
+            internal static extern API_ERRORS SetLED(string IPAddr, byte R, byte G, byte B, byte A);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int GetLED(string IPAddr, [MarshalAs(UnmanagedType.U1)] out byte R, [MarshalAs(UnmanagedType.U1)] out byte G, [MarshalAs(UnmanagedType.U1)] out byte B, [MarshalAs(UnmanagedType.U1)] out byte A);
+            internal static extern API_ERRORS GetLED(string IPAddr, [MarshalAs(UnmanagedType.U1)] out byte R, [MarshalAs(UnmanagedType.U1)] out byte G, [MarshalAs(UnmanagedType.U1)] out byte B, [MarshalAs(UnmanagedType.U1)] out byte A);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern int DumpProcess(string IPAddr, string ProcName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, byte[] Out);
+            internal static extern API_ERRORS DumpProcess(string IPAddr, string ProcName, [MarshalAs(UnmanagedType.U8)] out UInt64 Size, [MarshalAs(UnmanagedType.SysUInt)] IntPtr Out);
         }
 
         public class TargetManagement

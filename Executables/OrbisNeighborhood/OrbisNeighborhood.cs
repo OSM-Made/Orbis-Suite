@@ -252,6 +252,8 @@ namespace nsOrbisNeighborhood
                         Properties.Settings.Default.BINDirectory = Path.GetDirectoryName(openFileDialog.FileName);
                         Properties.Settings.Default.Save();
                     }
+                    else
+                        return;
                 }
 
                 FileStream fPayload = File.Open(PayloadPath, FileMode.Open);
