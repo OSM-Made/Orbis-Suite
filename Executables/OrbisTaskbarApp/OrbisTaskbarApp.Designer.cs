@@ -207,7 +207,7 @@
             this.ToolStrip_AutoLaunch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.ToolStrip_AutoLaunch.Name = "ToolStrip_AutoLaunch";
             this.ToolStrip_AutoLaunch.Size = new System.Drawing.Size(205, 22);
-            this.ToolStrip_AutoLaunch.Text = "Launch at Startup";
+            this.ToolStrip_AutoLaunch.Text = "Load Orbis Suite on boot";
             this.ToolStrip_AutoLaunch.Click += new System.EventHandler(this.ToolStrip_AutoLaunch_Click);
             // 
             // ToolStrip_Help

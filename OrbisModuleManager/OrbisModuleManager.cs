@@ -273,25 +273,20 @@ namespace OrbisModuleManager
 
         #region Module List
 
-        List<ModuleInfo> gModuleList;
         public void UpdateModuleList()
         {
-            ProcessInfo Info;
-            if (PS4.DefaultTarget.Process.GetCurrent(out Info) != API_ERRORS.API_OK)
+            if (PS4.DefaultTarget.Process.Current.Attached == false)
                 return;
 
             SetStatus("Updating List...");
 
             try
             {
-                gModuleList = new List<ModuleInfo>();
-                PS4.DefaultTarget.Process.GetLibraryList(out gModuleList);
-
                 int BackUpScroll = ModuleList.FirstDisplayedScrollingRowIndex;
 
                 ModuleList.Rows.Clear();
 
-                foreach (ModuleInfo Module in gModuleList)
+                foreach (ModuleInfo Module in PS4.DefaultTarget.Process.ModuleList)
                 {
                     object[] obj = { Module.Handle.ToString(), Module.Name, "0x" + Module.TextSegmentBase.ToString("X"), "0x" + Module.DataSegmentBase.ToString("X"), Utilities.SizeSuffix((long)(Module.TextSegmentLen + Module.DataSegmentLen)) };
                     ModuleList.Rows.Add(obj);
@@ -439,7 +434,7 @@ namespace OrbisModuleManager
 
                     SetStatus("Dumping Module " + ModuleName + "...");
 
-                    ModuleInfo Info = gModuleList.Find(x => x.Name == ModuleName);
+                    ModuleInfo Info = PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == ModuleName);
 
                     int Length = (int)(Info.TextSegmentLen + Info.DataSegmentLen);
                     byte[] Buffer = new byte[Length];
@@ -720,6 +715,38 @@ namespace OrbisModuleManager
 
             }
         }
+
+        private void FTPStrip_LoadModule_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DarkTreeNode SelectedNode = FTPDataTree.SelectedNodes.FirstOrDefault();
+                string FilePath = "/mnt/" + SelectedNode.FullPath;
+
+                if (!Path.GetExtension(FilePath).Equals(".sprx"))
+                    DarkMessageBox.ShowError("This file is not an sprx module and can not be loaded...", "File not sprx module!");
+                else
+                {
+                    SetStatus("Loading Module " + Path.GetFileName(FilePath) + "...");
+
+                    Int32 Handle = PS4.DefaultTarget.Process.LoadSPRX(FilePath, 0);
+
+                    if (Handle == 0)
+                        DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to load.");
+                    else
+                        Thread.Sleep(100);
+
+                    UpdateModuleList();
+
+                    SetStatus("Ready");
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         private void FTPStrip_UnloadModule_Click(object sender, EventArgs e)
         {
             try
@@ -731,7 +758,7 @@ namespace OrbisModuleManager
                     DarkMessageBox.ShowError("This file is not an sprx module and can not be Reloaded...", "File not sprx module!");
                 else
                 {
-                    if (gModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
+                    if (PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
                         DarkMessageBox.ShowError("This module couldnt be unloaded as it is not loaded.", "Module not loaded.");
                     {
                         SetStatus("UnLoading Module " + Path.GetFileName(FilePath) + "...");
@@ -766,7 +793,7 @@ namespace OrbisModuleManager
                     DarkMessageBox.ShowError("This file is not an sprx module and can not be Reloaded...", "File not sprx module!");
                 else
                 {
-                    if(gModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
+                    if(PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
                         DarkMessageBox.ShowError("This module couldnt be reloaded as it is not loaded.", "Module not loaded.");
                     {
                         SetStatus("ReLoading Module " + Path.GetFileName(FilePath) + "...");
@@ -782,37 +809,6 @@ namespace OrbisModuleManager
 
                         SetStatus("Ready");
                     }
-                }
-            }
-            catch
-            {
-
-            }
-        }
-
-        private void FTPStrip_LoadModule_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DarkTreeNode SelectedNode = FTPDataTree.SelectedNodes.FirstOrDefault();
-                string FilePath = "/mnt/" + SelectedNode.FullPath;
-
-                if (!Path.GetExtension(FilePath).Equals(".sprx"))
-                    DarkMessageBox.ShowError("This file is not an sprx module and can not be loaded...", "File not sprx module!");
-                else
-                {
-                    SetStatus("Loading Module " + Path.GetFileName(FilePath) + "...");
-
-                    Int32 Handle = PS4.DefaultTarget.Process.LoadSPRX(FilePath, 0);
-
-                    if (Handle == 0)
-                        DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to load.");
-                    else
-                        Thread.Sleep(100);
-
-                    UpdateModuleList();
-
-                    SetStatus("Ready");
                 }
             }
             catch

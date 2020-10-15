@@ -1,15 +1,18 @@
-﻿using System;
+﻿using DarkUI.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OrbisSuite.Classes
 {
     public class TargetEvents
     {
         private Target Target;
+        DarkMessageBox NewTargetDialog = null;
 
         public event EventHandler<ProcPrintEvent> ProcPrint;
         public event EventHandler<ProcInterceptEvent> ProcIntercept;

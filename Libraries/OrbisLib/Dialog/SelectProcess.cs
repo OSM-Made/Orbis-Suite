@@ -34,11 +34,9 @@ namespace OrbisSuite.Dialog
             {
                 ProcessList.Rows.Clear();
 
-                List<ProcessInfo> List = PS4.Target[TargetName].Process.GetList();
-
-                for (int i = 0; i < List.Count; i++)
+                foreach(ProcessInfo Info in PS4.Target[TargetName].Process.List)
                 {
-                    object[] obj = { List[i].PID.ToString(), List[i].Name, List[i].TitleID, List[i].Attached ? OrbisSuite.Properties.Resources.Process_Attached : OrbisSuite.Properties.Resources.Process_Detached };
+                    object[] obj = { Info.PID.ToString(), Info.Name, Info.TitleID, Info.Attached ? OrbisSuite.Properties.Resources.Process_Attached : OrbisSuite.Properties.Resources.Process_Detached };
                     ProcessList.Rows.Add(obj);
                 }
 

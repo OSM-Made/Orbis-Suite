@@ -35,8 +35,14 @@ namespace OrbisSuite.Dialog
             SOCTemp.Text = string.Format("SOC: {0} °C", Info.SOCTemp);
             CurrentTitleID.Text = Info.CurrentTitleID;
             ConsoleName.Text = Info.ConsoleName;
-            IDPS.Text = Utilities.CensorString(Info.IDPS, '#', 16);
-            PSID.Text = Utilities.CensorString(Info.PSID, '#', 16);
+            if (PS4.Settings.CensorIDPS)
+                IDPS.Text = Utilities.CensorString(Info.IDPS, '#', 16);
+            else
+                IDPS.Text = Info.IDPS;
+            if (PS4.Settings.CensorPSID)
+                PSID.Text = Utilities.CensorString(Info.PSID, '#', 16);
+            else
+                PSID.Text = Info.PSID;
             ConsoleType.Text = Info.ConsoleType;
         }
 

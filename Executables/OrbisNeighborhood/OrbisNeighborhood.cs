@@ -103,11 +103,9 @@ namespace nsOrbisNeighborhood
                     TargetList.Rows.Clear();
 
                 int LoopCount = 0;
-                List<TargetInfo> Targets = PS4.TargetManagement.GetTargetList();
-
-                foreach (TargetInfo Target in Targets)
+                foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
-                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.GetDefault().Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
+                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
                     if (TargetList.Rows.Count <= LoopCount)
                         TargetList.Rows.Add(obj);
                     else
@@ -157,8 +155,8 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                AutoLoadPayload_Button.Checked = PS4.Settings.GetAutoLoadPayload();
-                LoadOnBoot_Button.Checked = PS4.Settings.GetStartOnBoot();
+                AutoLoadPayload_Button.Checked = PS4.Settings.AutoLoadPayload;
+                LoadOnBoot_Button.Checked = PS4.Settings.StartOnBoot;
             }
             catch
             {
@@ -183,7 +181,7 @@ namespace nsOrbisNeighborhood
             try
             {
                 AutoLoadPayload_Button.Checked = !AutoLoadPayload_Button.Checked;
-                PS4.Settings.SetAutoLoadPayload(AutoLoadPayload_Button.Checked);
+                PS4.Settings.AutoLoadPayload = AutoLoadPayload_Button.Checked;
             }
             catch
             {
@@ -196,7 +194,7 @@ namespace nsOrbisNeighborhood
             try
             {
                 LoadOnBoot_Button.Checked = !LoadOnBoot_Button.Checked;
-                PS4.Settings.SetStartOnBoot(LoadOnBoot_Button.Checked);
+                PS4.Settings.StartOnBoot = LoadOnBoot_Button.Checked;
             }
             catch
             {

@@ -30,8 +30,7 @@ namespace OrbisSuite.Dialog
         public void RefreshTargetList()
         {
             DefaultTargetComboBox.Items.Clear();
-            List<TargetInfo> TargetList = PS4.TargetManagement.GetTargetList();
-            foreach (TargetInfo Target in TargetList)
+            foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
             {
                 if (Target.Default)
                     DefaultTargetComboBox.Text = Target.Name;
@@ -42,44 +41,44 @@ namespace OrbisSuite.Dialog
 
         public void UpdateSettings()
         {
-            AutoLoadPayload.Checked = PS4.Settings.GetAutoLoadPayload();
-            StartOnBoot.Checked = PS4.Settings.GetStartOnBoot();
-            PromptAttach.Checked = PS4.Settings.GetDetectGame();
+            AutoLoadPayload.Checked = PS4.Settings.AutoLoadPayload;
+            StartOnBoot.Checked = PS4.Settings.StartOnBoot;
+            PromptAttach.Checked = PS4.Settings.DetectGame;
 
             RefreshTargetList();
             //DefaultCOMPort.Text = PS4.Settings.GetCOMPort(); //TODO: GetCOMPort List
-            ServicePort.Text = PS4.Settings.GetServicePort().ToString();
-            APIPort.Text = PS4.Settings.GetAPIPort().ToString();
+            ServicePort.Text = PS4.Settings.ServicePort.ToString();
+            APIPort.Text = PS4.Settings.APIPort.ToString();
 
-            CensorIDPS.Checked = PS4.Settings.GetCensorIDPS();
-            CensorPSID.Checked = PS4.Settings.GetCensorPSID();
+            CensorIDPS.Checked = PS4.Settings.CensorIDPS;
+            CensorPSID.Checked = PS4.Settings.CensorPSID;
 
-            OrbisLibDebug.Checked = PS4.Settings.GetDebug();
-            OrbisLibLogs.Checked = PS4.Settings.GetCreateLogs();
+            OrbisLibDebug.Checked = PS4.Settings.Debug;
+            OrbisLibLogs.Checked = PS4.Settings.CreateLogs;
 
-            ShowTimestamps.Checked = PS4.Settings.GetShowTimestamps();
-            WordWrap.Checked = PS4.Settings.GetWordWrap();
+            ShowTimestamps.Checked = PS4.Settings.ShowTimestamps;
+            WordWrap.Checked = PS4.Settings.WordWrap;
         }
 
         public void SaveSettings()
         {
-            PS4.Settings.SetAutoLoadPayload(AutoLoadPayload.Checked);
-            PS4.Settings.SetStartOnBoot(StartOnBoot.Checked);
-            PS4.Settings.SetDetectGame(PromptAttach.Checked);
+            PS4.Settings.AutoLoadPayload = AutoLoadPayload.Checked;
+            PS4.Settings.StartOnBoot = StartOnBoot.Checked;
+            PS4.Settings.DetectGame = PromptAttach.Checked;
 
             PS4.TargetManagement.SetDefault(DefaultTargetComboBox.Text);
             //DefaultCOMPort.Text = PS4.Settings.SetCOMPort(); //TODO: SetCOMPort List
-            PS4.Settings.SetServicePort(Convert.ToInt32(ServicePort.Text));
-            PS4.Settings.SetAPIPort(Convert.ToInt32(APIPort.Text));
+            PS4.Settings.ServicePort = Convert.ToInt32(ServicePort.Text);
+            PS4.Settings.APIPort = Convert.ToInt32(APIPort.Text);
 
-            PS4.Settings.SetCensorIDPS(CensorIDPS.Checked);
-            PS4.Settings.SetCensorPSID(CensorPSID.Checked);
+            PS4.Settings.CensorIDPS = CensorIDPS.Checked;
+            PS4.Settings.CensorPSID = CensorPSID.Checked;
 
-            PS4.Settings.SetDebug(OrbisLibDebug.Checked);
-            PS4.Settings.SetCreateLogs(OrbisLibLogs.Checked);
+            PS4.Settings.Debug = OrbisLibDebug.Checked;
+            PS4.Settings.CreateLogs = OrbisLibLogs.Checked;
 
-            PS4.Settings.SetShowTimestamps(ShowTimestamps.Checked);
-            PS4.Settings.SetWordWrap(WordWrap.Checked);
+            PS4.Settings.ShowTimestamps = ShowTimestamps.Checked;
+            PS4.Settings.WordWrap = WordWrap.Checked;
         }
 
         private void ServicePort_KeyPress(object sender, KeyPressEventArgs e)

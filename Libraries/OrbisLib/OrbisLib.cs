@@ -20,9 +20,7 @@ namespace OrbisSuite
         {
             get
             {
-                List<TargetInfo> TargetList = TargetManagement.GetTargetList();
-
-                foreach (TargetInfo TargetInfo in TargetList)
+                foreach (TargetInfo TargetInfo in TargetManagement.TargetList)
                 {
                     if (Internal_Targets.ContainsKey(TargetInfo.Name))
                         Internal_Targets[TargetInfo.Name].Info = TargetInfo;
@@ -44,9 +42,7 @@ namespace OrbisSuite
             {
                 //Updates the dictionary every time its referenced to make sure its up to date.
                 //Need to test and see if the overhead on this is too much.
-                List<TargetInfo> TargetList = TargetManagement.GetTargetList();
-
-                foreach(TargetInfo TargetInfo in TargetList)
+                foreach(TargetInfo TargetInfo in TargetManagement.TargetList)
                 {
                     if (Internal_Targets.ContainsKey(TargetInfo.Name))
                         Internal_Targets[TargetInfo.Name].Info = TargetInfo;
@@ -113,18 +109,12 @@ namespace OrbisSuite
 
                 //Set up our instance of the OrbisLibCPP.dll.
                 SetupCPP(false);
-
-                Internal_DefaultTarget = new Target(this, TargetManagement.GetDefault());
-
-                //check with windows service to initialize Current Target and Proc
             }
             catch
             {
 
             }
         }
-
-        
 
         #endregion
     }

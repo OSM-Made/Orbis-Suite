@@ -26,46 +26,84 @@ namespace OrbisSuite.Classes
             PS4.Dialogs.SelectProcess(Target.Info.Name);
         }
 
-        public List<ProcessInfo> GetList()
+        private ProcessInfo _Current;
+        public ProcessInfo Current
         {
-            //Allocate unmanaged memory.
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)) * 100);
-
-            int ProcCount = 0;
-            List<ProcessInfo> ProcList = new List<ProcessInfo>();
-
-            if (Imports.Process.GetProcList(Target.Info.IPAddr, out ProcCount, ptr) != (int)API_ERRORS.API_OK)
-                return ProcList;
-
-            if (ProcCount == 0)
-                return ProcList;
-
-            for (int i = 0; i < ProcCount; i++)
+            get
             {
-                //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.
+                //Allocate unmanaged memory.
+                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)));
+
+                //Call our unmanaged c++ import.
+                API_ERRORS Result = Imports.Process.GetCurrent(Target.Info.IPAddr, ptr);
+
+                if (Result != API_ERRORS.API_OK)
+                    return _Current = new ProcessInfo();
+
+                //Convert the unmanaged memory into a easy to digest structure.
                 RESP_Proc ProcInfo = (RESP_Proc)Marshal.PtrToStructure(ptr, typeof(RESP_Proc));
-                ptr += Marshal.SizeOf(typeof(RESP_Proc));
 
-                ProcList.Add(
-                    new ProcessInfo(
-                        ProcInfo.ProcessID,
-                        ProcInfo.Attached,
-                        Utilities.CleanByteToString(ProcInfo.ProcName),
-                        Utilities.CleanByteToString(ProcInfo.TitleID),
-                        ProcInfo.TextSegmentBase,
-                        ProcInfo.TextSegmentLen,
-                        ProcInfo.DataSegmentBase,
-                        ProcInfo.DataSegmentLen
-                    ));
+                //Populate the c# class and clean strings for C# usage.
+                _Current = new ProcessInfo(
+                            ProcInfo.ProcessID,
+                            ProcInfo.Attached,
+                            Utilities.CleanByteToString(ProcInfo.ProcName),
+                            Utilities.CleanByteToString(ProcInfo.TitleID),
+                            ProcInfo.TextSegmentBase,
+                            ProcInfo.TextSegmentLen,
+                            ProcInfo.DataSegmentBase,
+                            ProcInfo.DataSegmentLen
+                        );
+
+                return _Current;
             }
+        }
 
-            //Weird shit requires you to be at the start to free it.
-            ptr -= Marshal.SizeOf(typeof(RESP_Proc)) * ProcCount;
+        private List<ProcessInfo> _List = new List<ProcessInfo>();
+        public List<ProcessInfo> List
+        {
+            get
+            {
+                //Clear the list for update
+                _List.Clear();
 
-            //free unmanageed memory.
-            Marshal.FreeHGlobal(ptr);
+                //Allocate unmanaged memory.
+                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)) * 100);
 
-            return ProcList;
+                int ProcCount = 0;
+                if (Imports.Process.GetProcList(Target.Info.IPAddr, out ProcCount, ptr) != (int)API_ERRORS.API_OK)
+                    return _List;
+
+                if (ProcCount == 0)
+                    return _List;
+
+                for (int i = 0; i < ProcCount; i++)
+                {
+                    //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.
+                    RESP_Proc ProcInfo = (RESP_Proc)Marshal.PtrToStructure(ptr, typeof(RESP_Proc));
+                    ptr += Marshal.SizeOf(typeof(RESP_Proc));
+
+                    _List.Add(
+                        new ProcessInfo(
+                            ProcInfo.ProcessID,
+                            ProcInfo.Attached,
+                            Utilities.CleanByteToString(ProcInfo.ProcName),
+                            Utilities.CleanByteToString(ProcInfo.TitleID),
+                            ProcInfo.TextSegmentBase,
+                            ProcInfo.TextSegmentLen,
+                            ProcInfo.DataSegmentBase,
+                            ProcInfo.DataSegmentLen
+                        ));
+                }
+
+                //Weird shit requires you to be at the start to free it.
+                ptr -= Marshal.SizeOf(typeof(RESP_Proc)) * ProcCount;
+
+                //free unmanageed memory.
+                Marshal.FreeHGlobal(ptr);
+
+                return _List;
+            }
         }
 
         public API_ERRORS Attach(string ProcName)
@@ -84,32 +122,6 @@ namespace OrbisSuite.Classes
                 return Imports.Process.Detach(Target.Info.IPAddr, Target.Info.CurrentProc);
             else
                 return API_ERRORS.API_ERROR_NOT_ATTACHED;
-        }
-
-        public API_ERRORS GetCurrent(out ProcessInfo Info)
-        {
-            //Allocate unmanaged memory.
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)));
-
-            //Call our unmanaged c++ import.
-            API_ERRORS res = Imports.Process.GetCurrent(Target.Info.IPAddr, ptr);
-
-            //Convert the unmanaged memory into a easy to digest structure.
-            RESP_Proc ProcInfo = (RESP_Proc)Marshal.PtrToStructure(ptr, typeof(RESP_Proc));
-
-            //Populate the c# class and clean strings for C# usage.
-            Info = new ProcessInfo(
-                        ProcInfo.ProcessID,
-                        ProcInfo.Attached,
-                        Utilities.CleanByteToString(ProcInfo.ProcName),
-                        Utilities.CleanByteToString(ProcInfo.TitleID),
-                        ProcInfo.TextSegmentBase,
-                        ProcInfo.TextSegmentLen,
-                        ProcInfo.DataSegmentBase,
-                        ProcInfo.DataSegmentLen
-                    );
-
-            return res;
         }
 
         public API_ERRORS Read(UInt64 Address, Int32 Len, out byte[] List)
@@ -182,54 +194,49 @@ namespace OrbisSuite.Classes
             return Result;
         }
 
-        public API_ERRORS GetLibraryList(out List<ModuleInfo> List)
+        private List<ModuleInfo> _ModuleList = new List<ModuleInfo>();
+        public List<ModuleInfo> ModuleList
         {
-            List<ModuleInfo> ModuleList = new List<ModuleInfo>();
-
-            //Allocate unmanaged memory.
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_ModuleList)) * 100);
-
-            int ModuleCount = 0;
-            API_ERRORS res = Imports.Process.GetLibraryList(Target.Info.IPAddr, out ModuleCount, ptr);
-
-            if (ModuleCount == 0)
+            get
             {
-                List = ModuleList;
-                return API_ERRORS.API_ERROR_FAIL;
+                //clear the list for update.
+                _ModuleList.Clear();
+
+                //Allocate unmanaged memory.
+                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_ModuleList)) * 100);
+
+                int ModuleCount = 0;
+                API_ERRORS res = Imports.Process.GetLibraryList(Target.Info.IPAddr, out ModuleCount, ptr);
+
+                if (ModuleCount == 0)
+                    return _ModuleList;
+
+                for (int i = 0; i < ModuleCount; i++)
+                {
+                    //Convert the unmanaged memory into a easy to digest structure. Increment the pointer of memory to the nex struct in the array.
+                    RESP_ModuleList ModuleInfo = (RESP_ModuleList)Marshal.PtrToStructure(ptr, typeof(RESP_ModuleList));
+                    ptr += Marshal.SizeOf(typeof(RESP_ModuleList));
+
+                    _ModuleList.Add(new ModuleInfo(
+                            Utilities.CleanByteToString(ModuleInfo.Name),
+                            Utilities.CleanByteToString(ModuleInfo.Path),
+                            ModuleInfo.Handle,
+                            ModuleInfo.TextSegmentBase,
+                            ModuleInfo.TextSegmentLen,
+                            ModuleInfo.DataSegmentBase,
+                            ModuleInfo.DataSegmentLen
+                            ));
+
+                }
+
+                //Weird shit requires you to be at the start to free it.
+                ptr -= Marshal.SizeOf(typeof(RESP_ModuleList)) * ModuleCount;
+
+                //free unmanageed memory.
+                Marshal.FreeHGlobal(ptr);
+
+                return _ModuleList;
             }
-                
-
-            for (int i = 0; i < ModuleCount; i++)
-            {
-                //Convert the unmanaged memory into a easy to digest structure. Increment the pointer of memory to the nex struct in the array.
-                RESP_ModuleList ModuleInfo = (RESP_ModuleList)Marshal.PtrToStructure(ptr, typeof(RESP_ModuleList));
-                ptr += Marshal.SizeOf(typeof(RESP_ModuleList));
-
-                ModuleList.Add(new ModuleInfo(
-                        Utilities.CleanByteToString(ModuleInfo.Name),
-                        Utilities.CleanByteToString(ModuleInfo.Path),
-                        ModuleInfo.Handle,
-                        ModuleInfo.TextSegmentBase,
-                        ModuleInfo.TextSegmentLen,
-                        ModuleInfo.DataSegmentBase,
-                        ModuleInfo.DataSegmentLen
-                        ));
-
-            }
-
-            //Set the output list to out new list.
-            List = ModuleList;
-
-            //Weird shit requires you to be at the start to free it.
-            ptr -= Marshal.SizeOf(typeof(RESP_ModuleList)) * ModuleCount;
-
-            //free unmanageed memory.
-            Marshal.FreeHGlobal(ptr);
-
-            return res;
         }
-
     }
-
-
 }

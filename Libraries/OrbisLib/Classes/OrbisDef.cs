@@ -83,6 +83,11 @@ namespace OrbisSuite.Classes
             this.DataSegmentBase = DataSegmentBase;
             this.DataSegmentLen = DataSegmentLen;
         }
+
+        public ProcessInfo()
+        {
+            this.Attached = false;
+        }
     }
 
 

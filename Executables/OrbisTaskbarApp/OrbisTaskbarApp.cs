@@ -43,6 +43,10 @@ namespace OrbisTaskbarApp
             PS4.Events.DBTouched += Events_DBTouched;
             PS4.Events.TargetAvailable += Events_TargetAvailable;
             PS4.Events.TargetUnAvailable += Events_TargetUnAvailable;
+
+            //Update settings
+            ToolStrip_AutoLoadPayload.Checked = PS4.Settings.AutoLoadPayload;
+            ToolStrip_AutoLaunch.Checked = PS4.Settings.StartOnBoot;
         }
 
         private void Events_TargetUnAvailable(object sender, TargetUnAvailableEvent e)
@@ -66,9 +70,7 @@ namespace OrbisTaskbarApp
             {
                 int Count = 0;
                 DarkContextMenu_ConsoleList.Items.Clear();
-                List<TargetInfo> TargetList = PS4.TargetManagement.GetTargetList();
-
-                foreach(TargetInfo Target in TargetList)
+                foreach(TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
                     DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
 
@@ -115,30 +117,113 @@ namespace OrbisTaskbarApp
             }
         }
 
+        #region Orbis Program Launcher
+
+        const int SW_RESTORE = 9;
+        public static void BringProcessToFront(System.Diagnostics.Process process)
+        {
+            IntPtr handle = process.MainWindowHandle;
+            if (IsIconic(handle))
+            {
+                ShowWindow(handle, SW_RESTORE);
+            }
+
+            SetForegroundWindow(handle);
+        }
+
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr handle);
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        private static extern bool ShowWindow(IntPtr handle, int nCmdShow);
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        private static extern bool IsIconic(IntPtr handle);
+
         private void Neigborhood_Launcher_Click(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisNeigborhood");
 
+                if (pname.Length == 0)
+                    System.Diagnostics.Process.Start("OrbisNeigborhood.exe");
+                else
+                    BringProcessToFront(pname[0]);
+            }
+            catch
+            {
+
+            }
         }
 
         private void ConsoleOutput_Launcher_Click(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisConsoleOutput");
 
+                if (pname.Length == 0)
+                    System.Diagnostics.Process.Start("OrbisConsoleOutput.exe");
+                else
+                    BringProcessToFront(pname[0]);
+            }
+            catch
+            {
+
+            }
         }
 
         private void Debugger_Launcher_Click(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisDebugger");
 
+                if (pname.Length == 0)
+                    System.Diagnostics.Process.Start("OrbisDebugger.exe");
+                else
+                    BringProcessToFront(pname[0]);
+            }
+            catch
+            {
+
+            }
         }
 
         private void ModuleManager_Launcher_Click(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisModuleManager");
 
+                if (pname.Length == 0)
+                    System.Diagnostics.Process.Start("OrbisModuleManager.exe");
+                else
+                    BringProcessToFront(pname[0]);
+            }
+            catch
+            {
+
+            }
         }
 
         private void TargetSettings_Launcher_Click(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisTargetSettings");
 
+                if (pname.Length == 0)
+                    System.Diagnostics.Process.Start("OrbisTargetSettings.exe");
+                else
+                    BringProcessToFront(pname[0]);
+            }
+            catch
+            {
+
+            }
         }
+
+        #endregion
 
         private void ToolStrip_Reboot_Click(object sender, EventArgs e)
         {
@@ -181,7 +266,6 @@ namespace OrbisTaskbarApp
             try
             {
                 string PayloadPath = string.Empty;
-                DialogResult FileOpened;
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.Title = "Open BIN File...";
@@ -242,7 +326,7 @@ namespace OrbisTaskbarApp
             try
             {
                 ToolStrip_AutoLoadPayload.Checked = !ToolStrip_AutoLoadPayload.Checked;
-                PS4.Settings.SetAutoLoadPayload(ToolStrip_AutoLoadPayload.Checked);
+                PS4.Settings.AutoLoadPayload = ToolStrip_AutoLoadPayload.Checked;
             }
             catch
             {
@@ -255,7 +339,7 @@ namespace OrbisTaskbarApp
             try
             {
                 ToolStrip_AutoLaunch.Checked = !ToolStrip_AutoLaunch.Checked;
-                PS4.Settings.SetStartOnBoot(ToolStrip_AutoLaunch.Checked);
+                PS4.Settings.StartOnBoot = ToolStrip_AutoLaunch.Checked;
             }
             catch
             {

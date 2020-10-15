@@ -46,7 +46,10 @@
             this.darkSectionPanel4 = new DarkUI.Controls.DarkSectionPanel();
             this.FTPDataTree = new DarkUI.Controls.DarkTreeView();
             this.FTPContextMenu = new DarkUI.Controls.DarkContextMenu();
+            this.FTPStrip_UnloadModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.FTPStrip_ReloadModule = new System.Windows.Forms.ToolStripMenuItem();
             this.FTPStrip_LoadModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.FTPStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.darkTitle4 = new DarkUI.Controls.DarkTitle();
@@ -80,9 +83,6 @@
             this.MenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.FTPStrip_UnloadModule = new System.Windows.Forms.ToolStripMenuItem();
-            this.FTPStrip_ReloadModule = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStrip1.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
             this.darkSectionPanel4.SuspendLayout();
@@ -270,13 +270,31 @@
             this.FTPContextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.FTPContextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.FTPContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FTPStrip_LoadModule,
             this.FTPStrip_UnloadModule,
             this.FTPStrip_ReloadModule,
-            this.FTPStrip_LoadModule,
             this.toolStripSeparator4,
             this.FTPStrip_Refresh});
             this.FTPContextMenu.Name = "FTPContextMenu";
             this.FTPContextMenu.Size = new System.Drawing.Size(181, 121);
+            // 
+            // FTPStrip_UnloadModule
+            // 
+            this.FTPStrip_UnloadModule.Enabled = false;
+            this.FTPStrip_UnloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_UnloadModule.Name = "FTPStrip_UnloadModule";
+            this.FTPStrip_UnloadModule.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_UnloadModule.Text = "Unload Module";
+            this.FTPStrip_UnloadModule.Click += new System.EventHandler(this.FTPStrip_UnloadModule_Click);
+            // 
+            // FTPStrip_ReloadModule
+            // 
+            this.FTPStrip_ReloadModule.Enabled = false;
+            this.FTPStrip_ReloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FTPStrip_ReloadModule.Name = "FTPStrip_ReloadModule";
+            this.FTPStrip_ReloadModule.Size = new System.Drawing.Size(180, 22);
+            this.FTPStrip_ReloadModule.Text = "Reload Module";
+            this.FTPStrip_ReloadModule.Click += new System.EventHandler(this.FTPStrip_ReloadModule_Click);
             // 
             // FTPStrip_LoadModule
             // 
@@ -286,6 +304,13 @@
             this.FTPStrip_LoadModule.Size = new System.Drawing.Size(180, 22);
             this.FTPStrip_LoadModule.Text = "Load Module";
             this.FTPStrip_LoadModule.Click += new System.EventHandler(this.FTPStrip_LoadModule_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // FTPStrip_Refresh
             // 
@@ -635,31 +660,6 @@
             this.darkTitle1.Size = new System.Drawing.Size(61, 13);
             this.darkTitle1.TabIndex = 0;
             this.darkTitle1.Text = "Module List";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
-            // 
-            // FTPStrip_UnloadModule
-            // 
-            this.FTPStrip_UnloadModule.Enabled = false;
-            this.FTPStrip_UnloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.FTPStrip_UnloadModule.Name = "FTPStrip_UnloadModule";
-            this.FTPStrip_UnloadModule.Size = new System.Drawing.Size(180, 22);
-            this.FTPStrip_UnloadModule.Text = "Unload Module";
-            this.FTPStrip_UnloadModule.Click += new System.EventHandler(this.FTPStrip_UnloadModule_Click);
-            // 
-            // FTPStrip_ReloadModule
-            // 
-            this.FTPStrip_ReloadModule.Enabled = false;
-            this.FTPStrip_ReloadModule.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.FTPStrip_ReloadModule.Name = "FTPStrip_ReloadModule";
-            this.FTPStrip_ReloadModule.Size = new System.Drawing.Size(180, 22);
-            this.FTPStrip_ReloadModule.Text = "Reload Module";
-            this.FTPStrip_ReloadModule.Click += new System.EventHandler(this.FTPStrip_ReloadModule_Click);
             // 
             // OrbisModuleManager
             // 

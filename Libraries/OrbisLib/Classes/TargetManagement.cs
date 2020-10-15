@@ -13,6 +13,68 @@ namespace OrbisSuite.Classes
         {
 
         }
+
+        private TargetInfo _DefaultTarget;
+        public TargetInfo DefaultTarget
+        {
+            get
+            {
+                DB_TargetInfo RawTargetInfo;
+                Imports.TargetManagement.GetDefaultTarget(out RawTargetInfo);
+
+                return _DefaultTarget = new TargetInfo(RawTargetInfo.Default,
+                        Utilities.CleanByteToString(RawTargetInfo.Name),
+                        Utilities.CleanByteToString(RawTargetInfo.IPAddr),
+                        (RawTargetInfo.Firmware / 100.0).ToString(),
+                        RawTargetInfo.PayloadPort,
+                        RawTargetInfo.Available,
+                        Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
+                        Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+                        Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                        Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
+                        RawTargetInfo.Attached,
+                        Utilities.CleanByteToString(RawTargetInfo.CurrentProc));
+            }
+        }
+
+        private List<TargetInfo> _TargetList = new List<TargetInfo>();
+        public List<TargetInfo> TargetList
+        {
+            get
+            {
+                //clear list for update.
+                _TargetList.Clear();
+
+                IntPtr ptr = IntPtr.Zero;
+                int TargetCount = Imports.TargetManagement.GetTargets(out ptr);
+
+                if (TargetCount == 0)
+                    return _TargetList;
+
+                for (int i = 0; i < TargetCount; i++)
+                {
+                    //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.
+                    DB_TargetInfo RawTargetInfo = (DB_TargetInfo)Marshal.PtrToStructure(ptr, typeof(DB_TargetInfo));
+                    ptr += Marshal.SizeOf(typeof(DB_TargetInfo));
+
+                    _TargetList.Add(new TargetInfo(RawTargetInfo.Default,
+                        Utilities.CleanByteToString(RawTargetInfo.Name),
+                        Utilities.CleanByteToString(RawTargetInfo.IPAddr),
+                        (RawTargetInfo.Firmware / 100.0).ToString(),
+                        RawTargetInfo.PayloadPort,
+                        RawTargetInfo.Available,
+                        Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
+                        Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+                        Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                        Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
+                        RawTargetInfo.Attached,
+                        Utilities.CleanByteToString(RawTargetInfo.CurrentProc)));
+                }
+
+                return _TargetList;
+            }
+        }
+
         public bool DoesDefaultTargetExist()
         {
             return Imports.TargetManagement.DoesDefaultTargetExist();
@@ -67,57 +129,6 @@ namespace OrbisSuite.Classes
         public int GetTargetCount()
         {
             return Imports.TargetManagement.GetTargetCount();
-        }
-
-        public List<TargetInfo> GetTargetList()
-        {
-            List<TargetInfo> List = new List<TargetInfo>();
-            IntPtr ptr = IntPtr.Zero;
-            int TargetCount = Imports.TargetManagement.GetTargets(out ptr);
-
-            if (TargetCount == 0)
-                return List;
-
-            for (int i = 0; i < TargetCount; i++)
-            {
-                //Convert the array of targets to a struct c# can use and incrementing the pointer by the size of the struct to get the next.
-                DB_TargetInfo RawTargetInfo = (DB_TargetInfo)Marshal.PtrToStructure(ptr, typeof(DB_TargetInfo));
-                ptr += Marshal.SizeOf(typeof(DB_TargetInfo));
-
-                List.Add(new TargetInfo(RawTargetInfo.Default,
-                    Utilities.CleanByteToString(RawTargetInfo.Name),
-                    Utilities.CleanByteToString(RawTargetInfo.IPAddr),
-                    (RawTargetInfo.Firmware / 100.0).ToString(),
-                    RawTargetInfo.PayloadPort,
-                    RawTargetInfo.Available,
-                    Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
-                    Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
-                    RawTargetInfo.Attached,
-                    Utilities.CleanByteToString(RawTargetInfo.CurrentProc)));
-            }
-
-            return List;
-        }
-
-        public TargetInfo GetDefault()
-        {
-            DB_TargetInfo RawTargetInfo;
-            Imports.TargetManagement.GetDefaultTarget(out RawTargetInfo);
-
-            return new TargetInfo(RawTargetInfo.Default,
-                    Utilities.CleanByteToString(RawTargetInfo.Name),
-                    Utilities.CleanByteToString(RawTargetInfo.IPAddr),
-                    (RawTargetInfo.Firmware / 100.0).ToString(),
-                    RawTargetInfo.PayloadPort,
-                    RawTargetInfo.Available,
-                    Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
-                    Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
-                    Utilities.CleanByteToString(RawTargetInfo.ConsoleType),
-                    RawTargetInfo.Attached,
-                    Utilities.CleanByteToString(RawTargetInfo.CurrentProc));
         }
 
         public void SetDefault(string TargetName)

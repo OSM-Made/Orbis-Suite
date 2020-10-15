@@ -49,7 +49,7 @@
     <ApplicationIcon>OrbisNeighborhoodx64_4055.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DarkUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DarkUI, Version=1.0.20.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
     </Reference>

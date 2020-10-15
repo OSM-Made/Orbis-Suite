@@ -15,124 +15,184 @@ namespace OrbisSuite.Classes
             this.PS4 = PS4;
         }
 
-        public bool GetAutoLoadPayload()
+        private bool _AutoLoadPayload;
+        public bool AutoLoadPayload
         {
-            return Imports.Settings.GetAutoLoadPayload();
+            get 
+            {
+                return _AutoLoadPayload = Imports.Settings.GetAutoLoadPayload();
+            }
+            set
+            {
+                _AutoLoadPayload = value;
+                Imports.Settings.SetAutoLoadPayload(value);
+            }
         }
 
-        public void SetAutoLoadPayload(bool Value)
+        private bool _StartOnBoot;
+        public bool StartOnBoot
         {
-            Imports.Settings.SetAutoLoadPayload(Value);
+            get
+            {
+                return _StartOnBoot = Imports.Settings.GetStartOnBoot();
+            }
+            set
+            {
+                _StartOnBoot = value;
+                Imports.Settings.SetStartOnBoot(value);
+
+                //Get windows registry key to set app on start up.
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                //add or remove the value.
+                if (value)
+                    key.SetValue("OrbisTaskbarApp", AppDomain.CurrentDomain.BaseDirectory + "OrbisTaskbarApp.exe");
+                else
+                    key.DeleteValue("OrbisTaskbarApp", false);
+
+                //Close the key after use.
+                key.Close();
+            }
         }
 
-        public bool GetStartOnBoot()
+        private bool _DetectGame;
+        public bool DetectGame
         {
-            return Imports.Settings.GetStartOnBoot();
+            get
+            {
+                return _DetectGame = Imports.Settings.GetDetectGame();
+            }
+            set
+            {
+                _DetectGame = value;
+                Imports.Settings.SetDetectGame(value);
+            }
         }
 
-        public void SetStartOnBoot(bool Value)
+        private string _COMPort;
+        public string COMPort
         {
-            Imports.Settings.SetStartOnBoot(Value);
+            get
+            {
+                return _COMPort = Imports.Settings.GetCOMPort();
+            }
+            set
+            {
+                _COMPort = value;
+                Imports.Settings.SetCOMPort(value);
+            }
         }
 
-        public bool GetDetectGame()
+        private int _ServicePort;
+        public int ServicePort
         {
-            return Imports.Settings.GetDetectGame();
+            get
+            {
+                return _ServicePort = Imports.Settings.GetServicePort();
+            }
+            set
+            {
+                _ServicePort = value;
+                Imports.Settings.SetServicePort(value);
+            }
         }
 
-        public void SetDetectGame(bool Value)
+        private int _APIPort;
+        public int APIPort
         {
-            Imports.Settings.SetDetectGame(Value);
+            get
+            {
+                return _APIPort = Imports.Settings.GetAPIPort();
+            }
+            set
+            {
+                _APIPort = value;
+                Imports.Settings.SetAPIPort(value);
+            }
         }
 
-        public string GetCOMPort()
+        private bool _CensorIDPS;
+        public bool CensorIDPS
         {
-            return Imports.Settings.GetCOMPort();
+            get
+            {
+                return _CensorIDPS = Imports.Settings.GetCensorIDPS();
+            }
+            set
+            {
+                _CensorIDPS = value;
+                Imports.Settings.SetCensorIDPS(value);
+            }
         }
 
-        public void SetCOMPort(string Value)
+        private bool _CensorPSID;
+        public bool CensorPSID
         {
-            Imports.Settings.SetCOMPort(Value);
+            get
+            {
+                return _CensorPSID = Imports.Settings.GetCensorPSID();
+            }
+            set
+            {
+                _CensorPSID = value;
+                Imports.Settings.SetCensorPSID(value);
+            }
         }
 
-        public int GetServicePort()
+        private bool _Debug;
+        public bool Debug
         {
-            return Imports.Settings.GetServicePort();
+            get
+            {
+                return _Debug = Imports.Settings.GetDebug();
+            }
+            set
+            {
+                _Debug = value;
+                Imports.Settings.SetDebug(value);
+            }
         }
 
-        public void SetServicePort(int Value)
+        private bool _CreateLogs;
+        public bool CreateLogs
         {
-            Imports.Settings.SetServicePort(Value);
+            get
+            {
+                return _CreateLogs = Imports.Settings.GetCreateLogs();
+            }
+            set
+            {
+                _CreateLogs = value;
+                Imports.Settings.SetCreateLogs(value);
+            }
         }
 
-        public int GetAPIPort()
+        private bool _ShowTimestamps;
+        public bool ShowTimestamps
         {
-            return Imports.Settings.GetAPIPort();
+            get
+            {
+                return _ShowTimestamps = Imports.Settings.GetShowTimestamps();
+            }
+            set
+            {
+                _ShowTimestamps = value;
+                Imports.Settings.SetShowTimestamps(value);
+            }
         }
 
-        public void SetAPIPort(int Value)
+        private bool _WordWrap;
+        public bool WordWrap
         {
-            Imports.Settings.SetAPIPort(Value);
-        }
-
-        public bool GetCensorIDPS()
-        {
-            return Imports.Settings.GetCensorIDPS();
-        }
-
-        public void SetCensorIDPS(bool Value)
-        {
-            Imports.Settings.SetCensorIDPS(Value);
-        }
-
-        public bool GetCensorPSID()
-        {
-            return Imports.Settings.GetCensorPSID();
-        }
-
-        public void SetCensorPSID(bool Value)
-        {
-            Imports.Settings.SetCensorPSID(Value);
-        }
-
-        public bool GetDebug()
-        {
-            return Imports.Settings.GetDebug();
-        }
-
-        public void SetDebug(bool Value)
-        {
-            Imports.Settings.SetDebug(Value);
-        }
-
-        public bool GetCreateLogs()
-        {
-            return Imports.Settings.GetCreateLogs();
-        }
-
-        public void SetCreateLogs(bool Value)
-        {
-            Imports.Settings.SetCreateLogs(Value);
-        }
-
-        public bool GetShowTimestamps()
-        {
-            return Imports.Settings.GetShowTimestamps();
-        }
-
-        public void SetShowTimestamps(bool Value)
-        {
-            Imports.Settings.SetShowTimestamps(Value);
-        }
-
-        public bool GetWordWrap()
-        {
-            return Imports.Settings.GetWordWrap();
-        }
-
-        public void SetWordWrap(bool Value)
-        {
-            Imports.Settings.SetWordWrap(Value);
+            get
+            {
+                return _WordWrap = Imports.Settings.GetWordWrap();
+            }
+            set
+            {
+                _WordWrap = value;
+                Imports.Settings.SetWordWrap(value);
+            }
         }
     }
 }
