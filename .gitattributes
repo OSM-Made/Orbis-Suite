@@ -62,7 +62,7 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-* linguist-vendored
+#* linguist-vendored
 
 # Sources
 *.c     text diff=c
