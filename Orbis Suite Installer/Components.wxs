@@ -18,6 +18,11 @@
         <File Id="DebuggerConfig" Name="OrbisDebugger.config" Source="$(var.ProjectDir)Assets\Program Data\" />
         <File Id="OrbisOutput" Name="OrbisOutput.config" Source="$(var.ProjectDir)Assets\Program Data\" />
 
+        <!--Install Payloads-->
+        <File Id="Payload505" Name="OrbisLib-505.bin" Source="$(var.ProjectDir)Assets\Program Data\" />
+        <!-- <File Id="Payload672" Name="OrbisLib-672.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
+        <!-- <File Id="Payload702" Name="OrbisLib-702.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
+        
       </Component>
       
       

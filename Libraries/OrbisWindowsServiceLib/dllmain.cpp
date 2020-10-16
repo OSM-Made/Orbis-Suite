@@ -28,7 +28,7 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 		}
 	}
 
-	socketprint("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
+	printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
 
 	//Forward the packet to all the connected children processes.
 	Client->ForwardPacket(TargetCommandPacket);

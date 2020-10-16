@@ -32,7 +32,7 @@ DWORD WINAPI SocketListener::ListenerThread() {
 
 	//Bind our socket
 	if (bind(this->ServerSocket, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
-		socketprint("Failed to bind Listener to Port %i\n", this->ListenPort);
+		printf("Failed to bind Listener to Port %i\n", this->ListenPort);
 
 		closesocket(this->ServerSocket);
 		WSACleanup();
@@ -45,7 +45,7 @@ DWORD WINAPI SocketListener::ListenerThread() {
 
 	//Start listening for incoming socket connections
 	if (listen(this->ServerSocket, SOMAXCONN) == SOCKET_ERROR) {
-		socketprint("[Error] Failed to start listen on Socket\n");
+		printf("[Error] Failed to start listen on Socket\n");
 
 		closesocket(this->ServerSocket);
 		WSACleanup();
@@ -119,7 +119,7 @@ DWORD WINAPI ThreadStartHack(LPVOID ptr)
 
 SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpParameter, unsigned short ListenPort)
 {
-	socketprint("SocketListener Initialization!\n");
+	printf("SocketListener Initialization!\n");
 
 	//Store Our input varibales locally
 	this->ClientCallBack = ClientCallBack;
@@ -137,12 +137,12 @@ SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpP
 
 SocketListener::~SocketListener()
 {
-	socketprint("SocketListener Destruction!\n");
+	printf("SocketListener Destruction!\n");
 
 	//Signal Clean up
 	this->ServerRunning = false;
 
 	while (this->ThreadCleanedUp == false) {}
 
-	socketprint("Destruction sucessful.\n");
+	printf("Destruction sucessful.\n");
 }

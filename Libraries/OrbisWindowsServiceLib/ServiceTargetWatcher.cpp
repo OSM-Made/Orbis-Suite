@@ -9,7 +9,7 @@ void ServiceTargetWatcher::WatcherChildThread(int index)
 	{
 		if (LastTargetValue[index] == false)
 		{
-			socketprint("Target: %s Available.\n", orbisLib->TargetManagement->Targets[index].Name);
+			printf("Target: %s Available.\n", orbisLib->TargetManagement->Targets[index].Name);
 
 			//Set up packet to send.
 			TargetCommandPacket_s TargetCommandPacket;
@@ -27,7 +27,7 @@ void ServiceTargetWatcher::WatcherChildThread(int index)
 	{
 		if (LastTargetValue[index] == true)
 		{
-			socketprint("Target: %s no longer Available.\n", orbisLib->TargetManagement->Targets[index].Name);
+			printf("Target: %s no longer Available.\n", orbisLib->TargetManagement->Targets[index].Name);
 
 			//Set up packet to send.
 			TargetCommandPacket_s TargetCommandPacket;

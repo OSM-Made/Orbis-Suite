@@ -19,23 +19,23 @@ namespace OrbisSuite.Classes
         }
 
         /// <summary>
-        /// Sends Orbis Suite Payloads to Playstation 4 Console. Payloads are read from the Orbis Suite Appdata folder with the format Payload-{Firmware}.bin ex. Payload-505.bin.
+        /// Sends Orbis Suite Payloads to Playstation 4 Console. Payloads are read from the Orbis Suite Appdata folder with the format OrbisLib-{Firmware}.bin ex. Payload-505.bin.
         /// </summary>
         /// <param name="IP">PlayStation 4 IP address</param>
         /// <param name="KernelVersion">PlayStation 4 Kernel Version Ex:5.05</param>
         /// <param name="Port">Port used to recieve payload default value is 9020</param>
-        public bool InjectPayload(int Port = 9020)
+        public bool InjectPayload()
         {
             try
             {
                 Socket socket;
 
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socket.ReceiveTimeout = 200;
-                socket.SendTimeout = 200;
-                IAsyncResult result = socket.BeginConnect(new IPEndPoint(IPAddress.Parse(Target.Info.IPAddr), Target.Info.PayloadPort), null, null);
+                socket.ReceiveTimeout = 1000;
+                socket.SendTimeout = 1000;
+                IAsyncResult result = socket.BeginConnect(Target.Info.IPAddr, Target.Info.PayloadPort, null, null);
 
-                result.AsyncWaitHandle.WaitOne(1000, true);
+                result.AsyncWaitHandle.WaitOne(3000, true);
 
                 if (!socket.Connected)
                 {
@@ -45,7 +45,10 @@ namespace OrbisSuite.Classes
                     return false;
                 }
 
-                FileStream fPayload = File.Open(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\Payload-" + Target.Info.Firmware + ".bin", FileMode.Open);
+                // we have connected
+                socket.EndConnect(result);
+
+                FileStream fPayload = File.Open($"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Orbis Suite\\OrbisLib-{(Convert.ToDouble(Target.Info.Firmware) * 100).ToString()}.bin", FileMode.Open);
 
                 if (!fPayload.CanRead)
                 {
@@ -95,11 +98,11 @@ namespace OrbisSuite.Classes
                 Socket socket;
 
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socket.ReceiveTimeout = 200;
-                socket.SendTimeout = 200;
-                IAsyncResult result = socket.BeginConnect(new IPEndPoint(IPAddress.Parse(Target.Info.IPAddr), Target.Info.PayloadPort), null, null);
+                socket.ReceiveTimeout = 1000;
+                socket.SendTimeout = 1000;
+                IAsyncResult result = socket.BeginConnect(Target.Info.IPAddr, Target.Info.PayloadPort, null, null);
 
-                result.AsyncWaitHandle.WaitOne(1000, true);
+                result.AsyncWaitHandle.WaitOne(3000, true);
 
                 if (!socket.Connected)
                 {
@@ -108,6 +111,9 @@ namespace OrbisSuite.Classes
                     socket.Close();
                     return false;
                 }
+
+                // we have connected
+                socket.EndConnect(result);
 
                 //Send Payload
                 socket.Send(PayloadBuffer);
