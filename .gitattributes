@@ -63,11 +63,6 @@
 #*.RTF   diff=astextplain
 
 * linguist-vendored
-*.h linguist-vendored=false
-*.hpp linguist-vendored=false
-*.cpp linguist-vendored=false
-*.cs linguist-vendored=false
-*.py linguist-vendored=false
 
 # Sources
 *.c     text diff=c
@@ -76,7 +71,7 @@
 *.cpp   text diff=cpp
 *.c++   text diff=cpp
 *.hpp   text diff=cpp
-*.h     text diff=c
+*.h     text diff=cpp
 *.h++   text diff=cpp
 *.hh    text diff=cpp
 
