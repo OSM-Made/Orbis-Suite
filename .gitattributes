@@ -61,3 +61,10 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+* linguist-vendored
+*.h linguist-vendored=false
+*.hpp linguist-vendored=false
+*.cpp linguist-vendored=false
+*.cs linguist-vendored=false
+*.py linguist-vendored=false
