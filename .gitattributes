@@ -63,7 +63,7 @@
 #*.RTF   diff=astextplain
 
 * linguist-vendored
-*.cpp linguist-language=cpp
-*.hpp linguist-language=cpp
-*.h linguist-language=cpp
-*.cs linguist-language=csharp
+*.cpp linguist-language=cpp linguist-vendored=false
+*.hpp linguist-language=cpp linguist-vendored=false
+*.h linguist-language=cpp linguist-vendored=false
+*.cs linguist-language=csharp linguist-vendored=false
