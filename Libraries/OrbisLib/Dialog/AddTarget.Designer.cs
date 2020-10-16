@@ -45,11 +45,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.darkTitle2 = new DarkUI.Controls.DarkTitle();
             this.TargetIPAddress = new DarkUI.Controls.DarkTextBox();
+            this.darkTitle5 = new DarkUI.Controls.DarkTitle();
+            this.PayloadPort = new DarkUI.Controls.DarkTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.IsDefaultTarget = new DarkUI.Controls.DarkCheckBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
-            this.PayloadPort = new DarkUI.Controls.DarkTextBox();
-            this.darkTitle5 = new DarkUI.Controls.DarkTitle();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -65,7 +65,7 @@
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.panel4.Size = new System.Drawing.Size(252, 62);
-            this.panel4.TabIndex = 27;
+            this.panel4.TabIndex = 1;
             // 
             // darkTitle3
             // 
@@ -73,7 +73,7 @@
             this.darkTitle3.Location = new System.Drawing.Point(0, 0);
             this.darkTitle3.Name = "darkTitle3";
             this.darkTitle3.Size = new System.Drawing.Size(252, 26);
-            this.darkTitle3.TabIndex = 15;
+            this.darkTitle3.TabIndex = 0;
             this.darkTitle3.Text = "Target Name";
             // 
             // TargetName
@@ -84,9 +84,10 @@
             this.TargetName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TargetName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.TargetName.Location = new System.Drawing.Point(3, 29);
+            this.TargetName.MaxLength = 256;
             this.TargetName.Name = "TargetName";
             this.TargetName.Size = new System.Drawing.Size(246, 20);
-            this.TargetName.TabIndex = 17;
+            this.TargetName.TabIndex = 0;
             // 
             // darkTitle4
             // 
@@ -94,7 +95,7 @@
             this.darkTitle4.Location = new System.Drawing.Point(0, 0);
             this.darkTitle4.Name = "darkTitle4";
             this.darkTitle4.Size = new System.Drawing.Size(252, 26);
-            this.darkTitle4.TabIndex = 16;
+            this.darkTitle4.TabIndex = 6;
             this.darkTitle4.Text = "Target Firmware";
             // 
             // panel5
@@ -109,7 +110,7 @@
             this.panel5.Location = new System.Drawing.Point(10, 148);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(252, 66);
-            this.panel5.TabIndex = 28;
+            this.panel5.TabIndex = 3;
             // 
             // TargetFW455
             // 
@@ -118,7 +119,7 @@
             this.TargetFW455.Location = new System.Drawing.Point(138, 19);
             this.TargetFW455.Name = "TargetFW455";
             this.TargetFW455.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW455.TabIndex = 19;
+            this.TargetFW455.TabIndex = 6;
             this.TargetFW455.Text = "4.55";
             // 
             // TargetFW405
@@ -128,7 +129,7 @@
             this.TargetFW405.Location = new System.Drawing.Point(70, 19);
             this.TargetFW405.Name = "TargetFW405";
             this.TargetFW405.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW405.TabIndex = 18;
+            this.TargetFW405.TabIndex = 5;
             this.TargetFW405.Text = "4.05";
             // 
             // TargetFW176
@@ -138,7 +139,7 @@
             this.TargetFW176.Location = new System.Drawing.Point(3, 19);
             this.TargetFW176.Name = "TargetFW176";
             this.TargetFW176.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW176.TabIndex = 17;
+            this.TargetFW176.TabIndex = 4;
             this.TargetFW176.Text = "1.76";
             // 
             // TargetFW505
@@ -148,8 +149,7 @@
             this.TargetFW505.Location = new System.Drawing.Point(203, 19);
             this.TargetFW505.Name = "TargetFW505";
             this.TargetFW505.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW505.TabIndex = 4;
-            this.TargetFW505.TabStop = true;
+            this.TargetFW505.TabIndex = 2;
             this.TargetFW505.Text = "5.05";
             // 
             // TargetFW672
@@ -158,7 +158,7 @@
             this.TargetFW672.Location = new System.Drawing.Point(3, 42);
             this.TargetFW672.Name = "TargetFW672";
             this.TargetFW672.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW672.TabIndex = 3;
+            this.TargetFW672.TabIndex = 8;
             this.TargetFW672.Text = "6.72";
             // 
             // TargetFW702
@@ -167,7 +167,7 @@
             this.TargetFW702.Location = new System.Drawing.Point(70, 42);
             this.TargetFW702.Name = "TargetFW702";
             this.TargetFW702.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW702.TabIndex = 2;
+            this.TargetFW702.TabIndex = 9;
             this.TargetFW702.Text = "7.02";
             // 
             // Button_AddTarget
@@ -177,7 +177,7 @@
             this.Button_AddTarget.Name = "Button_AddTarget";
             this.Button_AddTarget.Padding = new System.Windows.Forms.Padding(5);
             this.Button_AddTarget.Size = new System.Drawing.Size(95, 23);
-            this.Button_AddTarget.TabIndex = 24;
+            this.Button_AddTarget.TabIndex = 5;
             this.Button_AddTarget.Text = "Add Target";
             this.Button_AddTarget.Click += new System.EventHandler(this.Button_AddTarget_Click);
             // 
@@ -188,7 +188,7 @@
             this.Button_Cancel.Name = "Button_Cancel";
             this.Button_Cancel.Padding = new System.Windows.Forms.Padding(5);
             this.Button_Cancel.Size = new System.Drawing.Size(75, 23);
-            this.Button_Cancel.TabIndex = 25;
+            this.Button_Cancel.TabIndex = 0;
             this.Button_Cancel.Text = "Cancel";
             this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
             // 
@@ -201,7 +201,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.panel1.Size = new System.Drawing.Size(252, 62);
-            this.panel1.TabIndex = 29;
+            this.panel1.TabIndex = 2;
             // 
             // darkTitle2
             // 
@@ -222,7 +222,28 @@
             this.TargetIPAddress.Location = new System.Drawing.Point(3, 29);
             this.TargetIPAddress.Name = "TargetIPAddress";
             this.TargetIPAddress.Size = new System.Drawing.Size(246, 20);
-            this.TargetIPAddress.TabIndex = 17;
+            this.TargetIPAddress.TabIndex = 1;
+            // 
+            // darkTitle5
+            // 
+            this.darkTitle5.Location = new System.Drawing.Point(138, 0);
+            this.darkTitle5.Name = "darkTitle5";
+            this.darkTitle5.Size = new System.Drawing.Size(111, 20);
+            this.darkTitle5.TabIndex = 19;
+            this.darkTitle5.Text = "Payload Port";
+            // 
+            // PayloadPort
+            // 
+            this.PayloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.PayloadPort.Location = new System.Drawing.Point(138, 23);
+            this.PayloadPort.MaxLength = 2;
+            this.PayloadPort.Name = "PayloadPort";
+            this.PayloadPort.Size = new System.Drawing.Size(111, 20);
+            this.PayloadPort.TabIndex = 3;
+            this.PayloadPort.Text = "9020";
+            this.PayloadPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PayloadPort_KeyPress);
             // 
             // panel2
             // 
@@ -235,7 +256,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.panel2.Size = new System.Drawing.Size(252, 56);
-            this.panel2.TabIndex = 30;
+            this.panel2.TabIndex = 5;
             // 
             // IsDefaultTarget
             // 
@@ -243,7 +264,7 @@
             this.IsDefaultTarget.Location = new System.Drawing.Point(3, 24);
             this.IsDefaultTarget.Name = "IsDefaultTarget";
             this.IsDefaultTarget.Size = new System.Drawing.Size(130, 17);
-            this.IsDefaultTarget.TabIndex = 16;
+            this.IsDefaultTarget.TabIndex = 2;
             this.IsDefaultTarget.Text = "Use as Default Target";
             // 
             // darkTitle1
@@ -253,27 +274,6 @@
             this.darkTitle1.Size = new System.Drawing.Size(133, 20);
             this.darkTitle1.TabIndex = 15;
             this.darkTitle1.Text = "Default Target";
-            // 
-            // PayloadPort
-            // 
-            this.PayloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.PayloadPort.Location = new System.Drawing.Point(138, 23);
-            this.PayloadPort.MaxLength = 5;
-            this.PayloadPort.Name = "PayloadPort";
-            this.PayloadPort.Size = new System.Drawing.Size(111, 20);
-            this.PayloadPort.TabIndex = 20;
-            this.PayloadPort.Text = "9020";
-            this.PayloadPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PayloadPort_KeyPress);
-            // 
-            // darkTitle5
-            // 
-            this.darkTitle5.Location = new System.Drawing.Point(138, 0);
-            this.darkTitle5.Name = "darkTitle5";
-            this.darkTitle5.Size = new System.Drawing.Size(111, 20);
-            this.darkTitle5.TabIndex = 19;
-            this.darkTitle5.Text = "Payload Port";
             // 
             // AddTarget
             // 
@@ -322,10 +322,10 @@
         private System.Windows.Forms.Panel panel1;
         private DarkUI.Controls.DarkTitle darkTitle2;
         private DarkUI.Controls.DarkTextBox TargetIPAddress;
+        private DarkUI.Controls.DarkTitle darkTitle5;
+        private DarkUI.Controls.DarkTextBox PayloadPort;
         private System.Windows.Forms.Panel panel2;
         private DarkUI.Controls.DarkCheckBox IsDefaultTarget;
         private DarkUI.Controls.DarkTitle darkTitle1;
-        private DarkUI.Controls.DarkTextBox PayloadPort;
-        private DarkUI.Controls.DarkTitle darkTitle5;
     }
 }

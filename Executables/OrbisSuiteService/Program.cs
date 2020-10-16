@@ -17,7 +17,7 @@ namespace OrbisSuiteService
 #if DEBUG
             OrbisSuiteService Service = new OrbisSuiteService();
 
-            Service.OnDebug();
+            Service.ServiceThread();
 #else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]

@@ -18,6 +18,7 @@ namespace OrbisSuite.Dialog
         private OrbisLib PS4;
         string OriginalTargetName;
         string OriginalIPAddr;
+        bool IsDefaultTarget;
 
         public EditTarget(OrbisLib PS4, string TargetName)
         {
@@ -62,7 +63,7 @@ namespace OrbisSuite.Dialog
                     break;
             }
 
-            IsDefaultTarget.Checked = targetInfo.Default;
+            IsDefaultTarget = targetInfo.Default;
         }
 
         private void Button_Cancel_Click(object sender, EventArgs e)
@@ -117,7 +118,7 @@ namespace OrbisSuite.Dialog
             else if (TargetFW702.Checked)
                 Firmware = 702;
 
-            if(PS4.TargetManagement.SetTarget(OriginalTargetName, IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
+            if(PS4.TargetManagement.SetTarget(OriginalTargetName, IsDefaultTarget, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             else
                 DarkMessageBox.ShowError("An unknown error caused the target to not be saved. Please try again.", "Failed to save target.");

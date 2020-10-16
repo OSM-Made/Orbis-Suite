@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DarkUI.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -118,6 +119,12 @@ namespace OrbisSuite.Classes
 
         public bool DeleteTarget(string TargetName)
         {
+            if(TargetName.Equals(DefaultTarget.Name))
+            {
+                DarkMessageBox.ShowError($"{TargetName} is the Default Target and cant be deleted.", "Cant Delete Default Target");
+                return false;
+            }
+
             return Imports.TargetManagement.DeleteTarget(TargetName);
         }
 

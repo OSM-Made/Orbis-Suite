@@ -19,7 +19,7 @@ bool Sockets::Connect() {
 	iResult = ioctlsocket(Socket, FIONBIO, &iMode);
 
 	if (iResult != NO_ERROR) {
-		printf("Failed to Set to NON Blocking Mode!\n");
+		socketprint("Failed to Set to NON Blocking Mode!\n");
 		return false;
 	}
 
@@ -78,7 +78,7 @@ bool Sockets::Connect() {
 	iResult = ioctlsocket(Socket, FIONBIO, &iMode);
 
 	if (iResult != NO_ERROR) {
-		printf("Failed to Set to Blocking Mode!\n");
+		socketprint("Failed to Set to Blocking Mode!\n");
 		return false;
 	}
 

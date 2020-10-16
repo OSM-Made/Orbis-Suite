@@ -25,3 +25,36 @@ BOOL CWriteFile(const char* FilePath, CONST PVOID Data, DWORD Size)
 	CloseHandle(fHandle);
 	return TRUE;
 }
+
+#pragma comment(lib, "Advapi32.lib") 
+
+#include "Aclapi.h"
+#include "Sddl.h"
+#include <io.h>
+#include <sys/stat.h>
+
+void SetFilePerms(const char* path)
+{
+	PACL pDacl, pNewDACL;
+	EXPLICIT_ACCESS ExplicitAccess;
+	PSECURITY_DESCRIPTOR ppSecurityDescriptor;
+	PSID psid;
+
+	GetNamedSecurityInfoA((char*)path, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pDacl, NULL, &ppSecurityDescriptor);
+	ConvertStringSidToSid(L"S-1-1-0", &psid);
+
+	ExplicitAccess.grfAccessMode = SET_ACCESS;
+	ExplicitAccess.grfAccessPermissions = GENERIC_ALL;
+	ExplicitAccess.grfInheritance = CONTAINER_INHERIT_ACE | OBJECT_INHERIT_ACE;
+	ExplicitAccess.Trustee.MultipleTrusteeOperation = NO_MULTIPLE_TRUSTEE;
+	ExplicitAccess.Trustee.pMultipleTrustee = NULL;
+	ExplicitAccess.Trustee.ptstrName = (LPTSTR)psid;
+	ExplicitAccess.Trustee.TrusteeForm = TRUSTEE_IS_SID;
+	ExplicitAccess.Trustee.TrusteeType = TRUSTEE_IS_UNKNOWN;
+
+	SetEntriesInAcl(1, &ExplicitAccess, pDacl, &pNewDACL);
+	SetNamedSecurityInfoA((char*)path, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL);
+
+	LocalFree(pNewDACL);
+	LocalFree(psid);
+}

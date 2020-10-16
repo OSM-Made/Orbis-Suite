@@ -31,20 +31,80 @@
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Service|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components.wxs" />
+    <Compile Include="Directories.wxs" />
     <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
-  <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+  <!-- Before build -->
+  <Target Name="BeforeBuild">
+    <!-- Copy all the libraries to the directories -->
+    <Exec Command="copy &quot;..\Libraries\OrbisLib.dll&quot; &quot;Assets\Program Files x64\OrbisLib.dll&quot;" />
+    <Exec Command="copy &quot;..\Libraries\OrbisLibCPP.dll&quot; &quot;Assets\Program Data\OrbisLibCPP.dll&quot;" />
+    <Exec Command="copy &quot;..\Libraries\OrbisWindowsServiceLib.dll&quot; &quot;Assets\Program Data\OrbisWindowsServiceLib.dll&quot;" />
+    <Exec Command="copy &quot;..\Libraries\OrbisSuiteUserData&quot; &quot;Assets\Program Data\OrbisSuiteUserData&quot;" />
+	
+    <!-- Copy all the executables to the directories -->
+    <Exec Command="copy &quot;..\Executables\OrbisModuleManager.exe&quot; &quot;Assets\Program Files x64\OrbisModuleManager.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisNeighborhood.exe&quot; &quot;Assets\Program Files x64\OrbisNeighborhood.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisSuiteService.exe&quot; &quot;Assets\Program Files x64\OrbisSuiteService.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisTargetSettings.exe&quot; &quot;Assets\Program Files x64\OrbisTargetSettings.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisTaskbarApp.exe&quot; &quot;Assets\Program Files x64\OrbisTaskbarApp.exe&quot;" />
+    <!-- <Exec Command="copy &quot;..\Executables\OrbisDebugger.exe&quot; &quot;Assets\Program Files x64\OrbisDebugger.exe&quot;"/> -->
+    <!-- <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;"/> -->
+    <!-- <Exec Command="copy &quot;..\Executables\OrbisConsoleOutput.exe&quot; &quot;Assets\Program Files x64\OrbisConsoleOutput.exe&quot;"/> -->
+	
+    <!-- Copy all the scripts to the directories -->
+    <Exec Command="copy &quot;..\Scripts\make_fself.py&quot; &quot;Assets\Program Data\make_fself.py&quot;" />
+	
+    <!-- Get assembly version -->
+    <GetAssemblyIdentity AssemblyFiles="Assets\Program Files x64\OrbisLib.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <!-- Define some variables we need -->
+    <PropertyGroup>
+      <DefineConstants>BuildVersion=%(AssemblyVersion.Version)</DefineConstants>
+    </PropertyGroup>
+  </Target>
+  <Target Name="AfterBuild">
+    <!-- Get assembly version -->
+    <GetAssemblyIdentity AssemblyFiles="Assets\Program Files x64\OrbisLib.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <!-- Rename and move final MSI -->
+    <Exec Command="if not exist Installers mkdir Installers" />
+    <Exec Command="copy &quot;$(TargetDir)en-us\$(OutputName)$(TargetExt)&quot; &quot;$(SolutionDir)Orbis Suite Installer\Installers\Orbis Suite-%(AssemblyVersion.Version)-$(Platform)$(TargetExt)&quot;" />
+  </Target>
 </Project>

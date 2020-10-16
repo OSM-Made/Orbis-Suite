@@ -1,0 +1,42 @@
+﻿
+Running a transacted installation.
+
+Beginning the Install phase of the installation.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The Install phase completed successfully, and the Commit phase is beginning.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The Commit phase completed successfully.
+
+The transacted install has completed.
+
+
+The uninstall is beginning.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The uninstall has completed.
+
+Running a transacted installation.
+
+Beginning the Install phase of the installation.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The Install phase completed successfully, and the Commit phase is beginning.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The Commit phase completed successfully.
+
+The transacted install has completed.
+
+
+The uninstall is beginning.
+See the contents of the log file for the C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.exe assembly's progress.
+The file is located at C:\Users\Gregory\Source\Repos\Orbis Suite\Executables\OrbisSuiteService.InstallLog.
+
+The uninstall has completed.

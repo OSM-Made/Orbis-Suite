@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using DarkUI.Forms;
 using OrbisSuite.Classes;
 using OrbisSuite.Dialog;
@@ -87,8 +88,6 @@ namespace OrbisSuite
 
         #endregion
 
-        #region ** DLL Startup **
-
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetupCPP(bool WinService);
 
@@ -96,11 +95,12 @@ namespace OrbisSuite
         {
             try
             {
-                OrbisLib_Dir = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Orbis Suite\\");
+                Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
+                OrbisLib_Dir = (Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
 
                 if (!Directory.Exists(OrbisLib_Dir))
                 {
-                    DarkMessageBox.ShowError("In order to use the functionality of the OSLib.dll you need to first install Orbis Suite on this machine.", "Orbis Suite not Installed.");
+                    DarkMessageBox.ShowError("In order to use the functionality of the OrbisLib.dll you need to first install Orbis Suite on this machine.", "Orbis Suite not Installed.");
 
                     throw new System.Exception("Orbis Suite not Installed.");
                 }
@@ -109,13 +109,19 @@ namespace OrbisSuite
 
                 //Set up our instance of the OrbisLibCPP.dll.
                 SetupCPP(false);
+
+                if (DefaultTarget == null)
+                {
+                    DarkMessageBox.ShowError("Please add a default target First.", "Default Target Required.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
+                    Dialogs.AddTarget(FormStartPosition.CenterScreen);
+                    if (DefaultTarget == null)
+                        Environment.Exit(0);
+                }
             }
             catch
             {
 
             }
         }
-
-        #endregion
     }
 }

@@ -12,7 +12,7 @@ VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 		switch (CommandPacket->CommandIndex) //TODO: Add Command For changing Print Socket Port and COM Port
 		{
 		default:
-			printf("[Error] Client Command Thread Recieve Invalid Command Index!\n");
+			socketprint("[Error] Client Command Thread Recieve Invalid Command Index!\n");
 			break;
 
 		case CMD_CLIENT_CONNECT:
@@ -31,13 +31,13 @@ VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 		case CMD_CLIENT_HEARTBEAT:
 			if ((serviceClient->ClientInfo[CommandPacket->Index].Used == false) || (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime) > 10000) 
 			{
-				printf("Client has timed out Sending reconnect request.\n");
+				socketprint("Client has timed out Sending reconnect request.\n");
 				int Status = 1;
 				send(Client, (char*)&Status, sizeof(int), 0);
 			}
 			else
 			{
-				printf("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
+				socketprint("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
 
 				serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime = GetTickCount();
 
@@ -58,7 +58,7 @@ DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
 		{
 			if (serviceClient->ClientInfo[i].Used && ((GetTickCount() - serviceClient->ClientInfo[i].LastUpdateTime) > 10000))
 			{
-				printf("No response from Client %i in > 10000ms. Timed out!\n", i);
+				socketprint("No response from Client %i in > 10000ms. Timed out!\n", i);
 
 				serviceClient->ClientInfo[i].Used = false;
 				serviceClient->ClientInfo[i].LastUpdateTime = 0;
@@ -73,7 +73,7 @@ DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
 }
 
 ServiceClient::ServiceClient(unsigned short CommandListenerPort) {
-	printf("ServiceClient Initialization...\n");
+	socketprint("ServiceClient Initialization...\n");
 
 	//Initialize Struct
 	for (int i = 0; i < MAX_CLIENTS; i++)
@@ -96,7 +96,7 @@ ServiceClient::ServiceClient(unsigned short CommandListenerPort) {
 }
 
 ServiceClient::~ServiceClient() {
-	printf("ServiceClient Destruction...\n");
+	socketprint("ServiceClient Destruction...\n");
 
 	//Notify Thread to close
 	this->ServiceRunning = false;
@@ -117,7 +117,7 @@ int ServiceClient::AddClient() {
 
 	//Make sure we found a free client
 	if (NewClient == -1) {
-		printf("[Error] No Free Client!\n");
+		socketprint("[Error] No Free Client!\n");
 	}
 	else {
 		//Mark ClientInfo as used
@@ -140,12 +140,17 @@ void ServiceClient::ForwardPacket(TargetCommandPacket_s* TargetCommandPacket)
 		ClientInfo_s* ClientInfo = &this->ClientInfo[i];
 		if (ClientInfo->Used)
 		{
+			socketprint("Sending Packet to 127.0.0.1:%d...\n", ClientInfo->Port);
+
 			Sockets* Socket = new Sockets("127.0.0.1", ClientInfo->Port);
 
-			if (!Socket->Connect())
+			if (!Socket->Connect()) {
+				socketprint("Failed to Connect on 127.0.0.1:%d\n", ClientInfo->Port);
 				continue;
+			}
 
 			if (!Socket->Send((char*)TargetCommandPacket, sizeof(TargetCommandPacket_s))) {
+				socketprint("Failed to Send Command Packet.\n");
 				free(Socket);
 				continue;
 			}

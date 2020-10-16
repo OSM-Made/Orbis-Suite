@@ -28,7 +28,7 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 		}
 	}
 
-	printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
+	socketprint("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
 
 	//Forward the packet to all the connected children processes.
 	Client->ForwardPacket(TargetCommandPacket);
@@ -37,7 +37,7 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 	free(TargetCommandPacket);
 }
 
-const char* DBname = "Orbis-User-Data.db";
+const char* DBname = "OrbisSuiteUserData";
 char OrbisPath[0x1000];
 
 DWORD WINAPI FileWatcherThread(LPVOID Params)
@@ -86,12 +86,7 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 	ExitThread(Thr_Exit);
 }
 
-extern "C" __declspec(dllexport) void dummy()
-{
-
-}
-
-void OrbisStartService()
+extern "C" __declspec(dllexport) void StartLib()
 {
 	ServiceRunning = true;
 
@@ -104,7 +99,7 @@ void OrbisStartService()
 	//Set the orbis appdata dir
 	char AppdataBuffer[0x100];
 	size_t requiredSize = sizeof(AppdataBuffer);
-	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "APPDATA");
+	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "PROGRAMDATA");
 
 	sprintf_s(OrbisPath, sizeof(OrbisPath), "%s\\Orbis Suite", AppdataBuffer);
 
@@ -118,7 +113,7 @@ void OrbisStartService()
 	TargetWatcher = new ServiceTargetWatcher();
 }
 
-void OrbisEndService()
+extern "C" __declspec(dllexport) void StopLib()
 {
 	ServiceRunning = false;
 
@@ -142,13 +137,9 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
     {
 		
     case DLL_PROCESS_ATTACH:
-		OrbisStartService();
-
 		break;
 
 	case DLL_PROCESS_DETACH:
-		OrbisEndService();
-
 		break;
 
 	case DLL_THREAD_ATTACH:

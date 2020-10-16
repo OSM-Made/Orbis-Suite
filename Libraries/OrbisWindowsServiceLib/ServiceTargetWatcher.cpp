@@ -9,7 +9,7 @@ void ServiceTargetWatcher::WatcherChildThread(int index)
 	{
 		if (LastTargetValue[index] == false)
 		{
-			printf("Target: %s Available.\n", orbisLib->TargetManagement->Targets[index].Name);
+			socketprint("Target: %s Available.\n", orbisLib->TargetManagement->Targets[index].Name);
 
 			//Set up packet to send.
 			TargetCommandPacket_s TargetCommandPacket;
@@ -27,7 +27,7 @@ void ServiceTargetWatcher::WatcherChildThread(int index)
 	{
 		if (LastTargetValue[index] == true)
 		{
-			printf("Target: %s no longer Available.\n", orbisLib->TargetManagement->Targets[index].Name);
+			socketprint("Target: %s no longer Available.\n", orbisLib->TargetManagement->Targets[index].Name);
 
 			//Set up packet to send.
 			TargetCommandPacket_s TargetCommandPacket;
@@ -76,6 +76,7 @@ void ServiceTargetWatcher::WatcherThread()
 			CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)StartChildThread, ThreadParam, 3, NULL);
 		}
 
+		LastTargetCount = TargetCount;
 		Sleep(1000);
 	}
 }
@@ -91,6 +92,9 @@ DWORD WINAPI StartWatcherThread(LPVOID ptr)
 ServiceTargetWatcher::ServiceTargetWatcher()
 {
 	this->ServiceRunning = true;
+
+	for (int i = 0; i < 20; i++)
+		LastTargetValue[i] = false;
 
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)StartWatcherThread, this, 3, NULL);
 }

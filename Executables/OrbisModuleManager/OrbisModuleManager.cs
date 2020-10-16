@@ -57,6 +57,7 @@ namespace OrbisModuleManager
             PS4.DefaultTarget.Events.ProcAttach += Events_ProcAttach;
             PS4.DefaultTarget.Events.ProcDetach += Events_ProcDetach;
             PS4.DefaultTarget.Events.ProcDie += Events_ProcDie;
+            PS4.Events.TargetAvailable += Events_TargetAvailable;
             PS4.Events.DBTouched += Events_DBTouched;
 
             //Make sure the target info is updated on start.
@@ -72,7 +73,6 @@ namespace OrbisModuleManager
             //Update the FTP on start up.
             UpdateFTP();
         }
-
 
         #region Tool Strip
 
@@ -267,6 +267,12 @@ namespace OrbisModuleManager
         {
             ExecuteSecure(() => UpdateTarget());
             ExecuteSecure(() => UpdateModuleList());
+        }
+
+        private void Events_TargetAvailable(object sender, TargetAvailableEvent e)
+        {
+            if (e.TargetName.Equals(PS4.TargetManagement.DefaultTarget.Name))
+                ExecuteSecure(() => UpdateModuleList());
         }
 
         #endregion

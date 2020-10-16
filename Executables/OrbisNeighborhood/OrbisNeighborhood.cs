@@ -79,6 +79,7 @@ namespace nsOrbisNeighborhood
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
         {
+            Console.WriteLine("Data Base Touched.");
             ExecuteSecure(() => UpdateSettings());
             ExecuteSecure(() => UpdateTargetList());
         }

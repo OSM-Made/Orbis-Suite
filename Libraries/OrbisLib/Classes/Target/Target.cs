@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DarkUI.Forms;
+using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -31,9 +31,9 @@ namespace OrbisSuite.Classes
             FTP = new FTP(this);
         }
 
-        public bool Edit(bool Default, string Name, string IPAddr, int Firmware, int PayloadPort)
+        public bool Edit(string Name, string IPAddr, int Firmware, int PayloadPort)
         {
-            return Imports.TargetManagement.SetTarget(Info.Name, Default, Name, IPAddr, Firmware, PayloadPort);
+            return Imports.TargetManagement.SetTarget(Info.Name, Info.Default, Name, IPAddr, Firmware, PayloadPort);
         }
 
         public void SetDefault()
@@ -43,6 +43,12 @@ namespace OrbisSuite.Classes
 
         public bool Delete()
         {
+            if (PS4.TargetManagement.DefaultTarget.Name.Equals(Info.Name))
+            {
+                DarkMessageBox.ShowError($"{Info.Name} is the Default Target and cant be deleted.", "Cant Delete Default Target");
+                return false;
+            }
+
             return Imports.TargetManagement.DeleteTarget(Info.Name);
         }
 

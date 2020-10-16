@@ -43,3 +43,5 @@ extern ServiceTargetWatcher* TargetWatcher;
 extern bool ServiceRunning;
 
 extern const char* TargetCommandsStr[];
+
+void socketprint(const char* fmt, ...);

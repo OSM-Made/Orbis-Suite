@@ -82,6 +82,11 @@ namespace OrbisTaskbarApp
 
                     Count++;
                 }
+
+                if (PS4.DefaultTarget.Info.Available)
+                    ToolStrip_SendOrbisPayload.Enabled = false;
+                else
+                    ToolStrip_SendOrbisPayload.Enabled = true;
             }
             catch
             {
@@ -142,10 +147,10 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisNeigborhood");
+                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisNeighborhood");
 
                 if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisNeigborhood.exe");
+                    System.Diagnostics.Process.Start("OrbisNeighborhood.exe");
                 else
                     BringProcessToFront(pname[0]);
             }
@@ -294,10 +299,10 @@ namespace OrbisTaskbarApp
                     if (fPayload.Read(PayloadBuffer, 0, (int)fPayload.Length) == fPayload.Length)
                     {
                         if (!PS4.DefaultTarget.Payload.InjectPayload(PayloadBuffer))
-                            DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.");
+                            DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
                     }
                     else
-                        DarkMessageBox.ShowError("Failed read payload from disc to target please try again.", "Error: Failed to inject payload.");
+                        DarkMessageBox.ShowError("Failed read payload from disc to target please try again.", "Error: Failed to inject payload.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
                 }
 
                 fPayload.Close();
@@ -313,7 +318,7 @@ namespace OrbisTaskbarApp
             try
             {
                 if (!PS4.DefaultTarget.Payload.InjectPayload())
-                    DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.");
+                    DarkMessageBox.ShowError("Failed to send payload to target please try again.", "Error: Failed to inject payload.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
             }
             catch
             {

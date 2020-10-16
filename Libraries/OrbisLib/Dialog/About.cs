@@ -17,8 +17,8 @@ namespace OrbisSuite.Dialog
         public About()
         {
             InitializeComponent();
-
-            blVersion.Text = $"Version: { Assembly.GetExecutingAssembly().GetName().Version.Major }.{ Assembly.GetExecutingAssembly().GetName().Version.Minor}.{ Assembly.GetExecutingAssembly().GetName().Version.Build }";
+            Assembly assembly = Assembly.LoadFrom("OrbisLib.dll");
+            blVersion.Text = $"Version: { assembly.GetName().Version.Major }.{ assembly.GetName().Version.Minor}.{ assembly.GetName().Version.Build }";
         }
     }
 }

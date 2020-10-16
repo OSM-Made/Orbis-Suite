@@ -40,3 +40,4 @@ using namespace std;
 #include "OrbisSettings.hpp"
 
 extern bool IsWinService;
+extern HMODULE m_hInstance;

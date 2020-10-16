@@ -1,30 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Orbis_Suite_Installer" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="77bacc12-e9f9-4d6d-85f8-4c649195007e">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+  <!-- Fixed upgrade Id -->
+  <?define UpgradeCode = "{241A7827-46FD-4580-B11A-0FC5C2CAAABB}" ?>
 
-		<Feature Id="ProductFeature" Title="Orbis_Suite_Installer" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+  <!-- Define main product -->
+  <Product
+    Id="*"
+    Name="!(loc.ProductName_$(var.Platform))"
+    Language="!(loc.Language)"
+    Version="$(var.BuildVersion)"
+    Manufacturer="!(loc.Company)"
+    UpgradeCode="$(var.UpgradeCode)">
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Orbis_Suite_Installer" />
-			</Directory>
-		</Directory>
-	</Fragment>
+    <!-- Provide package details -->
+    <Package
+      InstallerVersion="200"
+      Compressed="yes"
+      InstallScope="perMachine"
+      Platform="$(var.Platform)"
+      Manufacturer="!(loc.Company)"
+      Description="!(loc.Description)"
+      Keywords="!(loc.Keywords)"
+      Comments="!(loc.Comments)"
+      Languages="!(loc.Language)"
+      
+      />
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+    <!-- Downgrade error message -->
+    <MajorUpgrade Schedule="afterInstallInitialize" AllowSameVersionUpgrades="yes" DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Include .cab file into .msi file -->
+    <MediaTemplate
+      EmbedCab="yes"
+      />
+
+    <!-- Define main app icon -->
+    <Icon Id="OrbisTaskbarApp.ico" SourceFile="$(var.ProjectDir)Assets\OrbisTaskbarApp.ico" />
+
+    <!--Define icons-->
+    <Icon Id="OrbisModuleManager.ico" SourceFile="$(var.ProjectDir)Assets\OrbisModuleManager.ico" />
+    <Icon Id="OrbisTargetSettings.ico" SourceFile="$(var.ProjectDir)Assets\OrbisTargetSettings.ico" />
+    <Icon Id="OrbisNeighborhood.ico" SourceFile="$(var.ProjectDir)Assets\OrbisNeighborhood.ico" />
+    <Icon Id="OrbisConsoleOutput.ico" SourceFile="$(var.ProjectDir)Assets\OrbisConsoleOutput.ico" />
+    <Icon Id="OrbisDebugger.ico" SourceFile="$(var.ProjectDir)Assets\OrbisDebugger.ico" />
+
+    <!-- Use the icon.ico icon for this installer (shows up in Add/Remove programs) -->
+    <Property Id="ARPPRODUCTICON">OrbisTaskbarApp.ico</Property>
+
+    <!-- Help/Support website (shows in the Add/Remove programs) -->
+    <Property Id="ARPURLINFOABOUT">http://www.github.com/OSM-Made</Property>
+
+    <!-- Create a basic UI for the installer -->
+    <UIRef Id="WixUI_Minimal" />
+
+    <!-- Change the installer UI background images -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp" />
+
+    <!-- Define components, shortcuts, files etc... for installer -->
+    <Feature Id="ProductFeature" Title="Orbis Suite" Level="1">
+
+      <ComponentGroupRef Id="ProductComponents" />
+
+    </Feature>
+
+  </Product>
+
 </Wix>

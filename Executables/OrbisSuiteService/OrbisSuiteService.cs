@@ -14,29 +14,47 @@ namespace OrbisSuiteService
 {
     public partial class OrbisSuiteService : ServiceBase
     {
-        [DllImport("OrbisWindowsServiceLib.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void dummy();
+        bool RunService = true;
 
         public OrbisSuiteService()
         {
             InitializeComponent();
         }
 
-        public void OnDebug()
+        [DllImport("OrbisWindowsServiceLib.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void StartLib();
+
+        [DllImport("OrbisWindowsServiceLib.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void StopLib();
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern bool SetDllDirectory(string lpPathName);
+
+        System.Threading.Thread hServiceThread;
+
+        void ServiceThread()
         {
-            OnStart(null);
+            StartLib();
+            while (RunService) { Thread.Sleep(10); }
         }
 
         protected override void OnStart(string[] args)
         {
-            dummy();
-            Console.WriteLine("Hello :)");
-            while (true) { Thread.Sleep(10); }
+            //System.Diagnostics.Debugger.Launch();
+            
+            SetDllDirectory(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
+
+            hServiceThread = new Thread(() => ServiceThread());
+            hServiceThread.Priority = ThreadPriority.Highest;
+            hServiceThread.IsBackground = true;
+            hServiceThread.Start();
         }
 
         protected override void OnStop()
         {
+            StopLib();
 
+            RunService = false;
         }
     }
 }

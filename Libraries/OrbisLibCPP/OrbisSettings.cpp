@@ -9,15 +9,17 @@ OrbisSettings::OrbisSettings(OrbisLib* orbisLib)
 	//Get the file path for the DB
 	char AppdataBuffer[0x100];
 	size_t requiredSize = sizeof(AppdataBuffer);
-	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "APPDATA");
-	sprintf_s(this->DBPath, "%s\\Orbis Suite\\Orbis-User-Data.db", AppdataBuffer);
+	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "PROGRAMDATA");
 
-	//Make sure DB Exists if not write default db
-	if (!FileExists(this->DBPath))
-	{
-		printf("DB doesnt Exist, Creating default DB.\n");
-		//CWriteFile(this->DBPath, &this->DefaultDB, sizeof(this->DefaultDB));
-	}
+	//Set the file perms on the folder.
+	sprintf_s(this->DBPath, "%s\\Orbis Suite\\", AppdataBuffer);
+	SetFilePerms(this->DBPath);
+
+	//Set the DB Path and perms on the db
+	sprintf_s(this->DBPath, "%s\\Orbis Suite\\OrbisSuiteUserData", AppdataBuffer);
+	SetFilePerms(this->DBPath);
+
+	printf(DBPath);
 
 	//Populate data on startup.
 	UpdateSettings();

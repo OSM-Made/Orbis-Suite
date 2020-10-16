@@ -129,6 +129,10 @@
       <AdditionalLibraryDirectories>C:\Users\Gregory\Source\Repos\Orbis Suite\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>OrbisLibCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"
+copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Service|x64'">
     <ClCompile>

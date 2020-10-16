@@ -12,7 +12,6 @@ namespace OrbisSuite.Classes
     public class TargetEvents
     {
         private Target Target;
-        DarkMessageBox NewTargetDialog = null;
 
         public event EventHandler<ProcPrintEvent> ProcPrint;
         public event EventHandler<ProcInterceptEvent> ProcIntercept;
