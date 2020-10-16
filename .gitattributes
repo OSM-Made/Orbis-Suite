@@ -67,3 +67,4 @@
 *.hpp linguist-language=cpp linguist-vendored=false
 *.h linguist-language=cpp linguist-vendored=false
 *.cs linguist-language=csharp linguist-vendored=false
+*.py linguist-language=python linguist-vendored=false
