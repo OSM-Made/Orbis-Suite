@@ -36,8 +36,6 @@ namespace nsOrbisNeighborhood
         {
             InitializeComponent();
 
-            System.Diagnostics.Debugger.Launch();
-
             TargetList.RowsDefaultCellStyle.BackColor = Color.FromArgb(57, 60, 62);
             TargetList.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(60, 63, 65);
 
