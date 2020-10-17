@@ -76,6 +76,11 @@ namespace OrbisTargetSettings
                 SelectedTarget.Items.Clear();
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                     SelectedTarget.Items.Add(Target.Name);
+
+                if(PS4.TargetManagement.TargetList.Find(x => x.Name == SelectedTarget.Text) == null)
+                {
+                    SelectTarget(PS4.TargetManagement.TargetList[0].Name);
+                }
             }
             catch
             {
@@ -105,6 +110,8 @@ namespace OrbisTargetSettings
         private void Button_Delete_Click(object sender, EventArgs e)
         {
             PS4.TargetManagement.DeleteTarget(SelectedTarget.Text);
+
+            UpdateTargetList();
         }
 
         private void Button_SaveTarget_Click(object sender, EventArgs e)
@@ -155,9 +162,23 @@ namespace OrbisTargetSettings
                 Firmware = 702;
 
             if (PS4.TargetManagement.SetTarget(SelectedTarget.Text, IsDefaultTarget, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
-                DialogResult = System.Windows.Forms.DialogResult.OK;
+            {
+                SelectedTarget.Text = TargetName.Text;
+            }
             else
                 DarkMessageBox.ShowError("An unknown error caused the target to not be saved. Please try again.", "Failed to save target.");
+        }
+
+        private void SelectedTarget_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PS4.TargetManagement.TargetList.Find(x => x.Name == SelectedTarget.Text) == null)
+            {
+                SelectTarget(PS4.TargetManagement.TargetList[0].Name);
+            }
+            else
+            {
+                SelectTarget(SelectedTarget.Text);
+            }
         }
     }
 }

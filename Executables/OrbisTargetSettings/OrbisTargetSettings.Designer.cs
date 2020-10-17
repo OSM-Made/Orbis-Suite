@@ -81,6 +81,7 @@
             this.SelectedTarget.Name = "SelectedTarget";
             this.SelectedTarget.Size = new System.Drawing.Size(162, 21);
             this.SelectedTarget.TabIndex = 2;
+            this.SelectedTarget.SelectedIndexChanged += new System.EventHandler(this.SelectedTarget_SelectedIndexChanged);
             // 
             // Button_Delete
             // 

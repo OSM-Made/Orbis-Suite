@@ -19,8 +19,6 @@ OrbisSettings::OrbisSettings(OrbisLib* orbisLib)
 	sprintf_s(this->DBPath, "%s\\Orbis Suite\\OrbisSuiteUserData", AppdataBuffer);
 	SetFilePerms(this->DBPath);
 
-	printf(DBPath);
-
 	//Populate data on startup.
 	UpdateSettings();
 }

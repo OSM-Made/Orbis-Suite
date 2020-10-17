@@ -8,7 +8,7 @@
   <String Id="ProductName_x86">Orbis Suite (x86)</String>
   <String Id="ProductName_x64">Orbis Suite (x64)</String>
 
-  <String Id="Description">TODO: Add description</String>
+  <String Id="Description">A suite of tools used for developing things on a jailbroken PS4. Aswell as an included DLL for creating 3rd party C# applications using the OrbisLib API.</String>
   <String Id="Keywords">TODO: Add keywords</String>
   <String Id="Comments">TODO: Add comments</String>
 

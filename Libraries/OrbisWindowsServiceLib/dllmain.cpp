@@ -88,6 +88,15 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 
 extern "C" __declspec(dllexport) void StartLib()
 {
+	//Create Log File.
+	HANDLE File = CreateFileA("OrbisSuiteService.log", GENERIC_ALL, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+	CloseHandle(File);
+
+	//Output our prints to a File.
+	FILE *stream;
+	freopen_s(&stream, "OrbisSuiteService.log", "a", stdout);
+	freopen_s(&stream, "OrbisSuiteService.log", "a", stderr);
+
 	ServiceRunning = true;
 
 	//Start New Client Manager

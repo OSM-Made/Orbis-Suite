@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -203,7 +204,7 @@ namespace OrbisSuite.Classes
                 _ModuleList.Clear();
 
                 //Allocate unmanaged memory.
-                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_ModuleList)) * 100);
+                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_ModuleList)) * 200);
 
                 int ModuleCount = 0;
                 API_ERRORS res = Imports.Process.GetLibraryList(Target.Info.IPAddr, out ModuleCount, ptr);
@@ -213,12 +214,16 @@ namespace OrbisSuite.Classes
 
                 for (int i = 0; i < ModuleCount; i++)
                 {
+                    
+
                     //Convert the unmanaged memory into a easy to digest structure. Increment the pointer of memory to the nex struct in the array.
                     RESP_ModuleList ModuleInfo = (RESP_ModuleList)Marshal.PtrToStructure(ptr, typeof(RESP_ModuleList));
                     ptr += Marshal.SizeOf(typeof(RESP_ModuleList));
 
+                    Console.WriteLine($"{ModuleInfo.Handle} {Utilities.CleanByteToString(ModuleInfo.Path)}");
+
                     _ModuleList.Add(new ModuleInfo(
-                            Utilities.CleanByteToString(ModuleInfo.Name),
+                            Path.GetFileName(Utilities.CleanByteToString(ModuleInfo.Path)),
                             Utilities.CleanByteToString(ModuleInfo.Path),
                             ModuleInfo.Handle,
                             ModuleInfo.TextSegmentBase,

@@ -75,7 +75,6 @@
     <Exec Command="copy &quot;..\Libraries\OrbisLibCPP.dll&quot; &quot;Assets\Program Data\OrbisLibCPP.dll&quot;" />
     <Exec Command="copy &quot;..\Libraries\OrbisWindowsServiceLib.dll&quot; &quot;Assets\Program Data\OrbisWindowsServiceLib.dll&quot;" />
     <Exec Command="copy &quot;..\Libraries\OrbisSuiteUserData&quot; &quot;Assets\Program Data\OrbisSuiteUserData&quot;" />
-	
     <!-- Copy all the executables to the directories -->
     <Exec Command="copy &quot;..\Executables\OrbisModuleManager.exe&quot; &quot;Assets\Program Files x64\OrbisModuleManager.exe&quot;" />
     <Exec Command="copy &quot;..\Executables\OrbisNeighborhood.exe&quot; &quot;Assets\Program Files x64\OrbisNeighborhood.exe&quot;" />
@@ -85,15 +84,12 @@
     <!-- <Exec Command="copy &quot;..\Executables\OrbisDebugger.exe&quot; &quot;Assets\Program Files x64\OrbisDebugger.exe&quot;"/> -->
     <!-- <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;"/> -->
     <!-- <Exec Command="copy &quot;..\Executables\OrbisConsoleOutput.exe&quot; &quot;Assets\Program Files x64\OrbisConsoleOutput.exe&quot;"/> -->
-	
     <!-- Copy all the scripts to the directories -->
     <Exec Command="copy &quot;..\Scripts\make_fself.py&quot; &quot;Assets\Program Data\make_fself.py&quot;" />
-	
-	<!-- Copy all the payloads to the directories -->
-	<Exec Command="copy &quot;..\Payloads\OrbisLib-505.bin&quot; &quot;Assets\Program Data\OrbisLib-505.bin&quot;" />
-	<!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-672.bin&quot; &quot;Assets\Program Data\OrbisLib-672.bin&quot;" /> -->
-	<!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-702.bin&quot; &quot;Assets\Program Data\OrbisLib-702.bin&quot;" /> -->
-	
+    <!-- Copy all the payloads to the directories -->
+    <Exec Command="copy &quot;..\Payloads\OrbisLib-505.bin&quot; &quot;Assets\Program Data\OrbisLib-505.bin&quot;" />
+    <!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-672.bin&quot; &quot;Assets\Program Data\OrbisLib-672.bin&quot;" /> -->
+    <!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-702.bin&quot; &quot;Assets\Program Data\OrbisLib-702.bin&quot;" /> -->
     <!-- Get assembly version -->
     <GetAssemblyIdentity AssemblyFiles="Assets\Program Files x64\OrbisLib.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />

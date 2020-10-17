@@ -130,7 +130,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"
-copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"</Command>
+copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"
+echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Service|x64'">
