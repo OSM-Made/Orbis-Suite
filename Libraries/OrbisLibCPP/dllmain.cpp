@@ -372,14 +372,9 @@ extern "C" __declspec(dllexport) void SetWordWrap(bool Value)
 
 extern "C"  __declspec(dllexport) void SetupCPP(bool WinService)
 {
-	//Create Log File.
-	//HANDLE File = CreateFileA("OrbisLib.log", GENERIC_ALL, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-	//CloseHandle(File);
+	EnableDebugLogs();
 
-	//Output our prints to a File.
-	//FILE *stream;
-	//freopen_s(&stream, "OrbisLib.log", "a", stdout);
-	//freopen_s(&stream, "OrbisLib.log", "a", stderr);
+	printf("OrbisLib Loading...\n");
 
 	IsWinService = WinService;
 	orbisLib = new OrbisLib();}

@@ -8,7 +8,7 @@ bool SerialComHelper::UpdateCOMPortList()
 	CHAR DeviceName[1000];
 
 	//Open Reg Key for serial com ports list
-	LSTATUS lResult = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_READ, &hKey);
+	LSTATUS lResult = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_READ, &hKey);
 	if (ERROR_SUCCESS != lResult)
 	{
 		printf("Failed to open key \'HARDWARE\\DEVICEMAP\\SERIALCOMM\' \n");

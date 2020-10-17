@@ -3,6 +3,7 @@
 
 OrbisLib::OrbisLib()
 {
+	printf("Initializing Classes...\n");
 	//Initialize Classes
 	this->Proc = new OrbisProc(this);
 	this->Target = new OrbisTarget(this);
@@ -17,12 +18,11 @@ OrbisLib::OrbisLib()
 
 	//Set the default OrbisLib Port.
 	this->Port = 6900;
-
 }
 
 OrbisLib::~OrbisLib()
 {
-	printf("Destruction!\n");
+	printf("OrbisLib Destruction!\n");
 	//Cleanup.
 	delete this->Proc;
 	delete this->Target;

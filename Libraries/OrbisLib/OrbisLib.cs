@@ -95,7 +95,6 @@ namespace OrbisSuite
         {
             try
             {
-                Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
                 OrbisLib_Dir = (Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
 
                 if (!Directory.Exists(OrbisLib_Dir))

@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="OrbisTaskbarApp.cs">
       <SubType>Form</SubType>
     </Compile>

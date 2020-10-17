@@ -49,6 +49,32 @@ namespace OrbisTaskbarApp
             ToolStrip_AutoLaunch.Checked = PS4.Settings.StartOnBoot;
         }
 
+        #region One Instance
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_TASKBARAPP)
+            {
+                ShowMe();
+            }
+            base.WndProc(ref m);
+        }
+        private void ShowMe()
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+            // get our current "TopMost" value (ours will always be false though)
+            bool top = TopMost;
+            // make our form jump to the top of everything
+            TopMost = true;
+            // set it back to whatever it was
+            TopMost = top;
+        }
+
+        #endregion
+
         private void Events_TargetUnAvailable(object sender, TargetUnAvailableEvent e)
         {
             ExecuteSecure(() => UpdateTargetList());
@@ -124,35 +150,11 @@ namespace OrbisTaskbarApp
 
         #region Orbis Program Launcher
 
-        const int SW_RESTORE = 9;
-        public static void BringProcessToFront(System.Diagnostics.Process process)
-        {
-            IntPtr handle = process.MainWindowHandle;
-            if (IsIconic(handle))
-            {
-                ShowWindow(handle, SW_RESTORE);
-            }
-
-            SetForegroundWindow(handle);
-        }
-
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr handle);
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern bool ShowWindow(IntPtr handle, int nCmdShow);
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern bool IsIconic(IntPtr handle);
-
         private void Neigborhood_Launcher_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisNeighborhood");
-
-                if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisNeighborhood.exe");
-                else
-                    BringProcessToFront(pname[0]);
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\Orbis Suite\\OrbisNeighborhood.exe");
             }
             catch
             {
@@ -164,12 +166,7 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisConsoleOutput");
-
-                if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisConsoleOutput.exe");
-                else
-                    BringProcessToFront(pname[0]);
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\Orbis Suite\\OrbisConsoleOutput.exe");
             }
             catch
             {
@@ -181,12 +178,7 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisDebugger");
-
-                if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisDebugger.exe");
-                else
-                    BringProcessToFront(pname[0]);
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\Orbis Suite\\OrbisDebugger.exe");
             }
             catch
             {
@@ -198,12 +190,7 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisModuleManager");
-
-                if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisModuleManager.exe");
-                else
-                    BringProcessToFront(pname[0]);
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\Orbis Suite\\OrbisModuleManager.exe");
             }
             catch
             {
@@ -215,12 +202,7 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                System.Diagnostics.Process[] pname = System.Diagnostics.Process.GetProcessesByName("OrbisTargetSettings");
-
-                if (pname.Length == 0)
-                    System.Diagnostics.Process.Start("OrbisTargetSettings.exe");
-                else
-                    BringProcessToFront(pname[0]);
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\Orbis Suite\\OrbisTargetSettings.exe");
             }
             catch
             {

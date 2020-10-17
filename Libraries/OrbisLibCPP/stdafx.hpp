@@ -12,7 +12,6 @@
 #include <tchar.h>
 #include <iostream>
 #include <string>
-//#include <functional>
 #include <memory>
 
 using namespace std;
@@ -26,6 +25,7 @@ using namespace std;
 
 #pragma comment (lib, "Ws2_32.lib")
 
+#include "FileIO.hpp"
 #include "Utilities.hpp"
 #include "Sockets.hpp"
 #include "SocketListener.hpp"

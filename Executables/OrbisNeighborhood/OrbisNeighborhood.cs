@@ -60,6 +60,35 @@ namespace nsOrbisNeighborhood
             PS4.DefaultTarget.Events.ProcAttach += Events_ProcAttach;
         }
 
+        #region One Instance
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == NativeMethods.WM_NEIGHBORHOOD)
+            {
+                ShowMe();
+            }
+            base.WndProc(ref m);
+        }
+
+        private void ShowMe()
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+            // get our current "TopMost" value (ours will always be false though)
+            bool top = TopMost;
+            // make our form jump to the top of everything
+            TopMost = true;
+            // set it back to whatever it was
+            TopMost = top;
+        }
+
+        #endregion
+
+        #region Events
+
         private void Events_ProcAttach(object sender, ProcAttachEvent e)
         {
             ExecuteSecure(() => CurrentProc.Text = "Process: " + e.NewProcName);
@@ -166,6 +195,8 @@ namespace nsOrbisNeighborhood
 
             SetStatus("Ready");
         }
+
+        #endregion
 
         private void TargetList_Enter(object sender, EventArgs e)
         {

@@ -120,7 +120,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;ORBISWINDOWSSERVICELIB_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;ORBISWINDOWSSERVICELIB_EXPORTS;_WINDOWS;_USRDLL;_WINDLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -213,6 +213,7 @@ copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetNa
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FileIO.h" />
     <ClInclude Include="SerialComHelper.h" />
     <ClInclude Include="ServiceClient.h" />
     <ClInclude Include="ServiceTargetWatcher.h" />
@@ -222,6 +223,7 @@ copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetNa
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="SerialComHelper.cpp" />
     <ClCompile Include="ServiceClient.cpp" />
     <ClCompile Include="ServiceTargetWatcher.cpp" />

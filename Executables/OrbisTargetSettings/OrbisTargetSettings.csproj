@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="OrbisTargetSettings.cs">
       <SubType>Form</SubType>
     </Compile>

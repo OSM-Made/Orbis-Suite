@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\NativeMethods.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="OrbisModuleManager.cs">
       <SubType>Form</SubType>

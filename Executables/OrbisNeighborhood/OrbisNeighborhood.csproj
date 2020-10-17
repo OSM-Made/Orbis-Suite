@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="OrbisNeighborhood.cs">
       <SubType>Form</SubType>
     </Compile>

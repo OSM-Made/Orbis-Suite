@@ -88,14 +88,12 @@ DWORD WINAPI FileWatcherThread(LPVOID Params)
 
 extern "C" __declspec(dllexport) void StartLib()
 {
-	//Create Log File.
-	HANDLE File = CreateFileA("OrbisSuiteService.log", GENERIC_ALL, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-	CloseHandle(File);
+	//program data path
+	char ProgramDataPath[MAX_PATH];
+	size_t requiredSize = sizeof(ProgramDataPath);
+	getenv_s(&requiredSize, (char*)&ProgramDataPath, requiredSize, "PROGRAMDATA");
 
-	//Output our prints to a File.
-	FILE *stream;
-	freopen_s(&stream, "OrbisSuiteService.log", "a", stdout);
-	freopen_s(&stream, "OrbisSuiteService.log", "a", stderr);
+	EnableDebugLogs();
 
 	ServiceRunning = true;
 
@@ -106,11 +104,7 @@ extern "C" __declspec(dllexport) void StartLib()
 	TargetListener = new SocketListener(TargetClientThread, 0, PORT_TARGETSERVER); //Listens for socket commands from the target PS4 ie. Interupts, Change in proc, or attach / dettach
 
 	//Set the orbis appdata dir
-	char AppdataBuffer[0x100];
-	size_t requiredSize = sizeof(AppdataBuffer);
-	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "PROGRAMDATA");
-
-	sprintf_s(OrbisPath, sizeof(OrbisPath), "%s\\Orbis Suite", AppdataBuffer);
+	sprintf_s(OrbisPath, sizeof(OrbisPath), "%s\\Orbis Suite", ProgramDataPath);
 
 	//Thread to watch db file for changes.
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FileWatcherThread, NULL, 3, NULL);

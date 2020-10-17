@@ -1,13 +1,22 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
-//
-
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
-// reference additional headers your program requires here
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <stdarg.h>
+#include <conio.h>
+#include <windows.h>
+#include <random>
+#include <WinSock.h>
+
+#include <tchar.h>
+#include <iostream>
+#include <string>
+#include <memory>
+
+using namespace std;
 
 #include <iostream>
 #include <Windows.h>
@@ -18,6 +27,7 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
+#include "FileIO.h"
 #include "sockets.h"
 #include "SocketListener.h"
 #include "ServiceClient.h"
@@ -43,3 +53,6 @@ extern ServiceTargetWatcher* TargetWatcher;
 extern bool ServiceRunning;
 
 extern const char* TargetCommandsStr[];
+
+string GetFileName(const string& path);
+void EnableDebugLogs();
