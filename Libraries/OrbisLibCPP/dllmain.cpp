@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-EXPORT OrbisLib* orbisLib;
+__declspec(dllexport) OrbisLib* orbisLib;
 
 #pragma region Exports
 

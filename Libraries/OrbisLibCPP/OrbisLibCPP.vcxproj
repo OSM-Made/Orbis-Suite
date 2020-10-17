@@ -130,8 +130,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"
-copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"
-echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
+copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Service|x64'">
@@ -202,8 +201,9 @@ echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ORBISLIBCPP_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ORBISLIBCPP_EXPORTS;_WINDOWS;_USRDLL;_WINDLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -211,6 +211,10 @@ echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"
+copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetName)$(TargetExt)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Export.hpp" />
@@ -246,6 +250,7 @@ echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -254,6 +259,7 @@ echo "$(PROGRAMDATA)\Orbis Suite\$(TargetName)$(TargetExt)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Service|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
