@@ -213,7 +213,13 @@ DWORD WINAPI OrbisService::HeartBeatThread(LPVOID Params)
 		}
 		else
 		{
-			orbisService->Disconnect();
+			//Reset our connection status.
+			orbisService->IsConnectedtoService = false;
+
+			//Destroy Listener.
+			delete orbisService->ServiceListener;
+
+			//Attempt to reconnect to the Windows Service.
 			while (!orbisService->Connect())
 			{
 				Sleep(1000);
