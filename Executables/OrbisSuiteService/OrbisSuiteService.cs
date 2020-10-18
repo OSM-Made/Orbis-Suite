@@ -52,9 +52,9 @@ namespace OrbisSuiteService
 
         protected override void OnStop()
         {
-            StopLib();
-
             RunService = false;
+
+            StopLib();
         }
     }
 }

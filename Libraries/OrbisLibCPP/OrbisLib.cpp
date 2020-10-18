@@ -27,6 +27,10 @@ OrbisLib::~OrbisLib()
 	delete this->Proc;
 	delete this->Target;
 	delete this->Debugger;
+	delete this->API;
+	delete this->Settings;
+	delete this->TargetManagement;
+
 	if (!IsWinService)
 		delete this->Service;
 }

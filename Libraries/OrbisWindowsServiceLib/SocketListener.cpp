@@ -142,7 +142,7 @@ SocketListener::~SocketListener()
 	//Signal Clean up
 	this->ServerRunning = false;
 
-	while (this->ThreadCleanedUp == false) {}
+	while (this->ThreadCleanedUp == false) { Sleep(10); }
 
 	printf("Destruction sucessful.\n");
 }

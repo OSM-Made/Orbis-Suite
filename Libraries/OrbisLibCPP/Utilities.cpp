@@ -64,7 +64,7 @@ void EnableDebugLogs()
 
 	//Set our output path.
 	char LogPath[MAX_PATH];
-	sprintf_s(LogPath, "%s\\Orbis Suite\\Logs\\%s", ProgramDataPath, GetFileName(modulename).c_str());
+	sprintf_s(LogPath, "%s\\Orbis Suite\\Logs\\OrbisLib-%s", ProgramDataPath, GetFileName(modulename).c_str());
 
 	char LogFolderPath[MAX_PATH];
 	sprintf_s(LogFolderPath, "%s\\Orbis Suite\\Logs", ProgramDataPath, GetFileName(modulename).c_str());

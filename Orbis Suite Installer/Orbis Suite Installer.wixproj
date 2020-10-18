@@ -88,7 +88,7 @@
     <Exec Command="copy &quot;..\Scripts\make_fself.py&quot; &quot;Assets\Program Data\make_fself.py&quot;" />
     <!-- Copy all the payloads to the directories -->
     <Exec Command="copy &quot;..\Payloads\OrbisLib-505.bin&quot; &quot;Assets\Program Data\OrbisLib-505.bin&quot;" />
-    <!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-672.bin&quot; &quot;Assets\Program Data\OrbisLib-672.bin&quot;" /> -->
+    <Exec Command="copy &quot;..\Payloads\OrbisLib-672.bin&quot; &quot;Assets\Program Data\OrbisLib-672.bin&quot;" />
     <!--  <Exec Command="copy &quot;..\Payloads\OrbisLib-702.bin&quot; &quot;Assets\Program Data\OrbisLib-702.bin&quot;" /> -->
     <!-- Get assembly version -->
     <GetAssemblyIdentity AssemblyFiles="Assets\Program Files x64\OrbisLib.dll">
