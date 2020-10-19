@@ -57,7 +57,13 @@ namespace nsOrbisNeighborhood
             PS4.Events.TargetUnAvailable += PS4_TargetUnAvailable;
             PS4.Events.DBTouched += Events_DBTouched;
 
-            PS4.DefaultTarget.Events.ProcAttach += Events_ProcAttach;
+            PS4.SelectedTarget.Events.ProcAttach += Events_ProcAttach;
+            PS4.SelectedTarget.Events.ProcDetach += Events_ProcDetach;
+        }
+
+        private void Events_ProcDetach(object sender, ProcDetachEvent e)
+        {
+            
         }
 
         #region One Instance
@@ -96,14 +102,14 @@ namespace nsOrbisNeighborhood
 
         private void Button_Attach_Click(object sender, EventArgs e)
         {
-            if(PS4.DefaultTarget.Info.Available)
-                PS4.DefaultTarget.Process.SelectProcess();
+            if(PS4.SelectedTarget.Info.Available)
+                PS4.SelectedTarget.Process.SelectProcess();
         }
 
         private void Button_Detach_Click(object sender, EventArgs e)
         {
-            if (PS4.DefaultTarget.Info.Available && PS4.DefaultTarget.Info.Attached)
-                PS4.DefaultTarget.Process.Detach();
+            if (PS4.SelectedTarget.Info.Available && PS4.SelectedTarget.Info.Attached)
+                PS4.SelectedTarget.Process.Detach();
         }
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
@@ -136,7 +142,7 @@ namespace nsOrbisNeighborhood
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
                     object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
-                    if (TargetList.Rows.Count <= LoopCount)
+                    if (TargetList.Rows.Count <= LoopCount) //todo redo for contains.
                         TargetList.Rows.Add(obj);
                     else
                         TargetList.Rows[LoopCount].SetValues(obj);
@@ -144,18 +150,18 @@ namespace nsOrbisNeighborhood
                     LoopCount++;
                 }
 
-                if (PS4.TargetManagement.DoesDefaultTargetExist())
+                if (PS4.SelectedTarget.Active)
                 {
-                    if (PS4.DefaultTarget.Info.Available)
+                    if (PS4.SelectedTarget.Info.Available)
                         Button_Attach.Enabled = true;
                     else
                         Button_Attach.Enabled = false;
 
-                    CurrentTarget.Text = string.Format("Target: {0}", PS4.DefaultTarget.Info.Name);
+                    CurrentTarget.Text = string.Format("Target: {0}", PS4.SelectedTarget.Info.Name);
 
-                    if (PS4.DefaultTarget.Info.Attached)
+                    if (PS4.SelectedTarget.Info.Attached)
                     {
-                        CurrentProc.Text = "Process: " + PS4.DefaultTarget.Info.CurrentProc;
+                        CurrentProc.Text = "Process: " + PS4.SelectedTarget.Info.CurrentProc;
                         Button_Detach.Enabled = true;
                     }
                     else

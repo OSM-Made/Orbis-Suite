@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using DarkUI.Forms;
@@ -21,6 +20,12 @@ namespace OrbisSuite
         {
             get
             {
+                //initialize the variable to start.
+                if (Internal_DefaultTarget == null)
+                    Internal_DefaultTarget = new Target(this);
+
+                //Need to Get the default Target.
+                bool FoundDefaultTarget = false;
                 foreach (TargetInfo TargetInfo in TargetManagement.TargetList)
                 {
                     if (Internal_Targets.ContainsKey(TargetInfo.Name))
@@ -29,10 +34,37 @@ namespace OrbisSuite
                         Internal_Targets.Add(TargetInfo.Name, new Target(this, TargetInfo));
 
                     if (TargetInfo.Default)
+                    {
                         Internal_DefaultTarget = Internal_Targets[TargetInfo.Name];
+                        FoundDefaultTarget = true;
+                        break;
+                    }
                 }
 
+                //If we dont find the default target we set the Active flag as false
+                Internal_DefaultTarget.Active = FoundDefaultTarget;
+
+                //Return the instanced version of the default target.
                 return Internal_DefaultTarget;
+            }
+        }
+
+        private Target internal_SelectedTarget;
+        public Target SelectedTarget
+        {
+            get
+            {
+                //initialize the variable to start.
+                if (internal_SelectedTarget == null)
+                    internal_SelectedTarget = new Target(this);
+
+                TargetInfo TargetInfo;
+                if ((TargetInfo = TargetManagement.TargetList.Find(x => x.Name == internal_SelectedTarget.Info.Name)) != null)
+                    internal_SelectedTarget.Active = true;
+                else
+                    internal_SelectedTarget.Active = false;
+
+                return internal_SelectedTarget;
             }
         }
 
@@ -81,16 +113,6 @@ namespace OrbisSuite
 
         #endregion
 
-        #region Kernel Imports
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern bool SetDllDirectory(string lpPathName);
-
-        #endregion
-
-        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SetupCPP(bool WinService);
-
         public OrbisLib()
         {
             try
@@ -104,18 +126,21 @@ namespace OrbisSuite
                     throw new System.Exception("Orbis Suite not Installed.");
                 }
 
-                SetDllDirectory(OrbisLib_Dir);
+                Utilities.SetDllDirectory(OrbisLib_Dir);
 
                 //Set up our instance of the OrbisLibCPP.dll.
-                SetupCPP(false);
+                Imports.SetupCPP(false);
 
-                if (DefaultTarget == null)
-                {
-                    DarkMessageBox.ShowError("Please add a default target First.", "Default Target Required.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
-                    Dialogs.AddTarget(FormStartPosition.CenterScreen);
-                    if (DefaultTarget == null)
-                        Environment.Exit(0);
-                }
+                //Set up selected target as default target initially.
+                SelectedTarget.Info = DefaultTarget.Info;
+
+                //if (DefaultTarget == null)
+                //{
+                //    DarkMessageBox.ShowError("Please add a default target First.", "Default Target Required.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
+                //    Dialogs.AddTarget(FormStartPosition.CenterScreen);
+                //    if (DefaultTarget == null)
+                //        Environment.Exit(0);
+                //}
             }
             catch
             {

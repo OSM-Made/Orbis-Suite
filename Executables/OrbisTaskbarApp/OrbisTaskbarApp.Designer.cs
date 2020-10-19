@@ -35,11 +35,6 @@
             this.ToolStrip_TargetList = new System.Windows.Forms.ToolStripMenuItem();
             this.DarkContextMenu_ConsoleList = new DarkUI.Controls.DarkContextMenu();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.Neigborhood_Launcher = new System.Windows.Forms.ToolStripMenuItem();
-            this.ConsoleOutput_Launcher = new System.Windows.Forms.ToolStripMenuItem();
-            this.Debugger_Launcher = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModuleManager_Launcher = new System.Windows.Forms.ToolStripMenuItem();
-            this.TargetSettings_Launcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStrip_Reboot = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip_Shutdown = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,10 +45,15 @@
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStrip_AutoLoadPayload = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip_AutoLaunch = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStrip_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.NotifyIcon_TaskBarApp = new System.Windows.Forms.NotifyIcon(this.components);
+            this.Neigborhood_Launcher = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConsoleOutput_Launcher = new System.Windows.Forms.ToolStripMenuItem();
+            this.Debugger_Launcher = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModuleManager_Launcher = new System.Windows.Forms.ToolStripMenuItem();
+            this.TargetSettings_Launcher = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStrip_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.DarkContextMenu_Main.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,7 +84,7 @@
             this.ToolStrip_Help,
             this.ToolStrip_Exit});
             this.DarkContextMenu_Main.Name = "DarkContextMenu_Main";
-            this.DarkContextMenu_Main.Size = new System.Drawing.Size(206, 428);
+            this.DarkContextMenu_Main.Size = new System.Drawing.Size(206, 406);
             // 
             // ToolStrip_AddTarget
             // 
@@ -98,6 +98,7 @@
             // 
             this.ToolStrip_TargetList.DropDown = this.DarkContextMenu_ConsoleList;
             this.ToolStrip_TargetList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.ToolStrip_TargetList.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisTaskbarApp_1907;
             this.ToolStrip_TargetList.Name = "ToolStrip_TargetList";
             this.ToolStrip_TargetList.Size = new System.Drawing.Size(205, 22);
             this.ToolStrip_TargetList.Text = "Default Target: N/A";
@@ -107,7 +108,8 @@
             this.DarkContextMenu_ConsoleList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.DarkContextMenu_ConsoleList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.DarkContextMenu_ConsoleList.Name = "DarkContextMenu_ConsoleList";
-            this.DarkContextMenu_ConsoleList.Size = new System.Drawing.Size(61, 4);
+            this.DarkContextMenu_ConsoleList.OwnerItem = this.ToolStrip_TargetList;
+            this.DarkContextMenu_ConsoleList.Size = new System.Drawing.Size(181, 26);
             // 
             // toolStripSeparator7
             // 
@@ -115,53 +117,6 @@
             this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
-            // 
-            // Neigborhood_Launcher
-            // 
-            this.Neigborhood_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Neigborhood_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisNeighborhoodx64_4055;
-            this.Neigborhood_Launcher.Name = "Neigborhood_Launcher";
-            this.Neigborhood_Launcher.Size = new System.Drawing.Size(205, 22);
-            this.Neigborhood_Launcher.Text = "Neighborhood...";
-            this.Neigborhood_Launcher.Click += new System.EventHandler(this.Neigborhood_Launcher_Click);
-            // 
-            // ConsoleOutput_Launcher
-            // 
-            this.ConsoleOutput_Launcher.Enabled = false;
-            this.ConsoleOutput_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ConsoleOutput_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisConsoleOutput_100;
-            this.ConsoleOutput_Launcher.Name = "ConsoleOutput_Launcher";
-            this.ConsoleOutput_Launcher.Size = new System.Drawing.Size(205, 22);
-            this.ConsoleOutput_Launcher.Text = "Console Output...";
-            this.ConsoleOutput_Launcher.Click += new System.EventHandler(this.ConsoleOutput_Launcher_Click);
-            // 
-            // Debugger_Launcher
-            // 
-            this.Debugger_Launcher.Enabled = false;
-            this.Debugger_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.Debugger_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisSettings_4496;
-            this.Debugger_Launcher.Name = "Debugger_Launcher";
-            this.Debugger_Launcher.Size = new System.Drawing.Size(205, 22);
-            this.Debugger_Launcher.Text = "Debugger...";
-            this.Debugger_Launcher.Click += new System.EventHandler(this.Debugger_Launcher_Click);
-            // 
-            // ModuleManager_Launcher
-            // 
-            this.ModuleManager_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.ModuleManager_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.orbis_razorCpuLiveUIx64_100;
-            this.ModuleManager_Launcher.Name = "ModuleManager_Launcher";
-            this.ModuleManager_Launcher.Size = new System.Drawing.Size(205, 22);
-            this.ModuleManager_Launcher.Text = "Module Manager...";
-            this.ModuleManager_Launcher.Click += new System.EventHandler(this.ModuleManager_Launcher_Click);
-            // 
-            // TargetSettings_Launcher
-            // 
-            this.TargetSettings_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.TargetSettings_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisSettings_100;
-            this.TargetSettings_Launcher.Name = "TargetSettings_Launcher";
-            this.TargetSettings_Launcher.Size = new System.Drawing.Size(205, 22);
-            this.TargetSettings_Launcher.Text = "Target Settings...";
-            this.TargetSettings_Launcher.Click += new System.EventHandler(this.TargetSettings_Launcher_Click);
             // 
             // toolStripSeparator8
             // 
@@ -243,14 +198,6 @@
             this.ToolStrip_AutoLaunch.Text = "Load Orbis Suite on boot";
             this.ToolStrip_AutoLaunch.Click += new System.EventHandler(this.ToolStrip_AutoLaunch_Click);
             // 
-            // ToolStrip_Settings
-            // 
-            this.ToolStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.ToolStrip_Settings.Name = "ToolStrip_Settings";
-            this.ToolStrip_Settings.Size = new System.Drawing.Size(205, 22);
-            this.ToolStrip_Settings.Text = "Settings";
-            this.ToolStrip_Settings.Click += new System.EventHandler(this.ToolStrip_Settings_Click);
-            // 
             // ToolStrip_Help
             // 
             this.ToolStrip_Help.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -274,6 +221,62 @@
             this.NotifyIcon_TaskBarApp.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIcon_TaskBarApp.Icon")));
             this.NotifyIcon_TaskBarApp.Text = "Taskbar Application for Orbis Suite";
             this.NotifyIcon_TaskBarApp.Visible = true;
+            // 
+            // Neigborhood_Launcher
+            // 
+            this.Neigborhood_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Neigborhood_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisNeighborhoodx64_4055;
+            this.Neigborhood_Launcher.Name = "Neigborhood_Launcher";
+            this.Neigborhood_Launcher.Size = new System.Drawing.Size(205, 22);
+            this.Neigborhood_Launcher.Text = "Neighborhood...";
+            this.Neigborhood_Launcher.Click += new System.EventHandler(this.Neigborhood_Launcher_Click);
+            // 
+            // ConsoleOutput_Launcher
+            // 
+            this.ConsoleOutput_Launcher.Enabled = false;
+            this.ConsoleOutput_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ConsoleOutput_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisConsoleOutput_100;
+            this.ConsoleOutput_Launcher.Name = "ConsoleOutput_Launcher";
+            this.ConsoleOutput_Launcher.Size = new System.Drawing.Size(205, 22);
+            this.ConsoleOutput_Launcher.Text = "Console Output...";
+            this.ConsoleOutput_Launcher.Click += new System.EventHandler(this.ConsoleOutput_Launcher_Click);
+            // 
+            // Debugger_Launcher
+            // 
+            this.Debugger_Launcher.Enabled = false;
+            this.Debugger_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.Debugger_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisSettings_4496;
+            this.Debugger_Launcher.Name = "Debugger_Launcher";
+            this.Debugger_Launcher.Size = new System.Drawing.Size(205, 22);
+            this.Debugger_Launcher.Text = "Debugger...";
+            this.Debugger_Launcher.Click += new System.EventHandler(this.Debugger_Launcher_Click);
+            // 
+            // ModuleManager_Launcher
+            // 
+            this.ModuleManager_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.ModuleManager_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.orbis_razorCpuLiveUIx64_100;
+            this.ModuleManager_Launcher.Name = "ModuleManager_Launcher";
+            this.ModuleManager_Launcher.Size = new System.Drawing.Size(205, 22);
+            this.ModuleManager_Launcher.Text = "Module Manager...";
+            this.ModuleManager_Launcher.Click += new System.EventHandler(this.ModuleManager_Launcher_Click);
+            // 
+            // TargetSettings_Launcher
+            // 
+            this.TargetSettings_Launcher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.TargetSettings_Launcher.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisSettings_100;
+            this.TargetSettings_Launcher.Name = "TargetSettings_Launcher";
+            this.TargetSettings_Launcher.Size = new System.Drawing.Size(205, 22);
+            this.TargetSettings_Launcher.Text = "Target Settings...";
+            this.TargetSettings_Launcher.Click += new System.EventHandler(this.TargetSettings_Launcher_Click);
+            // 
+            // ToolStrip_Settings
+            // 
+            this.ToolStrip_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.ToolStrip_Settings.Image = global::OrbisTaskbarApp.Properties.Resources.OrbisTaskbarApp_3569;
+            this.ToolStrip_Settings.Name = "ToolStrip_Settings";
+            this.ToolStrip_Settings.Size = new System.Drawing.Size(205, 22);
+            this.ToolStrip_Settings.Text = "Settings";
+            this.ToolStrip_Settings.Click += new System.EventHandler(this.ToolStrip_Settings_Click);
             // 
             // OrbisTaskbarApp
             // 

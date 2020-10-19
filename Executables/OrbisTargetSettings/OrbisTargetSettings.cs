@@ -73,6 +73,12 @@ namespace OrbisTargetSettings
         {
             try
             {
+                if (PS4.TargetManagement.TargetList.Count <= 0)
+                {
+                    DarkMessageBox.ShowError("Target list is empty nothing to show.", "Target List Empty", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
+                    Environment.Exit(0);
+                }
+
                 SelectedTarget.Items.Clear();
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                     SelectedTarget.Items.Add(Target.Name);
@@ -117,6 +123,12 @@ namespace OrbisTargetSettings
         public OrbisTargetSettings()
         {
             InitializeComponent();
+
+            if (PS4.TargetManagement.TargetList.Count <= 0) //TODO: Could add a "Add Target" Option instead and disable the other options.
+            {
+                DarkMessageBox.ShowError("Target list is empty nothing to show.", "Target List Empty", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
+                Environment.Exit(0);
+            }
 
             //Select the inital first member.
             SelectTarget(PS4.TargetManagement.TargetList[0].Name);

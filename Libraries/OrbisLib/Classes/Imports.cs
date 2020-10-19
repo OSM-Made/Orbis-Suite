@@ -206,6 +206,9 @@ namespace OrbisSuite.Classes
         [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int TestCommunications(string IPAddr);
 
+        [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SetupCPP(bool WinService);
+
         #endregion
     }
 }

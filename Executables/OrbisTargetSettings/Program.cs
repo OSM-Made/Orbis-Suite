@@ -16,9 +16,9 @@ namespace OrbisTargetSettings
         static void Main()
         {
             bool MutexCreated = true;
-            Mutex mutex = new Mutex(true, "{45FA8D0A-A56B-4D25-8F5D-6D2CBAD65309}", out MutexCreated);
+            Mutex mutex = new Mutex(true, "{45FA8D0A-A56B-4D25-8F5D-6D28BAD65309}", out MutexCreated);
 
-            if (!MutexCreated && mutex.WaitOne(TimeSpan.Zero, true))
+            if (MutexCreated && mutex.WaitOne(TimeSpan.Zero, true))
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

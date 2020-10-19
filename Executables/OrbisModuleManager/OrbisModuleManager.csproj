@@ -62,7 +62,8 @@
     <Reference Include="DarkUI">
       <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
     </Reference>
-    <Reference Include="OrbisLib">
+    <Reference Include="OrbisLib, Version=2.0.485.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace OrbisSuite.Classes
 {
@@ -38,6 +39,7 @@ namespace OrbisSuite.Classes
             }
         }
 
-        
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetDllDirectory(string lpPathName);
     }
 }

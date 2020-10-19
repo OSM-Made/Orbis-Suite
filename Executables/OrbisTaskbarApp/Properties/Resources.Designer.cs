@@ -123,9 +123,29 @@ namespace OrbisTaskbarApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap OrbisTaskbarApp_1907 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisTaskbarApp_1907", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap OrbisTaskbarApp_1908 {
             get {
                 object obj = ResourceManager.GetObject("OrbisTaskbarApp_1908", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OrbisTaskbarApp_3569 {
+            get {
+                object obj = ResourceManager.GetObject("OrbisTaskbarApp_3569", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

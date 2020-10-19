@@ -12,16 +12,31 @@ namespace OrbisSuite.Classes
 {
     public class Target
     {
+        public bool Active = false;
+        public TargetInfo Info;
+
         private OrbisLib PS4;
         public TargetEvents Events;
         public Debug Debug;
         public Payload Payload;
         public Process Process;
         public FTP FTP;
-        public TargetInfo Info;
+
+        public Target(OrbisLib PS4)
+        {
+            Active = false;
+            Info = new TargetInfo();
+            this.PS4 = PS4;
+            Events = new TargetEvents(this);
+            Debug = new Debug(this);
+            Payload = new Payload(this);
+            Process = new Process(PS4, this);
+            FTP = new FTP(this);
+        }
 
         public Target(OrbisLib PS4, TargetInfo TargetInfo)
         {
+            Active = true;
             Info = TargetInfo;
             this.PS4 = PS4;
             Events = new TargetEvents(this);

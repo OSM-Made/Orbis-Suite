@@ -158,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Orbis.ico" />
+    <None Include="Resources\OrbisTaskbarApp_1907.ico" />
+    <None Include="Resources\OrbisTaskbarApp_3569.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

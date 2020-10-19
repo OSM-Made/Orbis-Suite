@@ -138,6 +138,12 @@
     <Compile Include="Dialog\SelectProcess.Designer.cs">
       <DependentUpon>SelectProcess.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\SelectTarget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\SelectTarget.Designer.cs">
+      <DependentUpon>SelectTarget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\SelectProcess.resx">
       <DependentUpon>SelectProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\SelectTarget.resx">
+      <DependentUpon>SelectTarget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>

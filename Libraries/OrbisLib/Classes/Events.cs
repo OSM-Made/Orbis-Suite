@@ -135,61 +135,110 @@ namespace OrbisSuite
 
         internal void Target_PrintCallback(string IPAddr, int Type, int Len, string Data)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
+            PS4.SelectedTarget.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
         }
 
         internal void Proc_InterceptCallback(string IPAddr, int Reason, IntPtr Registers)
         {
-            
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
+            PS4.SelectedTarget.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
         }
 
         internal void Proc_ContinueCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcContinueEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseProcContinueEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcContinueEvent(IPAddr);
         }
 
         internal void Proc_DieCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcDieEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseProcDieEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcDieEvent(IPAddr);
         }
 
         internal void Proc_AttachCallback(string IPAddr, string NewProcName)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
+            PS4.SelectedTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
         }
 
         internal void Proc_DetachCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseProcDetachEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseProcDetachEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcDetachEvent(IPAddr);
         }
 
         internal void Target_SuspendCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseTargetSuspendEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseTargetSuspendEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetSuspendEvent(IPAddr);
         }
 
         internal void Target_ResumeCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseTargetResumeEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseTargetResumeEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetResumeEvent(IPAddr);
         }
 
         internal void Target_ShutdownCallback(string IPAddr)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseTargetShutdownEvent(IPAddr);
+            PS4.SelectedTarget.Events.RaiseTargetShutdownEvent(IPAddr);
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetShutdownEvent(IPAddr);
         }
 
         internal void Target_NewTitleCallback(string IPAddr, string TitleID)
         {
+            //Raise the event for the Default target and the Selected Target.
+            PS4.DefaultTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
+            PS4.SelectedTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
+
+            //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
         }

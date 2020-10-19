@@ -25,14 +25,6 @@ namespace OrbisModuleManager
             StatusLabel.Text = Val;
         }
 
-        private void ExecuteSecure(Action a)
-        {
-            if (InvokeRequired)
-                BeginInvoke(a);
-            else
-                a();
-        }
-
         public OrbisModuleManager()
         {
             InitializeComponent();
@@ -49,14 +41,17 @@ namespace OrbisModuleManager
             ModuleList.DefaultCellStyle.SelectionForeColor = Color.FromArgb(220, 220, 220);
 
             ModuleList.BackColor = Color.FromArgb(122, 128, 132);
+        }
 
+        private void OrbisModuleManager_Load(object sender, EventArgs e)
+        {
             //Load Stored Path
             SPRXDirectory.Text = Properties.Settings.Default.SPRXDirectory;
 
             //Register Events
-            PS4.DefaultTarget.Events.ProcAttach += Events_ProcAttach;
-            PS4.DefaultTarget.Events.ProcDetach += Events_ProcDetach;
-            PS4.DefaultTarget.Events.ProcDie += Events_ProcDie;
+            PS4.SelectedTarget.Events.ProcAttach += Events_ProcAttach;
+            PS4.SelectedTarget.Events.ProcDetach += Events_ProcDetach;
+            PS4.SelectedTarget.Events.ProcDie += Events_ProcDie;
             PS4.Events.TargetAvailable += Events_TargetAvailable;
             PS4.Events.DBTouched += Events_DBTouched;
 
@@ -114,14 +109,14 @@ namespace OrbisModuleManager
 
         private void Button_Attach_Click(object sender, EventArgs e)
         {
-            if (PS4.DefaultTarget.Info.Available)
-                PS4.DefaultTarget.Process.SelectProcess();
+            if (PS4.SelectedTarget.Info.Available)
+                PS4.SelectedTarget.Process.SelectProcess();
         }
 
         private void Button_Detach_Click(object sender, EventArgs e)
         {
-            if (PS4.DefaultTarget.Info.Available && PS4.DefaultTarget.Info.Attached)
-                PS4.DefaultTarget.Process.Detach();
+            if (PS4.SelectedTarget.Info.Available && PS4.SelectedTarget.Info.Attached)
+                PS4.SelectedTarget.Process.Detach();
         }
 
         #endregion
@@ -151,7 +146,7 @@ namespace OrbisModuleManager
                 {
                     //Enable Controls
                     Button_Detach.Enabled = true;
-                    CurrentProc.Text = string.Format("Process: {0}", PS4.DefaultTarget.Info.CurrentProc);
+                    CurrentProc.Text = string.Format("Process: {0}", PS4.SelectedTarget.Info.CurrentProc);
 
                     Button_Detach.Enabled = true;
 
@@ -249,56 +244,59 @@ namespace OrbisModuleManager
 
         public void UpdateTarget()
         {
-            try
+            Invoke((MethodInvoker)delegate
             {
-                if (PS4.TargetManagement.DoesDefaultTargetExist())
+                try
                 {
-                    if (PS4.DefaultTarget.Info.Available)
-                        EnableProgram(true, PS4.DefaultTarget.Info.Attached);
+                    if (PS4.SelectedTarget.Active)
+                    {
+                        if (PS4.SelectedTarget.Info.Available)
+                            EnableProgram(true, PS4.SelectedTarget.Info.Attached);
+                        else
+                            EnableProgram(false);
+
+                        CurrentTarget.Text = string.Format("Target: {0}", PS4.SelectedTarget.Info.Name);
+                    }
                     else
+                    {
+                        CurrentTarget.Text = "Target: N/A";
+                        CurrentProc.Text = "Process: N/A";
+                        Button_Detach.Enabled = false;
                         EnableProgram(false);
-
-                    CurrentTarget.Text = string.Format("Target: {0}", PS4.DefaultTarget.Info.Name);
+                    }
                 }
-                else
+                catch
                 {
-                    CurrentTarget.Text = "Target: N/A";
-                    CurrentProc.Text = "Process: N/A";
-                    Button_Detach.Enabled = false;
-                    EnableProgram(false);
-                }
-            }
-            catch
-            {
 
-            }
+                }
+            });
         }
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
         {
-            ExecuteSecure(() => UpdateTarget());
+            UpdateTarget();
         }
 
         private void Events_ProcDie(object sender, OrbisSuite.Classes.ProcDieEvent e)
         {
-            ExecuteSecure(() => UpdateTarget());
+            UpdateTarget();
         }
 
         private void Events_ProcDetach(object sender, OrbisSuite.Classes.ProcDetachEvent e)
         {
-            ExecuteSecure(() => UpdateTarget());
+            UpdateTarget();
         }
 
         private void Events_ProcAttach(object sender, OrbisSuite.Classes.ProcAttachEvent e)
         {
-            ExecuteSecure(() => UpdateTarget());
-            ExecuteSecure(() => UpdateModuleList());
+            UpdateTarget();
+            UpdateModuleList();
         }
 
         private void Events_TargetAvailable(object sender, TargetAvailableEvent e)
         {
-            if (e.TargetName.Equals(PS4.TargetManagement.DefaultTarget.Name))
-                ExecuteSecure(() => UpdateModuleList());
+            if (e.TargetName.Equals(PS4.SelectedTarget.Info.Name))
+                UpdateModuleList();
         }
 
         #endregion
@@ -307,47 +305,50 @@ namespace OrbisModuleManager
 
         public void UpdateModuleList()
         {
-            if (PS4.DefaultTarget.Process.Current.Attached == false)
-                return;
-
-            SetStatus("Updating List...");
-
-            try
+            Invoke((MethodInvoker)delegate
             {
-                int BackUpScroll = ModuleList.FirstDisplayedScrollingRowIndex;
+                if (PS4.SelectedTarget.Process.Current.Attached == false)
+                    return;
 
-                ModuleList.Rows.Clear();
+                SetStatus("Updating List...");
 
-                foreach (ModuleInfo Module in PS4.DefaultTarget.Process.ModuleList)
+                try
                 {
-                    object[] obj = { Module.Handle.ToString(), Module.Name, "0x" + Module.TextSegmentBase.ToString("X"), "0x" + Module.DataSegmentBase.ToString("X"), Utilities.SizeSuffix((long)(Module.TextSegmentLen + Module.DataSegmentLen)) };
-                    ModuleList.Rows.Add(obj);
+                    int BackUpScroll = ModuleList.FirstDisplayedScrollingRowIndex;
+
+                    ModuleList.Rows.Clear();
+
+                    foreach (ModuleInfo Module in PS4.SelectedTarget.Process.ModuleList)
+                    {
+                        object[] obj = { Module.Handle.ToString(), Module.Name, "0x" + Module.TextSegmentBase.ToString("X"), "0x" + Module.DataSegmentBase.ToString("X"), Utilities.SizeSuffix((long)(Module.TextSegmentLen + Module.DataSegmentLen)) };
+                        ModuleList.Rows.Add(obj);
+                    }
+
+                    if (ModuleList.Rows.Count <= 16)
+                    {
+                        darkScrollBar1.Minimum = 0;
+                        darkScrollBar1.Maximum = 100;
+                        darkScrollBar1.ViewSize = 99;
+
+                        darkScrollBar1.Enabled = false;
+                    }
+                    else
+                    {
+                        darkScrollBar1.Minimum = 0;
+                        darkScrollBar1.Maximum = ModuleList.Rows.Count;
+                        darkScrollBar1.ViewSize = 17;
+                        darkScrollBar1.Enabled = true;
+                    }
+
+                    ModuleList.FirstDisplayedScrollingRowIndex = BackUpScroll;
+                }
+                catch
+                {
+
                 }
 
-                if (ModuleList.Rows.Count <= 16)
-                {
-                    darkScrollBar1.Minimum = 0;
-                    darkScrollBar1.Maximum = 100;
-                    darkScrollBar1.ViewSize = 99;
-
-                    darkScrollBar1.Enabled = false;
-                }
-                else
-                {
-                    darkScrollBar1.Minimum = 0;
-                    darkScrollBar1.Maximum = ModuleList.Rows.Count;
-                    darkScrollBar1.ViewSize = 17;
-                    darkScrollBar1.Enabled = true;
-                }
-
-                ModuleList.FirstDisplayedScrollingRowIndex = BackUpScroll;
-            }
-            catch
-            {
-
-            }
-
-            SetStatus("Ready");
+                SetStatus("Ready");
+            });
         }
 
         private void ModuleList_Enter(object sender, EventArgs e)
@@ -404,7 +405,7 @@ namespace OrbisModuleManager
 
                     SetStatus("Unloading Module " + ModuleName + "...");
 
-                    int Result = PS4.DefaultTarget.Process.UnloadSPRX(ModuleHandle, 0);
+                    int Result = PS4.SelectedTarget.Process.UnloadSPRX(ModuleHandle, 0);
 
                     if (Result != 0)
                         DarkMessageBox.ShowError(string.Format("Result returned {0}.", Result.ToString()), "Module Failed to load.");
@@ -435,7 +436,7 @@ namespace OrbisModuleManager
 
                     SetStatus("Reloading Module " + ModuleName + "...");
 
-                    Int32 Handle = PS4.DefaultTarget.Process.ReloadSPRX(ModuleHandle, 0);
+                    Int32 Handle = PS4.SelectedTarget.Process.ReloadSPRX(ModuleHandle, 0);
 
                     if (Handle == 0)
                         DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to Reload.");
@@ -466,7 +467,7 @@ namespace OrbisModuleManager
 
                     SetStatus("Dumping Module " + ModuleName + "...");
 
-                    ModuleInfo Info = PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == ModuleName);
+                    ModuleInfo Info = PS4.SelectedTarget.Process.ModuleList.Find(x => x.Name == ModuleName);
 
                     int Length = (int)(Info.TextSegmentLen + Info.DataSegmentLen);
                     byte[] Buffer = new byte[Length];
@@ -475,7 +476,7 @@ namespace OrbisModuleManager
                     //If its module 0 thats the process so we want to dump the process else we dump a module.
                     if (ModuleHandle == 0)
                     {
-                        API_ERRORS Result = PS4.DefaultTarget.DumpProcess(ModuleName, Length, Buffer);
+                        API_ERRORS Result = PS4.SelectedTarget.DumpProcess(ModuleName, Length, Buffer);
                         if (Result != API_ERRORS.API_OK)
                         {
                             DarkMessageBox.ShowError(string.Format("Failed to Dump Process \"{0}\".\n{1}", ModuleName, OrbisDef.API_ERROR_STR[(int)Result]), "Error dumping module.");
@@ -485,7 +486,7 @@ namespace OrbisModuleManager
                     }
                     else
                     {
-                        API_ERRORS Result = PS4.DefaultTarget.Process.DumpModule(ModuleName, Length, Buffer);
+                        API_ERRORS Result = PS4.SelectedTarget.Process.DumpModule(ModuleName, Length, Buffer);
                         if (Result != API_ERRORS.API_OK)
                         {
                             DarkMessageBox.ShowError(string.Format("Failed to Dump Module \"{0}\".\n{1}", ModuleName, OrbisDef.API_ERROR_STR[(int)Result]), "Error dumping module.");
@@ -521,7 +522,7 @@ namespace OrbisModuleManager
         {
             SetStatus("ReLoading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
 
-            Int32 Handle = PS4.DefaultTarget.Process.ReloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
+            Int32 Handle = PS4.SelectedTarget.Process.ReloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
 
             if (Handle == 0)
                 DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to load.");
@@ -537,7 +538,7 @@ namespace OrbisModuleManager
         {
             SetStatus("UnLoading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
 
-            int Result = PS4.DefaultTarget.Process.UnloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
+            int Result = PS4.SelectedTarget.Process.UnloadSPRX(Path.GetFileName(SPRXDirectory.Text), 0);
 
             if(Result != 0)
                 DarkMessageBox.ShowError(string.Format("Result returned {0}.", Result.ToString()), "Module Failed to load.");
@@ -553,7 +554,7 @@ namespace OrbisModuleManager
         {
             SetStatus("Loading Module " + Path.GetFileName(SPRXDirectory.Text) + "...");
 
-            Int32 Handle = PS4.DefaultTarget.Process.LoadSPRX(SPRXDirectory.Text, 0);
+            Int32 Handle = PS4.SelectedTarget.Process.LoadSPRX(SPRXDirectory.Text, 0);
 
             if (Handle == 0)
                 DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to load.");
@@ -607,7 +608,7 @@ namespace OrbisModuleManager
             {
                 SetStatus("loading ELF...");
                 byte[] rawData = File.ReadAllBytes(ELFDirectory.Text);
-                PS4.DefaultTarget.Process.LoadELF(rawData, rawData.Length);
+                PS4.SelectedTarget.Process.LoadELF(rawData, rawData.Length);
                 SetStatus("Ready");
             }
             catch
@@ -639,7 +640,7 @@ namespace OrbisModuleManager
             node.ExpandedIcon = Properties.Resources.folder_16x;
             node.Icon = Properties.Resources.folder_Closed_16xLG;
 
-            List<FtpFileInfo> ChildFileList = PS4.DefaultTarget.FTP.GetDir($"{LastDir + FolderName}/");
+            List<FtpFileInfo> ChildFileList = PS4.SelectedTarget.FTP.GetDir($"{LastDir + FolderName}/");
             if (ChildFileList.Count > 1)
             {
                 node.NodeCountBypass = true;
@@ -661,7 +662,7 @@ namespace OrbisModuleManager
         {
             Parent.Nodes.Clear();
 
-            List<FtpFileInfo> FileList = PS4.DefaultTarget.FTP.GetDir(LastDir);
+            List<FtpFileInfo> FileList = PS4.SelectedTarget.FTP.GetDir(LastDir);
             foreach (FtpFileInfo Info in FileList)
             {
                 if (Info.FileName.Contains(".."))
@@ -674,52 +675,49 @@ namespace OrbisModuleManager
             }
         }
 
-        public void FetchFTP()
-        {
-            
-        }
-
         bool FetchingFTP = false;
         System.Threading.Thread hFTPThread;
         public void FTPThread()
         {
             try
             {
-                ExecuteSecure(() => FTPDataTree.Nodes.Clear());
-
-                List<FtpFileInfo> FileList = PS4.DefaultTarget.FTP.GetDir("/mnt/");
-
-                foreach (FtpFileInfo Info in FileList)
+                Invoke((MethodInvoker)delegate
                 {
-                    if (!Info.FileName.Contains("usb"))
-                        continue;
+                    FTPDataTree.Nodes.Clear();
+                    List<FtpFileInfo> FileList = PS4.SelectedTarget.FTP.GetDir("/mnt/");
 
-                    if (Info.Directory)
+                    foreach (FtpFileInfo Info in FileList)
                     {
-                        DarkTreeNode node = new DarkTreeNode(Info.FileName);
-                        node.ExpandedIcon = Properties.Resources.folder_16x;
-                        node.Icon = Properties.Resources.folder_Closed_16xLG;
+                        if (!Info.FileName.Contains("usb"))
+                            continue;
 
-                        List<FtpFileInfo> ChildFileList = PS4.DefaultTarget.FTP.GetDir($"/mnt/{Info.FileName}/");
-                        if (ChildFileList.Count > 1)
+                        if (Info.Directory)
                         {
-                            node.NodeCountBypass = true;
-                            node.NodeExpanded += Node_NodeExpanded;
+                            DarkTreeNode node = new DarkTreeNode(Info.FileName);
+                            node.ExpandedIcon = Properties.Resources.folder_16x;
+                            node.Icon = Properties.Resources.folder_Closed_16xLG;
+
+                            List<FtpFileInfo> ChildFileList = PS4.SelectedTarget.FTP.GetDir($"/mnt/{Info.FileName}/");
+                            if (ChildFileList.Count > 1)
+                            {
+                                node.NodeCountBypass = true;
+                                node.NodeExpanded += Node_NodeExpanded;
+                            }
+
+                            FTPDataTree.Nodes.Add(node);
                         }
-
-                        ExecuteSecure(() => FTPDataTree.Nodes.Add(node));
+                        else
+                        {
+                            DarkTreeNode node = new DarkTreeNode(Info.FileName);
+                            node.Icon = Properties.Resources.document_16xLG;
+                            node.ExpandedIcon = null;
+                            FTPDataTree.Nodes.Add(node);
+                        }
                     }
-                    else
-                    {
-                        DarkTreeNode node = new DarkTreeNode(Info.FileName);
-                        node.Icon = Properties.Resources.document_16xLG;
-                        node.ExpandedIcon = null;
-                        ExecuteSecure(() => FTPDataTree.Nodes.Add(node));
-                    }
-                }
 
-                ExecuteSecure(() => SetStatus("Ready"));
-                FetchingFTP = false;
+                    SetStatus("Ready");
+                    FetchingFTP = false;
+                });
             }
             catch
             {
@@ -761,7 +759,7 @@ namespace OrbisModuleManager
                 {
                     SetStatus("Loading Module " + Path.GetFileName(FilePath) + "...");
 
-                    Int32 Handle = PS4.DefaultTarget.Process.LoadSPRX(FilePath, 0);
+                    Int32 Handle = PS4.SelectedTarget.Process.LoadSPRX(FilePath, 0);
 
                     if (Handle == 0)
                         DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to load.");
@@ -790,12 +788,12 @@ namespace OrbisModuleManager
                     DarkMessageBox.ShowError("This file is not an sprx module and can not be Reloaded...", "File not sprx module!");
                 else
                 {
-                    if (PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
+                    if (PS4.SelectedTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
                         DarkMessageBox.ShowError("This module couldnt be unloaded as it is not loaded.", "Module not loaded.");
                     {
                         SetStatus("UnLoading Module " + Path.GetFileName(FilePath) + "...");
 
-                        int Result = PS4.DefaultTarget.Process.UnloadSPRX(Path.GetFileName(FilePath), 0);
+                        int Result = PS4.SelectedTarget.Process.UnloadSPRX(Path.GetFileName(FilePath), 0);
 
                         if (Result != 0)
                             DarkMessageBox.ShowError("Failed to unload the module.", "Module Failed to Unload.");
@@ -825,12 +823,12 @@ namespace OrbisModuleManager
                     DarkMessageBox.ShowError("This file is not an sprx module and can not be Reloaded...", "File not sprx module!");
                 else
                 {
-                    if(PS4.DefaultTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
+                    if(PS4.SelectedTarget.Process.ModuleList.Find(x => x.Name == Path.GetFileName(FilePath)) == null)
                         DarkMessageBox.ShowError("This module couldnt be reloaded as it is not loaded.", "Module not loaded.");
                     {
                         SetStatus("ReLoading Module " + Path.GetFileName(FilePath) + "...");
 
-                        Int32 Handle = PS4.DefaultTarget.Process.ReloadSPRX(Path.GetFileName(FilePath), 0);
+                        Int32 Handle = PS4.SelectedTarget.Process.ReloadSPRX(Path.GetFileName(FilePath), 0);
 
                         if (Handle == 0)
                             DarkMessageBox.ShowError("Handle returned 0.", "Module Failed to Reload.");
@@ -861,5 +859,6 @@ namespace OrbisModuleManager
         }
 
         #endregion
+
     }
 }

@@ -22,7 +22,6 @@ namespace nsOrbisNeighborhood
 
             if (MutexCreated && mutex.WaitOne(TimeSpan.Zero, true))
             {
-                Console.WriteLine("New Instance");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new OrbisNeighborhood());

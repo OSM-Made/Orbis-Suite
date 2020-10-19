@@ -90,29 +90,65 @@ namespace OrbisTaskbarApp
             ExecuteSecure(() => UpdateTargetList());
         }
 
+        public static int LastTargetCount;
         public void UpdateTargetList()
         {
             try
             {
-                int Count = 0;
+                //if(PS4.TargetManagement.TargetList.Count != PS4.TargetManagement.TargetList.Count)
                 DarkContextMenu_ConsoleList.Items.Clear();
-                foreach(TargetInfo Target in PS4.TargetManagement.TargetList)
-                {
-                    DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
 
-                    if (Target.Default)
+                //Only Update the list when there is a target to store.
+                if (PS4.TargetManagement.TargetList.Count > 0)
+                {
+                    int Count = 0;
+                    //If new count we need to clear so we can remove what was removed.
+
+
+                    foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                     {
-                        ((ToolStripMenuItem)DarkContextMenu_ConsoleList.Items[Count]).Checked = true;
-                        ToolStrip_TargetList.Text = "Default Target: " + Target.Name;
+                        DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
+
+                        if (Target.Default)
+                        {
+                            ((ToolStripMenuItem)DarkContextMenu_ConsoleList.Items[Count]).Checked = true;
+                            ToolStrip_TargetList.Text = "Default Target: " + Target.Name;
+                        }
+
+                        Count++;
                     }
 
-                    Count++;
+                    LastTargetCount = PS4.TargetManagement.TargetList.Count;
                 }
-
-                if (PS4.DefaultTarget.Info.Available)
-                    ToolStrip_SendOrbisPayload.Enabled = false;
                 else
-                    ToolStrip_SendOrbisPayload.Enabled = true;
+                    ToolStrip_TargetList.Text = "Default Target: N/A";
+
+                if (PS4.DefaultTarget.Active)
+                {
+                    ToolStrip_Reboot.Enabled = true;
+                    ToolStrip_Shutdown.Enabled = true;
+                    ToolStrip_Suspend.Enabled = true;
+
+                    ToolStrip_SendPayload.Enabled = true;
+                    if (PS4.DefaultTarget.Info.Available)
+                        ToolStrip_SendOrbisPayload.Enabled = false;
+                    else
+                        ToolStrip_SendOrbisPayload.Enabled = true;
+
+                    TargetSettings_Launcher.Enabled = true;
+                }
+                else
+                {
+                    
+                    ToolStrip_Reboot.Enabled = false;
+                    ToolStrip_Shutdown.Enabled = false;
+                    ToolStrip_Suspend.Enabled = false;
+
+                    ToolStrip_SendPayload.Enabled = false;
+                    ToolStrip_SendOrbisPayload.Enabled = false;
+
+                    TargetSettings_Launcher.Enabled = false;
+                }
             }
             catch
             {

@@ -59,6 +59,11 @@ namespace OrbisSuite.Classes
             this.Attached = Attached;
             this.CurrentProc = CurrentProc;
         }
+
+        public TargetInfo()
+        {
+
+        }
     }
 
     public class ProcessInfo
