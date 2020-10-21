@@ -57,7 +57,7 @@ bool FileIO::FileWrite(const char* File, char* Data, int Size)
 	}
 
 	DWORD writeSize = Size;
-	if (WriteFile(fHandle, Data, Size, &writeSize, NULL) != true) {
+	if (!WriteFile(fHandle, Data, Size, &writeSize, NULL)) {
 		CloseHandle(fHandle);
 		return false;
 	}
@@ -66,7 +66,7 @@ bool FileIO::FileWrite(const char* File, char* Data, int Size)
 	return true;
 }
 
-bool FileIO::FileRead(const char* File, char* Data, int Size)
+bool FileIO::FileRead(const char* File, char* Data, int64_t Size)
 {
 	HANDLE fHandle = CreateFile(File, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (fHandle == INVALID_HANDLE_VALUE) {

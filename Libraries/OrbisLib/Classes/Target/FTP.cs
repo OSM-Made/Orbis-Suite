@@ -18,6 +18,52 @@ namespace OrbisSuite
             this.Target = Target;
         }
 
+        public bool SendFile(string LocalFilePath, string RemoteFilePath)
+        {
+            try
+            {
+                //Set our host to connect to and remote file path. Connect using the anonymous anonymous creds.
+                FtpWebRequest ftp = (FtpWebRequest)FtpWebRequest.Create($"ftp://{ Target.Info.IPAddr }:6904/{RemoteFilePath}");
+                ftp.Credentials = new NetworkCredential("anonymous", "anonymous");
+
+                ftp.UseBinary = true;
+                ftp.UsePassive = true;
+                ftp.KeepAlive = false;
+
+                //Were using the FTP request upload.
+                ftp.Method = WebRequestMethods.Ftp.UploadFile;
+
+                //Get the response from the remote host.
+                Stream ftpStream = ftp.GetRequestStream();
+
+                //local file stream to read the file to the upload.
+                FileStream localFileStream = new FileStream(LocalFilePath, FileMode.Open);
+
+                int BufferSize = 2048;
+                byte[] byteBuffer = new byte[BufferSize];
+                int bytesSent = localFileStream.Read(byteBuffer, 0, BufferSize);
+
+                //try sending the file. 2048 bytes at a time.
+                try
+                {
+                    while (bytesSent != 0)
+                    {
+                        ftpStream.Write(byteBuffer, 0, bytesSent);
+                        bytesSent = localFileStream.Read(byteBuffer, 0, BufferSize);
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine(ex.ToString()); return false; }
+
+                //clean up.
+                localFileStream.Close();
+                ftpStream.Close();
+                ftp = null;
+
+                return true;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.ToString()); return false; }
+        }
+
         public static Regex FtpListDirectoryDetailsRegex = new Regex(@".*(?<month>(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\s*(?<day>[0-9]*)\s*(?<yearTime>([0-9]|:)*)\s*(?<fileName>.*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         public List<FtpFileInfo> GetDir(string Dir)
         {

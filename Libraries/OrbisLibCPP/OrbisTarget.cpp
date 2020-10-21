@@ -44,7 +44,7 @@ int OrbisTarget::SendPayload(char* IPAddr, int Firmware, short Port)
 	Sleep(2000);
 
 	//Send the payload.
-	if (!Socket->Send(PayloadData, FileSize))
+	if (!Socket->Send(PayloadData, (int)FileSize))
 	{
 		printf("Failed to Send Payload.\n");
 
