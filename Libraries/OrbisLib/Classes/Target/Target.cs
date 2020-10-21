@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrbisSuite.Classes
+namespace OrbisSuite
 {
     public class Target
     {
@@ -58,12 +58,6 @@ namespace OrbisSuite.Classes
 
         public bool Delete()
         {
-            if (PS4.TargetManagement.DefaultTarget.Name.Equals(Info.Name))
-            {
-                DarkMessageBox.ShowError($"{Info.Name} is the Default Target and cant be deleted.", "Cant Delete Default Target");
-                return false;
-            }
-
             return Imports.TargetManagement.DeleteTarget(Info.Name);
         }
 

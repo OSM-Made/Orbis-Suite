@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrbisModuleManager));
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
-            this.CurrentTarget = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.CurrentProc = new System.Windows.Forms.ToolStripLabel();
             this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -83,6 +82,8 @@
             this.MenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
+            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
+            this.SelectTargetButton = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStrip1.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
             this.darkSectionPanel4.SuspendLayout();
@@ -120,14 +121,6 @@
             this.darkToolStrip1.TabIndex = 3;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
-            // CurrentTarget
-            // 
-            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentTarget.Name = "CurrentTarget";
-            this.CurrentTarget.Size = new System.Drawing.Size(67, 25);
-            this.CurrentTarget.Text = "Target: N/A";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -148,6 +141,7 @@
             // 
             this.Settings_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.Settings_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SelectTargetButton,
             this.SettingsButton,
             this.About_Button});
             this.Settings_DropDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -161,7 +155,7 @@
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(116, 22);
+            this.SettingsButton.Size = new System.Drawing.Size(180, 22);
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
@@ -169,7 +163,7 @@
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.About_Button.Name = "About_Button";
-            this.About_Button.Size = new System.Drawing.Size(116, 22);
+            this.About_Button.Size = new System.Drawing.Size(180, 22);
             this.About_Button.Text = "About";
             this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
             // 
@@ -525,6 +519,7 @@
             this.ModuleList.Location = new System.Drawing.Point(1, 25);
             this.ModuleList.MultiSelect = false;
             this.ModuleList.Name = "ModuleList";
+            this.ModuleList.ReadOnly = true;
             this.ModuleList.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ModuleList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.ModuleList.RowHeadersVisible = false;
@@ -576,6 +571,7 @@
             this.mSize.FillWeight = 85F;
             this.mSize.HeaderText = "Size";
             this.mSize.Name = "mSize";
+            this.mSize.ReadOnly = true;
             this.mSize.Width = 85;
             // 
             // EditModule
@@ -661,6 +657,25 @@
             this.darkTitle1.TabIndex = 0;
             this.darkTitle1.Text = "Module List";
             // 
+            // CurrentTarget
+            // 
+            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
+            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurrentTarget.Name = "CurrentTarget";
+            this.CurrentTarget.Size = new System.Drawing.Size(80, 25);
+            this.CurrentTarget.Text = "Target: N/A";
+            // 
+            // SelectTargetButton
+            // 
+            this.SelectTargetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SelectTargetButton.Name = "SelectTargetButton";
+            this.SelectTargetButton.Size = new System.Drawing.Size(180, 22);
+            this.SelectTargetButton.Text = "Select Target";
+            this.SelectTargetButton.Click += new System.EventHandler(this.SelectTargetButton_Click);
+            // 
             // OrbisModuleManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,7 +718,6 @@
         #endregion
 
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
-        private System.Windows.Forms.ToolStripLabel CurrentTarget;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel CurrentProc;
         private System.Windows.Forms.ToolStripButton Button_Attach;
@@ -756,6 +770,8 @@
         private System.Windows.Forms.ToolStripMenuItem FTPStrip_UnloadModule;
         private System.Windows.Forms.ToolStripMenuItem FTPStrip_ReloadModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripDropDownButton CurrentTarget;
+        private System.Windows.Forms.ToolStripMenuItem SelectTargetButton;
     }
 }
 

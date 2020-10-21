@@ -9,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OrbisSuite;
-using static OrbisSuite.Classes.Target;
-using OrbisSuite.Classes;
 using System.IO;
 
 namespace nsOrbisNeighborhood
@@ -135,17 +133,27 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                if(TargetList.Rows.Count > PS4.TargetManagement.GetTargetCount())
+                if(TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
+
+                if(CurrentTarget.DropDownItems.Count != PS4.TargetManagement.GetTargetCount())
+                    CurrentTarget.DropDownItems.Clear();
 
                 int LoopCount = 0;
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
+                    //Set up the Target list
                     object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
-                    if (TargetList.Rows.Count <= LoopCount) //todo redo for contains.
+                    if (TargetList.Rows.Count <= LoopCount)
                         TargetList.Rows.Add(obj);
                     else
                         TargetList.Rows[LoopCount].SetValues(obj);
+
+                    //Set up the selection list
+                    if (CurrentTarget.DropDownItems.Count <= LoopCount)
+                        CurrentTarget.DropDownItems.Add(Target.Name, null, CurrentTarget_Click);
+                    else
+                        CurrentTarget.DropDownItems[LoopCount].Text = Target.Name;
 
                     LoopCount++;
                 }
@@ -183,6 +191,21 @@ namespace nsOrbisNeighborhood
             }
 
             SetStatus("Ready");
+        }
+
+        private void CurrentTarget_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string SelectedTarget = ((ToolStripMenuItem)sender).Text;
+                CurrentTarget.Text = "Target: " + SelectedTarget;
+                PS4.TargetManagement.SetSelected(SelectedTarget);
+                UpdateTargetList();
+            }
+            catch
+            {
+
+            }
         }
 
         public void UpdateSettings()
@@ -244,6 +267,12 @@ namespace nsOrbisNeighborhood
         {
             if (PS4.Dialogs.AddTarget() == DialogResult.OK)
                 UpdateTargetList();
+        }
+
+        private void SelectTargetButton_Click(object sender, EventArgs e)
+        {
+            PS4.Dialogs.SelectTarget();
+            UpdateTargetList();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)

@@ -15,6 +15,8 @@ public:
 	OrbisTarget(OrbisLib* OrbisLib);
 	~OrbisTarget();
 
+	int SendPayload(char* IPAddr, int Firmware, short Port);
+
 	//API Calls
 	int GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo);
 	int Shutdown(char* IPAddr);

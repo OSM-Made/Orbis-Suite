@@ -1,5 +1,4 @@
 ﻿using DarkUI.Forms;
-using OrbisSuite.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,8 +57,8 @@ namespace OrbisSuite.Dialog
         {
             Settings Settings = new Settings(PS4);
             Settings.StartPosition = startPosition;
-            System.Windows.Forms.DialogResult Result = Settings.ShowDialog();
-            if (Result == System.Windows.Forms.DialogResult.OK)
+            DialogResult Result = Settings.ShowDialog();
+            if (Result == DialogResult.OK)
                 Settings.SaveSettings();
             Settings.Close();
             return Result;
@@ -69,12 +68,25 @@ namespace OrbisSuite.Dialog
         {
             SelectProcess SelectProcess = new SelectProcess(PS4, TargetName);
             SelectProcess.StartPosition = startPosition;
-            System.Windows.Forms.DialogResult Result = SelectProcess.ShowDialog();
+            DialogResult Result = SelectProcess.ShowDialog();
 
-            if(Result == System.Windows.Forms.DialogResult.OK)
+            if(Result == DialogResult.OK)
                 SelectProcess.AttachtoSelected();
 
             SelectProcess.Close();
+            return Result;
+        }
+
+        public DialogResult SelectTarget(FormStartPosition startPosition = FormStartPosition.CenterParent)
+        {
+            SelectTarget SelectTarget = new SelectTarget(PS4);
+            SelectTarget.StartPosition = startPosition;
+            DialogResult Result = SelectTarget.ShowDialog();
+
+            if (Result == DialogResult.OK)
+                SelectTarget.SelectCurrentTarget();
+
+            SelectTarget.Close();
             return Result;
         }
     }

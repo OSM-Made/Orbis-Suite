@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OrbisSuite.Classes
+namespace OrbisSuite
 {
     public class TargetEvents
     {

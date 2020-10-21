@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using DarkUI.Forms;
-using OrbisSuite.Classes;
 using OrbisSuite.Dialog;
 
 namespace OrbisSuite
@@ -61,6 +60,11 @@ namespace OrbisSuite
                 TargetInfo TargetInfo;
                 if ((TargetInfo = TargetManagement.TargetList.Find(x => x.Name == internal_SelectedTarget.Info.Name)) != null)
                     internal_SelectedTarget.Active = true;
+                else if(DefaultTarget.Active)
+                {
+                    internal_SelectedTarget.Info = DefaultTarget.Info;
+                    internal_SelectedTarget.Active = true;
+                }
                 else
                     internal_SelectedTarget.Active = false;
 
@@ -96,13 +100,13 @@ namespace OrbisSuite
         private TargetManagement Internal_TargetManagement;
         public TargetManagement TargetManagement
         {
-            get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement()); }
+            get { return Internal_TargetManagement ?? (Internal_TargetManagement = new TargetManagement(this)); }
         }
 
-        private Classes.Settings Internal_Settings;
-        public Classes.Settings Settings
+        private Settings Internal_Settings;
+        public Settings Settings
         {
-            get { return Internal_Settings ?? (Internal_Settings = new Classes.Settings(this)); }
+            get { return Internal_Settings ?? (Internal_Settings = new Settings(this)); }
         }
 
         private Dialogs Internal_Dialogs;
@@ -134,13 +138,6 @@ namespace OrbisSuite
                 //Set up selected target as default target initially.
                 SelectedTarget.Info = DefaultTarget.Info;
 
-                //if (DefaultTarget == null)
-                //{
-                //    DarkMessageBox.ShowError("Please add a default target First.", "Default Target Required.", DarkDialogButton.Ok, FormStartPosition.CenterScreen);
-                //    Dialogs.AddTarget(FormStartPosition.CenterScreen);
-                //    if (DefaultTarget == null)
-                //        Environment.Exit(0);
-                //}
             }
             catch
             {

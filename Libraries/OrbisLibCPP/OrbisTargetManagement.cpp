@@ -7,16 +7,15 @@ OrbisTargetManagement::OrbisTargetManagement(OrbisLib* orbisLib)
 	this->orbisLib = orbisLib;
 
 	//Get the file path for the DB
-	char AppdataBuffer[0x100];
-	size_t requiredSize = sizeof(AppdataBuffer);
-	getenv_s(&requiredSize, (char*)&AppdataBuffer, requiredSize, "PROGRAMDATA");
+	size_t requiredSize = sizeof(ProgramDataBuffer);
+	getenv_s(&requiredSize, (char*)&ProgramDataBuffer, requiredSize, "PROGRAMDATA");
 
 	//Set the file perms on the folder.
-	sprintf_s(this->DBPath, "%s\\Orbis Suite\\", AppdataBuffer);
+	sprintf_s(this->DBPath, "%s\\Orbis Suite\\", ProgramDataBuffer);
 	SetFilePerms(this->DBPath);
 
 	//Set the DB Path and perms on the db
-	sprintf_s(this->DBPath, "%s\\Orbis Suite\\OrbisSuiteUserData", AppdataBuffer);
+	sprintf_s(this->DBPath, "%s\\Orbis Suite\\OrbisSuiteUserData", ProgramDataBuffer);
 	SetFilePerms(this->DBPath);
 
 	//Populate structures on startup.
@@ -293,7 +292,7 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Targets set TargetName=?, IPAddress=?, Firmware=?, PayloadPort=? WHERE TargetName=?", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "UPDATE Targets set DefaultTarget=?, TargetName=?, IPAddress=?, Firmware=?, PayloadPort=? WHERE TargetName=?", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -302,7 +301,16 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 1, In.Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_int(stmt, 1, In.Default);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Default: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 2, In.Name, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind TargetName: %s\n", sqlite3_errmsg(db));
@@ -311,7 +319,7 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 2, In.IPAddr, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 3, In.IPAddr, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind IPAddress: %s\n", sqlite3_errmsg(db));
@@ -320,7 +328,7 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 3, In.Firmware);
+	rc = sqlite3_bind_int(stmt, 4, In.Firmware);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Firmware: %s\n", sqlite3_errmsg(db));
@@ -329,7 +337,7 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 4, In.PayloadPort);
+	rc = sqlite3_bind_int(stmt, 5, In.PayloadPort);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind PayloadPort: %s\n", sqlite3_errmsg(db));
@@ -338,7 +346,7 @@ bool OrbisTargetManagement::SetTarget(const char* TargetName, DB_TargetInfo In)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 5, TargetName, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 6, TargetName, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind OldTargetName: %s\n", sqlite3_errmsg(db));
@@ -600,13 +608,6 @@ bool OrbisTargetManagement::DeleteTarget(const char* TargetName)
 	if (!DoesTargetExist(TargetName))
 	{
 		printf("Target \"%s\" doesn't exist in Targets Table.\n", TargetName);
-
-		return false;
-	}
-
-	if (!strcmp(orbisLib->Settings->DefaultTarget.Name, TargetName))
-	{
-		printf("Can't Delete Default target.");
 
 		return false;
 	}

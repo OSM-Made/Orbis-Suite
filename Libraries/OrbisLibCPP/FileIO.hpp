@@ -12,7 +12,7 @@ public:
 	static bool DirectoryCreate(const char* Directory);
 	static bool FileWrite(const char* File, char* Data, int Size);
 	static bool FileRead(const char* File, char* Data, int Size);
-
+	static int64_t FileSize(const char* File);
 private:
 
 };

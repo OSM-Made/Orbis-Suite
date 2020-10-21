@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OrbisSuite.Classes
+namespace OrbisSuite
 {
     public class FTP
     {

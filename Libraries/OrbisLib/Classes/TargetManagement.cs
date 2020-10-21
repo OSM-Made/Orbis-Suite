@@ -6,13 +6,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrbisSuite.Classes
+namespace OrbisSuite
 {
     public class TargetManagement
     {
-        public TargetManagement()
+        OrbisLib PS4;
+        public TargetManagement(OrbisLib PS4)
         {
-
+            this.PS4 = PS4;
         }
 
         private TargetInfo _DefaultTarget;
@@ -119,12 +120,6 @@ namespace OrbisSuite.Classes
 
         public bool DeleteTarget(string TargetName)
         {
-            if(TargetName.Equals(DefaultTarget.Name))
-            {
-                DarkMessageBox.ShowError($"{TargetName} is the Default Target and cant be deleted.", "Cant Delete Default Target");
-                return false;
-            }
-
             return Imports.TargetManagement.DeleteTarget(TargetName);
         }
 
@@ -141,6 +136,13 @@ namespace OrbisSuite.Classes
         public void SetDefault(string TargetName)
         {
             Imports.TargetManagement.SetDefault(TargetName);
+        }
+
+        public void SetSelected(string TargetName)
+        {
+            TargetInfo Info;
+            if (GetTarget(TargetName, out Info))
+                PS4.SelectedTarget.Info = Info;
         }
 
         public DetailedTargetInfo GetInfo(string TargetName)

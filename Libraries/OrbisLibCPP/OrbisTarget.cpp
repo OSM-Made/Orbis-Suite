@@ -13,6 +13,54 @@ OrbisTarget::~OrbisTarget()
 
 }
 
+int OrbisTarget::SendPayload(char* IPAddr, int Firmware, short Port)
+{
+	Sockets* Socket = new Sockets(IPAddr, Port);
+
+	if (!Socket->Connect()) {
+		Socket->Close();
+		return API_ERROR_FAILED_TO_CONNNECT;
+	}
+
+	//Get the file path for the correct payload.
+	char FilePath[MAX_PATH];
+	sprintf_s(FilePath, "%s\\Orbis Suite\\OrbisLib-%d.bin", orbisLib->TargetManagement->ProgramDataBuffer, Firmware);
+
+	//Get the size of the file and allocate heap space to read it.
+	int64_t FileSize = FileIO::FileSize(FilePath);
+	char* PayloadData = (char*)malloc(FileSize);
+
+	//Read the payload data from the disk.
+	if (!FileIO::FileRead(FilePath, PayloadData, FileSize))
+	{
+		printf("Failed to read Payload from HDD. %s\n", FilePath);
+
+		Socket->Close();
+		free(PayloadData);
+
+		return API_ERROR_FAIL;
+	}
+
+	Sleep(2000);
+
+	//Send the payload.
+	if (!Socket->Send(PayloadData, FileSize))
+	{
+		printf("Failed to Send Payload.\n");
+
+		Socket->Close();
+		free(PayloadData);
+
+		return API_ERROR_FAIL;
+	}
+
+	//clean up and return success.
+	Socket->Close();
+	free(PayloadData);
+
+	return API_OK;
+}
+
 int OrbisTarget::GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
 {
 	int Status = API_OK;

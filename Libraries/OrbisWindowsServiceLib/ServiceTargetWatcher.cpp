@@ -40,6 +40,9 @@ void ServiceTargetWatcher::WatcherChildThread(int index)
 
 			LastTargetValue[index] = false;
 		}
+
+		if(orbisLib->Settings->AutoLoadPayload)
+			orbisLib->Target->SendPayload(orbisLib->TargetManagement->Targets[index].IPAddr, orbisLib->TargetManagement->Targets[index].Firmware, orbisLib->TargetManagement->Targets[index].PayloadPort);
 	}
 }
 

@@ -1,5 +1,4 @@
 ﻿using DarkUI.Forms;
-using OrbisSuite.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -64,6 +63,8 @@ namespace OrbisSuite.Dialog
             }
 
             IsDefaultTarget = targetInfo.Default;
+
+            PayloadPort.Text = targetInfo.PayloadPort.ToString();
         }
 
         private void Button_Cancel_Click(object sender, EventArgs e)

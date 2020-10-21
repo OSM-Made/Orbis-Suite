@@ -1,5 +1,4 @@
-﻿using OrbisSuite.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -140,7 +139,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
         }
 
@@ -151,7 +150,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcInterceptEvent(IPAddr, Reason, Registers);
         }
 
@@ -162,7 +161,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcContinueEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcContinueEvent(IPAddr);
         }
 
@@ -173,7 +172,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcDieEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcDieEvent(IPAddr);
         }
 
@@ -184,7 +183,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
         }
 
@@ -195,7 +194,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseProcDetachEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseProcDetachEvent(IPAddr);
         }
 
@@ -206,7 +205,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseTargetSuspendEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetSuspendEvent(IPAddr);
         }
 
@@ -217,7 +216,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseTargetResumeEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetResumeEvent(IPAddr);
         }
 
@@ -228,7 +227,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseTargetShutdownEvent(IPAddr);
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetShutdownEvent(IPAddr);
         }
 
@@ -239,7 +238,7 @@ namespace OrbisSuite
             PS4.SelectedTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
 
             //Raise the event for all the conosles in the target list.
-            foreach (KeyValuePair<string, Classes.Target> Target in PS4.Target)
+            foreach (KeyValuePair<string, Target> Target in PS4.Target)
                 Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
         }
 

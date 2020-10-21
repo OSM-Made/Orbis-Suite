@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrbisSuite.Classes
+namespace OrbisSuite
 {
     public class Payload
     {

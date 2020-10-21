@@ -169,6 +169,8 @@
     <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
       <Link>OrbisLibCPP.dll</Link>
     </Content>
+    <None Include="Resources\NotDefault.ico" />
+    <None Include="Resources\Default.ico" />
     <None Include="Resources\Process_Detached.png" />
     <None Include="Resources\Process_Attached.png" />
   </ItemGroup>

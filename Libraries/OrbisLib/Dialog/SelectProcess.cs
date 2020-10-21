@@ -1,5 +1,4 @@
 ﻿using DarkUI.Forms;
-using OrbisSuite.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +16,6 @@ namespace OrbisSuite.Dialog
     {
         public string SelectedProcess { get; set; }
         public OrbisLib PS4;
-        bool ShouldStopThreads = false;
         public string TargetName;
 
         private void ExecuteSecure(Action a)
@@ -40,7 +38,8 @@ namespace OrbisSuite.Dialog
                     ProcessList.Rows.Add(obj);
                 }
 
-                if (ProcessList.Rows.Count <= 16)
+                //The number of rows is less than or equal to the number displayed on screen.
+                if (ProcessList.Rows.Count <= 17) //Diables the scroll bar
                 {
                     darkScrollBar1.Minimum = 0;
                     darkScrollBar1.Maximum = 100;
@@ -48,7 +47,7 @@ namespace OrbisSuite.Dialog
 
                     darkScrollBar1.Enabled = false;
                 }
-                else
+                else //enables the scroll bar
                 {
                     darkScrollBar1.Minimum = 0;
                     darkScrollBar1.Maximum = ProcessList.Rows.Count;
@@ -112,24 +111,11 @@ namespace OrbisSuite.Dialog
 
         private void SelectProcess_Load(object sender, EventArgs e)
         {
-            //Setup Scroll Bar
-            darkScrollBar1.Minimum = 0;
-            darkScrollBar1.Maximum = 100;
-            darkScrollBar1.ViewSize = 99;
-            darkScrollBar1.Enabled = false;
-
-            //Checking Scroll
-            hScrollThread = new Thread(() => ScrollThread());
-            hScrollThread.IsBackground = true;
-            hScrollThread.Start();
-
             LoadProcList();
         }
 
         private void SelectProcess_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ShouldStopThreads = true;
-
             PS4.Target[TargetName].Events.ProcDetach -= Events_ProcDetach;
             PS4.Target[TargetName].Events.ProcAttach -= Events_ProcAttach;
             PS4.Target[TargetName].Events.ProcDie -= Events_ProcDie;
@@ -140,26 +126,6 @@ namespace OrbisSuite.Dialog
             {
                 int index = ProcessList.SelectedRows[0].Index;
                 SelectedProcess = Convert.ToString(ProcessList.Rows[index].Cells["ProcName"].Value);
-            }
-        }
-
-        bool LockThread = false;
-        public int SrollVal = 0;
-        System.Threading.Thread hScrollThread;
-        void ScrollThread()
-        {
-            while (!ShouldStopThreads)
-            {
-                if (!LockThread)
-                {
-                    if (SrollVal != darkScrollBar1.Value)
-                    {
-                        ExecuteSecure(() => ProcessList.FirstDisplayedScrollingRowIndex = darkScrollBar1.Value);
-                        //Console.WriteLine(darkScrollBar1.Value);
-                    }
-                }
-
-                Thread.Sleep(10);
             }
         }
 
@@ -193,13 +159,27 @@ namespace OrbisSuite.Dialog
 
         private void ProcessList_Scroll(object sender, ScrollEventArgs e)
         {
-            LockThread = true;
-            //Console.WriteLine(e.NewValue);
-            SrollVal = e.NewValue;
-            darkScrollBar1.ScrollTo(e.NewValue);
-            darkScrollBar1.UpdateScrollBar();
+            try
+            {
+                darkScrollBar1.ScrollTo(e.NewValue);
+                darkScrollBar1.UpdateScrollBar();
+            }
+            catch
+            {
 
-            LockThread = false;
+            }
+        }
+
+        private void darkScrollBar1_ValueChanged(object sender, DarkUI.Controls.ScrollValueEventArgs e)
+        {
+            try
+            {
+                ProcessList.FirstDisplayedScrollingRowIndex = e.Value;
+            }
+            catch
+            {
+
+            }
         }
 
         public void AttachtoSelected()

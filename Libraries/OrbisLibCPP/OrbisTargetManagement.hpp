@@ -19,6 +19,8 @@ public:
 	OrbisTargetManagement(OrbisLib* orbisLib);
 	~OrbisTargetManagement();
 
+	char ProgramDataBuffer[0x100];
+
 	DB_TargetInfo Targets[MAX_TARGETS];
 	int TargetCount;
 

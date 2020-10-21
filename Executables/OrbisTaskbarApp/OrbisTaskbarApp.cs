@@ -1,6 +1,5 @@
 ﻿using DarkUI.Forms;
 using OrbisSuite;
-using OrbisSuite.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,19 +94,21 @@ namespace OrbisTaskbarApp
         {
             try
             {
-                //if(PS4.TargetManagement.TargetList.Count != PS4.TargetManagement.TargetList.Count)
-                DarkContextMenu_ConsoleList.Items.Clear();
+                //If new count we need to clear so we can remove what was removed.
+                if (DarkContextMenu_ConsoleList.Items.Count != PS4.TargetManagement.TargetList.Count)
+                    DarkContextMenu_ConsoleList.Items.Clear();
 
                 //Only Update the list when there is a target to store.
                 if (PS4.TargetManagement.TargetList.Count > 0)
                 {
                     int Count = 0;
-                    //If new count we need to clear so we can remove what was removed.
-
 
                     foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                     {
-                        DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
+                        if (DarkContextMenu_ConsoleList.Items.Count <= Count)
+                            DarkContextMenu_ConsoleList.Items[Count].Text = Target.Name;
+                        else
+                            DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
 
                         if (Target.Default)
                         {

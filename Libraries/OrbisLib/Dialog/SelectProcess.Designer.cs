@@ -78,6 +78,7 @@
             this.darkScrollBar1.TabIndex = 11;
             this.darkScrollBar1.Text = "darkScrollBar1";
             this.darkScrollBar1.ViewSize = 20;
+            this.darkScrollBar1.ValueChanged += new System.EventHandler<DarkUI.Controls.ScrollValueEventArgs>(this.darkScrollBar1_ValueChanged);
             // 
             // ProcessList
             // 
@@ -101,6 +102,7 @@
             this.ProcessList.Location = new System.Drawing.Point(1, 25);
             this.ProcessList.MultiSelect = false;
             this.ProcessList.Name = "ProcessList";
+            this.ProcessList.ReadOnly = true;
             this.ProcessList.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ProcessList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.ProcessList.RowHeadersVisible = false;
@@ -149,6 +151,7 @@
             this.Attached.HeaderText = "Attached";
             this.Attached.MinimumWidth = 60;
             this.Attached.Name = "Attached";
+            this.Attached.ReadOnly = true;
             this.Attached.Width = 60;
             // 
             // darkSectionPanel1

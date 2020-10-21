@@ -69,17 +69,18 @@
             this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.AutoLoadPayload_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.LoadOnBoot_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
-            this.CurrentTarget = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.CurrentProc = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.Button_Attach = new System.Windows.Forms.ToolStripButton();
             this.Button_Detach = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.AddTarget_Button = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.CurrentProc = new System.Windows.Forms.ToolStripLabel();
+            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
+            this.SelectTargetButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.TargetList)).BeginInit();
             this.TargetContextMenu.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
@@ -142,6 +143,7 @@
             this.TargetList.Location = new System.Drawing.Point(0, 33);
             this.TargetList.MultiSelect = false;
             this.TargetList.Name = "TargetList";
+            this.TargetList.ReadOnly = true;
             this.TargetList.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.TargetList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.TargetList.RowHeadersVisible = false;
@@ -157,6 +159,7 @@
             this.mDefault.HeaderText = "Default";
             this.mDefault.MinimumWidth = 50;
             this.mDefault.Name = "mDefault";
+            this.mDefault.ReadOnly = true;
             this.mDefault.Width = 50;
             // 
             // mTargetName
@@ -189,29 +192,35 @@
             // mStatus
             // 
             this.mStatus.HeaderText = "Status";
+            this.mStatus.MinimumWidth = 100;
             this.mStatus.Name = "mStatus";
+            this.mStatus.ReadOnly = true;
             // 
             // mTitle
             // 
             this.mTitle.HeaderText = "Title";
             this.mTitle.Name = "mTitle";
+            this.mTitle.ReadOnly = true;
             // 
             // mSDKVersion
             // 
             this.mSDKVersion.HeaderText = "SDK Version";
             this.mSDKVersion.Name = "mSDKVersion";
+            this.mSDKVersion.ReadOnly = true;
             // 
             // mConsoleName
             // 
             this.mConsoleName.HeaderText = "Console Name";
             this.mConsoleName.MinimumWidth = 162;
             this.mConsoleName.Name = "mConsoleName";
+            this.mConsoleName.ReadOnly = true;
             this.mConsoleName.Width = 162;
             // 
             // mConsoleType
             // 
             this.mConsoleType.HeaderText = "Console Type";
             this.mConsoleType.Name = "mConsoleType";
+            this.mConsoleType.ReadOnly = true;
             // 
             // TargetContextMenu
             // 
@@ -434,7 +443,8 @@
             this.Settings_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AutoLoadPayload_Button,
             this.LoadOnBoot_Button,
-            this.toolStripSeparator6,
+            this.toolStripSeparator3,
+            this.SelectTargetButton,
             this.SettingsButton,
             this.About_Button});
             this.Settings_DropDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -460,13 +470,6 @@
             this.LoadOnBoot_Button.Text = "Load Orbis Suite on boot";
             this.LoadOnBoot_Button.Click += new System.EventHandler(this.LoadOnBoot_Button_Click);
             // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
-            // 
             // SettingsButton
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -483,39 +486,12 @@
             this.About_Button.Text = "About";
             this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
             // 
-            // AddTarget_Button
+            // toolStripSeparator8
             // 
-            this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.AddTarget_Button.Image = ((System.Drawing.Image)(resources.GetObject("AddTarget_Button.Image")));
-            this.AddTarget_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.AddTarget_Button.Name = "AddTarget_Button";
-            this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
-            this.AddTarget_Button.Text = "Add Target";
-            this.AddTarget_Button.Click += new System.EventHandler(this.AddTarget_Button_Click);
-            // 
-            // CurrentTarget
-            // 
-            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentTarget.Name = "CurrentTarget";
-            this.CurrentTarget.Size = new System.Drawing.Size(67, 25);
-            this.CurrentTarget.Text = "Target: N/A";
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 28);
-            // 
-            // CurrentProc
-            // 
-            this.CurrentProc.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CurrentProc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentProc.Name = "CurrentProc";
-            this.CurrentProc.Size = new System.Drawing.Size(75, 25);
-            this.CurrentProc.Text = "Process: N/A";
+            this.toolStripSeparator8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 28);
             // 
             // Button_Attach
             // 
@@ -541,19 +517,64 @@
             this.Button_Detach.Text = "Detach";
             this.Button_Detach.Click += new System.EventHandler(this.Button_Detach_Click);
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 28);
-            // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator9.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 28);
+            // 
+            // AddTarget_Button
+            // 
+            this.AddTarget_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.AddTarget_Button.Image = ((System.Drawing.Image)(resources.GetObject("AddTarget_Button.Image")));
+            this.AddTarget_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddTarget_Button.Name = "AddTarget_Button";
+            this.AddTarget_Button.Size = new System.Drawing.Size(84, 25);
+            this.AddTarget_Button.Text = "Add Target";
+            this.AddTarget_Button.Click += new System.EventHandler(this.AddTarget_Button_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 28);
+            // 
+            // CurrentProc
+            // 
+            this.CurrentProc.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentProc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentProc.Name = "CurrentProc";
+            this.CurrentProc.Size = new System.Drawing.Size(75, 25);
+            this.CurrentProc.Text = "Process: N/A";
+            // 
+            // CurrentTarget
+            // 
+            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
+            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurrentTarget.Name = "CurrentTarget";
+            this.CurrentTarget.Size = new System.Drawing.Size(80, 25);
+            this.CurrentTarget.Text = "Target: N/A";
+            // 
+            // SelectTargetButton
+            // 
+            this.SelectTargetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SelectTargetButton.Name = "SelectTargetButton";
+            this.SelectTargetButton.Size = new System.Drawing.Size(205, 22);
+            this.SelectTargetButton.Text = "Select Target";
+            this.SelectTargetButton.Click += new System.EventHandler(this.SelectTargetButton_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // OrbisNeighborhood
             // 
@@ -596,15 +617,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel7;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel8;
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
-        private System.Windows.Forms.DataGridViewImageColumn mDefault;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mTargetName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mFirmware;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mIPAddress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mSDKVersion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleType;
         private System.Windows.Forms.ToolStripButton AddTarget_Button;
         private DarkUI.Controls.DarkContextMenu TargetContextMenu;
         private System.Windows.Forms.ToolStripMenuItem SendOrbisPayload;
@@ -620,10 +632,8 @@
         private System.Windows.Forms.ToolStripDropDownButton Settings_DropDown;
         private System.Windows.Forms.ToolStripMenuItem AutoLoadPayload_Button;
         private System.Windows.Forms.ToolStripMenuItem LoadOnBoot_Button;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem About_Button;
         private System.Windows.Forms.ToolStripMenuItem SettingsButton;
-        private System.Windows.Forms.ToolStripLabel CurrentTarget;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripLabel CurrentProc;
         private System.Windows.Forms.ToolStripMenuItem SendPayload;
@@ -631,6 +641,18 @@
         private System.Windows.Forms.ToolStripButton Button_Attach;
         private System.Windows.Forms.ToolStripButton Button_Detach;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.DataGridViewImageColumn mDefault;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mTargetName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mFirmware;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mIPAddress;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mSDKVersion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mConsoleType;
+        private System.Windows.Forms.ToolStripDropDownButton CurrentTarget;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem SelectTargetButton;
     }
 }
 

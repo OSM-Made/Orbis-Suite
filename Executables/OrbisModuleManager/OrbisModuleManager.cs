@@ -1,7 +1,6 @@
 ﻿using DarkUI.Controls;
 using DarkUI.Forms;
 using OrbisSuite;
-using OrbisSuite.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -96,6 +95,12 @@ namespace OrbisModuleManager
         #endregion
 
         #region Tool Strip
+
+        private void SelectTargetButton_Click(object sender, EventArgs e)
+        {
+            PS4.Dialogs.SelectTarget();
+            UpdateTarget();
+        }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
@@ -248,6 +253,22 @@ namespace OrbisModuleManager
             {
                 try
                 {
+                    //Clear the list when the count changes.
+                    if (CurrentTarget.DropDownItems.Count != PS4.TargetManagement.GetTargetCount())
+                        CurrentTarget.DropDownItems.Clear();
+
+                    int LoopCount = 0;
+                    foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
+                    {
+                        //Set up the selection list
+                        if (CurrentTarget.DropDownItems.Count <= LoopCount)
+                            CurrentTarget.DropDownItems.Add(Target.Name, null, CurrentTarget_Click);
+                        else
+                            CurrentTarget.DropDownItems[LoopCount].Text = Target.Name;
+
+                        LoopCount++;
+                    }
+
                     if (PS4.SelectedTarget.Active)
                     {
                         if (PS4.SelectedTarget.Info.Available)
@@ -272,22 +293,37 @@ namespace OrbisModuleManager
             });
         }
 
+        private void CurrentTarget_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string SelectedTarget = ((ToolStripMenuItem)sender).Text;
+                CurrentTarget.Text = "Target: " + SelectedTarget;
+                PS4.TargetManagement.SetSelected(SelectedTarget);
+                UpdateTarget();
+            }
+            catch
+            {
+
+            }
+        }
+
         private void Events_DBTouched(object sender, DBTouchedEvent e)
         {
             UpdateTarget();
         }
 
-        private void Events_ProcDie(object sender, OrbisSuite.Classes.ProcDieEvent e)
+        private void Events_ProcDie(object sender, ProcDieEvent e)
         {
             UpdateTarget();
         }
 
-        private void Events_ProcDetach(object sender, OrbisSuite.Classes.ProcDetachEvent e)
+        private void Events_ProcDetach(object sender, ProcDetachEvent e)
         {
             UpdateTarget();
         }
 
-        private void Events_ProcAttach(object sender, OrbisSuite.Classes.ProcAttachEvent e)
+        private void Events_ProcAttach(object sender, ProcAttachEvent e)
         {
             UpdateTarget();
             UpdateModuleList();
