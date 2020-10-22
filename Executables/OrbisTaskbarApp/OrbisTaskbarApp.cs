@@ -106,9 +106,9 @@ namespace OrbisTaskbarApp
                     foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                     {
                         if (DarkContextMenu_ConsoleList.Items.Count <= Count)
-                            DarkContextMenu_ConsoleList.Items[Count].Text = Target.Name;
-                        else
                             DarkContextMenu_ConsoleList.Items.Add(Target.Name, null, ConsoleList_Click);
+                        else
+                            DarkContextMenu_ConsoleList.Items[Count].Text = Target.Name;
 
                         if (Target.Default)
                         {

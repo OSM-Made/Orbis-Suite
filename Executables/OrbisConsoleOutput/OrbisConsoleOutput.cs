@@ -1,21 +1,20 @@
 ﻿using DarkUI.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using OrbisSuite;
+using OrbisConsoleOutput.Controls;
 
 namespace OrbisConsoleOutput
 {
     public partial class OrbisConsoleOutput : DarkForm
     {
+        OrbisLib PS4 = new OrbisLib();
+
         public OrbisConsoleOutput()
         {
             InitializeComponent();
+
+            MainDockPanel.AddContent(new OutputControl(PS4, "OrbisLib"));
+            MainDockPanel.AddContent(new OutputControl(PS4, "Test2"));
+            MainDockPanel.AddContent(new OutputControl(PS4, "Frost_Engine.sprx"));
         }
 
         /*

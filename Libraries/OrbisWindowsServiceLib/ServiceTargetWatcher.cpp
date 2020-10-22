@@ -60,7 +60,6 @@ DWORD WINAPI StartChildThread(LPVOID ptr)
 
 void ServiceTargetWatcher::WatcherThread()
 {
-
 	while (this->ServiceRunning)
 	{
 		int TargetCount = orbisLib->TargetManagement->GetTargetCount();

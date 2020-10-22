@@ -82,7 +82,7 @@
     <Exec Command="copy &quot;..\Executables\OrbisTargetSettings.exe&quot; &quot;Assets\Program Files x64\OrbisTargetSettings.exe&quot;" />
     <Exec Command="copy &quot;..\Executables\OrbisTaskbarApp.exe&quot; &quot;Assets\Program Files x64\OrbisTaskbarApp.exe&quot;" />
     <!-- <Exec Command="copy &quot;..\Executables\OrbisDebugger.exe&quot; &quot;Assets\Program Files x64\OrbisDebugger.exe&quot;"/> -->
-    <!-- <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;"/> -->
+    <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;"/>
     <!-- <Exec Command="copy &quot;..\Executables\OrbisConsoleOutput.exe&quot; &quot;Assets\Program Files x64\OrbisConsoleOutput.exe&quot;"/> -->
     <!-- Copy all the scripts to the directories -->
     <Exec Command="copy &quot;..\Scripts\make_fself.py&quot; &quot;Assets\Program Data\make_fself.py&quot;" />

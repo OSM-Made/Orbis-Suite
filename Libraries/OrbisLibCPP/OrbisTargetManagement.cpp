@@ -902,7 +902,7 @@ int OrbisTargetManagement::GetTargetCount()
 	{
 		printf("Failed to open database: %s\n", sqlite3_errmsg(db));
 
-		return false;
+		return 0;
 	}
 
 	sqlite3_stmt *stmt;
@@ -912,14 +912,12 @@ int OrbisTargetManagement::GetTargetCount()
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
 
 		sqlite3_close(db);
-		return false;
+		return 0;
 	}
 
 	rc = sqlite3_step(stmt);
 	if (rc != SQLITE_ERROR)
 		Count = sqlite3_column_int(stmt, 0);
-	else
-		printf("Failed to read row: %s\n", sqlite3_errmsg(db));
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);

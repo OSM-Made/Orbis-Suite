@@ -182,11 +182,14 @@ namespace OrbisSuite
 
         public API_ERRORS DumpModule(string Name, int Length, byte[] Out)
         {
+            //allocate un managed memory to get module.
             IntPtr ptr = Marshal.AllocHGlobal(Length);
 
+            //Call to the api to send dump
             int RealLength = 0;
             API_ERRORS Result = Imports.Process.DumpModule(Target.Info.IPAddr, Name, out RealLength, ptr);
 
+            //copy the data out of unmanaged to managed memory.
             Marshal.Copy(ptr, Out, 0, Length);
 
             //free unmanageed memory.
@@ -219,8 +222,6 @@ namespace OrbisSuite
                     //Convert the unmanaged memory into a easy to digest structure. Increment the pointer of memory to the nex struct in the array.
                     RESP_ModuleList ModuleInfo = (RESP_ModuleList)Marshal.PtrToStructure(ptr, typeof(RESP_ModuleList));
                     ptr += Marshal.SizeOf(typeof(RESP_ModuleList));
-
-                    Console.WriteLine($"{ModuleInfo.Handle} {Utilities.CleanByteToString(ModuleInfo.Path)}");
 
                     _ModuleList.Add(new ModuleInfo(
                             Path.GetFileName(Utilities.CleanByteToString(ModuleInfo.Path)),

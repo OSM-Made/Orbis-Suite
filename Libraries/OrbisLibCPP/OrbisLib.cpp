@@ -3,7 +3,8 @@
 
 OrbisLib::OrbisLib()
 {
-	printf("Initializing Classes...\n");
+	//printf("Initializing Classes...\n");
+
 	//Initialize Classes
 	this->Proc = new OrbisProc(this);
 	this->Target = new OrbisTarget(this);
@@ -13,7 +14,7 @@ OrbisLib::OrbisLib()
 	this->TargetManagement = new OrbisTargetManagement(this);
 
 	//Since we need to use this dll in the windows service we need to add a check
-	if(!IsWinService)
+	if(!NoInstance)
 		this->Service = new OrbisService(this);
 
 	//Set the default OrbisLib Port.
@@ -31,7 +32,7 @@ OrbisLib::~OrbisLib()
 	delete this->Settings;
 	delete this->TargetManagement;
 
-	if (!IsWinService)
+	if (!NoInstance)
 		delete this->Service;
 }
 

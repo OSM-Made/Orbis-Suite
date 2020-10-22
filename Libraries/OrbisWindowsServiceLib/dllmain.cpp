@@ -118,6 +118,8 @@ extern "C" __declspec(dllexport) void StartLib()
 
 extern "C" __declspec(dllexport) void StopLib()
 {
+	printf("StopLib Called!!!\n");
+
 	ServiceRunning = false;
 
 	//Clean up
@@ -143,6 +145,7 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 		break;
 
 	case DLL_PROCESS_DETACH:
+		printf("DLL_PROCESS_DETACH\n");
 		break;
 
 	case DLL_THREAD_ATTACH:

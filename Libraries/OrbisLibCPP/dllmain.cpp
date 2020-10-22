@@ -370,14 +370,20 @@ extern "C" __declspec(dllexport) void SetWordWrap(bool Value)
 
 #pragma endregion
 
-extern "C"  __declspec(dllexport) void SetupCPP(bool WinService)
+extern "C"  __declspec(dllexport) void SetupCPP(bool bNoInstance)
 {
-	EnableDebugLogs();
+	if (!bNoInstance)
+	{
+#ifndef _DEBUG
+		EnableDebugLogs();
+#endif
 
-	printf("OrbisLib Loading...\n");
-
-	IsWinService = WinService;
-	orbisLib = new OrbisLib();}
+		printf("OrbisLib Loading...\n");
+	}
+		
+	NoInstance = bNoInstance;
+	orbisLib = new OrbisLib();
+}
 
 extern "C" __declspec(dllexport) void DestroyCPP()
 {
@@ -392,7 +398,10 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 		m_hInstance = hModule;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
+		break;
     case DLL_PROCESS_DETACH:
+		if(orbisLib)
+			delete orbisLib;
         break;
     }
     return TRUE;

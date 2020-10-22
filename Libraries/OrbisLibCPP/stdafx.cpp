@@ -1,4 +1,4 @@
 #include "stdafx.hpp"
 
-bool IsWinService = false;
+bool NoInstance = false;
 HMODULE m_hInstance = 0;

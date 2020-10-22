@@ -23,20 +23,13 @@ namespace OrbisSuite
                 if (Internal_DefaultTarget == null)
                     Internal_DefaultTarget = new Target(this);
 
-                //Need to Get the default Target.
                 bool FoundDefaultTarget = false;
                 foreach (TargetInfo TargetInfo in TargetManagement.TargetList)
                 {
-                    if (Internal_Targets.ContainsKey(TargetInfo.Name))
-                        Internal_Targets[TargetInfo.Name].Info = TargetInfo;
-                    else
-                        Internal_Targets.Add(TargetInfo.Name, new Target(this, TargetInfo));
-
-                    if (TargetInfo.Default)
+                    if(TargetInfo.Default)
                     {
-                        Internal_DefaultTarget = Internal_Targets[TargetInfo.Name];
+                        Internal_DefaultTarget.Info = TargetInfo;
                         FoundDefaultTarget = true;
-                        break;
                     }
                 }
 
@@ -59,7 +52,10 @@ namespace OrbisSuite
 
                 TargetInfo TargetInfo;
                 if ((TargetInfo = TargetManagement.TargetList.Find(x => x.Name == internal_SelectedTarget.Info.Name)) != null)
+                {
+                    TargetManagement.GetTarget(internal_SelectedTarget.Info.Name, out internal_SelectedTarget.Info);
                     internal_SelectedTarget.Active = true;
+                }
                 else if(DefaultTarget.Active)
                 {
                     internal_SelectedTarget.Info = DefaultTarget.Info;
@@ -117,7 +113,7 @@ namespace OrbisSuite
 
         #endregion
 
-        public OrbisLib()
+        public OrbisLib(bool NoInstance = false)
         {
             try
             {
@@ -133,9 +129,10 @@ namespace OrbisSuite
                 Utilities.SetDllDirectory(OrbisLib_Dir);
 
                 //Set up our instance of the OrbisLibCPP.dll.
-                Imports.SetupCPP(false);
+                Imports.SetupCPP(NoInstance);
 
                 //Set up selected target as default target initially.
+                internal_SelectedTarget = new Target(this);
                 SelectedTarget.Info = DefaultTarget.Info;
 
             }

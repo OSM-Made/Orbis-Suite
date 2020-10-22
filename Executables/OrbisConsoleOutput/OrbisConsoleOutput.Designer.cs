@@ -46,6 +46,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.MainDockPanel = new DarkUI.Docking.DarkDockPanel();
             this.darkStatusStrip1.SuspendLayout();
             this.darkToolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -155,14 +156,14 @@
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(180, 22);
+            this.SettingsButton.Size = new System.Drawing.Size(116, 22);
             this.SettingsButton.Text = "Settings";
             // 
             // About_Button
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.About_Button.Name = "About_Button";
-            this.About_Button.Size = new System.Drawing.Size(180, 22);
+            this.About_Button.Size = new System.Drawing.Size(116, 22);
             this.About_Button.Text = "About";
             // 
             // toolStripSeparator8
@@ -221,11 +222,21 @@
             this.toolStripButton2.Size = new System.Drawing.Size(55, 25);
             this.toolStripButton2.Text = "Clear All";
             // 
+            // MainDockPanel
+            // 
+            this.MainDockPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.MainDockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainDockPanel.Location = new System.Drawing.Point(0, 30);
+            this.MainDockPanel.Name = "MainDockPanel";
+            this.MainDockPanel.Size = new System.Drawing.Size(988, 490);
+            this.MainDockPanel.TabIndex = 7;
+            // 
             // OrbisConsoleOutput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 550);
+            this.Controls.Add(this.MainDockPanel);
             this.Controls.Add(this.darkToolStrip1);
             this.Controls.Add(this.darkStatusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -258,6 +269,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private DarkUI.Docking.DarkDockPanel MainDockPanel;
     }
 }
 

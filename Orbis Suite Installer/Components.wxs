@@ -19,6 +19,9 @@
         <File Id="OrbisOutput" Name="OrbisOutput.config" Source="$(var.ProjectDir)Assets\Program Data\" />
 
         <!--Install Payloads-->
+        <!-- <File Id="Payload176" Name="OrbisLib-176.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
+        <!-- <File Id="Payload405" Name="OrbisLib-405.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
+        <!-- <File Id="Payload455" Name="OrbisLib-455.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
         <File Id="Payload505" Name="OrbisLib-505.bin" Source="$(var.ProjectDir)Assets\Program Data\" />
         <File Id="Payload672" Name="OrbisLib-672.bin" Source="$(var.ProjectDir)Assets\Program Data\" />
         <!-- <File Id="Payload702" Name="OrbisLib-702.bin" Source="$(var.ProjectDir)Assets\Program Data\" /> -->
@@ -34,7 +37,7 @@
         <File Id="OrbisTargetSettings" Name="OrbisTargetSettings.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <File Id="OrbisNeighborhood" Name="OrbisNeighborhood.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <!-- <File Id="OrbisDebugger" Name="OrbisDebugger.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" /> -->
-        <!-- <File Id="OrbisSPRXHelper" Name="OrbisSPRXHelper.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" /> -->
+        <File Id="OrbisSPRXHelper" Name="OrbisSPRXHelper.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <!-- <File Id="OrbisConsoleOutput" Name="OrbisConsoleOutput.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" /> -->
 
         <!-- Add Reference dll -->

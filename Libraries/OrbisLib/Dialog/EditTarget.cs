@@ -17,7 +17,6 @@ namespace OrbisSuite.Dialog
         private OrbisLib PS4;
         string OriginalTargetName;
         string OriginalIPAddr;
-        bool IsDefaultTarget;
 
         public EditTarget(OrbisLib PS4, string TargetName)
         {
@@ -30,8 +29,7 @@ namespace OrbisSuite.Dialog
             OriginalTargetName = TargetName;
 
             //get the target information we want to edit
-            TargetInfo targetInfo;
-            PS4.TargetManagement.GetTarget(TargetName, out targetInfo);
+            PS4.TargetManagement.GetTarget(TargetName, out TargetInfo targetInfo);
 
             //Bacl up the IP for db test.
             OriginalIPAddr = targetInfo.IPAddr;
@@ -62,7 +60,7 @@ namespace OrbisSuite.Dialog
                     break;
             }
 
-            IsDefaultTarget = targetInfo.Default;
+            DefaultTarget.Checked = targetInfo.Default;
 
             PayloadPort.Text = targetInfo.PayloadPort.ToString();
         }
@@ -74,8 +72,7 @@ namespace OrbisSuite.Dialog
 
         private void Button_SaveTarget_Click(object sender, EventArgs e)
         {
-            IPAddress IPAddr;
-            if (!IPAddress.TryParse(TargetIPAddress.Text, out IPAddr))
+            if (!IPAddress.TryParse(TargetIPAddress.Text, out IPAddress IPAddr))
             {
                 DarkMessageBox.ShowError("A valid IP Address must be entered!", "Invalid Target IP Address");
                 return;
@@ -119,7 +116,7 @@ namespace OrbisSuite.Dialog
             else if (TargetFW702.Checked)
                 Firmware = 702;
 
-            if(PS4.TargetManagement.SetTarget(OriginalTargetName, IsDefaultTarget, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
+            if(PS4.TargetManagement.SetTarget(OriginalTargetName, DefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             else
                 DarkMessageBox.ShowError("An unknown error caused the target to not be saved. Please try again.", "Failed to save target.");

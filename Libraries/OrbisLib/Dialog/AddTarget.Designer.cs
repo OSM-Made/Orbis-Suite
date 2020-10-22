@@ -150,6 +150,7 @@
             this.TargetFW505.Name = "TargetFW505";
             this.TargetFW505.Size = new System.Drawing.Size(46, 17);
             this.TargetFW505.TabIndex = 2;
+            this.TargetFW505.TabStop = true;
             this.TargetFW505.Text = "5.05";
             // 
             // TargetFW672
@@ -238,7 +239,7 @@
             this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.PayloadPort.Location = new System.Drawing.Point(138, 23);
-            this.PayloadPort.MaxLength = 2;
+            this.PayloadPort.MaxLength = 4;
             this.PayloadPort.Name = "PayloadPort";
             this.PayloadPort.Size = new System.Drawing.Size(111, 20);
             this.PayloadPort.TabIndex = 3;

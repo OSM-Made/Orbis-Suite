@@ -512,7 +512,9 @@ namespace OrbisModuleManager
                     //If its module 0 thats the process so we want to dump the process else we dump a module.
                     if (ModuleHandle == 0)
                     {
-                        API_ERRORS Result = PS4.SelectedTarget.DumpProcess(ModuleName, Length, Buffer);
+                        API_ERRORS Result = PS4.SelectedTarget.Process.DumpModule(ModuleName, Length, Buffer);
+                        //API_ERRORS Result = PS4.SelectedTarget.DumpProcess(ModuleName, Length, Buffer);
+                        ModuleName = $"{PS4.SelectedTarget.Process.Current.TitleID}-{ModuleName}";
                         if (Result != API_ERRORS.API_OK)
                         {
                             DarkMessageBox.ShowError(string.Format("Failed to Dump Process \"{0}\".\n{1}", ModuleName, OrbisDef.API_ERROR_STR[(int)Result]), "Error dumping module.");
@@ -531,8 +533,11 @@ namespace OrbisModuleManager
                         }
                     }
 
+                    //Create the Orbis Suite Directory in Documents.
+                    Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Orbis Suite\\");
+
                     //Write the file some where.
-                    FilePath = string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), Utilities.IndexedFilename(Path.GetFileNameWithoutExtension(ModuleName) + "-Dump", Path.GetExtension(ModuleName)));
+                    FilePath = string.Format(@"{0}\Orbis Suite\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Utilities.IndexedFilename(Path.GetFileNameWithoutExtension(ModuleName) + "-Dump", Path.GetExtension(ModuleName)));
                     using (FileStream fs = File.OpenWrite(FilePath))
                         fs.Write(Buffer, 0, (int)Length);
 

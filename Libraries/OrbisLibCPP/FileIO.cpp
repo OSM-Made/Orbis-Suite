@@ -74,7 +74,7 @@ bool FileIO::FileRead(const char* File, char* Data, int64_t Size)
 	}
 
 	DWORD dwNumberOfBytesRead = 0;
-	if (!ReadFile(fHandle, Data, Size, &dwNumberOfBytesRead, NULL)) {
+	if (!ReadFile(fHandle, Data, (int)Size, &dwNumberOfBytesRead, NULL)) {
 		CloseHandle(fHandle);
 		return false;
 	}

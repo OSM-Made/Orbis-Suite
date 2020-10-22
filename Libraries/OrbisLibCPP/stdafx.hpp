@@ -39,5 +39,5 @@ using namespace std;
 #include "OrbisTargetManagement.hpp"
 #include "OrbisSettings.hpp"
 
-extern bool IsWinService;
+extern bool NoInstance;
 extern HMODULE m_hInstance;

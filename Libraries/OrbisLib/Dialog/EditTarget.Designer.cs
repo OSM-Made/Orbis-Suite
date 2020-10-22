@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditTarget));
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.PayloadPort = new DarkUI.Controls.DarkTextBox();
-            this.darkTitle1 = new DarkUI.Controls.DarkTitle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.darkTitle2 = new DarkUI.Controls.DarkTitle();
             this.TargetIPAddress = new DarkUI.Controls.DarkTextBox();
@@ -48,43 +45,16 @@
             this.darkTitle4 = new DarkUI.Controls.DarkTitle();
             this.Button_SaveTarget = new DarkUI.Controls.DarkButton();
             this.Button_Cancel = new DarkUI.Controls.DarkButton();
-            this.panel2.SuspendLayout();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.PayloadPort = new DarkUI.Controls.DarkTextBox();
+            this.darkTitle5 = new DarkUI.Controls.DarkTitle();
+            this.darkTitle1 = new DarkUI.Controls.DarkTitle();
+            this.DefaultTarget = new DarkUI.Controls.DarkCheckBox();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel2
-            // 
-            this.panel2.AutoSize = true;
-            this.panel2.Controls.Add(this.PayloadPort);
-            this.panel2.Controls.Add(this.darkTitle1);
-            this.panel2.Location = new System.Drawing.Point(10, 220);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.panel2.Size = new System.Drawing.Size(252, 56);
-            this.panel2.TabIndex = 3;
-            // 
-            // PayloadPort
-            // 
-            this.PayloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.PayloadPort.Location = new System.Drawing.Point(3, 23);
-            this.PayloadPort.MaxLength = 5;
-            this.PayloadPort.Name = "PayloadPort";
-            this.PayloadPort.Size = new System.Drawing.Size(111, 20);
-            this.PayloadPort.TabIndex = 1;
-            this.PayloadPort.Text = "9020";
-            this.PayloadPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PayloadPort_KeyPress);
-            // 
-            // darkTitle1
-            // 
-            this.darkTitle1.Location = new System.Drawing.Point(0, 0);
-            this.darkTitle1.Name = "darkTitle1";
-            this.darkTitle1.Size = new System.Drawing.Size(116, 20);
-            this.darkTitle1.TabIndex = 0;
-            this.darkTitle1.Text = "PayloadPort";
             // 
             // panel1
             // 
@@ -254,6 +224,56 @@
             this.Button_Cancel.Text = "Cancel";
             this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
             // 
+            // panel2
+            // 
+            this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.DefaultTarget);
+            this.panel2.Controls.Add(this.PayloadPort);
+            this.panel2.Controls.Add(this.darkTitle5);
+            this.panel2.Controls.Add(this.darkTitle1);
+            this.panel2.Location = new System.Drawing.Point(10, 217);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.panel2.Size = new System.Drawing.Size(252, 56);
+            this.panel2.TabIndex = 6;
+            // 
+            // PayloadPort
+            // 
+            this.PayloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.PayloadPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PayloadPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.PayloadPort.Location = new System.Drawing.Point(138, 23);
+            this.PayloadPort.MaxLength = 4;
+            this.PayloadPort.Name = "PayloadPort";
+            this.PayloadPort.Size = new System.Drawing.Size(111, 20);
+            this.PayloadPort.TabIndex = 3;
+            this.PayloadPort.Text = "9020";
+            // 
+            // darkTitle5
+            // 
+            this.darkTitle5.Location = new System.Drawing.Point(138, 0);
+            this.darkTitle5.Name = "darkTitle5";
+            this.darkTitle5.Size = new System.Drawing.Size(111, 20);
+            this.darkTitle5.TabIndex = 19;
+            this.darkTitle5.Text = "Payload Port";
+            // 
+            // darkTitle1
+            // 
+            this.darkTitle1.Location = new System.Drawing.Point(0, 0);
+            this.darkTitle1.Name = "darkTitle1";
+            this.darkTitle1.Size = new System.Drawing.Size(133, 20);
+            this.darkTitle1.TabIndex = 15;
+            this.darkTitle1.Text = "Default Target";
+            // 
+            // DefaultTarget
+            // 
+            this.DefaultTarget.AutoSize = true;
+            this.DefaultTarget.Location = new System.Drawing.Point(3, 24);
+            this.DefaultTarget.Name = "DefaultTarget";
+            this.DefaultTarget.Size = new System.Drawing.Size(130, 17);
+            this.DefaultTarget.TabIndex = 20;
+            this.DefaultTarget.Text = "Use as Default Target";
+            // 
             // EditTarget
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,22 +290,20 @@
             this.Name = "EditTarget";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Target";
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private DarkUI.Controls.DarkTitle darkTitle2;
         private DarkUI.Controls.DarkTextBox TargetIPAddress;
@@ -302,7 +320,10 @@
         private DarkUI.Controls.DarkTitle darkTitle4;
         private DarkUI.Controls.DarkButton Button_SaveTarget;
         private DarkUI.Controls.DarkButton Button_Cancel;
+        private System.Windows.Forms.Panel panel2;
+        private DarkUI.Controls.DarkCheckBox DefaultTarget;
         private DarkUI.Controls.DarkTextBox PayloadPort;
+        private DarkUI.Controls.DarkTitle darkTitle5;
         private DarkUI.Controls.DarkTitle darkTitle1;
     }
 }
