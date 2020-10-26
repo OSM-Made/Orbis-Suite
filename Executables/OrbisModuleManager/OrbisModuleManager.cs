@@ -422,8 +422,6 @@ namespace OrbisModuleManager
             }
         }
 
-
-
         #endregion
 
         #region ModuleList MenuStrip
@@ -772,13 +770,16 @@ namespace OrbisModuleManager
             {
                 if (!FetchingFTP)
                 {
-                    SetStatus("Fetching FTP List...");
+                    if(PS4.SelectedTarget.Info.Available)
+                    {
+                        SetStatus("Fetching FTP List...");
 
-                    hFTPThread = new Thread(() => FTPThread());
-                    hFTPThread.Priority = ThreadPriority.Highest;
-                    hFTPThread.IsBackground = true;
-                    hFTPThread.Start();
-                    FetchingFTP = true;
+                        hFTPThread = new Thread(() => FTPThread());
+                        hFTPThread.Priority = ThreadPriority.AboveNormal;
+                        hFTPThread.IsBackground = true;
+                        hFTPThread.Start();
+                        FetchingFTP = true;
+                    }
                 }
             }
             catch

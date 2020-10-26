@@ -51,7 +51,7 @@ bool FileIO::DirectoryCreate(const char* Directory)
 
 bool FileIO::FileWrite(const char* File, char* Data, int Size)
 {
-	HANDLE fHandle = CreateFile(File, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE fHandle = CreateFile(File, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (fHandle == INVALID_HANDLE_VALUE) {
 		return false;
 	}

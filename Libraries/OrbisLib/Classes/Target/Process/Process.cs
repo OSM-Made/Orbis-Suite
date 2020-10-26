@@ -60,13 +60,12 @@ namespace OrbisSuite
             }
         }
 
-        private List<ProcessInfo> _List = new List<ProcessInfo>();
         public List<ProcessInfo> List
         {
             get
             {
                 //Clear the list for update
-                _List.Clear();
+                List<ProcessInfo> _List = new List<ProcessInfo>();
 
                 //Allocate unmanaged memory.
                 IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_Proc)) * 100);
@@ -198,13 +197,12 @@ namespace OrbisSuite
             return Result;
         }
 
-        private List<ModuleInfo> _ModuleList = new List<ModuleInfo>();
         public List<ModuleInfo> ModuleList
         {
             get
             {
                 //clear the list for update.
-                _ModuleList.Clear();
+                List<ModuleInfo> _ModuleList = new List<ModuleInfo>();
 
                 //Allocate unmanaged memory.
                 IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RESP_ModuleList)) * 200);

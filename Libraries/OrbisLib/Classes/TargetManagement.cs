@@ -39,13 +39,12 @@ namespace OrbisSuite
             }
         }
 
-        private List<TargetInfo> _TargetList = new List<TargetInfo>();
         public List<TargetInfo> TargetList
         {
             get
             {
                 //clear list for update.
-                _TargetList.Clear();
+                List<TargetInfo> _TargetList = new List<TargetInfo>();
 
                 IntPtr ptr = IntPtr.Zero;
                 int TargetCount = Imports.TargetManagement.GetTargets(out ptr);

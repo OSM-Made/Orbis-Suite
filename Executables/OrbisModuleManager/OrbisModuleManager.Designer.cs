@@ -30,9 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrbisModuleManager));
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
+            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.CurrentProc = new System.Windows.Forms.ToolStripLabel();
             this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.SelectTargetButton = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -82,8 +84,6 @@
             this.MenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
-            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
-            this.SelectTargetButton = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStrip1.SuspendLayout();
             this.darkStatusStrip1.SuspendLayout();
             this.darkSectionPanel4.SuspendLayout();
@@ -121,6 +121,17 @@
             this.darkToolStrip1.TabIndex = 3;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
+            // CurrentTarget
+            // 
+            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
+            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurrentTarget.Name = "CurrentTarget";
+            this.CurrentTarget.Size = new System.Drawing.Size(80, 25);
+            this.CurrentTarget.Text = "Target: N/A";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -151,11 +162,19 @@
             this.Settings_DropDown.Size = new System.Drawing.Size(29, 25);
             this.Settings_DropDown.Text = "Settings";
             // 
+            // SelectTargetButton
+            // 
+            this.SelectTargetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SelectTargetButton.Name = "SelectTargetButton";
+            this.SelectTargetButton.Size = new System.Drawing.Size(140, 22);
+            this.SelectTargetButton.Text = "Select Target";
+            this.SelectTargetButton.Click += new System.EventHandler(this.SelectTargetButton_Click);
+            // 
             // SettingsButton
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(180, 22);
+            this.SettingsButton.Size = new System.Drawing.Size(140, 22);
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
@@ -163,7 +182,7 @@
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.About_Button.Name = "About_Button";
-            this.About_Button.Size = new System.Drawing.Size(180, 22);
+            this.About_Button.Size = new System.Drawing.Size(140, 22);
             this.About_Button.Text = "About";
             this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
             // 
@@ -657,25 +676,6 @@
             this.darkTitle1.TabIndex = 0;
             this.darkTitle1.Text = "Module List";
             // 
-            // CurrentTarget
-            // 
-            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
-            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CurrentTarget.Name = "CurrentTarget";
-            this.CurrentTarget.Size = new System.Drawing.Size(80, 25);
-            this.CurrentTarget.Text = "Target: N/A";
-            // 
-            // SelectTargetButton
-            // 
-            this.SelectTargetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.SelectTargetButton.Name = "SelectTargetButton";
-            this.SelectTargetButton.Size = new System.Drawing.Size(180, 22);
-            this.SelectTargetButton.Text = "Select Target";
-            this.SelectTargetButton.Click += new System.EventHandler(this.SelectTargetButton_Click);
-            // 
             // OrbisModuleManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -689,6 +689,8 @@
             this.Controls.Add(this.darkToolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(954, 529);
+            this.MinimumSize = new System.Drawing.Size(954, 529);
             this.Name = "OrbisModuleManager";
             this.Text = "Orbis Module Manager";
             this.Load += new System.EventHandler(this.OrbisModuleManager_Load);

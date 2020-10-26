@@ -62,10 +62,6 @@
     <Reference Include="DarkUI">
       <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
     </Reference>
-    <Reference Include="OrbisLib, Version=2.0.485.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -124,7 +120,12 @@
   <ItemGroup>
     <None Include="Resources\Files_7954.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\OrbisLib\OrbisLib.csproj">
+      <Project>{d0d0036e-990f-4c2b-b95e-97882208e6b8}</Project>
+      <Name>OrbisLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
       <Link>OrbisLibCPP.dll</Link>

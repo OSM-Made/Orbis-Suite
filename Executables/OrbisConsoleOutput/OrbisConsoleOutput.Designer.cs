@@ -44,7 +44,6 @@
             this.Button_Attach = new System.Windows.Forms.ToolStripButton();
             this.Button_Detach = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.MainDockPanel = new DarkUI.Docking.DarkDockPanel();
             this.darkStatusStrip1.SuspendLayout();
@@ -60,10 +59,10 @@
             this.StatusLabel,
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
-            this.darkStatusStrip1.Location = new System.Drawing.Point(0, 520);
+            this.darkStatusStrip1.Location = new System.Drawing.Point(0, 528);
             this.darkStatusStrip1.Name = "darkStatusStrip1";
             this.darkStatusStrip1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 3);
-            this.darkStatusStrip1.Size = new System.Drawing.Size(988, 30);
+            this.darkStatusStrip1.Size = new System.Drawing.Size(984, 30);
             this.darkStatusStrip1.SizingGrip = false;
             this.darkStatusStrip1.TabIndex = 5;
             this.darkStatusStrip1.Text = "darkStatusStrip1";
@@ -79,7 +78,7 @@
             // 
             this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(0, 0, 50, 2);
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(832, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(828, 20);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -106,12 +105,11 @@
             this.Button_Attach,
             this.Button_Detach,
             this.toolStripSeparator2,
-            this.toolStripButton1,
             this.toolStripButton2});
             this.darkToolStrip1.Location = new System.Drawing.Point(0, 0);
             this.darkToolStrip1.Name = "darkToolStrip1";
             this.darkToolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 2);
-            this.darkToolStrip1.Size = new System.Drawing.Size(988, 30);
+            this.darkToolStrip1.Size = new System.Drawing.Size(984, 30);
             this.darkToolStrip1.TabIndex = 6;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
@@ -156,14 +154,14 @@
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(116, 22);
+            this.SettingsButton.Size = new System.Drawing.Size(180, 22);
             this.SettingsButton.Text = "Settings";
             // 
             // About_Button
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.About_Button.Name = "About_Button";
-            this.About_Button.Size = new System.Drawing.Size(116, 22);
+            this.About_Button.Size = new System.Drawing.Size(180, 22);
             this.About_Button.Text = "About";
             // 
             // toolStripSeparator8
@@ -202,16 +200,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(54, 25);
-            this.toolStripButton1.Text = "Outputs";
-            // 
             // toolStripButton2
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -228,18 +216,19 @@
             this.MainDockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainDockPanel.Location = new System.Drawing.Point(0, 30);
             this.MainDockPanel.Name = "MainDockPanel";
-            this.MainDockPanel.Size = new System.Drawing.Size(988, 490);
+            this.MainDockPanel.Size = new System.Drawing.Size(984, 498);
             this.MainDockPanel.TabIndex = 7;
             // 
             // OrbisConsoleOutput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 550);
+            this.ClientSize = new System.Drawing.Size(984, 558);
             this.Controls.Add(this.MainDockPanel);
             this.Controls.Add(this.darkToolStrip1);
             this.Controls.Add(this.darkStatusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(362, 239);
             this.Name = "OrbisConsoleOutput";
             this.Text = "Orbis Console Output";
             this.darkStatusStrip1.ResumeLayout(false);
@@ -267,7 +256,6 @@
         private System.Windows.Forms.ToolStripButton Button_Attach;
         private System.Windows.Forms.ToolStripButton Button_Detach;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private DarkUI.Docking.DarkDockPanel MainDockPanel;
     }

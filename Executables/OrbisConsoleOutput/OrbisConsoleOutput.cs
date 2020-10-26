@@ -1,6 +1,11 @@
 ﻿using DarkUI.Forms;
 using OrbisSuite;
 using OrbisConsoleOutput.Controls;
+using static OrbisConsoleOutput.Controls.OutputControl;
+using DarkUI.Docking;
+using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace OrbisConsoleOutput
 {
@@ -12,9 +17,29 @@ namespace OrbisConsoleOutput
         {
             InitializeComponent();
 
-            MainDockPanel.AddContent(new OutputControl(PS4, "OrbisLib"));
-            MainDockPanel.AddContent(new OutputControl(PS4, "Test2"));
-            MainDockPanel.AddContent(new OutputControl(PS4, "Frost_Engine.sprx"));
+            //Events
+            PS4.SelectedTarget.Events.ProcPrint += Events_ProcPrint;
+        }
+
+        private void Events_ProcPrint(object sender, ProcPrintEvent e)
+        {
+            OutputControl Tab = (OutputControl)MainDockPanel.GetDocuments().Find(x => x.DockText == e.Sender);
+            if (Tab != null)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    Tab.Append(e.Type, e.Data);
+                });
+            }
+            else
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    OutputControl NewDocument = new OutputControl(PS4, e.Sender);
+                    MainDockPanel.AddContent(NewDocument);
+                    NewDocument.Append(e.Type, e.Data);
+                });
+            }
         }
 
         /*

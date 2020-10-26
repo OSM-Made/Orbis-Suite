@@ -8,7 +8,7 @@ class OrbisLib;
 enum TargetCommands
 {
 	//Print Server
-	CMD_PRINT,
+	CMD_PRINT = 1,
 
 	//Debugging
 	CMD_INTERCEPT,
@@ -81,8 +81,9 @@ struct TargetCommandPacket_s
 		}TitleChange;
 		struct
 		{
+			char Sender[0x100];
+			char Data[0x400];
 			int Type;
-			int Len;
 		}Print;
 		struct
 		{
@@ -97,7 +98,7 @@ struct TargetCommandPacket_s
 	};
 };
 
-typedef void(*Target_Print_Callback)(char* IPAddr, int Type, int Len, char* Data);
+typedef void(*Target_Print_Callback)(char* IPAddr, char* Sender, int Type, char* Data);
 typedef void(*Proc_Intercept_Callback)(char* IPAddr, int Reason, reg* Registers);
 typedef void(*Proc_Continue_Callback)(char* IPAddr);
 typedef void(*Proc_Die_Callback)(char* IPAddr);
@@ -126,8 +127,6 @@ private:
 	bool Connect();
 	void Disconnect();
 	bool SendHeartBeat();
-
-	void HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket);
 
 public:
 	//Call Backs

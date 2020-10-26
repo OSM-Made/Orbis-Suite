@@ -7,6 +7,7 @@ bool ServiceRunning = false;
 
 const char* TargetCommandsStr[] =
 {
+	"NULL",
 	"CMD_PRINT",
 
 	"CMD_INTERCEPT",
@@ -66,8 +67,8 @@ void EnableDebugLogs()
 		FileIO::DirectoryCreate(LogFolderPath);
 
 	//Create Log File.
-	if (!FileIO::FileExists(LogFolderPath))
-		FileIO::FileCreate(LogFolderPath);
+	if (!FileIO::FileExists(LogPath))
+		FileIO::FileCreate(LogPath);
 
 	//Output our prints to a File.
 	FILE *stream;

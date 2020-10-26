@@ -32,7 +32,7 @@ namespace OrbisSuiteService
 
         System.Threading.Thread hServiceThread;
 
-        void ServiceThread()
+        public void ServiceThread()
         {
             StartLib();
             while (RunService) { Thread.Sleep(10); }

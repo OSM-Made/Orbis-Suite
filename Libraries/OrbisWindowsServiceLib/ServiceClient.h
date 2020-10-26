@@ -7,7 +7,7 @@
 enum TargetCommands
 {
 	//Print Server
-	CMD_PRINT,
+	CMD_PRINT = 1,
 
 	//Debugging
 	CMD_INTERCEPT,
@@ -80,8 +80,9 @@ struct TargetCommandPacket_s
 		}TitleChange;
 		struct
 		{
+			char Sender[0x100];
+			char Data[0x400];
 			int Type;
-			int Len;
 		}Print;
 		struct
 		{
@@ -166,4 +167,5 @@ public:
 	void RemoveClient(int index);
 
 	void ForwardPacket(TargetCommandPacket_s* TargetCommandPackets);
+	void ForwardPacket(TargetCommandPacket_s* TargetCommandPackets, char* Data);
 };

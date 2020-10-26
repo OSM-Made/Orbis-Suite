@@ -60,7 +60,9 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 	switch (Packet->CommandIndex)
 	{
 	case CMD_PRINT:
-		orbisService->HandlePrint(Packet, Socket);
+		printf("CMD_PRINT\n");
+		if (orbisService->Target_Print)
+			orbisService->Target_Print(Packet->IPAddr, Packet->Print.Sender, Packet->Print.Type, Packet->Print.Data);
 		break;
 
 
@@ -333,23 +335,4 @@ bool OrbisService::SendHeartBeat()
 	free(Socket);
 
 	return true;
-}
-
-void OrbisService::HandlePrint(TargetCommandPacket_s* Packet, SOCKET Socket)
-{
-	//Alloacate space to recieve print data
-	char* Data = (char*)malloc(Packet->Print.Len);
-
-	//Recieve print data
-	if (!recv(Socket, Data, Packet->Print.Len, 0))
-	{
-		printf("Failed to recv Print Data\n");
-
-		return;
-	}
-
-	if (this->Target_Print)
-		this->Target_Print(Packet->IPAddr, Packet->Print.Type, Packet->Print.Len, Data);
-
-	free(Data);
 }

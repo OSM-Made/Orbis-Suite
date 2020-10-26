@@ -2,6 +2,8 @@
 
 VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 {
+	char* Buffer = NULL;
+
 	//Get the sender IP
 	struct sockaddr_in addr;
 	int addr_size = sizeof(struct sockaddr_in);
@@ -12,6 +14,10 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 
 	//Recieve the Targets command packet.
 	recv(Socket, (char*)TargetCommandPacket, sizeof(TargetCommandPacket_s), 0);
+
+	//validate command
+	if (TargetCommandPacket->CommandIndex < 0 || TargetCommandPacket->CommandIndex > CMD_TARGET_AVAILABILITY)
+		goto CleanUp;
 
 	//Write IP to packet.
 	strcpy_s(TargetCommandPacket->IPAddr, inet_ntoa(addr.sin_addr));
@@ -30,11 +36,23 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 
 	printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
 
+	if (TargetCommandPacket->CommandIndex == CMD_PRINT) 
+	{
+		FileIO::FileWrite("C:\\Users\\Gregory\\Source\\Repos\\Orbis Suite\\Executables\\OrbisSuiteService\\bin\\x64\\Debug\\Test.bin", (char*)TargetCommandPacket, sizeof(TargetCommandPacket_s));
+		printf("Sender: %s\n", TargetCommandPacket->Print.Sender);
+		printf("Data: %s\n", TargetCommandPacket->Print.Data);
+	}
+	else if(TargetCommandPacket->CommandIndex == CMD_TARGET_NEWTITLE)
+		printf("%s\n", TargetCommandPacket->TitleChange.TitleID);
+	//printf("%llX\n", TargetCommandPacket);
+
 	//Forward the packet to all the connected children processes.
 	Client->ForwardPacket(TargetCommandPacket);
 	
+CleanUp:
 	//Clean up.
 	free(TargetCommandPacket);
+	free(Buffer);
 }
 
 const char* DBname = "OrbisSuiteUserData";
@@ -93,7 +111,7 @@ extern "C" __declspec(dllexport) void StartLib()
 	size_t requiredSize = sizeof(ProgramDataPath);
 	getenv_s(&requiredSize, (char*)&ProgramDataPath, requiredSize, "PROGRAMDATA");
 
-	EnableDebugLogs();
+	//EnableDebugLogs();
 
 	ServiceRunning = true;
 

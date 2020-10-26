@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{83582495-955D-4F38-A9CC-EF1004DD1FF7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>OrbisConsoleOutput</RootNamespace>
     <AssemblyName>OrbisConsoleOutput</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -55,12 +55,12 @@
   <PropertyGroup>
     <ApplicationIcon>OrbisConsoleOutput_100.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DarkUI">
       <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
-    </Reference>
-    <Reference Include="OrbisLib">
-      <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -120,7 +120,15 @@
   <ItemGroup>
     <Content Include="OrbisConsoleOutput_100.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\OrbisLib\OrbisLib.csproj">
+      <Project>{d0d0036e-990f-4c2b-b95e-97882208e6b8}</Project>
+      <Name>OrbisLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" /wildcards /t:winexe /out:../../../../$(ProjectName).exe  $(ProjectName).exe *.dll /ndebug /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"</PostBuildEvent>

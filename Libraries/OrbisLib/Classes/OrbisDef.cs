@@ -319,4 +319,12 @@ namespace OrbisSuite
             this.DataSegmentLen = DataSegmentLen;
         }
     }
+    
+    public enum PrintType
+    {
+        None,
+        Info,
+        Warn,
+        Error,
+    };
 }

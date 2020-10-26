@@ -135,6 +135,9 @@ namespace OrbisSuite
                 internal_SelectedTarget = new Target(this);
                 SelectedTarget.Info = DefaultTarget.Info;
 
+                //Set up classes
+                Internal_Events = new Events(this);
+
             }
             catch
             {

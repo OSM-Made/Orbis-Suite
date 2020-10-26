@@ -29,10 +29,10 @@ namespace OrbisSuite
             this.Target = Target;
         }
 
-        internal void RaiseProcPrintEvent(string IPAddr, int Type, int Len, string Data)
+        internal void RaiseProcPrintEvent(string IPAddr, string Sender, int Type, string Data)
         {
             if (IPAddr.Equals(Target.Info.IPAddr))
-                ProcPrint?.Invoke(null, new ProcPrintEvent(Type, Len, Data));
+                ProcPrint?.Invoke(null, new ProcPrintEvent(Sender, (PrintType)Type, Data));
         }
 
         internal void RaiseProcInterceptEvent(string IPAddr, int Reason, IntPtr Registers)
@@ -96,14 +96,14 @@ namespace OrbisSuite
 
     public class ProcPrintEvent : EventArgs
     {
-        public int Type { get; private set; }
-        public int Len { get; private set; }
+        public string Sender { get; private set; }
+        public PrintType Type { get; private set; }
         public string Data { get; private set; }
 
-        public ProcPrintEvent(int Type, int Len, string Data)
+        public ProcPrintEvent(string Sender, PrintType Type, string Data)
         {
+            this.Sender = Sender;
             this.Type = Type;
-            this.Len = Len;
             this.Data = Data;
         }
     }

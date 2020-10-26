@@ -30,7 +30,7 @@ namespace OrbisSuite
 
         #region CallBacks
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate void Target_Print_Callback(string IPAddr, int Type, int Len, string Data);
+        internal delegate void Target_Print_Callback(string IPAddr, string Sender, int Type, string Data);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate void Proc_Intercept_Callback(string IPAddr, int Reason, IntPtr Registers);
@@ -82,18 +82,18 @@ namespace OrbisSuite
             IntPtr Target_Availability);
 
         //Initialize all the callbacks
-        Target_Print_Callback pTarget_PrintCallback;
-        Proc_Intercept_Callback pProc_InterceptCallback;
-        Proc_Continue_Callback pProc_ContinueCallback;
-        Proc_Die_Callback pProc_DieCallback;
-        Proc_Attach_Callback pProc_AttachCallback;
-        Proc_Detach_Callback pProc_DetachCallback;
-        Target_Suspend_Callback pTarget_SuspendCallback;
-        Target_Resume_Callback pTarget_ResumeCallback;
-        Target_Shutdown_Callback pTarget_ShutdownCallback;
-        Target_NewTitle_Callback pTarget_NewTitle_Callback;
-        DB_Touched_Callback pDB_Touched_Callback;
-        Target_Availability_Callback pTarget_AvailabilityCallback;
+        readonly Target_Print_Callback pTarget_PrintCallback;
+        readonly Proc_Intercept_Callback pProc_InterceptCallback;
+        readonly Proc_Continue_Callback pProc_ContinueCallback;
+        readonly Proc_Die_Callback pProc_DieCallback;
+        readonly Proc_Attach_Callback pProc_AttachCallback;
+        readonly Proc_Detach_Callback pProc_DetachCallback;
+        readonly Target_Suspend_Callback pTarget_SuspendCallback;
+        readonly Target_Resume_Callback pTarget_ResumeCallback;
+        readonly Target_Shutdown_Callback pTarget_ShutdownCallback;
+        readonly Target_NewTitle_Callback pTarget_NewTitle_Callback;
+        readonly DB_Touched_Callback pDB_Touched_Callback;
+        readonly Target_Availability_Callback pTarget_AvailabilityCallback;
 
         #endregion
         /// <summary>
@@ -132,15 +132,15 @@ namespace OrbisSuite
                 Marshal.GetFunctionPointerForDelegate(pTarget_AvailabilityCallback));
         }
 
-        internal void Target_PrintCallback(string IPAddr, int Type, int Len, string Data)
+        internal void Target_PrintCallback(string IPAddr, string Sender, int Type, string Data)
         {
             //Raise the event for the Default target and the Selected Target.
-            PS4.DefaultTarget.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
-            PS4.SelectedTarget.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
+            PS4.DefaultTarget.Events.RaiseProcPrintEvent(IPAddr, Sender, Type, Data);
+            PS4.SelectedTarget.Events.RaiseProcPrintEvent(IPAddr, Sender, Type, Data);
 
             //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Target> Target in PS4.Target)
-                Target.Value.Events.RaiseProcPrintEvent(IPAddr, Type, Len, Data);
+                Target.Value.Events.RaiseProcPrintEvent(IPAddr, Sender, Type, Data);
         }
 
         internal void Proc_InterceptCallback(string IPAddr, int Reason, IntPtr Registers)
