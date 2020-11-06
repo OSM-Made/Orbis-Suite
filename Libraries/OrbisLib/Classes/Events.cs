@@ -179,12 +179,12 @@ namespace OrbisSuite
         internal void Proc_AttachCallback(string IPAddr, string NewProcName)
         {
             //Raise the event for the Default target and the Selected Target.
-            PS4.DefaultTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
-            PS4.SelectedTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
+            PS4.DefaultTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName);
+            PS4.SelectedTarget.Events.RaiseProcAttachEvent(IPAddr, NewProcName);
 
             //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Target> Target in PS4.Target)
-                Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName.Substring(4));
+                Target.Value.Events.RaiseProcAttachEvent(IPAddr, NewProcName);
         }
 
         internal void Proc_DetachCallback(string IPAddr)
@@ -234,12 +234,12 @@ namespace OrbisSuite
         internal void Target_NewTitleCallback(string IPAddr, string TitleID)
         {
             //Raise the event for the Default target and the Selected Target.
-            PS4.DefaultTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
-            PS4.SelectedTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
+            PS4.DefaultTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID);
+            PS4.SelectedTarget.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID);
 
             //Raise the event for all the conosles in the target list.
             foreach (KeyValuePair<string, Target> Target in PS4.Target)
-                Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID.Substring(4));
+                Target.Value.Events.RaiseTargetNewTitleEvent(IPAddr, TitleID);
         }
 
         internal void DB_TouchedCallback()

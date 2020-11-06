@@ -121,7 +121,7 @@ private:
 	int ClientIndex;
 
 	SocketListener* ServiceListener;
-	static VOID ServiceCallback(LPVOID lpParameter, SOCKET Socket);
+	static VOID ServiceCallback(LPVOID lpParameter, Sockets* Socket);
 	static DWORD WINAPI HeartBeatThread(LPVOID Params);
 
 	bool Connect();

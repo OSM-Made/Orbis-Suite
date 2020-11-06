@@ -6,6 +6,7 @@ public:
 	SOCKET Socket;
 
 	Sockets(const char* ConnectReceiveionAddr, unsigned short port);
+	Sockets(SOCKET Socket);
 	~Sockets();
 
 	void Close();

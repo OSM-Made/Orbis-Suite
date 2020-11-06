@@ -10,11 +10,10 @@ private:
 	unsigned short ListenPort;
 
 public:
-	SOCKET ClientSocket;
 	LPVOID lpParameter;
-	VOID(*ClientCallBack)(LPVOID lpParameter, SOCKET);
+	VOID(*ClientCallBack)(LPVOID lpParameter, Sockets*);
 	DWORD WINAPI ListenerThread();
 
-	SocketListener(VOID(*ClientCallBack)(LPVOID lpParameter, SOCKET), LPVOID lpParameter, unsigned short ListenPort);
+	SocketListener(VOID(*ClientCallBack)(LPVOID lpParameter, Sockets*), LPVOID lpParameter, unsigned short ListenPort);
 	~SocketListener();
 };

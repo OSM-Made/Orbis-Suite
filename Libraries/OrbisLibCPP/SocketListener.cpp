@@ -1,11 +1,23 @@
 #include "stdafx.hpp"
 #include "SocketListener.hpp"
 
+struct ClientThreadParams
+{
+	SocketListener* socketListener;
+	Sockets* Sock;
+};
+
 DWORD WINAPI ClientThreadStart(LPVOID ptr)
 {
-	((SocketListener*)ptr)->ClientCallBack(((SocketListener*)ptr)->lpParameter, ((SocketListener*)ptr)->ClientSocket);
+	ClientThreadParams* Params = (ClientThreadParams*)ptr;
+	SocketListener* socketListener = Params->socketListener;
+	Sockets* Sock = Params->Sock;
 
-	closesocket(((SocketListener*)ptr)->ClientSocket);
+	socketListener->ClientCallBack(socketListener->lpParameter, Sock);
+
+	Sock->Close();
+	delete Sock;
+	free(Params);
 
 	DWORD Thr_Exit = 0;
 	ExitThread(Thr_Exit);
@@ -83,20 +95,24 @@ DWORD WINAPI SocketListener::ListenerThread() {
 			int addrlen = sizeof(sockaddr_in);
 			SOCKET ClientSocket = accept(this->ServerSocket, (sockaddr*)&Clientaddr, &addrlen);
 
-			if (ClientSocket)
+			if (ClientSocket != INVALID_SOCKET)
 			{
-				//Store ClientSocket
-				this->ClientSocket = ClientSocket;
+				//set up thread params
+				ClientThreadParams* Params = new ClientThreadParams();
+				Params->socketListener = this;
+				Params->Sock = new Sockets(ClientSocket);
 
 				//Create thread to handle our socket client
 				DWORD hThreadID;
-				HANDLE hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThreadStart, (LPVOID)this, 3, &hThreadID);
+				HANDLE hThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThreadStart, (LPVOID)Params, 3, &hThreadID);
 				ResumeThread(hThread);
 				CloseHandle(hThread);
 
 				//Reset our local socket variable for next client
 				ClientSocket = -1;
 			}
+			else
+				wprintf(L"socket failed with error: %ld\n", WSAGetLastError());
 		}
 	}
 
@@ -117,7 +133,7 @@ DWORD WINAPI ThreadStartHack(LPVOID ptr)
 	return ((SocketListener*)ptr)->ListenerThread();
 }
 
-SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, SOCKET), LPVOID lpParameter, unsigned short ListenPort)
+SocketListener::SocketListener(VOID(*ClientCallBack)(LPVOID, Sockets*), LPVOID lpParameter, unsigned short ListenPort)
 {
 	printf("SocketListener Initialization!\n");
 

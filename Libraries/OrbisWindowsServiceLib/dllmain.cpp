@@ -1,23 +1,30 @@
 #include "stdafx.h"
 
-VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
+VOID TargetClientThread(LPVOID lpParameter, Sockets* Socket)
 {
 	char* Buffer = NULL;
 
 	//Get the sender IP
 	struct sockaddr_in addr;
 	int addr_size = sizeof(struct sockaddr_in);
-	getpeername(Socket, (struct sockaddr *)&addr, &addr_size);
+	getpeername(Socket->Socket, (struct sockaddr *)&addr, &addr_size);
 
 	//Allocate space to recieve the packet from the Target Console
 	TargetCommandPacket_s* TargetCommandPacket = (TargetCommandPacket_s*)malloc(sizeof(TargetCommandPacket_s));
+	memset(TargetCommandPacket, 0, sizeof(TargetCommandPacket_s));
 
 	//Recieve the Targets command packet.
-	recv(Socket, (char*)TargetCommandPacket, sizeof(TargetCommandPacket_s), 0);
+	if (!Socket->Receive((char*)TargetCommandPacket, sizeof(TargetCommandPacket_s)))
+	{
+		printf("Failed to recieve data for the packet.\n");
+		goto CleanUp;
+	}
 
 	//validate command
-	if (TargetCommandPacket->CommandIndex < 0 || TargetCommandPacket->CommandIndex > CMD_TARGET_AVAILABILITY)
+	if (TargetCommandPacket->CommandIndex <= 0 || TargetCommandPacket->CommandIndex > CMD_TARGET_AVAILABILITY) {
+		printf("Invalid Packet CommandIndex was %i which is out of range. (%i to %i)\n", TargetCommandPacket->CommandIndex, CMD_PRINT, CMD_TARGET_AVAILABILITY);
 		goto CleanUp;
+	}
 
 	//Write IP to packet.
 	strcpy_s(TargetCommandPacket->IPAddr, inet_ntoa(addr.sin_addr));
@@ -34,17 +41,9 @@ VOID TargetClientThread(LPVOID lpParameter, SOCKET Socket)
 		}
 	}
 
-	printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
-
-	if (TargetCommandPacket->CommandIndex == CMD_PRINT) 
-	{
-		FileIO::FileWrite("C:\\Users\\Gregory\\Source\\Repos\\Orbis Suite\\Executables\\OrbisSuiteService\\bin\\x64\\Debug\\Test.bin", (char*)TargetCommandPacket, sizeof(TargetCommandPacket_s));
-		printf("Sender: %s\n", TargetCommandPacket->Print.Sender);
-		printf("Data: %s\n", TargetCommandPacket->Print.Data);
-	}
-	else if(TargetCommandPacket->CommandIndex == CMD_TARGET_NEWTITLE)
-		printf("%s\n", TargetCommandPacket->TitleChange.TitleID);
-	//printf("%llX\n", TargetCommandPacket);
+	//printf("Command Recieved: %d(%s)\n", TargetCommandPacket->CommandIndex, TargetCommandsStr[TargetCommandPacket->CommandIndex]);
+	if (TargetCommandPacket->CommandIndex == CMD_PRINT)
+		printf("Data: %s", TargetCommandPacket->Print.Data);
 
 	//Forward the packet to all the connected children processes.
 	Client->ForwardPacket(TargetCommandPacket);

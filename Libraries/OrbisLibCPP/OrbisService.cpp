@@ -41,7 +41,7 @@ OrbisService::~OrbisService()
 	Disconnect();
 }
 
-VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
+VOID OrbisService::ServiceCallback(LPVOID lpParameter, Sockets* Socket)
 {
 	
 	OrbisService* orbisService = (OrbisService*)lpParameter;
@@ -50,7 +50,7 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 	TargetCommandPacket_s* Packet = (TargetCommandPacket_s*)malloc(sizeof(TargetCommandPacket_s));
 
 	//Recieve the Targets command packet.
-	if (!recv(Socket, (char*)Packet, sizeof(TargetCommandPacket_s), 0))
+	if (!Socket->Receive((char*)Packet, sizeof(TargetCommandPacket_s)))
 	{
 		printf("Failed to recv TargetCommandPacket\n");
 
@@ -60,7 +60,7 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, SOCKET Socket)
 	switch (Packet->CommandIndex)
 	{
 	case CMD_PRINT:
-		printf("CMD_PRINT\n");
+		printf("CMD_PRINT: %s\n", Packet->Print.Data);
 		if (orbisService->Target_Print)
 			orbisService->Target_Print(Packet->IPAddr, Packet->Print.Sender, Packet->Print.Type, Packet->Print.Data);
 		break;
@@ -309,6 +309,8 @@ bool OrbisService::SendHeartBeat()
 	CommandPacket.CommandIndex = CMD_CLIENT_HEARTBEAT;
 	CommandPacket.Index = this->ClientIndex;
 
+	printf("Sending Heart beat packet...\n");
+
 	//Send the packet.
 	if (!Socket->Send((char*)&CommandPacket, sizeof(CommandPacket_s)))
 	{
@@ -331,6 +333,8 @@ bool OrbisService::SendHeartBeat()
 
 		return false;
 	}
+
+	printf("Socket Done.\n");
 
 	free(Socket);
 

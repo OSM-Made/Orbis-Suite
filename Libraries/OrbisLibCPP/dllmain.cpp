@@ -380,8 +380,6 @@ extern "C"  __declspec(dllexport) void SetupCPP(bool bNoInstance)
 
 		printf("OrbisLib Loading...\n");
 	}
-
-	printf("TargetCommandPacket_s = %X\n", sizeof(TargetCommandPacket_s));
 		
 	NoInstance = bNoInstance;
 	orbisLib = new OrbisLib();

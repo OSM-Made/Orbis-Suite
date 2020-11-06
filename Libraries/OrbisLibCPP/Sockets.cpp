@@ -93,6 +93,17 @@ Sockets::Sockets(const char* ConnectionAddr, unsigned short port) {
 	this->hasConnectionBeenClosed = false;
 }
 
+Sockets::Sockets(SOCKET Socket)
+{
+	DWORD sock_timeout = 1200;
+
+	setsockopt(Socket, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
+	setsockopt(Socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
+
+	this->Socket = Socket;
+	this->hasConnectionBeenClosed = false;
+}
+
 Sockets::~Sockets() {
 	if (!hasConnectionBeenClosed)
 		Close();
@@ -101,7 +112,6 @@ Sockets::~Sockets() {
 void Sockets::Close() {
 	hasConnectionBeenClosed = true;
 
-	//WSACleanup();
 	shutdown(Socket, 2);
 	closesocket(Socket);
 }

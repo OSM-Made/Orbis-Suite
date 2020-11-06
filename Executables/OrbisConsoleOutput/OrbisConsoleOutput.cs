@@ -6,6 +6,7 @@ using DarkUI.Docking;
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace OrbisConsoleOutput
 {
@@ -21,8 +22,12 @@ namespace OrbisConsoleOutput
             PS4.SelectedTarget.Events.ProcPrint += Events_ProcPrint;
         }
 
+        private static Mutex mut = new Mutex();
         private void Events_ProcPrint(object sender, ProcPrintEvent e)
         {
+            // Wait until it is safe to enter.
+            mut.WaitOne();
+
             OutputControl Tab = (OutputControl)MainDockPanel.GetDocuments().Find(x => x.DockText == e.Sender);
             if (Tab != null)
             {
@@ -40,6 +45,9 @@ namespace OrbisConsoleOutput
                     NewDocument.Append(e.Type, e.Data);
                 });
             }
+
+            // Release the Mutex.
+            mut.ReleaseMutex();
         }
 
         /*

@@ -2,12 +2,13 @@
 #include "ServiceClient.h"
 #include "Sockets.h"
 
-VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
+VOID ServiceClient::CommandClientThread(LPVOID lpParameter, Sockets* Client) {
 	int Index = -1;
 
 	ServiceClient* serviceClient = (ServiceClient*)lpParameter;
 	CommandPacket_s* CommandPacket = (CommandPacket_s*)malloc(sizeof(CommandPacket_s));
-	if (recv(Client, (char*)CommandPacket, sizeof(CommandPacket_s), 0))
+
+	if (Client->Receive((char*)CommandPacket, sizeof(CommandPacket_s)))
 	{
 		switch (CommandPacket->CommandIndex) //TODO: Add Command For changing Print Socket Port and COM Port
 		{
@@ -18,7 +19,7 @@ VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 		case CMD_CLIENT_CONNECT:
 			Index = serviceClient->AddClient();
 
-			send(Client, (char*)&Index, sizeof(int), 0);
+			Client->Send((char*)&Index, sizeof(int));
 
 			break;
 
@@ -33,20 +34,23 @@ VOID ServiceClient::CommandClientThread(LPVOID lpParameter, SOCKET Client) {
 			{
 				printf("Client has timed out Sending reconnect request.\n");
 				int Status = 1;
-				send(Client, (char*)&Status, sizeof(int), 0);
+				Client->Send((char*)&Status, sizeof(int));
 			}
 			else
 			{
-				printf("Client heart beat Packet took %dms to respond\n", (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
+				//printf("Client %i heart beat Packet took %dms to respond\n", CommandPacket->Index, (GetTickCount() - serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime));
 
 				serviceClient->ClientInfo[CommandPacket->Index].LastUpdateTime = GetTickCount();
 
 				int Status = 2;
-				send(Client, (char*)&Status, sizeof(int), 0);
+				Client->Send((char*)&Status, sizeof(int));
 			}
 			break;
 		}
 	}
+
+	//Clean up
+	free(CommandPacket);
 }
 
 DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
@@ -58,7 +62,7 @@ DWORD ServiceClient::SocketAliveCheck(LPVOID ptr)
 		{
 			if (serviceClient->ClientInfo[i].Used && ((GetTickCount() - serviceClient->ClientInfo[i].LastUpdateTime) > 10000))
 			{
-				printf("No response from Client %i in > 10000ms. Timed out!\n", i);
+				printf("No response from Client %i %i > 10000ms. Timed out!\n", i, (GetTickCount() - serviceClient->ClientInfo[i].LastUpdateTime));
 
 				serviceClient->ClientInfo[i].Used = false;
 				serviceClient->ClientInfo[i].LastUpdateTime = 0;

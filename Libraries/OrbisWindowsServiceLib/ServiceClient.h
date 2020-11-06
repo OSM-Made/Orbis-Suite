@@ -156,7 +156,7 @@ private:
 	bool ServiceRunning = false;
 
 public:
-	static VOID CommandClientThread(LPVOID lpParameter, SOCKET Client);
+	static VOID CommandClientThread(LPVOID lpParameter, Sockets* Client);
 	SocketListener* CommandListener;
 	static DWORD SocketAliveCheck(LPVOID ptr);
 
