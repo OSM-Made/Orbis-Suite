@@ -57,7 +57,7 @@ bool FileIO::FileWrite(const char* File, char* Data, int Size)
 	}
 
 	DWORD writeSize = Size;
-	if (WriteFile(fHandle, Data, writeSize, &writeSize, NULL) != true) {
+	if (WriteFile(fHandle, Data, writeSize, &writeSize, NULL) != TRUE) {
 		return false;
 	}
 
@@ -73,7 +73,7 @@ bool FileIO::FileRead(const char* File, char* Data, int Size)
 	}
 
 	DWORD writeSize = Size;
-	if (ReadFile(fHandle, Data, writeSize, &writeSize, NULL) != true) {
+	if (ReadFile(fHandle, Data, writeSize, &writeSize, NULL) != TRUE) {
 		return false;
 	}
 

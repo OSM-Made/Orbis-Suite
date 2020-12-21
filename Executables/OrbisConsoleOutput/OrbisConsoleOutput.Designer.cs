@@ -119,7 +119,7 @@
             this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.CurrentTarget.Name = "CurrentTarget";
             this.CurrentTarget.Size = new System.Drawing.Size(67, 25);
-            this.CurrentTarget.Text = "Target: N/A";
+            this.CurrentTarget.Text = "Target: -";
             // 
             // toolStripSeparator1
             // 
@@ -135,7 +135,7 @@
             this.CurrentProc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.CurrentProc.Name = "CurrentProc";
             this.CurrentProc.Size = new System.Drawing.Size(75, 25);
-            this.CurrentProc.Text = "Process: N/A";
+            this.CurrentProc.Text = "Process: -";
             // 
             // Settings_DropDown
             // 

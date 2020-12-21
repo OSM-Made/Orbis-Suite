@@ -59,11 +59,6 @@ namespace nsOrbisNeighborhood
             PS4.SelectedTarget.Events.ProcDetach += Events_ProcDetach;
         }
 
-        private void Events_ProcDetach(object sender, ProcDetachEvent e)
-        {
-            
-        }
-
         #region One Instance
 
         protected override void WndProc(ref Message m)
@@ -98,6 +93,11 @@ namespace nsOrbisNeighborhood
             ExecuteSecure(() => CurrentProc.Text = "Process: " + e.NewProcName);
         }
 
+        private void Events_ProcDetach(object sender, ProcDetachEvent e)
+        {
+            ExecuteSecure(() => CurrentProc.Text = "Process: -");
+        }
+
         private void Button_Attach_Click(object sender, EventArgs e)
         {
             if(PS4.SelectedTarget.Info.Available)
@@ -112,7 +112,6 @@ namespace nsOrbisNeighborhood
 
         private void Events_DBTouched(object sender, DBTouchedEvent e)
         {
-            Console.WriteLine("Data Base Touched.");
             ExecuteSecure(() => UpdateSettings());
             ExecuteSecure(() => UpdateTargetList());
         }
@@ -174,14 +173,14 @@ namespace nsOrbisNeighborhood
                     }
                     else
                     {
-                        CurrentProc.Text = "Process: N/A";
+                        CurrentProc.Text = "Process: -";
                         Button_Detach.Enabled = false;
                     }
                 }
                 else
                 {
-                    CurrentTarget.Text = "Target: N/A";
-                    CurrentProc.Text = "Process: N/A";
+                    CurrentTarget.Text = "Target: -";
+                    CurrentProc.Text = "Process: -";
                     Button_Detach.Enabled = false;
                 }
             }

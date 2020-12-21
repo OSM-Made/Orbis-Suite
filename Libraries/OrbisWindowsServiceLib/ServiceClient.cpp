@@ -151,10 +151,12 @@ void ServiceClient::ForwardPacket(TargetCommandPacket_s* TargetCommandPacket)
 			}
 
 			if (!Socket->Send((char*)TargetCommandPacket, sizeof(TargetCommandPacket_s))) {
+				Socket->Close();
 				free(Socket);
 				continue;
 			}
 
+			Socket->Close();
 			free(Socket);
 		}
 	}

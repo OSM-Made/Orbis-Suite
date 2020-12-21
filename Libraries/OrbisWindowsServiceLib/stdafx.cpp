@@ -60,7 +60,7 @@ void EnableDebugLogs()
 	sprintf_s(LogPath, "%s\\Orbis Suite\\Logs\\OrbisService-%s", ProgramDataPath, GetFileName(modulename).c_str());
 
 	char LogFolderPath[MAX_PATH];
-	sprintf_s(LogFolderPath, "%s\\Orbis Suite\\Logs", ProgramDataPath, GetFileName(modulename).c_str());
+	sprintf_s(LogFolderPath, "%s\\Orbis Suite\\Logs", ProgramDataPath);
 
 	//Create Log folder if doesnt exist.
 	if (!FileIO::DirectoryExists(LogFolderPath))

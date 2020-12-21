@@ -173,7 +173,7 @@ namespace OrbisModuleManager
                 }
                 else
                 {
-                    CurrentProc.Text = "Process: N/A";
+                    CurrentProc.Text = "Process: -";
                     Button_Detach.Enabled = false;
 
                     //Initialize Module List
@@ -222,7 +222,7 @@ namespace OrbisModuleManager
                 darkScrollBar1.ViewSize = 99;
                 darkScrollBar1.Enabled = false;
 
-                CurrentProc.Text = "Process: N/A";
+                CurrentProc.Text = "Process: -";
 
                 //Disable Controls
                 Button_Attach.Enabled = false;
@@ -280,8 +280,8 @@ namespace OrbisModuleManager
                     }
                     else
                     {
-                        CurrentTarget.Text = "Target: N/A";
-                        CurrentProc.Text = "Process: N/A";
+                        CurrentTarget.Text = "Target: -";
+                        CurrentProc.Text = "Process: -";
                         Button_Detach.Enabled = false;
                         EnableProgram(false);
                     }

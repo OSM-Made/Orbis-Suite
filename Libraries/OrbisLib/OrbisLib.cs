@@ -75,12 +75,19 @@ namespace OrbisSuite
             {
                 //Updates the dictionary every time its referenced to make sure its up to date.
                 //Need to test and see if the overhead on this is too much.
-                foreach(TargetInfo TargetInfo in TargetManagement.TargetList)
+                try
                 {
-                    if (Internal_Targets.ContainsKey(TargetInfo.Name))
-                        Internal_Targets[TargetInfo.Name].Info = TargetInfo;
-                    else
-                        Internal_Targets.Add(TargetInfo.Name, new Target(this, TargetInfo));
+                    foreach (TargetInfo TargetInfo in TargetManagement.TargetList)
+                    {
+                        if (Internal_Targets.ContainsKey(TargetInfo.Name))
+                            Internal_Targets[TargetInfo.Name].Info = TargetInfo;
+                        else
+                            Internal_Targets.Add(TargetInfo.Name, new Target(this, TargetInfo));
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Failed to get Target.");
                 }
 
                 return Internal_Targets;

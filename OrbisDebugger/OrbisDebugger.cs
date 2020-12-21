@@ -100,7 +100,7 @@ namespace OrbisDebugger
                     //Process Selection
                     processDetachToolStripMenuItem.Enabled = false;
                     Button_ProcessDetach.Enabled = false;
-                    CurrentProc.Text = "Process: N/A";
+                    CurrentProc.Text = "Process: -";
 
                     //Process Control
                     Button_StopDebugging.Enabled = false;
@@ -152,7 +152,7 @@ namespace OrbisDebugger
                 Button_ProcessAttach.Enabled = false;
                 processDetachToolStripMenuItem.Enabled = false;
                 Button_ProcessDetach.Enabled = false;
-                CurrentProc.Text = "Process: N/A";
+                CurrentProc.Text = "Process: -";
 
                 //Process Control
                 Button_StopDebugging.Enabled = false;
@@ -237,8 +237,8 @@ namespace OrbisDebugger
                     }
                     else
                     {
-                        CurrentTarget.Text = "Target: N/A";
-                        CurrentProc.Text = "Process: N/A";
+                        CurrentTarget.Text = "Target: -";
+                        CurrentProc.Text = "Process: -";
                         EnableProgram(false);
                     }
                 }

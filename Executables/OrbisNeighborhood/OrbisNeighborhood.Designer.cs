@@ -356,7 +356,7 @@
             this.toolStripLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(67, 25);
-            this.toolStripLabel1.Text = "Target: N/A";
+            this.toolStripLabel1.Text = "Target: -";
             // 
             // toolStripSeparator2
             // 
@@ -372,7 +372,7 @@
             this.toolStripLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripLabel2.Name = "toolStripLabel2";
             this.toolStripLabel2.Size = new System.Drawing.Size(75, 25);
-            this.toolStripLabel2.Text = "Process: N/A";
+            this.toolStripLabel2.Text = "Process: -";
             // 
             // darkStatusStrip1
             // 
@@ -548,7 +548,7 @@
             this.CurrentProc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.CurrentProc.Name = "CurrentProc";
             this.CurrentProc.Size = new System.Drawing.Size(75, 25);
-            this.CurrentProc.Text = "Process: N/A";
+            this.CurrentProc.Text = "Process: -";
             // 
             // CurrentTarget
             // 
@@ -559,7 +559,7 @@
             this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CurrentTarget.Name = "CurrentTarget";
             this.CurrentTarget.Size = new System.Drawing.Size(80, 25);
-            this.CurrentTarget.Text = "Target: N/A";
+            this.CurrentTarget.Text = "Target: -";
             // 
             // SelectTargetButton
             // 

@@ -60,7 +60,6 @@ VOID OrbisService::ServiceCallback(LPVOID lpParameter, Sockets* Socket)
 	switch (Packet->CommandIndex)
 	{
 	case CMD_PRINT:
-		printf("CMD_PRINT: %s\n", Packet->Print.Data);
 		if (orbisService->Target_Print)
 			orbisService->Target_Print(Packet->IPAddr, Packet->Print.Sender, Packet->Print.Type, Packet->Print.Data);
 		break;

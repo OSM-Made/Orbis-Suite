@@ -18,6 +18,8 @@ namespace OrbisConsoleOutput
         {
             InitializeComponent();
 
+            Console.WriteLine("Hello World!...");
+
             //Events
             PS4.SelectedTarget.Events.ProcPrint += Events_ProcPrint;
         }
@@ -25,6 +27,7 @@ namespace OrbisConsoleOutput
         private static Mutex mut = new Mutex();
         private void Events_ProcPrint(object sender, ProcPrintEvent e)
         {
+            Console.WriteLine("Print!");
             // Wait until it is safe to enter.
             mut.WaitOne();
 
