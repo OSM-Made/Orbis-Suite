@@ -144,7 +144,6 @@ namespace OrbisSuite
 
                 //Set up classes
                 Internal_Events = new Events(this);
-
             }
             catch
             {

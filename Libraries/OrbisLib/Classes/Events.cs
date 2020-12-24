@@ -134,8 +134,6 @@ namespace OrbisSuite
 
         internal void Target_PrintCallback(string IPAddr, string Sender, int Type, string Data)
         {
-            Console.WriteLine("Print Call Back...");
-
             //Raise the event for the Default target and the Selected Target.
             PS4.DefaultTarget.Events.RaiseProcPrintEvent(IPAddr, Sender, Type, Data);
             PS4.SelectedTarget.Events.RaiseProcPrintEvent(IPAddr, Sender, Type, Data);
@@ -252,13 +250,9 @@ namespace OrbisSuite
         internal void Target_AvailabilityCallback(bool Available, string TargetName)
         {
             if (Available)
-            {
                 TargetAvailable?.Invoke(null, new TargetAvailableEvent(TargetName));
-            }
             else
-            {
                 TargetUnAvailable?.Invoke(null, new TargetUnAvailableEvent(TargetName));
-            }
         }
     }
 
