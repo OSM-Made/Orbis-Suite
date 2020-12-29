@@ -90,6 +90,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Json, Version=2.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Json.4.7.1\lib\net461\System.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -112,6 +115,7 @@
     <Compile Include="Classes\Target\Target.cs" />
     <Compile Include="Classes\TargetManagement.cs" />
     <Compile Include="Classes\Target\TargetEvents.cs" />
+    <Compile Include="Classes\TMDB.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Dialog\About.cs">
       <SubType>Form</SubType>
@@ -131,6 +135,12 @@
     </Compile>
     <Compile Include="Dialog\EditTarget.Designer.cs">
       <DependentUpon>EditTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\GameDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\GameDetails.Designer.cs">
+      <DependentUpon>GameDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialog\SelectProcess.cs">
       <SubType>Form</SubType>
@@ -169,6 +179,7 @@
     <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
       <Link>OrbisLibCPP.dll</Link>
     </Content>
+    <None Include="packages.config" />
     <None Include="Resources\NotDefault.ico" />
     <None Include="Resources\Default.ico" />
     <None Include="Resources\Process_Detached.png" />
@@ -183,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\EditTarget.resx">
       <DependentUpon>EditTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\GameDetails.resx">
+      <DependentUpon>GameDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\SelectProcess.resx">
       <DependentUpon>SelectProcess.cs</DependentUpon>

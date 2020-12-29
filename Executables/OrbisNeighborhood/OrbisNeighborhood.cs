@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OrbisSuite;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace nsOrbisNeighborhood
 {
@@ -132,7 +133,9 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                if(TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
+                Regex rgx = new Regex(@"[^0-9a-zA-Z +.:']");
+
+                if (TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
 
                 if(CurrentTarget.DropDownItems.Count != PS4.TargetManagement.GetTargetCount())
@@ -142,7 +145,7 @@ namespace nsOrbisNeighborhood
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
                     //Set up the Target list
-                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", Target.Title, Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
+                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", (Target.Title == "-" || Target.Title == "XMB") ? Target.Title : rgx.Replace(new TMDB(Target.Title + "_00").Names[0], ""), Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
                     if (TargetList.Rows.Count <= LoopCount)
                         TargetList.Rows.Add(obj);
                     else
@@ -522,6 +525,7 @@ namespace nsOrbisNeighborhood
                     Target_Reboot.Enabled = true;
                     Target_Shutdown.Enabled = true;
                     Target_Suspend.Enabled = true;
+                    TitleDetails.Enabled = true;
                 }
                 else
                 {
@@ -530,7 +534,27 @@ namespace nsOrbisNeighborhood
                     Target_Reboot.Enabled = false;
                     Target_Shutdown.Enabled = false;
                     Target_Suspend.Enabled = false;
+                    TitleDetails.Enabled = false;
                 }
+            }
+        }
+
+        private void TitleDetails_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Int32 selectedCellCount = TargetList.GetCellCount(DataGridViewElementStates.Selected);
+                if (selectedCellCount > 0)
+                {
+                    int index = TargetList.SelectedRows[0].Index;
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
+                    PS4.Dialogs.GameDetails(PS4.Target[TargetName].Info.Title + "_00");
+                    
+                }
+            }
+            catch
+            {
+
             }
         }
     }

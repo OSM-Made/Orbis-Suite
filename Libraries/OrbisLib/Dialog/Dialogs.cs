@@ -89,5 +89,15 @@ namespace OrbisSuite.Dialog
             SelectTarget.Close();
             return Result;
         }
+
+        public DialogResult GameDetails(string TitleID, FormStartPosition startPosition = FormStartPosition.CenterParent)
+        {
+            GameDetails GameDetails = new GameDetails(PS4, TitleID);
+            GameDetails.StartPosition = startPosition;
+            DialogResult Result = GameDetails.ShowDialog();
+
+            GameDetails.Close();
+            return Result;
+        }
     }
 }
