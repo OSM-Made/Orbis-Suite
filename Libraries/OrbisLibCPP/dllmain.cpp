@@ -20,18 +20,21 @@ extern "C"  __declspec(dllexport) void OrbisService_RegisterCallBacks(
 	DB_Touched_Callback DB_Touched,
 	Target_Availability_Callback Target_Availability)
 {
-	orbisLib->Service->Target_Print = Target_Print;
-	orbisLib->Service->Proc_Intercept = Proc_Intercept;
-	orbisLib->Service->Proc_Continue = Proc_Continue;
-	orbisLib->Service->Proc_Die = Proc_Die;
-	orbisLib->Service->Proc_Attach = Proc_Attach;
-	orbisLib->Service->Proc_Detach = Proc_Detach;
-	orbisLib->Service->Target_Suspend = Target_Suspend;
-	orbisLib->Service->Target_Resume = Target_Resume;
-	orbisLib->Service->Target_Shutdown = Target_Shutdown;
-	orbisLib->Service->Target_NewTitle = Target_NewTitle;
-	orbisLib->Service->DB_Touched = DB_Touched;
-	orbisLib->Service->Target_Availability = Target_Availability;
+	if (orbisLib->Service)
+	{
+		orbisLib->Service->Target_Print = Target_Print;
+		orbisLib->Service->Proc_Intercept = Proc_Intercept;
+		orbisLib->Service->Proc_Continue = Proc_Continue;
+		orbisLib->Service->Proc_Die = Proc_Die;
+		orbisLib->Service->Proc_Attach = Proc_Attach;
+		orbisLib->Service->Proc_Detach = Proc_Detach;
+		orbisLib->Service->Target_Suspend = Target_Suspend;
+		orbisLib->Service->Target_Resume = Target_Resume;
+		orbisLib->Service->Target_Shutdown = Target_Shutdown;
+		orbisLib->Service->Target_NewTitle = Target_NewTitle;
+		orbisLib->Service->DB_Touched = DB_Touched;
+		orbisLib->Service->Target_Availability = Target_Availability;
+	}
 }
 
 #pragma endregion

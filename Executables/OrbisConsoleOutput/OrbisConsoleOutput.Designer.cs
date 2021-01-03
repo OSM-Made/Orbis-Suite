@@ -34,9 +34,11 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
+            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.CurrentProc = new System.Windows.Forms.ToolStripLabel();
+            this.CurrentProc = new System.Windows.Forms.ToolStripButton();
             this.Settings_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.selectTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.About_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -45,8 +47,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.MainDockPanel = new DarkUI.Docking.DarkDockPanel();
-            this.CurrentTarget = new System.Windows.Forms.ToolStripDropDownButton();
-            this.selectTargetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkStatusStrip1.SuspendLayout();
             this.darkToolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -114,6 +114,17 @@
             this.darkToolStrip1.TabIndex = 6;
             this.darkToolStrip1.Text = "darkToolStrip1";
             // 
+            // CurrentTarget
+            // 
+            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
+            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurrentTarget.Name = "CurrentTarget";
+            this.CurrentTarget.Size = new System.Drawing.Size(63, 25);
+            this.CurrentTarget.Text = "Target: -";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -125,10 +136,15 @@
             // CurrentProc
             // 
             this.CurrentProc.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.CurrentProc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.CurrentProc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CurrentProc.Image = ((System.Drawing.Image)(resources.GetObject("CurrentProc.Image")));
+            this.CurrentProc.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CurrentProc.Name = "CurrentProc";
-            this.CurrentProc.Size = new System.Drawing.Size(58, 25);
+            this.CurrentProc.Size = new System.Drawing.Size(62, 25);
             this.CurrentProc.Text = "Process: -";
+            this.CurrentProc.ToolTipText = "Process: -";
+            this.CurrentProc.Click += new System.EventHandler(this.CurrentProc_Click);
             // 
             // Settings_DropDown
             // 
@@ -144,11 +160,19 @@
             this.Settings_DropDown.Size = new System.Drawing.Size(29, 25);
             this.Settings_DropDown.Text = "Settings";
             // 
+            // selectTargetToolStripMenuItem
+            // 
+            this.selectTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.selectTargetToolStripMenuItem.Name = "selectTargetToolStripMenuItem";
+            this.selectTargetToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.selectTargetToolStripMenuItem.Text = "Select Target";
+            this.selectTargetToolStripMenuItem.Click += new System.EventHandler(this.selectTargetToolStripMenuItem_Click);
+            // 
             // SettingsButton
             // 
             this.SettingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(180, 22);
+            this.SettingsButton.Size = new System.Drawing.Size(140, 22);
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
@@ -156,7 +180,7 @@
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.About_Button.Name = "About_Button";
-            this.About_Button.Size = new System.Drawing.Size(180, 22);
+            this.About_Button.Size = new System.Drawing.Size(140, 22);
             this.About_Button.Text = "About";
             this.About_Button.Click += new System.EventHandler(this.About_Button_Click);
             // 
@@ -218,25 +242,6 @@
             this.MainDockPanel.Size = new System.Drawing.Size(984, 498);
             this.MainDockPanel.TabIndex = 7;
             // 
-            // CurrentTarget
-            // 
-            this.CurrentTarget.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CurrentTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CurrentTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentTarget.Image = ((System.Drawing.Image)(resources.GetObject("CurrentTarget.Image")));
-            this.CurrentTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CurrentTarget.Name = "CurrentTarget";
-            this.CurrentTarget.Size = new System.Drawing.Size(63, 25);
-            this.CurrentTarget.Text = "Target: -";
-            // 
-            // selectTargetToolStripMenuItem
-            // 
-            this.selectTargetToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.selectTargetToolStripMenuItem.Name = "selectTargetToolStripMenuItem";
-            this.selectTargetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.selectTargetToolStripMenuItem.Text = "Select Target";
-            this.selectTargetToolStripMenuItem.Click += new System.EventHandler(this.selectTargetToolStripMenuItem_Click);
-            // 
             // OrbisConsoleOutput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,6 +254,7 @@
             this.MinimumSize = new System.Drawing.Size(362, 239);
             this.Name = "OrbisConsoleOutput";
             this.Text = "Orbis Console Output";
+            this.Load += new System.EventHandler(this.OrbisConsoleOutput_Load);
             this.darkStatusStrip1.ResumeLayout(false);
             this.darkStatusStrip1.PerformLayout();
             this.darkToolStrip1.ResumeLayout(false);
@@ -265,7 +271,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripLabel CurrentProc;
         private System.Windows.Forms.ToolStripDropDownButton Settings_DropDown;
         private System.Windows.Forms.ToolStripMenuItem SettingsButton;
         private System.Windows.Forms.ToolStripMenuItem About_Button;
@@ -277,6 +282,7 @@
         private DarkUI.Docking.DarkDockPanel MainDockPanel;
         private System.Windows.Forms.ToolStripDropDownButton CurrentTarget;
         private System.Windows.Forms.ToolStripMenuItem selectTargetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton CurrentProc;
     }
 }
 

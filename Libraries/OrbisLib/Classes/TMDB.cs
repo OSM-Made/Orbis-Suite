@@ -20,15 +20,13 @@ namespace OrbisSuite
             }
             set
             {
-                Internal_TitleID = value;
+                Internal_TitleID = value.Contains("_00") ? value : value + "_00";
 
                 //Update the url for the new TitleID
                 tmdbUrl = GetUrl();
 
                 //Download the Json document and parse the data.
                 ParseJson();
-
-                System.Console.WriteLine(tmdbUrl);
             }
         }
         public string tmdbUrl { get; private set; }
@@ -107,14 +105,17 @@ namespace OrbisSuite
                 {
                     JsonValue Temp = jNames[i];
                     if (Temp.ContainsKey("name"))
-                        Names[i] = Temp["name"];
+                    {
+                        Regex rgx = new Regex(@"[^0-9a-zA-Z +.:']");
+                        Names[i] = rgx.Replace(Temp["name"], "");
+                    }
+                        
                 }
             }
 
             if (Data.ContainsKey("icons"))
             {
                 JsonValue jIcons = Data["icons"];
-                System.Console.WriteLine(jIcons.Count);
 
                 for (int i = 0; i < jIcons.Count; i++)
                 {

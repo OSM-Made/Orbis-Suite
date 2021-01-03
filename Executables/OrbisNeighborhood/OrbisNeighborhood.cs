@@ -133,8 +133,6 @@ namespace nsOrbisNeighborhood
 
             try
             {
-                Regex rgx = new Regex(@"[^0-9a-zA-Z +.:']");
-
                 if (TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
 
@@ -145,7 +143,17 @@ namespace nsOrbisNeighborhood
                 foreach (TargetInfo Target in PS4.TargetManagement.TargetList)
                 {
                     //Set up the Target list
-                    object[] obj = { Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault, Target.Name, Target.Firmware, Target.IPAddr, Target.Available ? "Available" : "Not Available", (Target.Title == "-" || Target.Title == "XMB") ? Target.Title : rgx.Replace(new TMDB(Target.Title + "_00").Names[0], ""), Target.SDKVersion, Target.ConsoleName, Target.ConsoleType };
+                    object[] obj = {
+                        Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault,
+                        Target.Name,
+                        Target.Firmware,
+                        Target.IPAddr,
+                        Target.Available ? "Available" : "Not Available", (Target.Title == "-" || Target.Title == "XMB") ? Target.Title : new TMDB(Target.Title + "_00").Names[0],
+                        Target.SDKVersion,
+                        Target.ConsoleName,
+                        Target.ConsoleType
+                    };
+
                     if (TargetList.Rows.Count <= LoopCount)
                         TargetList.Rows.Add(obj);
                     else

@@ -45,7 +45,8 @@ namespace OrbisSPRXHelper
 
         static void Main(string[] args)
         {
-            //args = new string[] { "-PythonDirectory", "C:\\Python27\\python.exe", "-PRXDirectory", @"D:\Modding\PS4\Projects\Test\ORBIS_Debug\Test.prx", "-FTPFilePath", "/mnt/usb0/", "-DefaultTarget" };
+            //Arguments for testing.
+            //args = new string[] { "-PythonDirectory", "C:\\Python27\\python.exe", "-PRXDirectory", @"E:\Modding\PS4\Projects\Test\ORBIS_Debug\Test.prx", "-FTPFilePath", "/mnt/usb0/", "-DefaultTarget" };
 
             int NumberOfArgs = 0;
 

@@ -244,6 +244,8 @@ namespace OrbisModuleManager
 
                 Button_OpenELF.Enabled = false;
                 Button_LoadELF.Enabled = false;
+
+                FTPDataTree.Nodes.Clear();
             }
         }
 

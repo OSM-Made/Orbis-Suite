@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Json;
+using System.Drawing;
 
 namespace OrbisConsoleOutput
 {
@@ -33,34 +34,13 @@ namespace OrbisConsoleOutput
                 a();
         }
 
-        private string GetUrl(string TitleID)
-        {
-            //TitleID format must follow CUSAXXXXX_00 format.
-            if (!Regex.IsMatch(TitleID, @"CUSA\d{5}_00"))
-            {
-                throw new Exception("TitleID format incorrect!! Format must follow CUSA#####_00.");
-            }
-
-            //tmdb Key for PS3 and PS4 credits to https://github.com/Tustin
-            byte[] tmdb_key = { 0xF5, 0xDE, 0x66, 0xD2, 0x68, 0x0E, 0x25, 0x5B, 0x2D, 0xF7, 0x9E, 0x74, 0xF8, 0x90, 0xEB, 0xF3, 0x49, 0x26, 0x2F, 0x61, 0x8B, 0xCA, 0xE2, 0xA9,
-                                0xAC, 0xCD, 0xEE, 0x51, 0x56, 0xCE, 0x8D, 0xF2, 0xCD, 0xF2, 0xD4, 0x8C, 0x71, 0x17, 0x3C, 0xDC, 0x25, 0x94, 0x46, 0x5B, 0x87, 0x40, 0x5D, 0x19,
-                                0x7C, 0xF1, 0xAE, 0xD3, 0xB7, 0xE9, 0x67, 0x1E, 0xEB, 0x56, 0xCA, 0x67, 0x53, 0xC2, 0xE6, 0xB0,
-                              };
-
-            //Make a new Hmac sha1 digest with the key tmdb_key
-            HMACSHA1 Digest = new HMACSHA1(tmdb_key);
-
-            //Compute new digest using the data of the TitleID
-            Digest.ComputeHash(Encoding.UTF8.GetBytes(TitleID));
-
-            //return the url for the json using the TitleID and generated Digest.
-            return $"https://tmdb.np.dl.playstation.net/tmdb2/{TitleID}_{BitConverter.ToString(Digest.Hash).Replace("-", "")}/{TitleID}.json";
-        }
-
         public OrbisConsoleOutput()
         {
             InitializeComponent();
+        }
 
+        private void OrbisConsoleOutput_Load(object sender, EventArgs e)
+        {
             //Events
             PS4.Events.TargetAvailable += Events_TargetAvailable;
             PS4.Events.TargetUnAvailable += Events_TargetUnAvailable;
@@ -70,6 +50,8 @@ namespace OrbisConsoleOutput
             PS4.SelectedTarget.Events.ProcDetach += Events_ProcDetach;
 
             PS4.SelectedTarget.Events.ProcPrint += Events_ProcPrint;
+
+            UpdateTarget();
         }
 
         #region Events
@@ -137,13 +119,13 @@ namespace OrbisConsoleOutput
             if (state)
             {
                 Button_Attach.Enabled = true;
+                CurrentProc.Enabled = true;
 
                 if (IsAttached)
                 {
                     //Enable Controls
                     Button_Detach.Enabled = true;
-                    CurrentProc.Text = string.Format("Process: {0}", PS4.SelectedTarget.Info.CurrentProc);
-
+                    CurrentProc.Text = string.Format("Process: {0}({1})", PS4.SelectedTarget.Info.CurrentProc, PS4.SelectedTarget.Info.Title);
                     Button_Detach.Enabled = true;
                 }
                 else
@@ -159,7 +141,11 @@ namespace OrbisConsoleOutput
                 //Disable Controls
                 Button_Attach.Enabled = false;
                 Button_Detach.Enabled = false;
+                CurrentProc.Enabled = false;
             }
+
+            //Fixes some bug with toolstripbuttons not resizing.
+            CurrentProc.Width = TextRenderer.MeasureText(CurrentProc.Text, new Font("Segoe UI", 9)).Width + 4; 
         }
 
         public void UpdateTarget()
@@ -257,7 +243,14 @@ namespace OrbisConsoleOutput
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            //MainDockPanel.rem
+            foreach (OutputControl Content in MainDockPanel.GetDocuments())
+                Content.Clear();
+        }
+
+        private void CurrentProc_Click(object sender, EventArgs e)
+        {
+            if (PS4.SelectedTarget.Info.Available)
+                PS4.SelectedTarget.Process.SelectProcess();
         }
 
         #endregion
