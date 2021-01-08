@@ -36,9 +36,9 @@
         <File Id="OrbisModuleManager" Name="OrbisModuleManager.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <File Id="OrbisTargetSettings" Name="OrbisTargetSettings.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <File Id="OrbisNeighborhood" Name="OrbisNeighborhood.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
-        <!-- <File Id="OrbisDebugger" Name="OrbisDebugger.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" /> -->
+        <File Id="OrbisDebugger" Name="OrbisDebugger.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
         <File Id="OrbisSPRXHelper" Name="OrbisSPRXHelper.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
-        <!-- <File Id="OrbisConsoleOutput" Name="OrbisConsoleOutput.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" /> -->
+        <File Id="OrbisConsoleOutput" Name="OrbisConsoleOutput.exe"  Source="$(var.ProjectDir)Assets\Program Files x64\" />
 
         <!-- Add Reference dll -->
         <File Id="OrbisLib" Name="OrbisLib.dll" Source="$(var.ProjectDir)\Assets\Program Files x64\" />
@@ -86,21 +86,21 @@
                   Icon="OrbisNeighborhood.ico"
                   />
 
-        <!-- <Shortcut Id="OrbisConsoleOutputShortcut"
+        <Shortcut Id="OrbisConsoleOutputShortcut"
                   Name="Orbis ConsoleOutput"
                   Target="[INSTALLFOLDER]OrbisConsoleOutput.exe"
                   Directory="InstallProgramMenuFolder"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="OrbisConsoleOutput.ico"
-                  /> -->
+                  />
 
-        <!-- <Shortcut Id="OrbisDebugger"
+        <Shortcut Id="OrbisDebugger"
                   Name="Orbis Debugger"
                   Target="[INSTALLFOLDER]OrbisDebugger.exe"
                   Directory="InstallProgramMenuFolder"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="OrbisDebugger.ico"
-                  /> -->
+                  />
 
         <!-- Our unique key for this component/shortcut -->
         <RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />

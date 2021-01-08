@@ -170,6 +170,9 @@ namespace OrbisModuleManager
 
                     Button_OpenELF.Enabled = true;
                     Button_LoadELF.Enabled = true;
+
+                    //Updates too often??
+                    //UpdateModuleList();
                 }
                 else
                 {
@@ -303,6 +306,7 @@ namespace OrbisModuleManager
                 CurrentTarget.Text = "Target: " + SelectedTarget;
                 PS4.TargetManagement.SetSelected(SelectedTarget);
                 UpdateTarget();
+                UpdateModuleList();
             }
             catch
             {

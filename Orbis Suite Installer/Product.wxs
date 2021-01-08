@@ -42,8 +42,8 @@
     <Icon Id="OrbisModuleManager.ico" SourceFile="$(var.ProjectDir)Assets\OrbisModuleManager.ico" />
     <Icon Id="OrbisTargetSettings.ico" SourceFile="$(var.ProjectDir)Assets\OrbisTargetSettings.ico" />
     <Icon Id="OrbisNeighborhood.ico" SourceFile="$(var.ProjectDir)Assets\OrbisNeighborhood.ico" />
-    <!-- <Icon Id="OrbisConsoleOutput.ico" SourceFile="$(var.ProjectDir)Assets\OrbisConsoleOutput.ico" /> -->
-    <!-- <Icon Id="OrbisDebugger.ico" SourceFile="$(var.ProjectDir)Assets\OrbisDebugger.ico" /> -->
+    <Icon Id="OrbisConsoleOutput.ico" SourceFile="$(var.ProjectDir)Assets\OrbisConsoleOutput.ico" />
+    <Icon Id="OrbisDebugger.ico" SourceFile="$(var.ProjectDir)Assets\OrbisDebugger.ico" />
 
     <!-- Use the icon.ico icon for this installer (shows up in Add/Remove programs) -->
     <Property Id="ARPPRODUCTICON">OrbisTaskbarApp.ico</Property>

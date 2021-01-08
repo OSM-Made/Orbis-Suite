@@ -340,6 +340,8 @@ int OrbisProc::DumpModule(char* IPAddr, char* ModuleName, int* Len, char* Out)
 	Sockets* Sock;
 	int Status = orbisLib->API->CallLong(&Sock, IPAddr, &Packet);
 
+	printf("Status = %d\n", Status);
+
 	if (!Sock->Receive((char*)Len, sizeof(int)))
 	{
 		orbisLib->API->FinishCall(&Sock);

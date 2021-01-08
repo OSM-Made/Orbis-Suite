@@ -210,7 +210,7 @@ copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)Libraries\$(TargetNa
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Gregory\Source\Repos\Orbis Suite\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Modding\PS4\Projects\2021\Orbis-Suite\x64\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>OrbisLibCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>

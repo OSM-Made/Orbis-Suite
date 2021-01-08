@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisSPRXHelper", "Executab
 		{4F776AAC-2760-435F-B4BF-758776426FA7} = {4F776AAC-2760-435F-B4BF-758776426FA7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisDebugger", "OrbisDebugger\OrbisDebugger.csproj", "{54A3549B-A20C-4879-BE26-6071E0BF6AA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisDebugger", "Executables\OrbisDebugger\OrbisDebugger.csproj", "{54A3549B-A20C-4879-BE26-6071E0BF6AA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -267,14 +267,14 @@ Global
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Debug|x86.Build.0 = Debug|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x64.ActiveCfg = Release|Any CPU
-		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x64.Build.0 = Release|Any CPU
+		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x64.ActiveCfg = Release|x64
+		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x64.Build.0 = Release|x64
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x86.ActiveCfg = Release|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Release|x86.Build.0 = Release|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|Any CPU.ActiveCfg = Release|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|Any CPU.Build.0 = Release|Any CPU
-		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x64.ActiveCfg = Release|Any CPU
-		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x64.Build.0 = Release|Any CPU
+		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x64.ActiveCfg = Release|x64
+		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x64.Build.0 = Release|x64
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x86.ActiveCfg = Release|Any CPU
 		{54A3549B-A20C-4879-BE26-6071E0BF6AA3}.Service|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
