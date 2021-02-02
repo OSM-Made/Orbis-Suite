@@ -246,15 +246,20 @@ bool OrbisTargetManagement::GetTarget(const char* TargetName, DB_TargetInfo* Out
 		Out->Available = sqlite3_column_int(stmt, 5);
 		strcpy_s(Out->SDKVersion, (const char*)sqlite3_column_text(stmt, 6));
 		strcpy_s(Out->SoftwareVersion, (const char*)sqlite3_column_text(stmt, 7));
-		Out->CPUTemp = sqlite3_column_int(stmt, 8);
-		Out->SOCTemp = sqlite3_column_int(stmt, 9);
-		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 11));
-		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 12));
-		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 13));
-		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 14));
-		Out->Attached = sqlite3_column_int(stmt, 15);
-		strcpy_s(Out->CurrentProc, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out->FactorySoftwareVersion, (const char*)sqlite3_column_text(stmt, 8));
+		Out->CPUTemp = sqlite3_column_int(stmt, 9);
+		Out->SOCTemp = sqlite3_column_int(stmt, 10);
+		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out->MotherboardSerial, (const char*)sqlite3_column_text(stmt, 13));
+		strcpy_s(Out->Serial, (const char*)sqlite3_column_text(stmt, 14));
+		strcpy_s(Out->Model, (const char*)sqlite3_column_text(stmt, 15));
+		strcpy_s(Out->MACAdressLAN, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 17));
+		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 18));
+		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 19));
+		Out->Attached = sqlite3_column_int(stmt, 20);
+		strcpy_s(Out->CurrentProc, (const char*)sqlite3_column_text(stmt, 21));
 
 		Result = true;
 	}
@@ -406,10 +411,18 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		Targets[ID].Available = true;
 		sprintf_s(Targets[ID].SDKVersion, "%01X.%03X.%03X", (TargetInfo.SDKVersion >> 24) & 0xFF, (TargetInfo.SDKVersion >> 12) & 0xFFF, TargetInfo.SDKVersion & 0xFFF);
 		sprintf_s(Targets[ID].SoftwareVersion, "%01X.%02X", (TargetInfo.SoftwareVersion >> 24) & 0xFF, (TargetInfo.SoftwareVersion >> 16) & 0xFF);
+		sprintf_s(Targets[ID].FactorySoftwareVersion, "%01X.%03X.%03X", (TargetInfo.FactorySoftwareVersion >> 24) & 0xFF, (TargetInfo.FactorySoftwareVersion >> 12) & 0xFFF, TargetInfo.FactorySoftwareVersion & 0xFFF);
 		Targets[ID].CPUTemp = TargetInfo.CPUTemp;
 		Targets[ID].SOCTemp = TargetInfo.SOCTemp;
 		strcpy_s(Targets[ID].CurrentTitleID, TargetInfo.CurrentTitleID);
 		strcpy_s(Targets[ID].ConsoleName, TargetInfo.ConsoleName);
+		//strcpy_s(Targets[ID].MotherboardSerial, TargetInfo.MotherboardSerial);
+		/*strcpy_s(Targets[ID].Serial, TargetInfo.Serial);
+		strcpy_s(Targets[ID].Model, TargetInfo.Model);
+		sprintf_s(Targets[ID].MACAdressLAN, "%02X:%02X:%02X:%02X:%02X:%02X",
+			TargetInfo.MACAdressLAN[0], TargetInfo.MACAdressLAN[1], TargetInfo.MACAdressLAN[2], 
+			TargetInfo.MACAdressLAN[3], TargetInfo.MACAdressLAN[4], TargetInfo.MACAdressLAN[5]);*/
+
 		sprintf_s(Targets[ID].IDPS, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
 			(TargetInfo.IDPS[0] & 0xffU),
 			(TargetInfo.IDPS[1] & 0xffU),
@@ -457,7 +470,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 	}
 
 	sqlite3_stmt *stmt;
-	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, CPUTemp=?, SOCTemp=?, CurrentTitleID=?, ConsoleName=?, IDPS=?, PSID=?, ConsoleType=?, Attached=?, CurrentProc=? WHERE TargetName=?", -1, &stmt, NULL);
+	rc = sqlite3_prepare_v2(db, "UPDATE Targets set Available=?, SDKVersion=?, SoftwareVersion=?, FactorySoftwareVersion=?, CPUTemp=?, SOCTemp=?, CurrentTitleID=?, ConsoleName=?, MotherboardSerial=?, Serial=?, Model=?, MACAddressLAN=?, IDPS=?, PSID=?, ConsoleType=?, Attached=?, CurrentProc=? WHERE TargetName=?", -1, &stmt, NULL);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to prep stmt: %s\n", sqlite3_errmsg(db));
@@ -493,7 +506,16 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 4, Targets[ID].CPUTemp);
+	rc = sqlite3_bind_text(stmt, 4, Targets[ID].FactorySoftwareVersion, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind FactorySoftwareVersion: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_int(stmt, 5, Targets[ID].CPUTemp);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind CPUTemp: %s\n", sqlite3_errmsg(db));
@@ -502,7 +524,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 5, Targets[ID].SOCTemp);
+	rc = sqlite3_bind_int(stmt, 6, Targets[ID].SOCTemp);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind SOCTemp: %s\n", sqlite3_errmsg(db));
@@ -511,7 +533,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 6, Targets[ID].CurrentTitleID, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 7, Targets[ID].CurrentTitleID, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind CurrentTitleID: %s\n", sqlite3_errmsg(db));
@@ -520,7 +542,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 7, Targets[ID].ConsoleName, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 8, Targets[ID].ConsoleName, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind ConsoleName: %s\n", sqlite3_errmsg(db));
@@ -529,7 +551,43 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 8, Targets[ID].IDPS, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 9, Targets[ID].MotherboardSerial, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind MotherboardSerial: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 10, Targets[ID].Serial, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Serial: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 11, Targets[ID].Model, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind Model: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 12, Targets[ID].MACAdressLAN, -1, SQLITE_TRANSIENT);
+	if (rc != SQLITE_OK)
+	{
+		printf("Failed to bind MACAdressLAN: %s\n", sqlite3_errmsg(db));
+
+		sqlite3_close(db);
+		return false;
+	}
+
+	rc = sqlite3_bind_text(stmt, 13, Targets[ID].IDPS, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind IDPS: %s\n", sqlite3_errmsg(db));
@@ -538,7 +596,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 9, Targets[ID].PSID, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 14, Targets[ID].PSID, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind PSID: %s\n", sqlite3_errmsg(db));
@@ -547,7 +605,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 10, Targets[ID].ConsoleType, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 15, Targets[ID].ConsoleType, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind ConsoleType: %s\n", sqlite3_errmsg(db));
@@ -556,7 +614,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_int(stmt, 11, Targets[ID].Attached);
+	rc = sqlite3_bind_int(stmt, 16, Targets[ID].Attached);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Attached: %s\n", sqlite3_errmsg(db));
@@ -565,7 +623,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 12, Targets[ID].CurrentProc, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 17, Targets[ID].CurrentProc, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind CurrentProc: %s\n", sqlite3_errmsg(db));
@@ -574,7 +632,7 @@ bool OrbisTargetManagement::UpdateTargetExtInfo(int ID)
 		return false;
 	}
 
-	rc = sqlite3_bind_text(stmt, 13, Targets[ID].Name, -1, SQLITE_TRANSIENT);
+	rc = sqlite3_bind_text(stmt, 18, Targets[ID].Name, -1, SQLITE_TRANSIENT);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to bind Name: %s\n", sqlite3_errmsg(db));
@@ -866,15 +924,20 @@ bool OrbisTargetManagement::GetDefaultTarget(DB_TargetInfo* Out)
 		Out->Available = sqlite3_column_int(stmt, 5);
 		strcpy_s(Out->SDKVersion, (const char*)sqlite3_column_text(stmt, 6));
 		strcpy_s(Out->SoftwareVersion, (const char*)sqlite3_column_text(stmt, 7));
-		Out->CPUTemp = sqlite3_column_int(stmt, 8);
-		Out->SOCTemp = sqlite3_column_int(stmt, 9);
-		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 11));
-		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 12));
-		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 13));
-		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 14));
-		Out->Attached = sqlite3_column_int(stmt, 15);
-		strcpy_s(Out->CurrentProc, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out->FactorySoftwareVersion, (const char*)sqlite3_column_text(stmt, 8));
+		Out->CPUTemp = sqlite3_column_int(stmt, 9);
+		Out->SOCTemp = sqlite3_column_int(stmt, 10);
+		strcpy_s(Out->CurrentTitleID, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out->ConsoleName, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out->MotherboardSerial, (const char*)sqlite3_column_text(stmt, 13));
+		strcpy_s(Out->Serial, (const char*)sqlite3_column_text(stmt, 14));
+		strcpy_s(Out->Model, (const char*)sqlite3_column_text(stmt, 15));
+		strcpy_s(Out->MACAdressLAN, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out->IDPS, (const char*)sqlite3_column_text(stmt, 17));
+		strcpy_s(Out->PSID, (const char*)sqlite3_column_text(stmt, 18));
+		strcpy_s(Out->ConsoleType, (const char*)sqlite3_column_text(stmt, 19));
+		Out->Attached = sqlite3_column_int(stmt, 20);
+		strcpy_s(Out->CurrentProc, (const char*)sqlite3_column_text(stmt, 21));
 
 		Result = true;
 	}
@@ -962,15 +1025,20 @@ bool OrbisTargetManagement::GetTargetList(DB_TargetInfo Out[])
 		Out[LoopCount].Available = sqlite3_column_int(stmt, 5);
 		strcpy_s(Out[LoopCount].SDKVersion, (const char*)sqlite3_column_text(stmt, 6));
 		strcpy_s(Out[LoopCount].SoftwareVersion, (const char*)sqlite3_column_text(stmt, 7));
-		Out[LoopCount].CPUTemp = sqlite3_column_int(stmt, 8);
-		Out[LoopCount].SOCTemp = sqlite3_column_int(stmt, 9);
-		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 10));
-		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 11));
-		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 12));
-		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 13));
-		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 14));
-		Out[LoopCount].Attached = sqlite3_column_int(stmt, 15);
-		strcpy_s(Out[LoopCount].CurrentProc, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out[LoopCount].FactorySoftwareVersion, (const char*)sqlite3_column_text(stmt, 8));
+		Out[LoopCount].CPUTemp = sqlite3_column_int(stmt, 9);
+		Out[LoopCount].SOCTemp = sqlite3_column_int(stmt, 10);
+		strcpy_s(Out[LoopCount].CurrentTitleID, (const char*)sqlite3_column_text(stmt, 11));
+		strcpy_s(Out[LoopCount].ConsoleName, (const char*)sqlite3_column_text(stmt, 12));
+		strcpy_s(Out[LoopCount].MotherboardSerial, (const char*)sqlite3_column_text(stmt, 13));
+		strcpy_s(Out[LoopCount].Serial, (const char*)sqlite3_column_text(stmt, 14));
+		strcpy_s(Out[LoopCount].Model, (const char*)sqlite3_column_text(stmt, 15));
+		strcpy_s(Out[LoopCount].MACAdressLAN, (const char*)sqlite3_column_text(stmt, 16));
+		strcpy_s(Out[LoopCount].IDPS, (const char*)sqlite3_column_text(stmt, 17));
+		strcpy_s(Out[LoopCount].PSID, (const char*)sqlite3_column_text(stmt, 18));
+		strcpy_s(Out[LoopCount].ConsoleType, (const char*)sqlite3_column_text(stmt, 19));
+		Out[LoopCount].Attached = sqlite3_column_int(stmt, 20);
+		strcpy_s(Out[LoopCount].CurrentProc, (const char*)sqlite3_column_text(stmt, 21));
 
 		LoopCount++;
 	}

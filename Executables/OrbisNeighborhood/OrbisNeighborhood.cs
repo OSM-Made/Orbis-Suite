@@ -131,7 +131,7 @@ namespace nsOrbisNeighborhood
         {
             SetStatus("Updating List...");
 
-            try
+            //try
             {
                 if (TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
@@ -144,11 +144,12 @@ namespace nsOrbisNeighborhood
                 {
                     //Set up the Target list
                     object[] obj = {
-                        Target.Name.Equals(PS4.TargetManagement.DefaultTarget.Name) ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault,
+                        Target.Default ? nsOrbisNeighborhood.Properties.Resources.Default : nsOrbisNeighborhood.Properties.Resources.NotDefault,
                         Target.Name,
                         Target.Firmware,
                         Target.IPAddr,
-                        Target.Available ? "Available" : "Not Available", (Target.Title == "-" || Target.Title == "XMB") ? Target.Title : new TMDB(Target.Title + "_00").Names[0],
+                        Target.Available ? "Available" : "Not Available",
+                        "-",//(Target.Title.Equals("-") || Target.Title.Equals("XMB")) ?Target.Title : new TMDB(Target.Title + "_00").Names[0],
                         Target.SDKVersion,
                         Target.ConsoleName,
                         Target.ConsoleType
@@ -195,10 +196,10 @@ namespace nsOrbisNeighborhood
                     Button_Detach.Enabled = false;
                 }
             }
-            catch
+            /*catch
             {
 
-            }
+            }*/
 
             SetStatus("Ready");
         }
@@ -534,6 +535,7 @@ namespace nsOrbisNeighborhood
                     Target_Shutdown.Enabled = true;
                     Target_Suspend.Enabled = true;
                     TitleDetails.Enabled = true;
+                    Locate_Target.Enabled = true;
                 }
                 else
                 {
@@ -543,6 +545,7 @@ namespace nsOrbisNeighborhood
                     Target_Shutdown.Enabled = false;
                     Target_Suspend.Enabled = false;
                     TitleDetails.Enabled = false;
+                    Locate_Target.Enabled = false;
                 }
             }
         }
@@ -558,6 +561,24 @@ namespace nsOrbisNeighborhood
                     string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
                     PS4.Dialogs.GameDetails(PS4.Target[TargetName].Info.Title + "_00");
                     
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void locateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Int32 selectedCellCount = TargetList.GetCellCount(DataGridViewElementStates.Selected);
+                if (selectedCellCount > 0)
+                {
+                    int index = TargetList.SelectedRows[0].Index;
+                    string TargetName = Convert.ToString(TargetList.Rows[index].Cells["mTargetName"].Value);
+                    PS4.Target[TargetName].Beep(2);
                 }
             }
             catch

@@ -149,12 +149,18 @@ namespace OrbisSuite
             DB_TargetInfo RawTargetInfo;
             Imports.TargetManagement.GetTarget(TargetName, out RawTargetInfo);
 
-            return new DetailedTargetInfo(Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
+            return new DetailedTargetInfo(
+                Utilities.CleanByteToString(RawTargetInfo.SDKVersion),
                 Utilities.CleanByteToString(RawTargetInfo.SoftwareVersion),
+                Utilities.CleanByteToString(RawTargetInfo.FactorySoftwareVersion),
                 RawTargetInfo.CPUTemp,
                 RawTargetInfo.SOCTemp,
                 Utilities.CleanByteToString(RawTargetInfo.CurrentTitleID),
                 Utilities.CleanByteToString(RawTargetInfo.ConsoleName),
+                Utilities.CleanByteToString(RawTargetInfo.MotherboardSerial),
+                Utilities.CleanByteToString(RawTargetInfo.Serial),
+                Utilities.CleanByteToString(RawTargetInfo.Model),
+                Utilities.CleanByteToString(RawTargetInfo.MACAdressLAN),
                 Utilities.CleanByteToString(RawTargetInfo.IDPS),
                 Utilities.CleanByteToString(RawTargetInfo.PSID),
                 Utilities.CleanByteToString(RawTargetInfo.ConsoleType));

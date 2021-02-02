@@ -127,12 +127,22 @@ namespace OrbisSuite
         public byte[] SDKVersion;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public byte[] SoftwareVersion;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        public byte[] FactorySoftwareVersion;
         public int CPUTemp;
         public int SOCTemp;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public byte[] CurrentTitleID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 100)]
         public byte[] ConsoleName;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        public byte[] MotherboardSerial;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public byte[] Serial;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
+        public byte[] Model;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 18)]
+        public byte[] MACAdressLAN;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
         public byte[] IDPS;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
@@ -249,22 +259,34 @@ namespace OrbisSuite
     {
         public string SDKVersion;
         public string SoftwareVersion;
+        public string FactorySoftwareVersion;
         public int CPUTemp;
         public int SOCTemp;
         public string CurrentTitleID;
         public string ConsoleName;
+        public string MotherboardSerial;
+        public string Serial;
+        public string Model;
+        public string MACAddressLAN;
         public string IDPS;
         public string PSID;
         public string ConsoleType;
 
-        public DetailedTargetInfo(string SDKVersion, string SoftwareVersion, int CPUTemp, int SOCTemp, string CurrentTitleID, string ConsoleName, string IDPS, string PSID, string ConsoleType)
+        public DetailedTargetInfo(string SDKVersion, string SoftwareVersion, string FactorySoftwareVersion, int CPUTemp, int SOCTemp, 
+            string CurrentTitleID, string ConsoleName, string MotherboardSerial, string Serial, string Model, string MACAddressLAN, 
+            string IDPS, string PSID, string ConsoleType)
         {
             this.SDKVersion = SDKVersion;
             this.SoftwareVersion = SoftwareVersion;
+            this.FactorySoftwareVersion = FactorySoftwareVersion;
             this.CPUTemp = CPUTemp;
             this.SOCTemp = SOCTemp;
             this.CurrentTitleID = CurrentTitleID;
             this.ConsoleName = ConsoleName;
+            this.MotherboardSerial = MotherboardSerial;
+            this.Serial = Serial;
+            this.Model = Model;
+            this.MACAddressLAN = MACAddressLAN;
             this.IDPS = IDPS;
             this.PSID = PSID;
             this.ConsoleType = ConsoleType;
@@ -274,10 +296,15 @@ namespace OrbisSuite
         {
             SDKVersion = "-";
             SoftwareVersion = "-";
+            FactorySoftwareVersion = "-";
             CPUTemp = 0;
             SOCTemp = 0;
             CurrentTitleID = "-";
             ConsoleName = "-";
+            MotherboardSerial = "-";
+            Serial = "-";
+            Model = "-";
+            MACAddressLAN = "-";
             IDPS = "-";
             PSID = "-";
             ConsoleType = "-";

@@ -195,10 +195,15 @@ struct RESP_TargetInfo
 {
 	int32_t SDKVersion;
 	int32_t SoftwareVersion;
+	int32_t FactorySoftwareVersion;
 	int32_t CPUTemp;
 	int32_t SOCTemp;
 	char CurrentTitleID[10];
 	char ConsoleName[100];
+	char MotherboardSerial[14];
+	char Serial[10];
+	char Model[9];
+	unsigned char MACAdressLAN[6];
 	char IDPS[16];
 	char PSID[16];
 	int32_t ConsoleType;
@@ -216,10 +221,15 @@ struct DB_TargetInfo
 	int Available;
 	char SDKVersion[14];
 	char SoftwareVersion[10];
+	char FactorySoftwareVersion[14];
 	int32_t CPUTemp;
 	int32_t SOCTemp;
 	char CurrentTitleID[10];
 	char ConsoleName[100];
+	char MotherboardSerial[14];
+	char Serial[10];
+	char Model[9];
+	char MACAdressLAN[18];
 	char IDPS[40];
 	char PSID[40];
 	char ConsoleType[20];

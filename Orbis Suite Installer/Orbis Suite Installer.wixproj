@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ILMerge.3.0.41\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -8,6 +9,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>Orbis_Suite_Installer</OutputName>
     <OutputType>Package</OutputType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -63,6 +66,9 @@
       <Name>WixUIExtension</Name>
     </WixExtension>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
@@ -81,9 +87,9 @@
     <Exec Command="copy &quot;..\Executables\OrbisSuiteService.exe&quot; &quot;Assets\Program Files x64\OrbisSuiteService.exe&quot;" />
     <Exec Command="copy &quot;..\Executables\OrbisTargetSettings.exe&quot; &quot;Assets\Program Files x64\OrbisTargetSettings.exe&quot;" />
     <Exec Command="copy &quot;..\Executables\OrbisTaskbarApp.exe&quot; &quot;Assets\Program Files x64\OrbisTaskbarApp.exe&quot;" />
-    <Exec Command="copy &quot;..\Executables\OrbisDebugger.exe&quot; &quot;Assets\Program Files x64\OrbisDebugger.exe&quot;"/>
-    <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;"/>
-    <Exec Command="copy &quot;..\Executables\OrbisConsoleOutput.exe&quot; &quot;Assets\Program Files x64\OrbisConsoleOutput.exe&quot;"/>
+    <Exec Command="copy &quot;..\Executables\OrbisDebugger.exe&quot; &quot;Assets\Program Files x64\OrbisDebugger.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisSPRXHelper.exe&quot; &quot;Assets\Program Files x64\OrbisSPRXHelper.exe&quot;" />
+    <Exec Command="copy &quot;..\Executables\OrbisConsoleOutput.exe&quot; &quot;Assets\Program Files x64\OrbisConsoleOutput.exe&quot;" />
     <!-- Copy all the scripts to the directories -->
     <Exec Command="copy &quot;..\Scripts\make_fself.py&quot; &quot;Assets\Program Data\make_fself.py&quot;" />
     <!-- Copy all the payloads to the directories -->
@@ -107,5 +113,11 @@
     <!-- Rename and move final MSI -->
     <Exec Command="if not exist Installers mkdir Installers" />
     <Exec Command="copy &quot;$(TargetDir)en-us\$(OutputName)$(TargetExt)&quot; &quot;$(SolutionDir)Orbis Suite Installer\Installers\Orbis Suite-%(AssemblyVersion.Version)-$(Platform)$(TargetExt)&quot;" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.41\build\ILMerge.props'))" />
   </Target>
 </Project>

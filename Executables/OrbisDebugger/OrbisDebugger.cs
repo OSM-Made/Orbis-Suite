@@ -1,6 +1,10 @@
-﻿using DarkUI.Forms;
+﻿using DarkUI.Docking;
+using DarkUI.Forms;
+using OrbisDebugger.Controls;
 using OrbisSuite;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace OrbisDebugger
@@ -8,6 +12,8 @@ namespace OrbisDebugger
     public partial class OrbisDebugger : DarkForm
     {
         OrbisLib PS4 = new OrbisLib();
+
+        public object SerializerHelper { get; private set; }
 
         public OrbisDebugger()
         {
@@ -26,8 +32,6 @@ namespace OrbisDebugger
             PS4.Events.DBTouched += Events_DBTouched;
             PS4.Events.TargetAvailable += Events_TargetAvailable;
             PS4.Events.TargetUnAvailable += Events_TargetUnAvailable;
-
-
         }
 
         #region Target Availability
@@ -469,6 +473,10 @@ namespace OrbisDebugger
 
         }
 
+        //
+        // Execution control
+        //
+
         private void Button_PauseProcess_Click(object sender, EventArgs e)
         {
             //PS4.SelectedTarget.Process.
@@ -493,6 +501,10 @@ namespace OrbisDebugger
         {
 
         }
+
+        //
+        // Windows
+        //
 
         private void Button_ConsoleWindow_Click(object sender, EventArgs e)
         {
@@ -539,6 +551,10 @@ namespace OrbisDebugger
 
         }
 
+        //
+        // Target Controls
+        //
+
         private void Button_KillProcess_Click(object sender, EventArgs e)
         {
             PS4.SelectedTarget.Process.Kill();
@@ -547,6 +563,113 @@ namespace OrbisDebugger
         private void Button_RebootTarget_Click(object sender, EventArgs e)
         {
             PS4.SelectedTarget.Reboot();
+        }
+
+        #endregion
+
+        #region Windows
+        
+        //Left
+
+        //Documents
+        public ScratchPad ScratchPadWindow = new ScratchPad();
+
+
+        //Bottom
+        
+
+
+        private void RegisterWindows()
+        {
+
+        }
+
+        #endregion 
+
+        #region MainDock
+
+        private void SetupDockSize()
+        {
+            DockPanelState State = MainDock.GetDockPanelState();
+            State.Regions.Add(new DockRegionState(DarkDockArea.Document));
+            State.Regions.Add(new DockRegionState(DarkDockArea.Left, new Size(492, 811)));
+            State.Regions.Add(new DockRegionState(DarkDockArea.Right, new Size(200, 100)));
+            State.Regions.Add(new DockRegionState(DarkDockArea.Bottom, new Size(1040, 270)));
+        }
+
+        private void SetWindowButtons()
+        {
+            //Button_ConsoleWindow.Checked = MainDock.ContainsContent(_ConsoleWindow);
+            //Button_RegisterWindow.Checked = MainDock.ContainsContent(_RegisterWindow);
+            //Button_ProcessWatchpointsWindow.Checked = MainDock.ContainsContent(_WatchpointWindow);
+            //Button_ProcessBreakpointWindow.Checked = MainDock.ContainsContent(_BreakpointWindow);
+            //Button_ProcessInfoWindow.Checked = MainDock.ContainsContent(_ProcessInfoWindow);
+            Button_ScratchWindow.Checked = MainDock.ContainsContent(ScratchPadWindow);
+            //Button_ProcessCallStackWindow.Checked = MainDock.ContainsContent(_CallStackWindow);
+        }
+
+        void CloseAllWindows()
+        {
+            SetWindowButtons();
+
+            foreach (DarkDockContent Content in MainDock.GetContent(DarkDockArea.Document))
+                MainDock.RemoveContent(Content);
+
+            foreach (DarkDockContent Content in MainDock.GetContent(DarkDockArea.Left))
+                MainDock.RemoveContent(Content);
+
+            foreach (DarkDockContent Content in MainDock.GetContent(DarkDockArea.Bottom))
+                MainDock.RemoveContent(Content);
+
+            //foreach (var toolWindow in _toolWindows)
+            //    MainDock.RemoveContent(toolWindow);
+        }
+
+        bool AnyWindowsOpen()
+        {
+            return ((MainDock.GetContent(DarkDockArea.Document).Count > 0) || (MainDock.GetContent(DarkDockArea.Left).Count > 0) || (MainDock.GetContent(DarkDockArea.Bottom).Count > 0));
+        }
+
+        //Adding Windows
+
+        private void AddLeftcontent(DarkToolWindow toolWindow)
+        {
+            DarkDockGroup Group = null;
+            List<DarkDockContent> LeftContent = MainDock.GetContent(DarkDockArea.Left);
+
+            foreach (DarkDockContent Content in LeftContent)
+            {
+                if ((Content != null))
+                {
+                    Group = Content.DockGroup;
+                    break;
+                }
+            }
+
+            if (Group != null)
+                MainDock.AddContent(toolWindow, Group);
+            else
+                MainDock.AddContent(toolWindow);
+        }
+
+        private void AddBottomcontent(DarkToolWindow toolWindow)
+        {
+            DarkDockGroup Group = null;
+            List<DarkDockContent> BottomContent = MainDock.GetContent(DarkDockArea.Bottom);
+
+            foreach (DarkDockContent Content in BottomContent)
+            {
+                if ((Content != null))
+                {
+                    Group = Content.DockGroup;
+                    break;
+                }
+            }
+
+            if (Group != null)
+                MainDock.AddContent(toolWindow, Group);
+            else
+                MainDock.AddContent(toolWindow);
         }
 
         #endregion
