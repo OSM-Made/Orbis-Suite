@@ -131,7 +131,7 @@ namespace nsOrbisNeighborhood
         {
             SetStatus("Updating List...");
 
-            //try
+            try
             {
                 if (TargetList.Rows.Count != PS4.TargetManagement.GetTargetCount())
                     TargetList.Rows.Clear();
@@ -149,7 +149,7 @@ namespace nsOrbisNeighborhood
                         Target.Firmware,
                         Target.IPAddr,
                         Target.Available ? "Available" : "Not Available",
-                        "-",//(Target.Title.Equals("-") || Target.Title.Equals("XMB")) ?Target.Title : new TMDB(Target.Title + "_00").Names[0],
+                        (Target.Title.Equals("-") || Target.Title.Equals("XMB")) ?Target.Title : new TMDB(Target.Title + "_00").Names[0],
                         Target.SDKVersion,
                         Target.ConsoleName,
                         Target.ConsoleType
@@ -196,10 +196,10 @@ namespace nsOrbisNeighborhood
                     Button_Detach.Enabled = false;
                 }
             }
-            /*catch
+            catch
             {
 
-            }*/
+            }
 
             SetStatus("Ready");
         }

@@ -141,8 +141,12 @@ namespace OrbisSuite
         public byte[] Serial;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
         public byte[] Model;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 18)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
         public byte[] MACAdressLAN;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
+        public byte[] MACAdressWIFI;
+        public bool UART;
+        public bool IDUMode;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
         public byte[] IDPS;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
@@ -268,13 +272,16 @@ namespace OrbisSuite
         public string Serial;
         public string Model;
         public string MACAddressLAN;
+        public string MACAddressWIFI;
+        public bool UART;
+        public bool IDUMode;
         public string IDPS;
         public string PSID;
         public string ConsoleType;
 
         public DetailedTargetInfo(string SDKVersion, string SoftwareVersion, string FactorySoftwareVersion, int CPUTemp, int SOCTemp, 
-            string CurrentTitleID, string ConsoleName, string MotherboardSerial, string Serial, string Model, string MACAddressLAN, 
-            string IDPS, string PSID, string ConsoleType)
+                                string CurrentTitleID, string ConsoleName, string MotherboardSerial, string Serial, string Model,
+                                string MACAddressLAN, string MACAddressWIFI, bool UART, bool IDUMode, string IDPS, string PSID, string ConsoleType)
         {
             this.SDKVersion = SDKVersion;
             this.SoftwareVersion = SoftwareVersion;
@@ -287,6 +294,9 @@ namespace OrbisSuite
             this.Serial = Serial;
             this.Model = Model;
             this.MACAddressLAN = MACAddressLAN;
+            this.MACAddressWIFI = MACAddressWIFI;
+            this.UART = UART;
+            this.IDUMode = IDUMode;
             this.IDPS = IDPS;
             this.PSID = PSID;
             this.ConsoleType = ConsoleType;
@@ -305,6 +315,9 @@ namespace OrbisSuite
             Serial = "-";
             Model = "-";
             MACAddressLAN = "-";
+            MACAddressWIFI = "-";
+            UART = false;
+            IDUMode = false;
             IDPS = "-";
             PSID = "-";
             ConsoleType = "-";

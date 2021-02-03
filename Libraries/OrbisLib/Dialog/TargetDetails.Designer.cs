@@ -50,14 +50,18 @@
             this.FactorySoftwareVersion = new DarkUI.Controls.DarkTextBox();
             this.darkTitle9 = new DarkUI.Controls.DarkTitle();
             this.darkTitle10 = new DarkUI.Controls.DarkTitle();
-            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
+            this.Serial = new DarkUI.Controls.DarkTextBox();
             this.darkTitle11 = new DarkUI.Controls.DarkTitle();
-            this.darkTextBox2 = new DarkUI.Controls.DarkTextBox();
+            this.MotherboardSerial = new DarkUI.Controls.DarkTextBox();
             this.darkTitle12 = new DarkUI.Controls.DarkTitle();
             this.MACAddressWIFI = new DarkUI.Controls.DarkTextBox();
             this.MACAddressLAN = new DarkUI.Controls.DarkTextBox();
             this.darkTitle13 = new DarkUI.Controls.DarkTitle();
             this.darkTitle14 = new DarkUI.Controls.DarkTitle();
+            this.IDUMode = new DarkUI.Controls.DarkTextBox();
+            this.UART = new DarkUI.Controls.DarkTextBox();
+            this.darkTitle15 = new DarkUI.Controls.DarkTitle();
+            this.darkTitle16 = new DarkUI.Controls.DarkTitle();
             this.SuspendLayout();
             // 
             // SOCTemp
@@ -259,16 +263,16 @@
             this.darkTitle10.TabIndex = 50;
             this.darkTitle10.Text = "Model";
             // 
-            // darkTextBox1
+            // Serial
             // 
-            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox1.Location = new System.Drawing.Point(289, 171);
-            this.darkTextBox1.Name = "darkTextBox1";
-            this.darkTextBox1.ReadOnly = true;
-            this.darkTextBox1.Size = new System.Drawing.Size(273, 20);
-            this.darkTextBox1.TabIndex = 57;
+            this.Serial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.Serial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Serial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Serial.Location = new System.Drawing.Point(289, 171);
+            this.Serial.Name = "Serial";
+            this.Serial.ReadOnly = true;
+            this.Serial.Size = new System.Drawing.Size(273, 20);
+            this.Serial.TabIndex = 57;
             // 
             // darkTitle11
             // 
@@ -278,16 +282,16 @@
             this.darkTitle11.TabIndex = 56;
             this.darkTitle11.Text = "Serial";
             // 
-            // darkTextBox2
+            // MotherboardSerial
             // 
-            this.darkTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox2.Location = new System.Drawing.Point(12, 171);
-            this.darkTextBox2.Name = "darkTextBox2";
-            this.darkTextBox2.ReadOnly = true;
-            this.darkTextBox2.Size = new System.Drawing.Size(272, 20);
-            this.darkTextBox2.TabIndex = 55;
+            this.MotherboardSerial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.MotherboardSerial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MotherboardSerial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.MotherboardSerial.Location = new System.Drawing.Point(12, 171);
+            this.MotherboardSerial.Name = "MotherboardSerial";
+            this.MotherboardSerial.ReadOnly = true;
+            this.MotherboardSerial.Size = new System.Drawing.Size(272, 20);
+            this.MotherboardSerial.TabIndex = 55;
             // 
             // darkTitle12
             // 
@@ -335,18 +339,60 @@
             this.darkTitle14.TabIndex = 58;
             this.darkTitle14.Text = "WIFI MAC Address";
             // 
+            // IDUMode
+            // 
+            this.IDUMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.IDUMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IDUMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.IDUMode.Location = new System.Drawing.Point(429, 218);
+            this.IDUMode.Name = "IDUMode";
+            this.IDUMode.ReadOnly = true;
+            this.IDUMode.Size = new System.Drawing.Size(133, 20);
+            this.IDUMode.TabIndex = 65;
+            // 
+            // UART
+            // 
+            this.UART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.UART.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UART.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.UART.Location = new System.Drawing.Point(290, 218);
+            this.UART.Name = "UART";
+            this.UART.ReadOnly = true;
+            this.UART.Size = new System.Drawing.Size(133, 20);
+            this.UART.TabIndex = 64;
+            // 
+            // darkTitle15
+            // 
+            this.darkTitle15.Location = new System.Drawing.Point(290, 197);
+            this.darkTitle15.Name = "darkTitle15";
+            this.darkTitle15.Size = new System.Drawing.Size(133, 18);
+            this.darkTitle15.TabIndex = 63;
+            this.darkTitle15.Text = "UART";
+            // 
+            // darkTitle16
+            // 
+            this.darkTitle16.Location = new System.Drawing.Point(430, 197);
+            this.darkTitle16.Name = "darkTitle16";
+            this.darkTitle16.Size = new System.Drawing.Size(133, 18);
+            this.darkTitle16.TabIndex = 62;
+            this.darkTitle16.Text = "IDU Mode";
+            // 
             // TargetDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 364);
+            this.ClientSize = new System.Drawing.Size(575, 292);
+            this.Controls.Add(this.IDUMode);
+            this.Controls.Add(this.UART);
+            this.Controls.Add(this.darkTitle15);
+            this.Controls.Add(this.darkTitle16);
             this.Controls.Add(this.MACAddressWIFI);
             this.Controls.Add(this.MACAddressLAN);
             this.Controls.Add(this.darkTitle13);
             this.Controls.Add(this.darkTitle14);
-            this.Controls.Add(this.darkTextBox1);
+            this.Controls.Add(this.Serial);
             this.Controls.Add(this.darkTitle11);
-            this.Controls.Add(this.darkTextBox2);
+            this.Controls.Add(this.MotherboardSerial);
             this.Controls.Add(this.darkTitle12);
             this.Controls.Add(this.Model);
             this.Controls.Add(this.FactorySoftwareVersion);
@@ -396,13 +442,17 @@
             this.Controls.SetChildIndex(this.FactorySoftwareVersion, 0);
             this.Controls.SetChildIndex(this.Model, 0);
             this.Controls.SetChildIndex(this.darkTitle12, 0);
-            this.Controls.SetChildIndex(this.darkTextBox2, 0);
+            this.Controls.SetChildIndex(this.MotherboardSerial, 0);
             this.Controls.SetChildIndex(this.darkTitle11, 0);
-            this.Controls.SetChildIndex(this.darkTextBox1, 0);
+            this.Controls.SetChildIndex(this.Serial, 0);
             this.Controls.SetChildIndex(this.darkTitle14, 0);
             this.Controls.SetChildIndex(this.darkTitle13, 0);
             this.Controls.SetChildIndex(this.MACAddressLAN, 0);
             this.Controls.SetChildIndex(this.MACAddressWIFI, 0);
+            this.Controls.SetChildIndex(this.darkTitle16, 0);
+            this.Controls.SetChildIndex(this.darkTitle15, 0);
+            this.Controls.SetChildIndex(this.UART, 0);
+            this.Controls.SetChildIndex(this.IDUMode, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,13 +481,17 @@
         private DarkUI.Controls.DarkTextBox FactorySoftwareVersion;
         private DarkUI.Controls.DarkTitle darkTitle9;
         private DarkUI.Controls.DarkTitle darkTitle10;
-        private DarkUI.Controls.DarkTextBox darkTextBox1;
+        private DarkUI.Controls.DarkTextBox Serial;
         private DarkUI.Controls.DarkTitle darkTitle11;
-        private DarkUI.Controls.DarkTextBox darkTextBox2;
+        private DarkUI.Controls.DarkTextBox MotherboardSerial;
         private DarkUI.Controls.DarkTitle darkTitle12;
         private DarkUI.Controls.DarkTextBox MACAddressWIFI;
         private DarkUI.Controls.DarkTextBox MACAddressLAN;
         private DarkUI.Controls.DarkTitle darkTitle13;
         private DarkUI.Controls.DarkTitle darkTitle14;
+        private DarkUI.Controls.DarkTextBox IDUMode;
+        private DarkUI.Controls.DarkTextBox UART;
+        private DarkUI.Controls.DarkTitle darkTitle15;
+        private DarkUI.Controls.DarkTitle darkTitle16;
     }
 }

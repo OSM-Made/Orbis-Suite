@@ -161,6 +161,9 @@ namespace OrbisSuite
                 Utilities.CleanByteToString(RawTargetInfo.Serial),
                 Utilities.CleanByteToString(RawTargetInfo.Model),
                 Utilities.CleanByteToString(RawTargetInfo.MACAdressLAN),
+                Utilities.CleanByteToString(RawTargetInfo.MACAdressWIFI),
+                RawTargetInfo.UART,
+                RawTargetInfo.IDUMode,
                 Utilities.CleanByteToString(RawTargetInfo.IDPS),
                 Utilities.CleanByteToString(RawTargetInfo.PSID),
                 Utilities.CleanByteToString(RawTargetInfo.ConsoleType));

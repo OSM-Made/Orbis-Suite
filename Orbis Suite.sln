@@ -15,6 +15,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisNeighborhood", "Executables\OrbisNeighborhood\OrbisNeighborhood.csproj", "{E2CECFD9-CE2A-44FA-95C6-8DF68F1E3D70}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D0D0036E-990F-4C2B-B95E-97882208E6B8} = {D0D0036E-990F-4C2B-B95E-97882208E6B8}
+		{4F776AAC-2760-435F-B4BF-758776426FA7} = {4F776AAC-2760-435F-B4BF-758776426FA7}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisTaskbarApp", "Executables\OrbisTaskbarApp\OrbisTaskbarApp.csproj", "{7EA604BB-D40A-481D-88F6-0AFA78D41494}"

@@ -204,6 +204,9 @@ struct RESP_TargetInfo
 	char Serial[10];
 	char Model[9];
 	unsigned char MACAdressLAN[6];
+	unsigned char MACAdressWIFI[6];
+	int32_t UART;
+	int32_t IDUMode;
 	char IDPS[16];
 	char PSID[16];
 	int32_t ConsoleType;
@@ -229,10 +232,15 @@ struct DB_TargetInfo
 	char MotherboardSerial[14];
 	char Serial[10];
 	char Model[9];
-	char MACAdressLAN[18];
+	char MACAdressLAN[20];
+	char MACAdressWIFI[20];
+	int UART;
+	int IDUMode;
 	char IDPS[40];
 	char PSID[40];
 	char ConsoleType[20];
 	int Attached;
 	char CurrentProc[32];
 };
+
+char Test[sizeof(DB_TargetInfo)];

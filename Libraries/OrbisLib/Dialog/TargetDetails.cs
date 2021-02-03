@@ -30,18 +30,29 @@ namespace OrbisSuite.Dialog
 
             SDKVersion.Text = Info.SDKVersion;
             SoftwareVersion.Text = Info.SoftwareVersion;
+            FactorySoftwareVersion.Text = Info.FactorySoftwareVersion;
             CPUTemp.Text = string.Format("CPU: {0} °C", Info.CPUTemp);
             SOCTemp.Text = string.Format("SOC: {0} °C", Info.SOCTemp);
             CurrentTitleID.Text = Info.CurrentTitleID;
             ConsoleName.Text = Info.ConsoleName;
+            MotherboardSerial.Text = Info.MotherboardSerial;
+            Serial.Text = Info.Serial;
+            Model.Text = Info.Model;
+            MACAddressLAN.Text = Info.MACAddressLAN;
+            MACAddressWIFI.Text = Info.MACAddressWIFI;
+            UART.Text = Info.UART ? "Enabled" : "Disabled";
+            IDUMode.Text = Info.IDUMode ? "Enabled" : "Disabled";
+
             if (PS4.Settings.CensorIDPS)
                 IDPS.Text = Utilities.CensorString(Info.IDPS, '#', 16);
             else
                 IDPS.Text = Info.IDPS;
+
             if (PS4.Settings.CensorPSID)
                 PSID.Text = Utilities.CensorString(Info.PSID, '#', 16);
             else
                 PSID.Text = Info.PSID;
+
             ConsoleType.Text = Info.ConsoleType;
         }
 
