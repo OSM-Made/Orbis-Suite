@@ -68,7 +68,7 @@
             // 
             this.SOCTemp.AutoSize = true;
             this.SOCTemp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.SOCTemp.Location = new System.Drawing.Point(361, 81);
+            this.SOCTemp.Location = new System.Drawing.Point(223, 219);
             this.SOCTemp.Name = "SOCTemp";
             this.SOCTemp.Size = new System.Drawing.Size(63, 13);
             this.SOCTemp.TabIndex = 49;
@@ -78,7 +78,7 @@
             // 
             this.CPUTemp.AutoSize = true;
             this.CPUTemp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CPUTemp.Location = new System.Drawing.Point(292, 81);
+            this.CPUTemp.Location = new System.Drawing.Point(154, 219);
             this.CPUTemp.Name = "CPUTemp";
             this.CPUTemp.Size = new System.Drawing.Size(63, 13);
             this.CPUTemp.TabIndex = 48;
@@ -89,7 +89,7 @@
             this.ConsoleType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.ConsoleType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ConsoleType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.ConsoleType.Location = new System.Drawing.Point(429, 78);
+            this.ConsoleType.Location = new System.Drawing.Point(432, 123);
             this.ConsoleType.Name = "ConsoleType";
             this.ConsoleType.ReadOnly = true;
             this.ConsoleType.Size = new System.Drawing.Size(133, 20);
@@ -97,7 +97,7 @@
             // 
             // darkTitle8
             // 
-            this.darkTitle8.Location = new System.Drawing.Point(430, 57);
+            this.darkTitle8.Location = new System.Drawing.Point(429, 102);
             this.darkTitle8.Name = "darkTitle8";
             this.darkTitle8.Size = new System.Drawing.Size(133, 18);
             this.darkTitle8.TabIndex = 46;
@@ -105,7 +105,7 @@
             // 
             // darkTitle7
             // 
-            this.darkTitle7.Location = new System.Drawing.Point(290, 57);
+            this.darkTitle7.Location = new System.Drawing.Point(152, 195);
             this.darkTitle7.Name = "darkTitle7";
             this.darkTitle7.Size = new System.Drawing.Size(133, 18);
             this.darkTitle7.TabIndex = 45;
@@ -116,7 +116,7 @@
             this.PSID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.PSID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PSID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.PSID.Location = new System.Drawing.Point(289, 124);
+            this.PSID.Location = new System.Drawing.Point(289, 76);
             this.PSID.Name = "PSID";
             this.PSID.ReadOnly = true;
             this.PSID.Size = new System.Drawing.Size(273, 20);
@@ -124,7 +124,7 @@
             // 
             // darkTitle6
             // 
-            this.darkTitle6.Location = new System.Drawing.Point(289, 103);
+            this.darkTitle6.Location = new System.Drawing.Point(289, 55);
             this.darkTitle6.Name = "darkTitle6";
             this.darkTitle6.Size = new System.Drawing.Size(273, 18);
             this.darkTitle6.TabIndex = 43;
@@ -135,7 +135,7 @@
             this.IDPS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.IDPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.IDPS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.IDPS.Location = new System.Drawing.Point(12, 124);
+            this.IDPS.Location = new System.Drawing.Point(12, 76);
             this.IDPS.Name = "IDPS";
             this.IDPS.ReadOnly = true;
             this.IDPS.Size = new System.Drawing.Size(272, 20);
@@ -143,7 +143,7 @@
             // 
             // darkTitle5
             // 
-            this.darkTitle5.Location = new System.Drawing.Point(12, 103);
+            this.darkTitle5.Location = new System.Drawing.Point(12, 55);
             this.darkTitle5.Name = "darkTitle5";
             this.darkTitle5.Size = new System.Drawing.Size(273, 18);
             this.darkTitle5.TabIndex = 41;
@@ -154,7 +154,7 @@
             this.ConsoleName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.ConsoleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ConsoleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.ConsoleName.Location = new System.Drawing.Point(429, 30);
+            this.ConsoleName.Location = new System.Drawing.Point(12, 216);
             this.ConsoleName.Name = "ConsoleName";
             this.ConsoleName.ReadOnly = true;
             this.ConsoleName.Size = new System.Drawing.Size(133, 20);
@@ -165,7 +165,7 @@
             this.CurrentTitleID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.CurrentTitleID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CurrentTitleID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CurrentTitleID.Location = new System.Drawing.Point(290, 30);
+            this.CurrentTitleID.Location = new System.Drawing.Point(429, 30);
             this.CurrentTitleID.Name = "CurrentTitleID";
             this.CurrentTitleID.ReadOnly = true;
             this.CurrentTitleID.Size = new System.Drawing.Size(133, 20);
@@ -173,7 +173,7 @@
             // 
             // darkTitle2
             // 
-            this.darkTitle2.Location = new System.Drawing.Point(290, 9);
+            this.darkTitle2.Location = new System.Drawing.Point(429, 9);
             this.darkTitle2.Name = "darkTitle2";
             this.darkTitle2.Size = new System.Drawing.Size(133, 18);
             this.darkTitle2.TabIndex = 38;
@@ -181,7 +181,7 @@
             // 
             // darkTitle4
             // 
-            this.darkTitle4.Location = new System.Drawing.Point(430, 9);
+            this.darkTitle4.Location = new System.Drawing.Point(13, 195);
             this.darkTitle4.Name = "darkTitle4";
             this.darkTitle4.Size = new System.Drawing.Size(133, 18);
             this.darkTitle4.TabIndex = 37;
@@ -230,7 +230,7 @@
             this.Model.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.Model.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Model.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Model.Location = new System.Drawing.Point(151, 78);
+            this.Model.Location = new System.Drawing.Point(290, 123);
             this.Model.Name = "Model";
             this.Model.ReadOnly = true;
             this.Model.Size = new System.Drawing.Size(133, 20);
@@ -241,7 +241,7 @@
             this.FactorySoftwareVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.FactorySoftwareVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FactorySoftwareVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.FactorySoftwareVersion.Location = new System.Drawing.Point(12, 78);
+            this.FactorySoftwareVersion.Location = new System.Drawing.Point(289, 30);
             this.FactorySoftwareVersion.Name = "FactorySoftwareVersion";
             this.FactorySoftwareVersion.ReadOnly = true;
             this.FactorySoftwareVersion.Size = new System.Drawing.Size(133, 20);
@@ -249,7 +249,7 @@
             // 
             // darkTitle9
             // 
-            this.darkTitle9.Location = new System.Drawing.Point(12, 57);
+            this.darkTitle9.Location = new System.Drawing.Point(289, 9);
             this.darkTitle9.Name = "darkTitle9";
             this.darkTitle9.Size = new System.Drawing.Size(133, 18);
             this.darkTitle9.TabIndex = 51;
@@ -257,7 +257,7 @@
             // 
             // darkTitle10
             // 
-            this.darkTitle10.Location = new System.Drawing.Point(152, 57);
+            this.darkTitle10.Location = new System.Drawing.Point(290, 99);
             this.darkTitle10.Name = "darkTitle10";
             this.darkTitle10.Size = new System.Drawing.Size(133, 18);
             this.darkTitle10.TabIndex = 50;
@@ -268,17 +268,17 @@
             this.Serial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.Serial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Serial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Serial.Location = new System.Drawing.Point(289, 171);
+            this.Serial.Location = new System.Drawing.Point(151, 123);
             this.Serial.Name = "Serial";
             this.Serial.ReadOnly = true;
-            this.Serial.Size = new System.Drawing.Size(273, 20);
+            this.Serial.Size = new System.Drawing.Size(134, 20);
             this.Serial.TabIndex = 57;
             // 
             // darkTitle11
             // 
-            this.darkTitle11.Location = new System.Drawing.Point(289, 150);
+            this.darkTitle11.Location = new System.Drawing.Point(152, 102);
             this.darkTitle11.Name = "darkTitle11";
-            this.darkTitle11.Size = new System.Drawing.Size(273, 18);
+            this.darkTitle11.Size = new System.Drawing.Size(133, 18);
             this.darkTitle11.TabIndex = 56;
             this.darkTitle11.Text = "Serial";
             // 
@@ -287,17 +287,17 @@
             this.MotherboardSerial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.MotherboardSerial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MotherboardSerial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.MotherboardSerial.Location = new System.Drawing.Point(12, 171);
+            this.MotherboardSerial.Location = new System.Drawing.Point(12, 123);
             this.MotherboardSerial.Name = "MotherboardSerial";
             this.MotherboardSerial.ReadOnly = true;
-            this.MotherboardSerial.Size = new System.Drawing.Size(272, 20);
+            this.MotherboardSerial.Size = new System.Drawing.Size(133, 20);
             this.MotherboardSerial.TabIndex = 55;
             // 
             // darkTitle12
             // 
-            this.darkTitle12.Location = new System.Drawing.Point(12, 150);
+            this.darkTitle12.Location = new System.Drawing.Point(12, 102);
             this.darkTitle12.Name = "darkTitle12";
-            this.darkTitle12.Size = new System.Drawing.Size(273, 18);
+            this.darkTitle12.Size = new System.Drawing.Size(133, 18);
             this.darkTitle12.TabIndex = 54;
             this.darkTitle12.Text = "Motherboard Serial";
             // 
@@ -306,7 +306,7 @@
             this.MACAddressWIFI.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.MACAddressWIFI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MACAddressWIFI.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.MACAddressWIFI.Location = new System.Drawing.Point(151, 218);
+            this.MACAddressWIFI.Location = new System.Drawing.Point(151, 170);
             this.MACAddressWIFI.Name = "MACAddressWIFI";
             this.MACAddressWIFI.ReadOnly = true;
             this.MACAddressWIFI.Size = new System.Drawing.Size(133, 20);
@@ -317,7 +317,7 @@
             this.MACAddressLAN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.MACAddressLAN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MACAddressLAN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.MACAddressLAN.Location = new System.Drawing.Point(12, 218);
+            this.MACAddressLAN.Location = new System.Drawing.Point(12, 170);
             this.MACAddressLAN.Name = "MACAddressLAN";
             this.MACAddressLAN.ReadOnly = true;
             this.MACAddressLAN.Size = new System.Drawing.Size(133, 20);
@@ -325,7 +325,7 @@
             // 
             // darkTitle13
             // 
-            this.darkTitle13.Location = new System.Drawing.Point(12, 197);
+            this.darkTitle13.Location = new System.Drawing.Point(12, 149);
             this.darkTitle13.Name = "darkTitle13";
             this.darkTitle13.Size = new System.Drawing.Size(133, 18);
             this.darkTitle13.TabIndex = 59;
@@ -333,7 +333,7 @@
             // 
             // darkTitle14
             // 
-            this.darkTitle14.Location = new System.Drawing.Point(152, 197);
+            this.darkTitle14.Location = new System.Drawing.Point(152, 149);
             this.darkTitle14.Name = "darkTitle14";
             this.darkTitle14.Size = new System.Drawing.Size(133, 18);
             this.darkTitle14.TabIndex = 58;
@@ -344,7 +344,7 @@
             this.IDUMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.IDUMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.IDUMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.IDUMode.Location = new System.Drawing.Point(429, 218);
+            this.IDUMode.Location = new System.Drawing.Point(429, 170);
             this.IDUMode.Name = "IDUMode";
             this.IDUMode.ReadOnly = true;
             this.IDUMode.Size = new System.Drawing.Size(133, 20);
@@ -355,7 +355,7 @@
             this.UART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.UART.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UART.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.UART.Location = new System.Drawing.Point(290, 218);
+            this.UART.Location = new System.Drawing.Point(290, 170);
             this.UART.Name = "UART";
             this.UART.ReadOnly = true;
             this.UART.Size = new System.Drawing.Size(133, 20);
@@ -363,7 +363,7 @@
             // 
             // darkTitle15
             // 
-            this.darkTitle15.Location = new System.Drawing.Point(290, 197);
+            this.darkTitle15.Location = new System.Drawing.Point(290, 149);
             this.darkTitle15.Name = "darkTitle15";
             this.darkTitle15.Size = new System.Drawing.Size(133, 18);
             this.darkTitle15.TabIndex = 63;
@@ -371,7 +371,7 @@
             // 
             // darkTitle16
             // 
-            this.darkTitle16.Location = new System.Drawing.Point(430, 197);
+            this.darkTitle16.Location = new System.Drawing.Point(430, 149);
             this.darkTitle16.Name = "darkTitle16";
             this.darkTitle16.Size = new System.Drawing.Size(133, 18);
             this.darkTitle16.TabIndex = 62;
@@ -381,7 +381,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 292);
+            this.ClientSize = new System.Drawing.Size(575, 290);
             this.Controls.Add(this.IDUMode);
             this.Controls.Add(this.UART);
             this.Controls.Add(this.darkTitle15);
