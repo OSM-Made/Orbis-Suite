@@ -65,7 +65,7 @@ namespace OrbisModuleManager
             ELFDirectory.Text = Properties.Settings.Default.ELFDirectory;
 
             //Update the FTP on start up.
-            //UpdateFTP();
+            UpdateFTP();
         }
 
         #region One Instance
