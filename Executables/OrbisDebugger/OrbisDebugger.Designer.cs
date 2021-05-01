@@ -265,7 +265,7 @@
             this.dumpProcessToolStripMenuItem.Enabled = false;
             this.dumpProcessToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.dumpProcessToolStripMenuItem.Name = "dumpProcessToolStripMenuItem";
-            this.dumpProcessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dumpProcessToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.dumpProcessToolStripMenuItem.Text = "Dump Process";
             // 
             // dumpMemoryToolStripMenuItem
@@ -273,7 +273,7 @@
             this.dumpMemoryToolStripMenuItem.Enabled = false;
             this.dumpMemoryToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.dumpMemoryToolStripMenuItem.Name = "dumpMemoryToolStripMenuItem";
-            this.dumpMemoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dumpMemoryToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.dumpMemoryToolStripMenuItem.Text = "Dump Memory";
             // 
             // debugToolStripMenuItem
@@ -312,7 +312,7 @@
             this.resettoolStripMenuItem});
             this.toolStripMenuItem1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.toolStripMenuItem1.Text = "Windows";
             // 
             // consoletoolStripMenuItem
@@ -321,7 +321,7 @@
             this.consoletoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.consoletoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Console_Window;
             this.consoletoolStripMenuItem.Name = "consoletoolStripMenuItem";
-            this.consoletoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.consoletoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.consoletoolStripMenuItem.Text = "Console";
             this.consoletoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
@@ -331,7 +331,7 @@
             this.registerstoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.registerstoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Register_Window;
             this.registerstoolStripMenuItem.Name = "registerstoolStripMenuItem";
-            this.registerstoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.registerstoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.registerstoolStripMenuItem.Text = "Registers";
             this.registerstoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
@@ -341,7 +341,7 @@
             this.callstacktoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.callstacktoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.CallStack_Window;
             this.callstacktoolStripMenuItem.Name = "callstacktoolStripMenuItem";
-            this.callstacktoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.callstacktoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.callstacktoolStripMenuItem.Text = "Call Stack";
             this.callstacktoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
@@ -351,7 +351,7 @@
             this.watchpointstoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.watchpointstoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Watchpoints_Window;
             this.watchpointstoolStripMenuItem.Name = "watchpointstoolStripMenuItem";
-            this.watchpointstoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.watchpointstoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.watchpointstoolStripMenuItem.Text = "Watchpoints";
             this.watchpointstoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
@@ -361,7 +361,7 @@
             this.breakpointstoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.breakpointstoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.BreakPoint_Window;
             this.breakpointstoolStripMenuItem.Name = "breakpointstoolStripMenuItem";
-            this.breakpointstoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.breakpointstoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.breakpointstoolStripMenuItem.Text = "Breakpoints";
             this.breakpointstoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
@@ -371,7 +371,7 @@
             this.threadstoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.threadstoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Processes_Modules_Window;
             this.threadstoolStripMenuItem.Name = "threadstoolStripMenuItem";
-            this.threadstoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.threadstoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.threadstoolStripMenuItem.Text = "Threads";
             this.threadstoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
@@ -381,7 +381,7 @@
             this.memorytoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.memorytoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Memory_Window;
             this.memorytoolStripMenuItem.Name = "memorytoolStripMenuItem";
-            this.memorytoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.memorytoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.memorytoolStripMenuItem.Text = "Memory";
             this.memorytoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
@@ -391,7 +391,7 @@
             this.disassemblytoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.disassemblytoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Disassembly_Window;
             this.disassemblytoolStripMenuItem.Name = "disassemblytoolStripMenuItem";
-            this.disassemblytoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.disassemblytoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.disassemblytoolStripMenuItem.Text = "Disassembly";
             this.disassemblytoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem9_Click);
             // 
@@ -401,7 +401,7 @@
             this.scratchtoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.scratchtoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.ScratchPad_Window;
             this.scratchtoolStripMenuItem.Name = "scratchtoolStripMenuItem";
-            this.scratchtoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scratchtoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.scratchtoolStripMenuItem.Text = "Scratch Pad";
             this.scratchtoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem10_Click);
             // 
@@ -410,7 +410,7 @@
             this.toolStripSeparator9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator9.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(138, 6);
             // 
             // savetoolStripMenuItem
             // 
@@ -418,7 +418,7 @@
             this.savetoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.savetoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Save_grey_16x;
             this.savetoolStripMenuItem.Name = "savetoolStripMenuItem";
-            this.savetoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.savetoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.savetoolStripMenuItem.Text = "Save";
             this.savetoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem14_Click);
             // 
@@ -428,7 +428,7 @@
             this.loadtoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.loadtoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.folder_open_16x;
             this.loadtoolStripMenuItem.Name = "loadtoolStripMenuItem";
-            this.loadtoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadtoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.loadtoolStripMenuItem.Text = "Load";
             this.loadtoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem13_Click);
             // 
@@ -438,7 +438,7 @@
             this.cleartoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.cleartoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.document_16xLG;
             this.cleartoolStripMenuItem.Name = "cleartoolStripMenuItem";
-            this.cleartoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cleartoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.cleartoolStripMenuItem.Text = "Clear";
             this.cleartoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
@@ -448,7 +448,7 @@
             this.resettoolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.resettoolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.NewFile_6276;
             this.resettoolStripMenuItem.Name = "resettoolStripMenuItem";
-            this.resettoolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resettoolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.resettoolStripMenuItem.Text = "Reset";
             this.resettoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem12_Click);
             // 
@@ -457,7 +457,7 @@
             this.toolStripSeparator8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(157, 6);
             // 
             // stopToolStripMenuItem
             // 
@@ -465,7 +465,7 @@
             this.stopToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.stopToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Process_StopDebugging;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.stopToolStripMenuItem.Text = "Stop Debugging";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -475,7 +475,7 @@
             this.pauseToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.pauseToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Pause_Process;
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.pauseToolStripMenuItem.Text = "Break";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
@@ -485,7 +485,7 @@
             this.resumeToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.resumeToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Resume_Process;
             this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
-            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.resumeToolStripMenuItem.Text = "Resume";
             this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
@@ -494,7 +494,7 @@
             this.toolStripSeparator6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(157, 6);
             // 
             // stepOutToolStripMenuItem
             // 
@@ -502,7 +502,7 @@
             this.stepOutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.stepOutToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Process_StepOut;
             this.stepOutToolStripMenuItem.Name = "stepOutToolStripMenuItem";
-            this.stepOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stepOutToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.stepOutToolStripMenuItem.Text = "Step Out";
             this.stepOutToolStripMenuItem.Click += new System.EventHandler(this.stepOutToolStripMenuItem_Click);
             // 
@@ -512,7 +512,7 @@
             this.stepIntoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.stepIntoToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Process_StepIn;
             this.stepIntoToolStripMenuItem.Name = "stepIntoToolStripMenuItem";
-            this.stepIntoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stepIntoToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.stepIntoToolStripMenuItem.Text = "Step Into";
             this.stepIntoToolStripMenuItem.Click += new System.EventHandler(this.stepIntoToolStripMenuItem_Click);
             // 
@@ -522,7 +522,7 @@
             this.stepOverToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.stepOverToolStripMenuItem.Image = global::OrbisDebugger.Properties.Resources.Process_StepOver;
             this.stepOverToolStripMenuItem.Name = "stepOverToolStripMenuItem";
-            this.stepOverToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stepOverToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.stepOverToolStripMenuItem.Text = "Step Over";
             this.stepOverToolStripMenuItem.Click += new System.EventHandler(this.stepOverToolStripMenuItem_Click);
             // 

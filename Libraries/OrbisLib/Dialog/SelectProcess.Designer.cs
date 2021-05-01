@@ -39,6 +39,7 @@
             this.TitleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Attached = new System.Windows.Forms.DataGridViewImageColumn();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.ToolStrip_KillProcess = new System.Windows.Forms.ToolStripMenuItem();
             this.darkContextMenu1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProcessList)).BeginInit();
             this.darkSectionPanel1.SuspendLayout();
@@ -50,15 +51,16 @@
             this.darkContextMenu1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.darkContextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStrip_DetachProcess,
+            this.ToolStrip_KillProcess,
             this.refreshToolStripMenuItem});
             this.darkContextMenu1.Name = "darkContextMenu1";
-            this.darkContextMenu1.Size = new System.Drawing.Size(155, 48);
+            this.darkContextMenu1.Size = new System.Drawing.Size(181, 92);
             // 
             // ToolStrip_DetachProcess
             // 
             this.ToolStrip_DetachProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.ToolStrip_DetachProcess.Name = "ToolStrip_DetachProcess";
-            this.ToolStrip_DetachProcess.Size = new System.Drawing.Size(154, 22);
+            this.ToolStrip_DetachProcess.Size = new System.Drawing.Size(180, 22);
             this.ToolStrip_DetachProcess.Text = "Detach Process";
             this.ToolStrip_DetachProcess.Click += new System.EventHandler(this.ToolStrip_DetachProcess_Click);
             // 
@@ -66,7 +68,7 @@
             // 
             this.refreshToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
@@ -165,6 +167,14 @@
             this.darkSectionPanel1.Size = new System.Drawing.Size(412, 421);
             this.darkSectionPanel1.TabIndex = 12;
             // 
+            // ToolStrip_KillProcess
+            // 
+            this.ToolStrip_KillProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.ToolStrip_KillProcess.Name = "ToolStrip_KillProcess";
+            this.ToolStrip_KillProcess.Size = new System.Drawing.Size(180, 22);
+            this.ToolStrip_KillProcess.Text = "Kill Process";
+            this.ToolStrip_KillProcess.Click += new System.EventHandler(this.ToolStrip_KillProcess_Click);
+            // 
             // SelectProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -198,5 +208,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TitleID;
         private System.Windows.Forms.DataGridViewImageColumn Attached;
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStrip_KillProcess;
     }
 }

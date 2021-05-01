@@ -87,6 +87,14 @@ namespace OrbisSuite.Dialog
             PS4.Target[TargetName].Events.ProcAttach += Events_ProcAttach;
             PS4.Target[TargetName].Events.ProcDie += Events_ProcDie;
             PS4.Target[TargetName].Events.TargetNewTitle += Events_TargetNewTitle;
+
+            PS4.Events.TargetUnAvailable += Events_TargetUnAvailable;
+        }
+
+        private void Events_TargetUnAvailable(object sender, TargetUnAvailableEvent e)
+        {
+            if(e.TargetName == TargetName)
+                ExecuteSecure(() => Close());
         }
 
         private void Events_TargetNewTitle(object sender, TargetNewTitleEvent e)
@@ -204,6 +212,18 @@ namespace OrbisSuite.Dialog
         private void ProcessList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             AttachtoSelected();
+        }
+
+        private void ToolStrip_KillProcess_Click(object sender, EventArgs e)
+        {
+            Int32 selectedCellCount = ProcessList.GetCellCount(DataGridViewElementStates.Selected);
+            if (selectedCellCount > 0)
+            {
+                int index = ProcessList.SelectedRows[0].Index;
+                SelectedProcess = Convert.ToString(ProcessList.Rows[index].Cells["ProcName"].Value);
+
+                PS4.Target[TargetName].Process.Kill(SelectedProcess);
+            }
         }
     }
 }

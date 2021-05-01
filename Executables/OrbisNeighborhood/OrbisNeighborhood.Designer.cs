@@ -249,23 +249,25 @@
             this.TitleDetails,
             this.Locate_Target});
             this.TargetContextMenu.Name = "TargetContextMenu";
-            this.TargetContextMenu.Size = new System.Drawing.Size(206, 289);
+            this.TargetContextMenu.Size = new System.Drawing.Size(193, 289);
             this.TargetContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.TargetContextMenu_Opening);
             // 
             // SendPayload
             // 
             this.SendPayload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SendPayload.Image = global::nsOrbisNeighborhood.Properties.Resources.Send;
             this.SendPayload.Name = "SendPayload";
-            this.SendPayload.Size = new System.Drawing.Size(205, 22);
+            this.SendPayload.Size = new System.Drawing.Size(192, 22);
             this.SendPayload.Text = "Send Payload";
             this.SendPayload.Click += new System.EventHandler(this.SendPayload_Click);
             // 
             // SendOrbisPayload
             // 
             this.SendOrbisPayload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SendOrbisPayload.Image = global::nsOrbisNeighborhood.Properties.Resources.OrbisTaskbarApp_1908;
             this.SendOrbisPayload.Name = "SendOrbisPayload";
-            this.SendOrbisPayload.Size = new System.Drawing.Size(205, 22);
-            this.SendOrbisPayload.Text = "Send Orbis Suite Payload";
+            this.SendOrbisPayload.Size = new System.Drawing.Size(192, 22);
+            this.SendOrbisPayload.Text = "Send OrbisLib Payload";
             this.SendOrbisPayload.Click += new System.EventHandler(this.SendOrbisPayload_Click);
             // 
             // toolStripSeparator4
@@ -273,29 +275,32 @@
             this.toolStripSeparator4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(189, 6);
             // 
             // Target_Reboot
             // 
             this.Target_Reboot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Reboot.Image = global::nsOrbisNeighborhood.Properties.Resources.tex_restart;
             this.Target_Reboot.Name = "Target_Reboot";
-            this.Target_Reboot.Size = new System.Drawing.Size(205, 22);
+            this.Target_Reboot.Size = new System.Drawing.Size(192, 22);
             this.Target_Reboot.Text = "Reboot";
             this.Target_Reboot.Click += new System.EventHandler(this.Target_Reboot_Click);
             // 
             // Target_Shutdown
             // 
             this.Target_Shutdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Shutdown.Image = global::nsOrbisNeighborhood.Properties.Resources.tex_turn_off;
             this.Target_Shutdown.Name = "Target_Shutdown";
-            this.Target_Shutdown.Size = new System.Drawing.Size(205, 22);
+            this.Target_Shutdown.Size = new System.Drawing.Size(192, 22);
             this.Target_Shutdown.Text = "Shutdown";
             this.Target_Shutdown.Click += new System.EventHandler(this.Target_Shutdown_Click);
             // 
             // Target_Suspend
             // 
             this.Target_Suspend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Suspend.Image = global::nsOrbisNeighborhood.Properties.Resources.tex_enter_rest_mode;
             this.Target_Suspend.Name = "Target_Suspend";
-            this.Target_Suspend.Size = new System.Drawing.Size(205, 22);
+            this.Target_Suspend.Size = new System.Drawing.Size(192, 22);
             this.Target_Suspend.Text = "Suspend";
             this.Target_Suspend.Click += new System.EventHandler(this.Target_Suspend_Click);
             // 
@@ -304,29 +309,32 @@
             this.toolStripSeparator5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(189, 6);
             // 
             // Target_SetDefault
             // 
             this.Target_SetDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_SetDefault.Image = ((System.Drawing.Image)(resources.GetObject("Target_SetDefault.Image")));
             this.Target_SetDefault.Name = "Target_SetDefault";
-            this.Target_SetDefault.Size = new System.Drawing.Size(205, 22);
+            this.Target_SetDefault.Size = new System.Drawing.Size(192, 22);
             this.Target_SetDefault.Text = "Default";
             this.Target_SetDefault.Click += new System.EventHandler(this.Target_SetDefault_Click);
             // 
             // Target_Edit
             // 
             this.Target_Edit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Edit.Image = global::nsOrbisNeighborhood.Properties.Resources.Edit;
             this.Target_Edit.Name = "Target_Edit";
-            this.Target_Edit.Size = new System.Drawing.Size(205, 22);
+            this.Target_Edit.Size = new System.Drawing.Size(192, 22);
             this.Target_Edit.Text = "Edit";
             this.Target_Edit.Click += new System.EventHandler(this.Target_Edit_Click);
             // 
             // Target_Delete
             // 
             this.Target_Delete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Delete.Image = global::nsOrbisNeighborhood.Properties.Resources.Delete;
             this.Target_Delete.Name = "Target_Delete";
-            this.Target_Delete.Size = new System.Drawing.Size(205, 22);
+            this.Target_Delete.Size = new System.Drawing.Size(192, 22);
             this.Target_Delete.Text = "Delete";
             this.Target_Delete.Click += new System.EventHandler(this.Target_Delete_Click);
             // 
@@ -335,29 +343,32 @@
             this.toolStripSeparator6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(189, 6);
             // 
             // Target_Details
             // 
             this.Target_Details.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Target_Details.Image = global::nsOrbisNeighborhood.Properties.Resources.InformationSymbol_16x1;
             this.Target_Details.Name = "Target_Details";
-            this.Target_Details.Size = new System.Drawing.Size(205, 22);
+            this.Target_Details.Size = new System.Drawing.Size(192, 22);
             this.Target_Details.Text = "Target Details";
             this.Target_Details.Click += new System.EventHandler(this.Target_Details_Click);
             // 
             // TitleDetails
             // 
             this.TitleDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.TitleDetails.Image = global::nsOrbisNeighborhood.Properties.Resources.Title_Disc;
             this.TitleDetails.Name = "TitleDetails";
-            this.TitleDetails.Size = new System.Drawing.Size(205, 22);
+            this.TitleDetails.Size = new System.Drawing.Size(192, 22);
             this.TitleDetails.Text = "Title Details";
             this.TitleDetails.Click += new System.EventHandler(this.TitleDetails_Click);
             // 
             // Locate_Target
             // 
             this.Locate_Target.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Locate_Target.Image = global::nsOrbisNeighborhood.Properties.Resources.Locate;
             this.Locate_Target.Name = "Locate_Target";
-            this.Locate_Target.Size = new System.Drawing.Size(205, 22);
+            this.Locate_Target.Size = new System.Drawing.Size(192, 22);
             this.Locate_Target.Text = "Locate";
             this.Locate_Target.Click += new System.EventHandler(this.locateToolStripMenuItem_Click);
             // 
@@ -513,6 +524,7 @@
             // SelectTargetButton
             // 
             this.SelectTargetButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.SelectTargetButton.Image = global::nsOrbisNeighborhood.Properties.Resources.FindSymbol_16x;
             this.SelectTargetButton.Name = "SelectTargetButton";
             this.SelectTargetButton.Size = new System.Drawing.Size(205, 22);
             this.SelectTargetButton.Text = "Select Target";
@@ -529,6 +541,7 @@
             // About_Button
             // 
             this.About_Button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.About_Button.Image = global::nsOrbisNeighborhood.Properties.Resources.InformationSymbol_16x;
             this.About_Button.Name = "About_Button";
             this.About_Button.Size = new System.Drawing.Size(205, 22);
             this.About_Button.Text = "About";

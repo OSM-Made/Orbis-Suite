@@ -86,7 +86,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\DarkUI.dll</HintPath>
     </Reference>
-    <Reference Include="OrbisLib, Version=2.0.486.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="OrbisLib, Version=2.0.572.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\OrbisLib.dll</HintPath>
     </Reference>
@@ -144,9 +144,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Default.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\NotDefault.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +152,25 @@
     </Content>
     <Content Include="Orbis.ico" />
     <Content Include="OrbisNeighborhoodx64_4055.ico" />
+    <None Include="Resources\Edit.png" />
+    <None Include="Resources\OrbisTaskbarApp_1908.png" />
+    <None Include="Resources\Send.png" />
+    <None Include="Resources\Locate.png" />
+    <None Include="Resources\Title Disc.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\Default.ico" />
+    <None Include="Resources\RefactoringLog_12810.png" />
+    <None Include="Resources\InformationSymbol_16x1.png" />
+    <None Include="Resources\Default1.ico" />
+    <None Include="Resources\Settings1.png" />
+    <None Include="Resources\properties_16xLG.png" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\InformationSymbol_16x.png" />
+    <None Include="Resources\FindSymbol_16x.png" />
+    <None Include="Resources\tex_enter_rest_mode.png" />
+    <None Include="Resources\tex_turn_off.png" />
+    <None Include="Resources\tex_restart.png" />
+    <None Include="Resources\Add_Target.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
