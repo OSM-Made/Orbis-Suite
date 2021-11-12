@@ -27,7 +27,7 @@ bool Sockets::Connect() {
 	addr.sin_port = this->port;
 	addr.sin_addr.s_addr = inet_addr(this->IP);
 
-	DWORD sock_timeout = 1200;
+	DWORD sock_timeout = 2000; //1200
 
 	setsockopt(Socket, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
 	setsockopt(Socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));

@@ -62,18 +62,18 @@ namespace OrbisSuite.Dialog
             }
 
             int Firmware = 0;
-            if (TargetFW176.Checked)
-                Firmware = 176;
-            else if (TargetFW405.Checked)
-                Firmware = 405;
-            else if (TargetFW455.Checked)
-                Firmware = 455;
-            else if (TargetFW505.Checked)
+            if (TargetFW505.Checked)
                 Firmware = 505;
             else if (TargetFW672.Checked)
                 Firmware = 672;
             else if (TargetFW702.Checked)
                 Firmware = 702;
+            else if (TargetFW750.Checked)
+                Firmware = 750;
+            else if (TargetFW751.Checked)
+                Firmware = 751;
+            else if (TargetFW755.Checked)
+                Firmware = 755;
 
             if (PS4.TargetManagement.NewTarget(IsDefaultTarget.Checked, TargetName.Text, TargetIPAddress.Text, Firmware, Convert.ToInt32(PayloadPort.Text)))
                 DialogResult = System.Windows.Forms.DialogResult.OK;

@@ -37,11 +37,18 @@ namespace OrbisSuiteService
             StartLib();
             while (RunService) { Thread.Sleep(10); }
         }
+   
+        void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            Environment.Exit(1);
+        }
 
         protected override void OnStart(string[] args)
         {
             //System.Diagnostics.Debugger.Launch();
-            
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
+
             SetDllDirectory(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Orbis Suite\\");
 
             hServiceThread = new Thread(() => ServiceThread());

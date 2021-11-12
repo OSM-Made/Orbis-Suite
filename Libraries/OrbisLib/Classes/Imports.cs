@@ -26,7 +26,7 @@ namespace OrbisSuite
             internal static extern API_ERRORS GetCurrent(string IPAddr, [MarshalAs(UnmanagedType.SysUInt)] IntPtr CurrentProc);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
-            internal static extern API_ERRORS Read(string IPAddr, UInt64 Address, Int32 Len, out byte[] List);
+            internal static extern API_ERRORS Read(string IPAddr, UInt64 Address, Int32 Len, IntPtr List);
 
             [DllImport("OrbisLibCPP.dll", CallingConvention = CallingConvention.Cdecl)]
             internal static extern API_ERRORS Write(string IPAddr, UInt64 Address, Int32 Len, byte[] List);

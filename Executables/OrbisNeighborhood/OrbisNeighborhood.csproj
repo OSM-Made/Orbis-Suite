@@ -144,7 +144,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NotDefault.ico" />
+    <EmbeddedResource Include="Resources\NotDefault.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\x64\Debug\OrbisLibCPP.dll">
@@ -152,29 +152,29 @@
     </Content>
     <Content Include="Orbis.ico" />
     <Content Include="OrbisNeighborhoodx64_4055.ico" />
-    <None Include="Resources\Edit.png" />
-    <None Include="Resources\OrbisTaskbarApp_1908.png" />
-    <None Include="Resources\Send.png" />
-    <None Include="Resources\Locate.png" />
-    <None Include="Resources\Title Disc.png" />
-    <None Include="Resources\Delete.png" />
-    <None Include="Resources\Default.ico" />
-    <None Include="Resources\RefactoringLog_12810.png" />
-    <None Include="Resources\InformationSymbol_16x1.png" />
-    <None Include="Resources\Default1.ico" />
-    <None Include="Resources\Settings1.png" />
-    <None Include="Resources\properties_16xLG.png" />
-    <None Include="Resources\Settings.png" />
-    <None Include="Resources\InformationSymbol_16x.png" />
-    <None Include="Resources\FindSymbol_16x.png" />
-    <None Include="Resources\tex_enter_rest_mode.png" />
-    <None Include="Resources\tex_turn_off.png" />
-    <None Include="Resources\tex_restart.png" />
-    <None Include="Resources\Add_Target.png" />
+    <EmbeddedResource Include="Resources\Edit.png" />
+    <EmbeddedResource Include="Resources\OrbisTaskbarApp_1908.png" />
+    <EmbeddedResource Include="Resources\Send.png" />
+    <EmbeddedResource Include="Resources\Locate.png" />
+    <EmbeddedResource Include="Resources\Title Disc.png" />
+    <EmbeddedResource Include="Resources\Delete.png" />
+    <EmbeddedResource Include="Resources\Default.ico" />
+    <EmbeddedResource Include="Resources\RefactoringLog_12810.png" />
+    <EmbeddedResource Include="Resources\InformationSymbol_16x1.png" />
+    <EmbeddedResource Include="Resources\Default1.ico" />
+    <EmbeddedResource Include="Resources\Settings1.png" />
+    <EmbeddedResource Include="Resources\properties_16xLG.png" />
+    <EmbeddedResource Include="Resources\Settings.png" />
+    <EmbeddedResource Include="Resources\InformationSymbol_16x.png" />
+    <EmbeddedResource Include="Resources\FindSymbol_16x.png" />
+    <EmbeddedResource Include="Resources\tex_enter_rest_mode.png" />
+    <EmbeddedResource Include="Resources\tex_turn_off.png" />
+    <EmbeddedResource Include="Resources\tex_restart.png" />
+    <EmbeddedResource Include="Resources\Add_Target.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" /wildcards /t:winexe /out:../../../$(ProjectName).exe  $(ProjectName).exe *.dll /ndebug /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" /wildcards /t:winexe /out:../../../../$(ProjectName).exe  $(ProjectName).exe *.dll /ndebug /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

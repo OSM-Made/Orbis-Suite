@@ -27,7 +27,7 @@ bool Sockets::Connect() {
 	addr.sin_port = this->port;
 	addr.sin_addr.s_addr = inet_addr(this->IP);
 
-	DWORD sock_timeout = 500;
+	DWORD sock_timeout = 2000; //500
 
 	setsockopt(Socket, SOL_SOCKET, SO_SNDTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
 	setsockopt(Socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&sock_timeout, sizeof(sock_timeout));
@@ -153,8 +153,10 @@ bool Sockets::Receive(char* Data, int Size) {
 	while (DataLeft > 0) {
 		int DataChunkSize = min(1024 * 2, DataLeft);
 
-		if (hasConnectionBeenClosed)
+		if (hasConnectionBeenClosed) {
+			//printf("Err: Connection Has Been Closed\n");
 			return false;
+		}
 
 		ReceiveStatus = recv(Socket, CurrentPosition, DataChunkSize, 0);
 		if (ReceiveStatus == -1 && errno != EWOULDBLOCK)
@@ -164,8 +166,10 @@ bool Sockets::Receive(char* Data, int Size) {
 		DataLeft -= ReceiveStatus;
 	}
 
-	if (ReceiveStatus == -1)
+	if (ReceiveStatus == -1) {
+		//printf("Err: ReceiveStatus == -1\n");
 		return false;
+	}
 
 	return true;
 }

@@ -29,7 +29,10 @@ OrbisService::OrbisService(OrbisLib* orbisLib)
 	this->IsRunning = true;
 
 	//Connect to Windows Service.
-	Connect();
+	while (!Connect())
+	{
+		Sleep(1000);
+	}
 }
 
 OrbisService::~OrbisService()

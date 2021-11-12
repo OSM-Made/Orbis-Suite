@@ -123,7 +123,16 @@
                         Description="Monitoring/Managing the Orbis Suite Database and Target communication."
                         Start="auto"
                         Account="LocalSystem"
-                        ErrorControl="ignore" />
+                        ErrorControl="ignore">
+
+          <util:ServiceConfig
+          FirstFailureActionType='restart'
+          SecondFailureActionType='restart'
+          ThirdFailureActionType='restart'
+          RestartServiceDelayInSeconds='30'
+          ResetPeriodInDays='1'/>
+          
+        </ServiceInstall>
         <ServiceControl Id="Service_Start" Name="OrbisSuiteService" Start="install" Wait="no" />
         <ServiceControl Id="Service_Stop" Name="OrbisSuiteService"  Stop="both" Remove="uninstall" Wait="yes" />
       </Component>

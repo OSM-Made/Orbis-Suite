@@ -82,6 +82,8 @@ int OrbisTarget::GetInfo(char* IPAddr, RESP_TargetInfo* TargetInfo)
 		return API_ERROR_FAIL;
 	}
 
+	char test[sizeof(API_Packet_s)];
+
 	orbisLib->API->FinishCall(&Sock);
 
 	return API_OK;

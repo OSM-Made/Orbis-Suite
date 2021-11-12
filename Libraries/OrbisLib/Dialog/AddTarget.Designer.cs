@@ -34,12 +34,9 @@
             this.TargetName = new DarkUI.Controls.DarkTextBox();
             this.darkTitle4 = new DarkUI.Controls.DarkTitle();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.TargetFW455 = new DarkUI.Controls.DarkRadioButton();
-            this.TargetFW405 = new DarkUI.Controls.DarkRadioButton();
-            this.TargetFW176 = new DarkUI.Controls.DarkRadioButton();
             this.TargetFW505 = new DarkUI.Controls.DarkRadioButton();
             this.TargetFW672 = new DarkUI.Controls.DarkRadioButton();
-            this.TargetFW702 = new DarkUI.Controls.DarkRadioButton();
+            this.TargetFW751 = new DarkUI.Controls.DarkRadioButton();
             this.Button_AddTarget = new DarkUI.Controls.DarkButton();
             this.Button_Cancel = new DarkUI.Controls.DarkButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -50,6 +47,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.IsDefaultTarget = new DarkUI.Controls.DarkCheckBox();
             this.darkTitle1 = new DarkUI.Controls.DarkTitle();
+            this.TargetFW702 = new DarkUI.Controls.DarkRadioButton();
+            this.TargetFW755 = new DarkUI.Controls.DarkRadioButton();
+            this.TargetFW750 = new DarkUI.Controls.DarkRadioButton();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -100,53 +100,23 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.TargetFW455);
-            this.panel5.Controls.Add(this.TargetFW405);
-            this.panel5.Controls.Add(this.TargetFW176);
+            this.panel5.Controls.Add(this.TargetFW750);
+            this.panel5.Controls.Add(this.TargetFW755);
+            this.panel5.Controls.Add(this.TargetFW702);
             this.panel5.Controls.Add(this.TargetFW505);
             this.panel5.Controls.Add(this.TargetFW672);
-            this.panel5.Controls.Add(this.TargetFW702);
+            this.panel5.Controls.Add(this.TargetFW751);
             this.panel5.Controls.Add(this.darkTitle4);
             this.panel5.Location = new System.Drawing.Point(10, 148);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(252, 66);
             this.panel5.TabIndex = 3;
             // 
-            // TargetFW455
-            // 
-            this.TargetFW455.AutoSize = true;
-            this.TargetFW455.Enabled = false;
-            this.TargetFW455.Location = new System.Drawing.Point(138, 19);
-            this.TargetFW455.Name = "TargetFW455";
-            this.TargetFW455.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW455.TabIndex = 6;
-            this.TargetFW455.Text = "4.55";
-            // 
-            // TargetFW405
-            // 
-            this.TargetFW405.AutoSize = true;
-            this.TargetFW405.Enabled = false;
-            this.TargetFW405.Location = new System.Drawing.Point(70, 19);
-            this.TargetFW405.Name = "TargetFW405";
-            this.TargetFW405.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW405.TabIndex = 5;
-            this.TargetFW405.Text = "4.05";
-            // 
-            // TargetFW176
-            // 
-            this.TargetFW176.AutoSize = true;
-            this.TargetFW176.Enabled = false;
-            this.TargetFW176.Location = new System.Drawing.Point(3, 19);
-            this.TargetFW176.Name = "TargetFW176";
-            this.TargetFW176.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW176.TabIndex = 4;
-            this.TargetFW176.Text = "1.76";
-            // 
             // TargetFW505
             // 
             this.TargetFW505.AutoSize = true;
             this.TargetFW505.Checked = true;
-            this.TargetFW505.Location = new System.Drawing.Point(203, 19);
+            this.TargetFW505.Location = new System.Drawing.Point(3, 19);
             this.TargetFW505.Name = "TargetFW505";
             this.TargetFW505.Size = new System.Drawing.Size(46, 17);
             this.TargetFW505.TabIndex = 2;
@@ -156,20 +126,20 @@
             // TargetFW672
             // 
             this.TargetFW672.AutoSize = true;
-            this.TargetFW672.Location = new System.Drawing.Point(3, 42);
+            this.TargetFW672.Location = new System.Drawing.Point(70, 19);
             this.TargetFW672.Name = "TargetFW672";
             this.TargetFW672.Size = new System.Drawing.Size(46, 17);
             this.TargetFW672.TabIndex = 8;
             this.TargetFW672.Text = "6.72";
             // 
-            // TargetFW702
+            // TargetFW751
             // 
-            this.TargetFW702.AutoSize = true;
-            this.TargetFW702.Location = new System.Drawing.Point(70, 42);
-            this.TargetFW702.Name = "TargetFW702";
-            this.TargetFW702.Size = new System.Drawing.Size(46, 17);
-            this.TargetFW702.TabIndex = 9;
-            this.TargetFW702.Text = "7.02";
+            this.TargetFW751.AutoSize = true;
+            this.TargetFW751.Location = new System.Drawing.Point(3, 42);
+            this.TargetFW751.Name = "TargetFW751";
+            this.TargetFW751.Size = new System.Drawing.Size(46, 17);
+            this.TargetFW751.TabIndex = 9;
+            this.TargetFW751.Text = "7.51";
             // 
             // Button_AddTarget
             // 
@@ -276,6 +246,33 @@
             this.darkTitle1.TabIndex = 15;
             this.darkTitle1.Text = "Default Target";
             // 
+            // TargetFW702
+            // 
+            this.TargetFW702.AutoSize = true;
+            this.TargetFW702.Location = new System.Drawing.Point(136, 19);
+            this.TargetFW702.Name = "TargetFW702";
+            this.TargetFW702.Size = new System.Drawing.Size(46, 17);
+            this.TargetFW702.TabIndex = 10;
+            this.TargetFW702.Text = "7.02";
+            // 
+            // TargetFW755
+            // 
+            this.TargetFW755.AutoSize = true;
+            this.TargetFW755.Location = new System.Drawing.Point(70, 42);
+            this.TargetFW755.Name = "TargetFW755";
+            this.TargetFW755.Size = new System.Drawing.Size(46, 17);
+            this.TargetFW755.TabIndex = 11;
+            this.TargetFW755.Text = "7.55";
+            // 
+            // TargetFW750
+            // 
+            this.TargetFW750.AutoSize = true;
+            this.TargetFW750.Location = new System.Drawing.Point(203, 19);
+            this.TargetFW750.Name = "TargetFW750";
+            this.TargetFW750.Size = new System.Drawing.Size(46, 17);
+            this.TargetFW750.TabIndex = 12;
+            this.TargetFW750.Text = "7.50";
+            // 
             // AddTarget
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,12 +309,9 @@
         private DarkUI.Controls.DarkTextBox TargetName;
         private DarkUI.Controls.DarkTitle darkTitle4;
         private System.Windows.Forms.Panel panel5;
-        private DarkUI.Controls.DarkRadioButton TargetFW455;
-        private DarkUI.Controls.DarkRadioButton TargetFW405;
-        private DarkUI.Controls.DarkRadioButton TargetFW176;
         private DarkUI.Controls.DarkRadioButton TargetFW505;
         private DarkUI.Controls.DarkRadioButton TargetFW672;
-        private DarkUI.Controls.DarkRadioButton TargetFW702;
+        private DarkUI.Controls.DarkRadioButton TargetFW751;
         private DarkUI.Controls.DarkButton Button_AddTarget;
         private DarkUI.Controls.DarkButton Button_Cancel;
         private System.Windows.Forms.Panel panel1;
@@ -328,5 +322,8 @@
         private System.Windows.Forms.Panel panel2;
         private DarkUI.Controls.DarkCheckBox IsDefaultTarget;
         private DarkUI.Controls.DarkTitle darkTitle1;
+        private DarkUI.Controls.DarkRadioButton TargetFW702;
+        private DarkUI.Controls.DarkRadioButton TargetFW750;
+        private DarkUI.Controls.DarkRadioButton TargetFW755;
     }
 }

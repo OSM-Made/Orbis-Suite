@@ -124,9 +124,20 @@ namespace OrbisSuite
                 return API_ERRORS.API_ERROR_NOT_ATTACHED;
         }
 
-        public API_ERRORS Read(UInt64 Address, Int32 Len, out byte[] List)
+        public API_ERRORS Read(UInt64 Address, Int32 Len, byte[] List)
         {
-            return Imports.Process.Read(Target.Info.IPAddr, Address, Len, out List);
+            IntPtr ptr = Marshal.AllocHGlobal(Len);
+
+            API_ERRORS err = Imports.Process.Read(Target.Info.IPAddr, Address, Len, ptr);
+
+            for(int i = 0; i < Len; i++)
+            {
+                List[i] = Marshal.ReadByte(ptr, i);
+            }
+                
+            Marshal.FreeHGlobal(ptr);
+
+            return err;
         }
 
         public API_ERRORS Write(UInt64 Address, Int32 Len, byte[] List)
