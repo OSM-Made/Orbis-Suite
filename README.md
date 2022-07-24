@@ -1,3 +1,5 @@
+This repo has become stale and out of date please visit the newer one [here](https://github.com/OSM-Made/Orbis-Suite-3.0). Thanks :D
+
 # Orbis-Suite
 A suite of tools used for developing things on a jailbroken PS4. Aswell as an included DLL for creating 3rd party C# applications using the OrbisLib API.
 
