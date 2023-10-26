@@ -1,0 +1,406 @@
+﻿<simpleControls:SimpleWindow x:Class="OrbisPeeknPoke.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrbisPeeknPoke"
+        xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+        xmlns:OrbisSuiteCore="clr-namespace:OrbisSuiteCore.Controls;assembly=OrbisSuiteCore"
+        xmlns:wpfhexa="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
+        mc:Ignorable="d"
+        Title="Peek n' Poke"
+        Height="660" Width="837"
+        MinHeight="666" MinWidth="827"
+        MaxHeight="666" MaxWidth="827">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="234"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="86"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu BG -->
+        <Rectangle Grid.Column="0"
+                   Fill="{DynamicResource WindowBar}" Grid.ColumnSpan="2"/>
+
+        <!-- Separation bar -->
+        <Rectangle Grid.Column="0"
+                   Height="0.6" VerticalAlignment="Top"
+                   Fill="{DynamicResource WindowBackground}" Grid.ColumnSpan="2"/>
+
+        <!-- Separation bar Main Top -->
+        <Rectangle Grid.Column="0"
+                   Height="1" VerticalAlignment="Bottom"
+                   Fill="{DynamicResource WindowBackground}" Grid.ColumnSpan="2"/>
+        
+        <!-- Current Target -->
+        <OrbisSuiteCore:CurrentTargetDisplay VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right" Grid.ColumnSpan="2">
+
+            <StackPanel Orientation="Vertical"
+                        Margin="6 6 0 6">
+
+                <!-- Base Address -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <simpleControls:SimpleTextField 
+                        Name="BaseAddress"
+                        FieldName="Base Address"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="185"
+                        Margin="0"/>
+
+                    <simpleControls:SimpleButton 
+                        Name="SelectBase"
+                        Content="Get"
+                        Width="31"
+                        Height="31"
+                        Margin="6 0 0 0"
+                        Click="SelectBase_Click"/>
+
+                </StackPanel>
+
+                <!-- Offset / Len -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="6 4 0 0">
+
+
+                    <simpleControls:SimpleTextField Grid.Column="0"
+                        Name="Offset"
+                        FieldName="Offset"
+                        FieldText="0x0"
+                        IsReadOnly="False"
+                        Margin="0"
+                        VerticalContentAlignment="Center"
+                        Width="108"/>
+
+                    <simpleControls:SimpleTextField Grid.Column="0"
+                        Name="Length"
+                        FieldName="Length"
+                        FieldText="0x200"
+                        IsReadOnly="False"
+                        Margin="6 0 0 0"
+                        VerticalContentAlignment="Center"
+                        Width="108"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <!-- Peek / Poke -->
+            <StackPanel Orientation="Vertical" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top"
+                        Margin="6 6 0 6">
+
+                <simpleControls:SimpleButton Name="Peek"
+                                 Content="Peek"
+                                 Width="52"
+                                 Height="31"
+                                 Margin="0 2 0 0"
+                                 Click="Peek_Click"/>
+
+                <simpleControls:SimpleButton Name="Poke"
+                                 Content="Poke"
+                                 Width="52"
+                                 Height="31"
+                                 Margin="0 8 0 0"
+                                 Click="Poke_Click"/>
+            </StackPanel>
+
+            <!-- Current Debugging Process -->
+            <OrbisSuiteCore:DebuggingDisplay 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Right"/>
+
+        </StackPanel>
+        
+        <!-- Main View -->
+        <wpfhexa:HexEditor
+            x:Name="HexView"
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="14 0 0 0"
+            
+            FontFamily="Consolas"
+            FontSize="12"
+            
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center"
+            
+            AllowByteCount="False"
+            AllowCustomBackgroundBlock="False"
+            AllowDrop="False"
+            AllowExtend="False"
+            AllowAutoHighLightSelectionByte="False"
+            StatusBarVisibility="Hidden"
+            AppendNeedConfirmation="False"
+            CanInsertAnywhere="True"
+            
+            BorderThickness="1"
+            BorderBrush="Transparent"
+            
+            
+            ByteGrouping="TwoByte"
+            ByteShiftLeft="{Binding LongValue, ElementName=HbBsl, UpdateSourceTrigger=PropertyChanged}"
+            ByteSpacerPositioning="Nothing"
+            ByteSpacerVisualStyle="Empty"
+            ByteSpacerWidthTickness="VeryLarge"
+            
+            StringByteWidth="8"
+            DataStringVisual="Hexadecimal"
+            
+            DefaultCopyToClipboardMode="HexaString"
+            PreloadByteInEditorMode="MaxScreenVisibleLineAtDataLoad"
+            VisualCaretMode="Overwrite"
+            
+            HighLightSelectionStart="False"
+            OffSetStringVisual="Hexadecimal"
+            OffSetPanelFixedWidthVisual="Fixed"
+ 
+            ForegroundSecondColor="#FFDCDCDC"
+            Foreground="#FFDCDCDC"
+            ForegroundOffSetHeaderColor="#BA6969"
+            ForegroundHighLightOffSetHeaderColor="#BA6969"
+            SelectionFirstColor="#B04B4B"
+            SelectionSecondColor="#B04B4B"
+            MouseOverColor="#B04B4B"
+            ByteModifiedColor="{DynamicResource WindowBar}"
+            Background="Transparent">
+
+            <wpfhexa:HexEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Follow Pointer" Click="FollowPointer_Click"/>
+                    <MenuItem Header="Return" Click="ReturnPointer_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Copy Address"/>
+                    <MenuItem Header="Copy Offset"/>
+                    <MenuItem Header="Copy Selection Length"/>
+                    <Separator/>
+                    <MenuItem Header="Copy Hex" Click="CopyHex_Click"/>
+                    <MenuItem Header="Copy Text" Click="CopyText_Click"/>
+                    <MenuItem Header="Copy C# Code" Click="CopyCSharp_Click"/>
+                    <MenuItem Header="Copy C++ Code" Click="CopyCPP_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Select All" Click="SelectAll_Click"/>
+                </ContextMenu>
+            </wpfhexa:HexEditor.ContextMenu>
+        </wpfhexa:HexEditor>
+
+        
+
+        <!-- Control Area -->
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Grid.ColumnSpan="2">
+
+            <!-- Control Area Background -->
+            <Border Background="{DynamicResource WindowBar}"/>
+
+            <StackPanel Orientation="Vertical" 
+                        HorizontalAlignment="Left"
+                        Margin="0 6 0 6">
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <simpleControls:SimpleTextField 
+                        Name="Int8"
+                        FieldName="Int8"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 0 0 0"/>
+
+                    <simpleControls:SimpleTextField 
+                        Name="UInt8"
+                        FieldName="UInt8"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 0 6 0"/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <simpleControls:SimpleTextField 
+                        Name="Int16"
+                        FieldName="Int16"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 6 0 0"/>
+
+                    <simpleControls:SimpleTextField 
+                        Name="UInt16"
+                        FieldName="UInt16"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 6 6 0"/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <simpleControls:SimpleTextField 
+                        Name="Int32"
+                        FieldName="Int32"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 6 0 0"/>
+
+                    <simpleControls:SimpleTextField 
+                        Name="UInt32"
+                        FieldName="UInt32"
+                        FieldText=""
+                        IsReadOnly="False"
+                        VerticalContentAlignment="Center"
+                        Width="108"
+                        Margin="6 6 6 0"/>
+
+                </StackPanel>
+
+                <simpleControls:SimpleTextField 
+                    Name="Int64"
+                    FieldName="Int64"
+                    FieldText=""
+                    IsReadOnly="False"
+                    VerticalContentAlignment="Center"
+                    Width="Auto"
+                    Margin="6 6 6 0"/>
+
+                <simpleControls:SimpleTextField 
+                    Name="UInt64"
+                    FieldName="UInt64"
+                    FieldText=""
+                    IsReadOnly="False"
+                    VerticalContentAlignment="Center"
+                    Width="Auto"
+                    Margin="6 6 6 0"/>
+
+                <simpleControls:SimpleTextField 
+                    Name="Float"
+                    FieldName="Float"
+                    FieldText=""
+                    IsReadOnly="False"
+                    VerticalContentAlignment="Center"
+                    Width="Auto"
+                    Margin="6 6 6 0"/>
+
+                <simpleControls:SimpleTextField 
+                    Name="Double"
+                    FieldName="Double"
+                    FieldText=""
+                    IsReadOnly="False"
+                    VerticalContentAlignment="Center"
+                    Width="Auto"
+                    Margin="6 6 6 0"/>
+
+                <simpleControls:SimpleTextField 
+                    Name="String"
+                    FieldName="String"
+                    FieldText=""
+                    IsReadOnly="False"
+                    VerticalContentAlignment="Center"
+                    Width="Auto"
+                    Margin="6 6 6 0"
+                    KeyUp="String_KeyUp"
+                    />
+
+            </StackPanel>
+        </Grid>
+
+        <!-- Info BG -->
+        <Rectangle Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   Fill="{DynamicResource WindowBar}"/>
+
+        <!-- Info -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    Margin="10 0 0 0"
+                    VerticalAlignment="Center">
+
+            <!-- Address -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="Address: ">
+                </TextBlock>
+                <TextBlock
+                        x:Name="CurrentAddress"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       Margin="0 0 10 0"
+                       Text="0x0">
+                </TextBlock>
+            </StackPanel>
+            
+
+            <!-- Offset -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="Offset: ">
+                </TextBlock>
+                <TextBlock
+                       x:Name="OffsetValue"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       Margin="0 0 10 0"
+                       Text="0x0">
+                </TextBlock>
+            </StackPanel>
+
+            <!-- Slection -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Text="Selection Length: ">
+                </TextBlock>
+                <TextBlock
+                       x:Name="SelectionLength"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="13"
+                       Margin="0 0 10 0"
+                       Text="0x0">
+                </TextBlock>
+            </StackPanel>
+
+            <!-- Length -->
+
+        </StackPanel>
+
+        <!-- Separation bar Main Bottom -->
+        <Rectangle Grid.Column="0"
+                   Grid.Row="2"
+                   Height="1" VerticalAlignment="Top"
+                   Fill="{DynamicResource WindowBackground}" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</simpleControls:SimpleWindow>

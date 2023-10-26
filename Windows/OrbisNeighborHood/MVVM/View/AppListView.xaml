@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="OrbisNeighborHood.MVVM.View.AppListView"
+             x:Name="AppListElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.MVVM.View"
+             xmlns:controls="clr-namespace:OrbisNeighborHood.Controls"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="585" d:DesignWidth="700">
+    <StackPanel>
+        <TextBlock Text="{Binding ElementName=AppListElement, Path=TitleString}"
+                   Foreground="{DynamicResource Text}"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="30,10,0,10"/>
+
+        <Grid Margin="20 0 20 30">
+            <ListBox Width="660" Height="500"
+                     Background="Transparent"
+                     BorderBrush="Transparent"
+                     x:Name="AppList">
+
+                <!-- Sets the List view to be a uniform grid starting top left with 2 columns. -->
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid VerticalAlignment="Top" Columns="2"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <!-- Remove Selection & Add Margin to all Items -->
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Margin" Value="0 0 0 20" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </Grid>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,222 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>OrbisNeighborhood.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\AppList.png" />
+    <None Remove="Images\Consoles\Fat.png" />
+    <None Remove="Images\Consoles\Pro.png" />
+    <None Remove="Images\Consoles\Slim.png" />
+    <None Remove="Images\Default.ico" />
+    <None Remove="Images\DefaultAppIcon.png" />
+    <None Remove="Images\DefaultTitleIcon.png" />
+    <None Remove="Images\Delete.png" />
+    <None Remove="Images\Home.png" />
+    <None Remove="Images\Icons\OrbisConsoleOutput.ico" />
+    <None Remove="Images\Icons\OrbisDebugger.ico" />
+    <None Remove="Images\Icons\OrbisModuleManager.ico" />
+    <None Remove="Images\Icons\OrbisNeighborhood.ico" />
+    <None Remove="Images\Icons\OrbisPeeknPoke.ico" />
+    <None Remove="Images\Icons\OrbisTargetSettings.ico" />
+    <None Remove="Images\Icons\OrbisTaskbarApp.ico" />
+    <None Remove="Images\Info.png" />
+    <None Remove="Images\Locate.png" />
+    <None Remove="Images\NotDefault.ico" />
+    <None Remove="Images\Plus.png" />
+    <None Remove="Images\ReplaceIcon.png" />
+    <None Remove="Images\Restart.png" />
+    <None Remove="Images\RestMode.png" />
+    <None Remove="Images\ReturnArrow.png" />
+    <None Remove="Images\Send.png" />
+    <None Remove="Images\Settings.png" />
+    <None Remove="Images\Shutdown.png" />
+    <None Remove="Images\SpinningDualRing.gif" />
+    <None Remove="Images\Start.png" />
+    <None Remove="Images\Stop.png" />
+    <None Remove="Images\Store.png" />
+    <None Remove="Images\Suspend.png" />
+    <None Remove="Images\Targets.png" />
+    <None Remove="Images\UnAvailable.png" />
+    <None Remove="Images\Visibility.png" />
+    <None Remove="Resources\BuildNumber.txt" />
+    <None Remove="Resources\BuildString.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="OrbisNeighborhood.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Store.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\AppList.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Consoles\Fat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Consoles\Pro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Consoles\Slim.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Default.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DefaultAppIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DefaultTitleIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisConsoleOutput.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisDebugger.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisModuleManager.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisNeighborhood.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisPeeknPoke.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisTargetSettings.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\OrbisTaskbarApp.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Locate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\NotDefault.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ReplaceIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Restart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\RestMode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Send.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Shutdown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SpinningDualRing.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Start.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Suspend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Targets.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\UnAvailable.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Visibility.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <EmbeddedResource Include="Resources\BuildNumber.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\BuildString.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrbisLib\OrbisLib2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleUI">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\SimpleUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="call &quot;$(ProjectDir)PreBuild.bat&quot; &quot;$(ProjectDir)&quot; &quot;$(CurrentDate)&quot; &quot;$(ConfigurationName)&quot;" />
+  </Target>
+
+  <PropertyGroup>
+   <CurrentDate>$([System.DateTime]::Now.ToString("dddd MMMM dd yyyy h:mm tt"))</CurrentDate>
+   <PackageProjectUrl>https://github.com/OSM-Made/Orbis-Suite-3.0</PackageProjectUrl>
+   <RepositoryUrl>https://github.com/OSM-Made/Orbis-Suite-3.0</RepositoryUrl>
+   <AssemblyVersion>3.0.0</AssemblyVersion>
+   <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(SolutionDir)Windows\Executables\$(ProjectName)&quot;&#xD;&#xA;xcopy /y /E &quot;$(ProjectDir)$(OutDir)&quot; &quot;$(SolutionDir)Windows\Executables\$(ProjectName)&quot;&#xD;&#xA;" />
+  </Target>
+
+</Project>

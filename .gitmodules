@@ -1,0 +1,37 @@
+[submodule "SimpleUI"]
+	path = External/SimpleUI
+	url = https://github.com/OSM-Made/SimpleUI
+	shallow = true
+[submodule "External/Be.HexEditor"]
+	path = External/Be.HexEditor
+	url = https://github.com/OSM-Made/Be.HexEditor
+[submodule "External/OrbisLib2"]
+	path = External/OrbisLib2
+	url = https://github.com/OSM-Made/OrbisLib2
+[submodule "External/WpfHexEditorControl"]
+	path = External/WpfHexEditorControl
+	url = https://github.com/OSM-Made/WpfHexEditorControl
+[submodule "Playstation/External/--init"]
+	path = Playstation/External/--init
+	url = https://github.com/OSM-Made/StubMaker
+[submodule "Playstation/External/StubMaker"]
+	path = Playstation/External/StubMaker
+	url = https://github.com/OSM-Made/StubMaker
+[submodule "Playstation/External/libKernelInterface"]
+	path = Playstation/External/libKernelInterface
+	url = https://github.com/OSM-Made/libKernelInterface
+[submodule "Playstation/External/OrbisUtils2"]
+	path = Playstation/External/OrbisUtils2
+	url = https://github.com/OSM-Made/OrbisUtils2
+[submodule "Playstation/External/SimpleUI"]
+	path = Playstation/External/SimpleUI
+	url = https://github.com/OSM-Made/SimpleUI
+[submodule "Playstation/External/libGoldHEN"]
+	path = Playstation/External/libGoldHEN
+	url = https://github.com/OSM-Made/libGoldHEN
+[submodule "Playstation/External/libSQLite-ps4"]
+	path = Playstation/External/libSQLite-ps4
+	url = https://github.com/bucanero/libSQLite-ps4
+[submodule "External/SimpleUI"]
+	path = External/SimpleUI
+	url = https://github.com/OSM-Made/SimpleUI

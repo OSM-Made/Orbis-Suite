@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{2D1D95EC-BDB9-4E1E-A357-3002C5F71081}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\Increment.bat = Misc\Increment.bat
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Loader", "Loader\Loader.vcxproj", "{094342B9-8AC8-4772-97BA-D03C7D61670A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OrbisAPIDaemon", "OrbisAPIDaemon\OrbisAPIDaemon.vcxproj", "{A39FC9BA-130E-4993-9D80-46564A892EE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ORBIS = Debug|ORBIS
+		Release|ORBIS = Release|ORBIS
+		System|ORBIS = System|ORBIS
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Release|ORBIS.ActiveCfg = Release|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Release|ORBIS.Build.0 = Release|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.System|ORBIS.ActiveCfg = System|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.System|ORBIS.Build.0 = System|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Release|ORBIS.ActiveCfg = Release|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Release|ORBIS.Build.0 = Release|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.System|ORBIS.ActiveCfg = System|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.System|ORBIS.Build.0 = System|ORBIS
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71E4052C-AB52-4284-AF91-2711A2DCD093}
+	EndGlobalSection
+EndGlobal

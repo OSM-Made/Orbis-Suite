@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net7.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+	<UseWPF>true</UseWPF>
+	<Configurations>Debug;Release;System</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Common\Images\Consoles\Fat.png" />
+    <None Remove="Common\Images\Consoles\Pro.png" />
+    <None Remove="Common\Images\Consoles\Slim.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Common\Images\Consoles\Fat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Images\Consoles\Pro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Images\Consoles\Slim.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ftp.dll" Version="2.0.23268.1746" />
+    <PackageReference Include="Google.Protobuf" Version="3.24.4" />
+    <PackageReference Include="H.Pipes" Version="2.0.53" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="System.Json" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleUI">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\SimpleUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y &quot;$(ProjectDir)$(OutDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)Windows\Executables&quot;" />
+  </Target>
+
+</Project>

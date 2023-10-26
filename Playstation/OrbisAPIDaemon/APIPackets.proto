@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+enum APICommand 
+{
+	/* ####### Apps functions ####### */
+	API_APPS_CHECK_VER = 0;
+	API_APPS_GET_DB = 1;
+	API_APPS_GET_INFO_STR = 2;
+	API_APPS_STATUS = 3;
+	API_APPS_START = 4;
+	API_APPS_STOP = 5;
+	API_APPS_SUSPEND = 6;
+	API_APPS_RESUME = 7;
+	API_APPS_DELETE = 8;
+	API_APPS_SET_VISIBILITY = 9;
+	API_APPS_GET_VISIBILITY = 10;
+	
+	/* ##### Debugger functions ##### */
+	API_DBG_ATTACH = 11; /* Debugger attach to target */
+	API_DBG_DETACH = 12; /* Debugger detach from target */
+	API_DBG_GET_CURRENT = 13;
+	API_DBG_READ = 14;
+	API_DBG_WRITE = 15;
+	API_DBG_KILL = 16;
+	API_DBG_BREAK = 17;
+	API_DBG_RESUME = 18;
+	API_DBG_SIGNAL = 19;
+	API_DBG_STEP = 20;
+	API_DBG_STEP_OVER = 21;
+	API_DBG_STEP_OUT = 22;
+	API_DBG_GET_CALLSTACK = 23;
+	API_DBG_GET_REG = 24;
+	API_DBG_SET_REG = 25;
+	API_DBG_GET_FREG = 26;
+	API_DBG_SET_FREG = 27;
+	API_DBG_GET_DBGREG = 28;
+	API_DBG_SET_DBGREG = 29;
+	
+	/* Remote Library functions */
+	API_DBG_LOAD_LIBRARY = 30;
+	API_DBG_UNLOAD_LIBRARY = 31;
+	API_DBG_RELOAD_LIBRARY = 32;
+	API_DBG_LIBRARY_LIST = 33;
+	
+	/* Thread Management */
+	API_DBG_THREAD_LIST = 34;
+	API_DBG_THREAD_STOP = 35;
+	API_DBG_THREAD_RESUME = 36;
+	
+	/* Breakpoint functions */
+	API_DBG_BREAKPOINT_GETFREE = 37;
+	API_DBG_BREAKPOINT_SET = 38;
+	API_DBG_BREAKPOINT_UPDATE = 39;
+	API_DBG_BREAKPOINT_REMOVE = 40;
+	API_DBG_BREAKPOINT_GETINFO = 41;
+	API_DBG_BREAKPOINT_LIST = 42;
+	
+	/* Watchpoint functions */
+	API_DBG_WATCHPOINT_SET = 43;
+	API_DBG_WATCHPOINT_UPDATE = 44;
+	API_DBG_WATCHPOINT_REMOVE = 45;
+	API_DBG_WATCHPOINT_GETINFO = 46;
+	API_DBG_WATCHPOINT_LIST = 47;
+	
+	/* ###### Kernel functions ###### */
+	API_KERN_BASE = 48;
+	API_KERN_READ = 49;
+	API_KERN_WRITE = 50;
+	
+	/* ###### Target functions ###### */
+	API_TARGET_INFO = 51;
+	API_TARGET_RESTMODE = 52;
+	API_TARGET_SHUTDOWN = 53;
+	API_TARGET_REBOOT = 54;
+	API_TARGET_NOTIFY = 55;
+	API_TARGET_BUZZER = 56;
+	API_TARGET_SET_LED = 57;
+	API_TARGET_SET_SETTINGS = 58;
+	API_TARGET_GET_PROC_LIST = 59;
+	API_TARGET_SEND_FILE = 60;
+	API_TARGET_RECIEVE_FILE = 61;
+	API_TARGET_DELETE_FILE = 62;
+}
+
+enum AppState
+{
+	STATE_NOT_RUNNING = 0;
+	STATE_RUNNING = 1;
+	STATE_SUSPENDED = 2;
+}
+
+message InitialPacket 
+{
+	int32 PacketVersion = 1;
+	int32 Command = 2;
+}
+
+message ResultState
+{
+	bool Succeeded = 1;
+	string ErrorMessage = 2;
+}
+
+message AppInfoPacket
+{
+	string TitleId = 1;
+	string ContentId = 2;
+	string TitleName = 3;
+	string MetaDataPath = 4;
+	string LastAccessTime = 5;
+	bool IsVisible = 6;
+	int32 SortPriority = 7;
+	int32 DispLocation = 8;
+	string Category = 9;
+	int32 ContentSize = 10;
+	string InstallDate = 11;
+	string UICategory = 12;
+}
+
+message AppInfoListPacket
+{
+	repeated AppInfoPacket Apps = 1;
+}
+
+message AppPacket
+{
+	string TitleId = 1;
+}
+
+message RWPacket
+{
+	uint64 Address = 1;
+	uint64 Length = 2;
+}
+
+message SPRXPacket
+{
+	string Path = 1;
+	int32 Handle = 2;
+}
+
+message MemoryInfo
+{
+	int32 Used = 1;
+	int32 Free = 2;
+	int32 Total = 3;
+	float Percentage = 4;
+}
+
+message CurrentBigApp
+{
+	int32 Pid = 1;
+	string Name = 2;
+	string TitleId = 3;
+}
+
+message TargetInfoPacket 
+{
+    int32 SDKVersion = 1;
+    int32 SoftwareVersion = 2;
+    int32 FactorySoftwareVersion = 3;
+    CurrentBigApp BigApp = 4;
+    string ConsoleName = 5;
+    string MotherboardSerial = 6;
+    string Serial = 7;
+    string Model = 8;
+    string MACAddressLAN = 9;
+    string MACAddressWIFI = 10;
+    bool UART = 11;
+    bool IDUMode = 12;
+    string IDPS = 13;
+    string PSID = 14;
+    int32 ConsoleType = 15;
+    int32 Attached = 16;
+    int32 AttachedPid = 17;
+    int32 ForegroundAccountId = 18;
+
+    // Storage Stats
+    uint64 FreeSpace = 19;
+    uint64 TotalSpace = 20;
+
+    // System Stats
+    int32 CPUTemp = 21;
+    int32 SOCTemp = 22;
+    int32 ThreadCount = 23;
+    float AverageCPUUsage = 24;
+    int32 BusyCore = 25;
+    MemoryInfo Ram = 26;
+    MemoryInfo VRam = 27;
+};
+
+message TargetNotifyPacket
+{
+	string IconURI = 1;
+	string Message = 2;
+}
+
+message TargetSettingsPacket
+{
+	bool AutoLoadSettings = 1;
+    bool ShowDebugTitleIdLabel = 2;
+    bool ShowDevkitPanel = 3;
+    bool ShowDebugSettings = 4;
+    bool ShowAppHome = 5;
+    bool ShowBuildOverlay = 6;
+    string GameOverlayLocation = 7;
+    bool ShowCPUUsage = 8;
+    bool ShowThreadCount = 9;
+    bool Showram = 10;
+    bool Showvram = 11;
+    bool ShowCPUTemp = 12;
+    bool ShowSOCTemp = 13;
+}
+
+message ProcPacket
+{
+	int32 AppId = 1;
+	int32 ProcessId = 2;
+	string Name = 3;
+	string TitleId = 4;
+}
+
+message ProcListPacket
+{
+	repeated ProcPacket Processes = 1;
+}
+
+message LibraryInfoPacket
+{
+	uint32 Handle = 1;
+	string Path = 2;
+	uint64 MapBase = 3;
+	uint64 MapSize = 4;
+	uint64 TextSize = 5;
+	uint64 DataBase = 6;
+	uint64 DataSize = 7;
+}
+
+message LibraryListPacket
+{
+	repeated LibraryInfoPacket Libraries = 1;
+}
+
+message FilePacket
+{
+	string FilePath = 1;
+}

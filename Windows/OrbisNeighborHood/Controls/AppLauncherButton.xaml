@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="OrbisNeighborHood.Controls.AppLauncherButton"
+             x:Name="AppLauncherButtonElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
+             mc:Ignorable="d" 
+             Height="116" Width="116"
+             ForceCursor="True" Cursor="Hand"
+             MouseDown="AppLauncherButtonElement_MouseDown"
+             IsEnabledChanged="AppLauncherButtonElement_IsEnabledChanged"
+             d:DesignHeight="116" d:DesignWidth="116">
+    <Border Width="116"
+            Height="116"
+            CornerRadius="10"
+            Background="{DynamicResource WindowBar}">
+
+        <StackPanel>
+            <Image Margin="30 20 30 0" Name="IconImage"
+                   Source="/OrbisNeighborHood;component/Images/Icons/OrbisTaskbarApp.ico"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   RenderOptions.EdgeMode="Aliased"/>
+
+            <TextBlock Text="{Binding ElementName=AppLauncherButtonElement, Path=Text}"
+                       Name="IconText"
+                       FontSize="13"
+                       Margin="0 10 0 0"
+                       Foreground="{DynamicResource Text}"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+    </Border>
+</UserControl>

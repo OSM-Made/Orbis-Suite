@@ -1,0 +1,117 @@
+﻿<simpleControls:SimpleWindow x:Class="OrbisNeighborHood.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrbisNeighborHood"
+        xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+        xmlns:viewModel="clr-namespace:OrbisNeighborHood.MVVM.ViewModel"
+        xmlns:view="clr-namespace:OrbisNeighborHood.MVVM.View"
+        xmlns:subViewModel="clr-namespace:OrbisNeighborHood.MVVM.ViewModel.SubView"
+        xmlns:subView="clr-namespace:OrbisNeighborHood.MVVM.View.SubView"
+        xmlns:controls="clr-namespace:OrbisNeighborHood.Controls"
+        mc:Ignorable="d"
+        Title="NeighborHood" Height="640" Width="960"
+        MinHeight="640" MinWidth="960"
+        MaxHeight="640" MaxWidth="960">
+    
+    <!-- View Models -->
+    <Window.Resources>
+        <view:DashboardView x:Key="DashboardViewKey"/>
+        <view:TargetView x:Key="TargetViewKey"/>
+        <view:AppListView x:Key="AppListViewKey"/>
+        <view:SettingsView x:Key="SettingsViewKey"/>
+
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <ContentControl Content="{StaticResource DashboardViewKey}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:TargetViewModel}">
+            <ContentControl Content="{StaticResource TargetViewKey}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:AppListViewModel}">
+            <ContentControl Content="{StaticResource AppListViewKey}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+            <ContentControl Content="{StaticResource SettingsViewKey}" />
+        </DataTemplate>
+        
+        <!-- Sub View Models -->
+        <subView:AddTargetView x:Key="AddTargetViewKey"/>
+        <subView:EditTargetView x:Key="EditTargetViewKey"/>
+
+        <DataTemplate DataType="{x:Type subViewModel:AddTargetViewModel}">
+            <ContentControl Content="{StaticResource AddTargetViewKey}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type subViewModel:EditTargetViewModel}">
+            <ContentControl Content="{StaticResource EditTargetViewKey}" />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu BG -->
+        <Rectangle Grid.Column="0"
+                   Grid.RowSpan="3"
+            Fill="{DynamicResource WindowBar}"/>
+        
+        <!-- Current Target -->
+        <controls:CurrentTargetDisplay VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"/>
+
+        <!-- Separation bar -->
+        <Rectangle Grid.Column="0" Grid.Row="0"
+                   Height="0.6" VerticalAlignment="Top"
+                   Fill="{DynamicResource WindowBackground}"/>
+
+        <!-- Menu Controls -->
+        <StackPanel Grid.Column="0" Grid.Row="2"
+                    Orientation="Vertical">
+
+            <controls:MenuButton ImagePath="/OrbisNeighborHood;component/Images/Home.png"
+                                 Text="Dashboard"
+                                 Height="50"
+                                 IsChecked="True"
+                                 Command="{Binding DashboardViewCommand}"/>
+
+            <controls:MenuButton ImagePath="/OrbisNeighborHood;component/Images/Targets.png"
+                                 Text="Targets"
+                                 Height="50"
+                                 Command="{Binding TargetViewCommand}"/>
+
+            <controls:MenuButton ImagePath="/OrbisNeighborHood;component/Images/AppList.png"
+                                 Text="Applications"
+                                 Height="50"
+                                 Command="{Binding AppListViewCommand}"/>
+
+            <controls:MenuButton ImagePath="/OrbisNeighborHood;component/Images/Settings.png"
+                                 Text="Settings"
+                                 Height="50"
+                                 Command="{Binding SettingsViewCommand}"/>
+
+        </StackPanel>
+
+        <!-- Current View -->
+        <ContentControl Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Margin="0"
+                        Content="{Binding CurrentView}"/>
+
+    </Grid>
+</simpleControls:SimpleWindow>

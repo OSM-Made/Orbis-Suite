@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="OrbisNeighborHood.Controls.CurrentTargetDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="240">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!-- Current Title Image -->
+        <Border Grid.Column="0" Grid.Row="1"
+                BorderThickness="1"
+                BorderBrush="#333333"
+                Margin="8">
+            
+            <Image Name="CurrentTargetTitleImage"
+                   Source="/OrbisNeighborHood;component/Images/DefaultTitleIcon.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   RenderOptions.EdgeMode="Aliased"/>
+        </Border>
+
+        <StackPanel Grid.Column="1" Grid.Row="1"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center">
+
+            <!-- Target Name -->
+            <StackPanel Grid.ColumnSpan="2" Grid.Row="0"
+                        Orientation="Horizontal">
+
+                <!-- Target State -->
+                <Ellipse Grid.ColumnSpan="2" Grid.Row="0"
+                         Name="CurrentTargetState"
+                         Fill="Red"
+                         Width="12"
+                         Height="12"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Margin="5 0 5 0"
+                         ToolTip="Online &amp; API Available"/>
+
+                <!-- Current Target Name -->
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="0"
+                           Name="CurrentTargetName"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Margin="0 0 0 0"
+                           Text="-"
+                           FontSize="13"
+                           Foreground="{DynamicResource Text}"
+                           Cursor="Hand"
+                           MouseDown="CurrentTargetName_MouseDown"/>
+
+            </StackPanel>
+            
+            <!-- Title Name -->
+            <TextBlock Name="CurrentTargetTitleName" 
+                       HorizontalAlignment="Left"
+                       Margin="5 0 0 0"
+                       Text="-"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="10"/>
+            
+            <!-- TitleId -->
+            <TextBlock Name="CurrentTargetTitleId" 
+                       HorizontalAlignment="Left"
+                       Margin="5 0 0 0"
+                       Text="-"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="10"/>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

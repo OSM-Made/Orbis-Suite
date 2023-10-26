@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+	<String Id="Company">Orbis Suite</String>
+	<String Id="ProductNameFolder">Orbis Suite</String>
+	<String Id="ProductName">Orbis Suite</String>
+
+	<String Id="Description">TODO: Add</String>
+	<String Id="Keywords">TODO: Add</String>
+	<String Id="Comments">TODO: Add</String>
+
+	<String Id="DowngradeErrorMessage">A newer version of Orbis Suite is already installed.</String>
+
+	<String Id="Language">1033</String>
+
+</WixLocalization>

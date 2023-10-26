@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="OrbisLib2.Dialog.Controls.MiniTargetPanel"
+             x:Name="MiniTargetPanelElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisLib2.Dialog.Controls"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             Width="255" Height="115"
+             d:DesignWidth="255" d:DesignHeight="115"
+             Cursor="Hand" MouseDown="MiniTargetPanelElement_MouseDown">
+    
+    <Border VerticalAlignment="Stretch"
+            CornerRadius="10"
+            Background="{DynamicResource WindowBar}">
+
+        <!-- Main View -->
+        <StackPanel Margin="5">
+
+            <!-- Target Name & State -->
+            <Grid>
+
+                <StackPanel Orientation="Horizontal">
+                    <!-- Target State -->
+                    <Ellipse Grid.ColumnSpan="2" Grid.Row="0"
+                         Name="TargetStatusElement"
+                         Fill="red"
+                         Width="14"
+                         Height="14"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Margin="5 0 0 0"
+                         ToolTip="Online &amp; API Available"/>
+
+                    <!-- Target Name -->
+                    <TextBlock Text="{Binding ElementName=MiniTargetPanelElement, Path=TargetName}"
+                           Name="TargetNameElement"
+                           Foreground="{DynamicResource Text}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Margin="5 0 0 0"/>
+                </StackPanel>
+
+                <!-- Default Selection -->
+                <TextBlock Name="DefaultTargetElement"
+                           Text="★"
+                           Foreground="#45494A"
+                           FontSize="25"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="3 -8"
+                           Cursor="Hand"
+                           ForceCursor="True"
+                           MouseDown="DefaultTargetElement_MouseDown"/>
+
+            </Grid>
+
+            <!-- Target Image / Details -->
+            <StackPanel Orientation="Horizontal">
+
+                <!-- Target Image -->
+                <Grid Margin="0 5 5 5"
+                      Width="75"
+                      Height="75">
+                    <Rectangle Fill="#45494A"/>
+
+                    <Image Name="ConsoleImageElement"
+                           Source="/OrbisLib2;component/Common/Images/Consoles/Fat.png"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           RenderOptions.EdgeMode="Aliased"/>
+                </Grid>
+
+                <!-- Target Details -->
+                <Grid VerticalAlignment="Center"
+                      Height="75">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="0">
+                        <!-- Firmware Version -->
+                        <simpleControls:SimpleTextField FieldName="Firmware Version" 
+                                                    FieldText="{Binding ElementName=MiniTargetPanelElement, Path=FirmwareVersion}"
+                                                    Width="80"
+                                                    Height="35"
+                                                    Margin="0 0 5 0"/>
+
+                        <!-- SDK Version -->
+                        <simpleControls:SimpleTextField FieldName="SDK Version" 
+                                                        FieldText="{Binding ElementName=MiniTargetPanelElement, Path=SDKVersion}"
+                                                        Width="80"
+                                                        Height="35"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="2">
+                        <!-- IP Address -->
+                        <simpleControls:SimpleTextField FieldName="IP Address" 
+                                                    FieldText="{Binding ElementName=MiniTargetPanelElement, Path=IPAddress}"
+                                                    Width="100"
+                                                    Height="35"
+                                                    Margin="0 0 5 0"/>
+
+                        <!-- Payload Port -->
+                        <simpleControls:SimpleTextField FieldName="Payload Port" 
+                                                        FieldText="{Binding ElementName=MiniTargetPanelElement, Path=PayloadPort}"
+                                                        Width="60"
+                                                        Height="35"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

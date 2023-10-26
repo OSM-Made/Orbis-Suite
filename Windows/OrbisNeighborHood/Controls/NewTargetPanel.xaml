@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="OrbisNeighborHood.Controls.NewTargetPanel"
+             x:Name="AddTargetElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
+             mc:Ignorable="d"
+             Width="305" Height="210"
+             d:DesignHeight="210" d:DesignWidth="315"
+             ForceCursor="True" Cursor="Hand"
+             MouseDown="AddTargetElement_MouseDown">
+
+    <Border VerticalAlignment="Stretch"
+            CornerRadius="10"
+            Background="{DynamicResource WindowBar}">
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Image 
+               Width="70"
+               Height="70"
+               Source="/OrbisNeighborHood;component/Images/Plus.png"
+               RenderOptions.BitmapScalingMode="Fant"
+               RenderOptions.EdgeMode="Aliased"/>
+
+            <TextBlock Text="Add Target"
+                       Foreground="{DynamicResource Text}"
+                       FontWeight="SemiBold"
+                       FontSize="16"
+                       HorizontalAlignment="Center"/>
+
+        </StackPanel>
+
+    </Border>
+</UserControl>

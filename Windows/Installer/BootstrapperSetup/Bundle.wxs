@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<?include Version.wxi ?>
+	
+	<Bundle Name="Orbis Suite" Version="$(var.MajorVersion).$(var.MinorVersion).$(var.BuildVersion)" Manufacturer="OSM-Made" UpgradeCode="0978d0b2-ffa5-42b2-81ac-0cfd85de9184" IconSourceFile='..\..\..\Assets\OrbisTaskbarApp\OrbisTaskbarApp.ico'>
+		
+		<!-- Installer and its dependancies -->
+		<BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
+			<Payload SourceFile="..\SetupBA\BootstrapperCore.config"/>
+			<Payload SourceFile="..\SetupBA\bin\Release\SetupBA.dll"/>
+			<Payload SourceFile="..\SetupBA\bin\Release\SimpleUI.dll"/>
+			<Payload SourceFile="..\SetupBA\bin\Release\WpfAnimatedGif.dll"/>
+			<Payload SourceFile="..\SetupBA\bin\Release\Microsoft.Expression.Drawing.dll"/>
+			<Payload SourceFile="C:\Program Files (x86)\WiX Toolset v3.11\SDK\Microsoft.Deployment.WindowsInstaller.dll"/>
+		</BootstrapperApplicationRef>
+
+		<!-- The chain of things to install. -->
+		<Chain>
+			<!-- <PackageGroupRef Id="dotnet6"/> -->
+			<MsiPackage SourceFile="..\DummyInstaller\bin\Release\en-us\DummyInstaller.msi" Id="DummyInstallationPackageId" Cache="yes" Visible="no"/>
+		</Chain>
+
+		<WixVariable Id="WixMbaPrereqPackageId" Value="Netfx4Full" />
+		<WixVariable Id="WixMbaPrereqLicenseUrl" Value="NetfxLicense.rtf" />
+
+	</Bundle>
+
+	<Fragment>
+		<util:DirectorySearch
+		  Id="Net6Installed"
+		  Variable="Net6Installed"
+		  Path="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App\6.0.4"
+		  Result="exists" />
+		<PackageGroup Id="dotnet6">
+			<ExePackage
+			  Id="dotnet6"
+			  InstallCondition="NOT Net6Installed"
+			  DetectCondition="Net6Installed"
+			  Cache="no"
+			  Compressed="yes"
+			  PerMachine="yes"
+			  Permanent="yes"
+			  Vital="yes"
+			  SourceFile="aspnetcore-runtime-6.0.4-win-x64.exe"
+			  DownloadUrl="https://download.visualstudio.microsoft.com/download/pr/2162932c-987a-4de8-ae2a-f7d327bb39a8/97fe1cb950c2bccf44b7c3fe6aa45b53/aspnetcore-runtime-6.0.4-win-x64.exe"/>
+		</PackageGroup>
+	</Fragment>
+</Wix>

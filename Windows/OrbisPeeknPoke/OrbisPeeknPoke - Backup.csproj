@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
+    <PackageIcon></PackageIcon>
+    <ApplicationIcon>OrbisPeeknPoke.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Attached.png" />
+    <None Remove="Images\DefaultTitleIcon.png" />
+    <None Remove="Images\Detached.png" />
+    <None Remove="Images\KillProcess.png" />
+    <None Remove="Images\Restart.png" />
+    <None Remove="Images\RestMode.png" />
+    <None Remove="Images\Send.png" />
+    <None Remove="Images\Shutdown.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Attached.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DefaultTitleIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Detached.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\KillProcess.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Restart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\RestMode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Send.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Shutdown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="OrbisPeeknPoke.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Be.Windows.Forms.HexBox">
+      <HintPath>..\..\External\Be.HexEditor\Be.Windows.Forms.HexBox\bin\Release\Be.Windows.Forms.HexBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Debug\net6.0-windows\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleUI">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net6.0-windows\SimpleUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BinaryTools.Elf" Version="0.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\External\OrbisLib2\OrbisLib2\OrbisLib2.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y /E $(ProjectDir)$(OutDir) $(SolutionDir)Windows\Executables\$(ProjectName)" />
+  </Target>
+
+</Project>

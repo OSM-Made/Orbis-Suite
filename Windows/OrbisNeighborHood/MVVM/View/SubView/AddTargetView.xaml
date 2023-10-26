@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="OrbisNeighborHood.MVVM.View.SubView.AddTargetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.MVVM.View.SubView"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             xmlns:controls="clr-namespace:OrbisNeighborHood.Controls"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="585" d:DesignWidth="700">
+
+    <StackPanel>
+        <TextBlock Text="Add Target"
+                   Foreground="{DynamicResource Text}"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,10,0,10"/>
+
+        <Border Name="TestBoarder" Width="630"
+                    Height="500"
+                    VerticalAlignment="Center"
+                    Margin="30,0,30,0"
+                    CornerRadius="10"
+                    Background="{DynamicResource WindowBar}">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <!-- Main View Area -->
+                <StackPanel Margin="20 0">
+
+                    <!-- Target Info Region -->
+                    <Label Content="Target Information"
+                       FontSize="18"
+                       Margin="15 5 20 5"
+                       Foreground="{DynamicResource Text}"/>
+
+                    <controls:InputPanel InputName="Name"
+                                         InputDescription="A unique name to give the Target.">
+                        <simpleControls:SimpleTextBox VerticalContentAlignment="Center"
+                                                      HorizontalAlignment="Stretch"
+                                                      Width="200"
+                                                      Height="22"
+                                                      FontSize="14"
+                                                      Loaded="TargetName_Loaded"
+                                                      LostFocus="TargetName_LostFocus"/>
+                    </controls:InputPanel>
+                    <controls:InputPanel InputName="IP Address"
+                                         InputDescription="The IP Address of the Target.">
+                        <simpleControls:SimpleTextBox VerticalContentAlignment="Center"
+                                                      HorizontalAlignment="Stretch"
+                                                      Width="200"
+                                                      Height="22"
+                                                      FontSize="14"
+                                                      PreviewTextInput="TargetIPAddress_PreviewTextInput"
+                                                      Loaded="TargetIPAddress_Loaded"
+                                                      LostFocus="TargetIPAddress_LostFocus"/>
+                    </controls:InputPanel>
+                    <controls:InputPanel InputName="Payload Port Here"
+                                         InputDescription="The port to send payloads to the Target.">
+                        <simpleControls:SimpleTextBox VerticalContentAlignment="Center"
+                                                      HorizontalAlignment="Stretch"
+                                                      Width="200"
+                                                      Height="22"
+                                                      FontSize="14"
+                                                      PreviewTextInput="TargetPayloadPort_PreviewTextInput"
+                                                      Loaded="TargetPayloadPort_Loaded"
+                                                      LostFocus="TargetPayloadPort_LostFocus"/>
+                    </controls:InputPanel>
+
+                    <!-- Target Settings Region -->
+                    <Label Content="Target Settings"
+                       FontSize="18"
+                       Margin="15 10 20 10"
+                       Foreground="{DynamicResource Text}"/>
+                    
+                    <!-- Show TitleId Labels -->
+                    <controls:InputPanel InputName="Show TitleId Labels"
+                                         InputDescription="Shows the Title number of the games on the home screen of this target.">
+                        <simpleControls:SimpleSwitch Tag="ShowTitleIdLabels" 
+                                                     Height="17"
+                                                     IsEnabled="False"
+                                                     MouseDown="ShowTitleIdLabels_MouseDown"/>
+                    </controls:InputPanel>
+
+                    <!-- Show Devkit Panel -->
+                    <controls:InputPanel InputName="Show Devkit Panel"
+                                         InputDescription="Shows the devkit information display panel that will show some information about the target like the IP Address.">
+                        <simpleControls:SimpleSwitch Tag="ShowDevkitPanel" 
+                                                     Height="17"
+                                                     IsEnabled="False"
+                                                     MouseDown="ShowDevkitPanel_MouseDown"/>
+                    </controls:InputPanel>
+                    
+                    <!-- Show Orbis Toolbox Shortcut -->
+                    <controls:InputPanel InputName="Show '★Orbis Toolbox' Shortcut"
+                                         InputDescription="Shows a shortcut on the Home screen that can be used to quickly access the Orbis Toolbox menu.">
+                        <simpleControls:SimpleSwitch Tag="ShowToolboxShortcut" 
+                                                     Height="17"
+                                                     IsEnabled="False"
+                                                     MouseDown="ShowToolboxShortcut_MouseDown"/>
+                    </controls:InputPanel>
+
+                    <!-- Show APP_HOME -->
+                    <controls:InputPanel InputName="Show '★APP_HOME'"
+                                         InputDescription="Shows the '★APP_HOME' on the home screen that can be used to quickly launch home brew to debug it with out a pkg.">
+                        <simpleControls:SimpleSwitch Tag="ShowAppHome" 
+                                                     Height="17"
+                                                     IsEnabled="False"
+                                                     MouseDown="ShowAppHome_MouseDown"/>
+                    </controls:InputPanel>
+
+                </StackPanel>
+
+                <!-- Button Area -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="1"
+                            Margin="0 0 30 10">
+
+                    <!-- Cancel -->
+                    <simpleControls:SimpleButton HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Grid.Column="1" Grid.Row="1" 
+                                            Content="Cancel" x:Name="Cancel"
+                                            Click="Cancel_Click"
+                                            Width="75" Height="26" 
+                                            Margin="0 0 8 0"/>
+
+                    <!-- Save -->
+                    <simpleControls:SimpleButton HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Grid.Column="1" Grid.Row="1" 
+                                            Content="Save" x:Name="Save" 
+                                            Click="Save_Click"
+                                            Width="75" Height="26" 
+                                            Margin="0 0 8 0"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

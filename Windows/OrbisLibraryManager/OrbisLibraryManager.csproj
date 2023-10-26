@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <Nullable>annotations</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>OrbisLibraryManager.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="OrbisLibraryManager.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrbisLib\OrbisLib2.csproj" />
+    <ProjectReference Include="..\OrbisSuiteCore\OrbisSuiteCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleUI">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\SimpleUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(SolutionDir)Windows\Executables\$(ProjectName)&quot;&#xD;&#xA;xcopy /y /E &quot;$(ProjectDir)$(OutDir)&quot; &quot;$(SolutionDir)Windows\Executables\$(ProjectName)&quot;" />
+  </Target>
+
+</Project>

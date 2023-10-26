@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="OrbisNeighborHood.Controls.TargetPanel"
+             x:Name="TargetViewElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             Width="305" Height="210"
+             d:DesignHeight="210" d:DesignWidth="305">
+    
+    <Border VerticalAlignment="Stretch"
+            CornerRadius="10"
+            Background="{DynamicResource WindowBar}">
+        
+        <!-- Main View -->
+        <StackPanel Margin="5">
+
+            <!-- Target Name & State -->
+            <Grid>
+
+                <StackPanel Orientation="Horizontal">
+                    <!-- Target State -->
+                    <Ellipse Grid.ColumnSpan="2" Grid.Row="0"
+                         Name="TargetStatusElement"
+                         Fill="red"
+                         Width="14"
+                         Height="14"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Margin="5 0 0 0"
+                         ToolTip="Online &amp; API Available"/>
+
+                    <!-- Target Name -->
+                    <TextBlock Text="{Binding ElementName=TargetViewElement, Path=TargetName}"
+                           Name="TargetNameElement"
+                           Foreground="{DynamicResource Text}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Margin="5 0 0 0"/>
+                </StackPanel>
+                    
+                <!-- Default Selection -->
+                <TextBlock Name="DefaultTargetElement"
+                           Text="★"
+                           Foreground="#45494A"
+                           FontSize="25"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="3 -8"
+                           Cursor="Hand"
+                           ForceCursor="True"
+                           MouseDown="DefaultTargetElement_MouseDown"/>
+
+            </Grid>
+            
+            <!-- Target Image / Details -->
+            <StackPanel Orientation="Horizontal">
+                
+                <!-- Target Image -->
+                <Grid Margin="0 5 5 5"
+                      Width="125"
+                      Height="125">
+                    <Rectangle Fill="#45494A"/>
+
+                    <Image Name="ConsoleImageElement"
+                           Source="/OrbisNeighborHood;component/Images/Consoles/Fat.png"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           RenderOptions.EdgeMode="Aliased"/>
+                </Grid>
+                
+                <!-- Target Details -->
+                <Grid VerticalAlignment="Center"
+                      Height="125">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="0">
+                        <!-- Firmware Version -->
+                        <simpleControls:SimpleTextField FieldName="Firmware Version" 
+                                                    FieldText="{Binding ElementName=TargetViewElement, Path=FirmwareVersion}"
+                                                    Width="80"
+                                                    Height="35"
+                                                    Margin="0 0 5 0"/>
+
+                        <!-- SDK Version -->
+                        <simpleControls:SimpleTextField FieldName="SDK Version" 
+                                                        FieldText="{Binding ElementName=TargetViewElement, Path=SDKVersion}"
+                                                        Width="80"
+                                                        Height="35"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="2">
+                        <!-- IP Address -->
+                        <simpleControls:SimpleTextField FieldName="IP Address" 
+                                                    FieldText="{Binding ElementName=TargetViewElement, Path=IPAddress}"
+                                                    Width="100"
+                                                    Height="35"
+                                                    Margin="0 5 5 0"/>
+
+                        <!-- Payload Port -->
+                        <simpleControls:SimpleTextField FieldName="Payload Port" 
+                                                        FieldText="{Binding ElementName=TargetViewElement, Path=PayloadPort}"
+                                                        Width="60"
+                                                        Height="35"
+                                                        Margin="0 5 0 0"/>
+                    </StackPanel>
+
+                    <!-- Console Name -->
+                    <simpleControls:SimpleTextField FieldName="Console Name" 
+                                                        FieldText="{Binding ElementName=TargetViewElement, Path=ConsoleName}"
+                                                        Width="165"
+                                                        Height="35"
+                                                        Margin="0 5 0 0"
+                                                        Grid.Row="4"/>
+                </Grid>
+            </StackPanel>
+            
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 3 0 0">
+                <!-- Locate -->
+                <local:ImageButton x:Name="LocateTarget"
+                                   Width="35"
+                                   Height="35"
+                                   ToolTip="Locate Target"
+                                   Margin="0 0 5 0"
+                                   ImageSource="/OrbisNeighborHood;component/Images/Locate.png"
+                                   ImageMargin="4"
+                                   Click="LocateTarget_Click" Loaded="LocateTarget_Loaded"/>
+
+                <!-- Send Payload -->
+                <local:ImageButton x:Name="SendPayload"
+                                   Width="35"
+                                   Height="35"
+                                   ToolTip="Send Payload"
+                                   Margin="0 0 5 0"
+                                   ImageSource="/OrbisNeighborHood;component/Images/Send.png"
+                                   ImageMargin="4"
+                                   Click="SendPayload_Click"/>
+
+                <!-- Reboot -->
+                <local:ImageButton x:Name="RestartTarget"
+                                   Width="35"
+                                   Height="35"
+                                   ToolTip="Restart the Target"
+                                   Margin="0 0 5 0"
+                                   ImageSource="/OrbisNeighborHood;component/Images/Restart.png"
+                                   ImageMargin="0"
+                                   Click="RestartTarget_Click"/>
+
+                <!-- Shutdown -->
+                <local:ImageButton x:Name="ShutdownTarget"
+                                   Width="35"
+                                   Height="35"
+                                   ToolTip="Shutdown the Target"
+                                   Margin="0 0 5 0"
+                                   ImageSource="/OrbisNeighborHood;component/Images/Shutdown.png"
+                                   ImageMargin="0"
+                                   Click="ShutdownTarget_Click"/>
+
+                <!-- Restmode -->
+                <local:ImageButton x:Name="SuspendTarget"
+                                   Width="35"
+                                   Height="35"
+                                   ToolTip="Set the Target into Restmode"
+                                   Margin="0 0 5 0"
+                                   ImageSource="/OrbisNeighborHood;component/Images/Restmode.png"
+                                   ImageMargin="0"
+                                   Click="SuspendTarget_Click"/>
+
+                <!-- Edit -->
+                <simpleControls:SimpleButton 
+                                        Content="Edit"
+                                        Width="40"
+                                        Height="35"
+                                        ToolTip="Edit the Target"
+                                        Margin="0 0 5 0"
+                                        Click="Edit_Click"/>
+                
+                <!-- Delete -->
+                <simpleControls:SimpleButton 
+                                        Content="Delete"
+                                        Width="50"
+                                        Height="35"
+                                        ToolTip="Delete the Target"
+                                        Margin="0 0 5 0"
+                                        Click="Delete_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+</UserControl>

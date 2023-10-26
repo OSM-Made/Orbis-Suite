@@ -1,0 +1,49 @@
+﻿<simpleDialogs:SimpleDialog x:Class="OrbisLib2.Dialog.LoadSomething"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisLib2.Dialog"
+             xmlns:ValueConverters="clr-namespace:OrbisLib2.Common.ValueConverters"
+             xmlns:simpleDialogs="clr-namespace:SimpleUI.Dialogs;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="500"
+             Height="350" Width="500"
+             Title="Select something to load">
+
+    <simpleDialogs:SimpleDialog.Resources>
+        <ValueConverters:FilePathShortenerConverter x:Key="FilePathShortenerConverter"/>
+    </simpleDialogs:SimpleDialog.Resources>
+
+    <!-- History List -->
+    <ListView Grid.Row="1"
+          Margin="6"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Background="{DynamicResource WindowBackground}"
+          BorderBrush="Transparent"
+          BorderThickness="0"
+          Name="HistoryList"
+          SelectionMode="Single"
+          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+          MouseDoubleClick="HistoryList_MouseDoubleClick"
+          AlternationCount="2" Grid.ColumnSpan="2">
+
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="TitleId" Width="100" DisplayMemberBinding="{Binding Path=TitleId}"/>
+                <GridViewColumn Header="Path" Width="300" DisplayMemberBinding="{Binding Path=Path, Converter={StaticResource FilePathShortenerConverter}}"/>
+            </GridView>
+        </ListView.View>
+
+        <ListView.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Load" Click="Load_Click"/>
+                <Separator/>
+                <MenuItem Header="Remove from history" Click="Remove_Click"/>
+            </ContextMenu>
+        </ListView.ContextMenu>
+
+    </ListView>
+
+</simpleDialogs:SimpleDialog>

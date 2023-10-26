@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ORBIS">
+      <Configuration>Debug</Configuration>
+      <Platform>ORBIS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ORBIS">
+      <Configuration>Release</Configuration>
+      <Platform>ORBIS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="System|ORBIS">
+      <Configuration>System</Configuration>
+      <Platform>ORBIS</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A39FC9BA-130E-4993-9D80-46564A892EE4}</ProjectGuid>
+    <OrbisSdkVersion>7.500</OrbisSdkVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='System|ORBIS'">
+    <PlatformToolset>Clang</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(DebuggerFlavor)'=='ORBISDebugger'" Label="OverrideDebuggerDefaults">
+    <!--LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand-->
+    <!--LocalDebuggerCommandArguments></LocalDebuggerCommandArguments-->
+    <!--LocalDebuggerTarget></LocalDebuggerTarget-->
+    <!--LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory-->
+    <!--LocalRunCommandLine></LocalRunCommandLine-->
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+    <Import Condition="Exists('$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.props')" Project="$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.props" />
+    <Import Condition="Exists('$(VCTargetsPath)\BuildCustomizations\SCU.props')" Project="$(VCTargetsPath)\BuildCustomizations\SCU.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
+    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\pkg\Daemons\ORBS30000\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lKernelInterface_stub_weak;-lGoldHEN;-lSQLite;-lprotobuf;-lOrbisUtils2;%(AdditionalDependencies)</AdditionalDependencies>
+      <Addressing Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NonAslr</Addressing>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\libKernelInterface\ORBIS_Debug;$(SolutionDir)External\StubMaker;$(SolutionDir)External\libGoldHEN\ORBIS_Debug;$(SolutionDir)External\libSQLite-ps4;A:\Protobuf;$(SolutionDir)External\OrbisUtils2\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>py -V:3.11 $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 000000000000000000000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+del $(OutputPath)$(ProjectName).elf
+
+echo open 1.1.0.14 2121&gt;&gt; temp.txt
+echo cd "/system/vsh/app/ORBS30000/"&gt;&gt; temp.txt
+echo send $(OutputPath)eboot.bin&gt;&gt; temp.txt
+echo quit&gt;&gt; temp.txt
+ftp -A -s:temp.txt
+del temp.txt
+</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;RootBuild;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</GenerateDebugInformation>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\libKernelInterface\libKernelInterface;$(SolutionDir)External\StubMaker\include;$(SolutionDir)External\libGoldHEN\libGoldHEN;$(SolutionDir)Misc;$(SolutionDir)External\libSQLite-ps4\include;A:\Protobuf\include;$(SolutionDir)External\OrbisUtils2\OrbisUtils2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppExceptions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</CppExceptions>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</MultiProcessorCompilation>
+      <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">32</ProcessorNumber>
+    </ClCompile>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NDEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <OptimizationLevel Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Level2</OptimizationLevel>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Use</PrecompiledHeader>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)$(ProjectName)\buildASM.bat $(SolutionDir)$(ProjectName)\ $(SolutionDir)$(ProjectName)\$(IntermediateOutputPath)</Command>
+    </PreLinkEvent>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">call "$(SolutionDir)\Misc\Increment.bat" "Version.h" "ORBISLIB_BUILDVERSION" </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="API.h" />
+    <ClInclude Include="APIPackets.pb.h" />
+    <ClInclude Include="AppDatabase.h" />
+    <ClInclude Include="Apps.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="Debug.h" />
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="Flash.h" />
+    <ClInclude Include="Library.h" />
+    <ClInclude Include="SystemMonitor.h" />
+    <ClInclude Include="ProcessMonitor.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Target.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="API.cpp" />
+    <ClCompile Include="APIPackets.pb.cc" />
+    <ClCompile Include="AppDatabase.cpp" />
+    <ClCompile Include="Apps.cpp" />
+    <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="Flash.cpp" />
+    <ClCompile Include="Library.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SystemMonitor.cpp" />
+    <ClCompile Include="ProcessMonitor.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Target.cpp" />
+    <ClCompile Include="Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="APIPackets.proto" />
+  </ItemGroup>
+  <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Condition="Exists('$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.targets')" Project="$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.targets" />
+    <Import Condition="Exists('$(VCTargetsPath)\BuildCustomizations\SCU.targets')" Project="$(VCTargetsPath)\BuildCustomizations\SCU.targets" />
+  </ImportGroup>
+</Project>

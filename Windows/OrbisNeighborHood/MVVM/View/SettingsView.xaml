@@ -1,0 +1,250 @@
+﻿<UserControl x:Class="OrbisNeighborHood.MVVM.View.SettingsView"
+             x:Name="SettingsViewElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.MVVM.View" 
+             xmlns:controls="clr-namespace:OrbisNeighborHood.Controls"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="585" d:DesignWidth="700">
+    <StackPanel>
+        <TextBlock Text="Settings"
+                   Foreground="{DynamicResource Text}"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="30,10,0,10"/>
+
+        <StackPanel Orientation="Horizontal" Margin="30 0 30 30">
+
+            <!-- General -->
+            <Border Width="305" Height="340"
+                CornerRadius="10"
+                Margin="0 0 30 0"
+                Background="{DynamicResource WindowBar}">
+
+                <StackPanel Orientation="Vertical"
+                            Margin="5">
+
+                    <TextBlock Text="General"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="18"
+                       VerticalAlignment="Center"
+                       Margin="5 0 0 0"/>
+
+                    <!-- API Port -->
+                    <controls:SettingPanel SettingName="API Port"
+                                           SettingDescription="The port used to communicate with target machines using the Orbislib API."
+                                           Margin="0 0 0 15">
+                        <simpleControls:SimpleTextBox 
+                            Tag="APIPort"
+                            Text="9020"
+                            Width="50"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Right"
+                            MaxLength="5"
+                            Loaded="APIPort_Loaded"
+                            LostFocus="APIPort_LostFocus"
+                            PreviewTextInput="AllowOnlyInteger"/>
+                    </controls:SettingPanel>
+
+                    <!-- FTP Port -->
+                    <controls:SettingPanel SettingName="FTP Port"
+                                           SettingDescription="The port that will be used to access the targets file system using ftp."
+                                           Margin="0 0 0 15">
+                        <simpleControls:SimpleTextBox 
+                            Text="2121"
+                            Width="50"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Right"
+                            MaxLength="5"
+                            Loaded="FTPPort_Loaded"
+                            LostFocus="FTPPort_LostFocus"
+                            PreviewTextInput="AllowOnlyInteger"/>
+                    </controls:SettingPanel>
+
+                    <!-- Klog Port -->
+                    <controls:SettingPanel SettingName="Klog Port"
+                                           SettingDescription="The port of a klog server that will be used to print console output similar to UART."
+                                           Margin="0 0 0 15">
+                        <simpleControls:SimpleTextBox 
+                            Text="3232"
+                            Width="50"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Right"
+                            MaxLength="5"
+                            Loaded="KlogPort_Loaded"
+                            LostFocus="KlogPort_LostFocus"
+                            PreviewTextInput="AllowOnlyInteger"/>
+                    </controls:SettingPanel>
+
+                    <!-- Serial Com Port -->
+                    <controls:SettingPanel SettingName="Serial Com Port"
+                                           SettingDescription="The USB serial com port name used to connect to the Targets UART."
+                                           Margin="0 0 0 15">
+                        <simpleControls:SimpleTextBox 
+                            Text="com3"
+                            Width="50"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Right"
+                            Loaded="COMPort_Loaded"
+                            LostFocus="COMPort_LostFocus"/>
+                    </controls:SettingPanel>
+
+                    <!-- Start Taskbar App on Boot -->
+                    <controls:SettingPanel SettingName="Start Taskbar App on Boot"
+                                           SettingDescription="Have the Orbis Suite Taskbar App to start when windows starts."
+                                           Margin="0 0 0 15">
+                        <simpleControls:SimpleSwitch Tag="OnStart" Height="15"
+                                                     Loaded="StartOnBoot_Loaded"
+                                                     MouseDown="StartOnBoot_MouseDown"/>
+                    </controls:SettingPanel>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Skins / Target Settings -->
+            <StackPanel Orientation="Vertical">
+                <Border Width="305" Height="155"
+                    Margin="0 0 0 30"
+                    CornerRadius="10"
+                    Background="{DynamicResource WindowBar}">
+
+                    <StackPanel Orientation="Vertical"
+                            Margin="5">
+
+                        <TextBlock Text="Skins"
+                                   Foreground="{DynamicResource Text}"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="5 0 0 0"/>
+                        <!-- Theme -->
+                        <controls:SettingPanel SettingName="Theme"
+                                               SettingDescription="Choose which theme will be used across Orbis Suite."
+                                               Margin="0 0 0 15">
+                            <simpleControls:SimpleComboBox SelectedValuePath="Content"
+                                                           Width="60"
+                                                           Height="20"
+                                                           Loaded="Theme_Loaded"
+                                                           SelectionChanged="Theme_SelectionChanged">
+                                <ComboBoxItem Content="Red" />
+                                <ComboBoxItem Content="Blue" />
+                            </simpleControls:SimpleComboBox>
+                        </controls:SettingPanel>
+                        
+                        <!-- Rainbow Accents -->
+                        <controls:SettingPanel SettingName="Rainbow Accent Colours"
+                                               SettingDescription="Enables the accent colours to cycle through all colours of the rainbow."
+                                               Margin="0 0 0 15">
+                            <simpleControls:SimpleSwitch Tag="RainbowTheme" Height="15"
+                                                         Loaded="RainbowTheme_Loaded"
+                                                         MouseDown="RainbowTheme_MouseDown"/>
+                        </controls:SettingPanel>
+
+                    </StackPanel>
+
+                </Border>
+
+                <Border Width="305" Height="155"
+                    CornerRadius="10"
+                    Background="{DynamicResource WindowBar}">
+
+                    <StackPanel Orientation="Vertical"
+                            Margin="5">
+
+                        <TextBlock Text="Target Details"
+                                   Foreground="{DynamicResource Text}"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="5 0 0 0"/>
+                        <!-- Censor IDPS -->
+                        <controls:SettingPanel SettingName="Censor IDPS"
+                                               SettingDescription="When viewd from the target details choose to censor the Target identifier."
+                                               Margin="0 0 0 15">
+                            
+                            <simpleControls:SimpleSwitch Height="15"
+                                                         Loaded="CensorIDPS_Loaded"
+                                                         MouseDown="CensorIDPS_MouseDown"/>
+                            
+                        </controls:SettingPanel>
+                        
+                        <!-- Censor PSID -->
+                        <controls:SettingPanel SettingName="Censor PSID"
+                                               SettingDescription="When viewd from the target details choose to censor the Target identifier."
+                                               Margin="0 0 0 15">
+
+                            <simpleControls:SimpleSwitch Height="15"
+                                                         Loaded="CensorPSID_Loaded"
+                                                         MouseDown="CensorPSID_MouseDown"/>
+
+                        </controls:SettingPanel>
+                        
+
+
+                    </StackPanel>
+
+                </Border>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Credits / Version / About -->
+        <Border Width="640" Height="140"
+                CornerRadius="10"
+                Background="{DynamicResource WindowBar}">
+
+            <StackPanel Orientation="Vertical"
+                            Margin="5">
+
+                <TextBlock Text="About"
+                       Foreground="{DynamicResource Text}"
+                       FontSize="18"
+                       VerticalAlignment="Center"
+                       Margin="5 0 0 0"/>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0"
+                                Margin="3 0 3 0">
+                        <TextBlock Text="The next version of Orbis Suite completely rewritten with a new UI. Now running mostly in userland on the PS4 with its own Daemon process gone is the need for a payload! Fully featured suite of tools to help aid in developing and debugging on the PS4 console."
+                                   Foreground="{DynamicResource Text}"
+                                   TextWrapping="Wrap">
+                        </TextBlock>
+
+                        <TextBlock 
+                                   Foreground="{DynamicResource Text}"
+                                   TextWrapping="Wrap">
+                            <Run>Special Thanks to Zenco, Alex / Skiff, Flatz, iMoD1998, ZzReApErzZ, Synful, SiSTR0, LightningMods, kiwidoggie, Al-Azif, My Cats + Many More!</Run>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!-- Version -->
+                    <TextBlock Grid.Row="1" 
+                               Text="{Binding ElementName=SettingsViewElement, Path=BuildString}"
+                               Foreground="{DynamicResource Text}"
+                               HorizontalAlignment="Left"
+                               FontSize="10"/>
+
+                    <!-- Who made this :) -->
+                    <TextBlock Grid.Row="1" 
+                               Text="Made with tender loving care by Greg ♥"
+                               Foreground="{DynamicResource Text}"
+                               HorizontalAlignment="Right"
+                               FontSize="10"/>
+
+                </Grid>
+            </StackPanel>
+        </Border>
+        
+    </StackPanel>
+</UserControl>

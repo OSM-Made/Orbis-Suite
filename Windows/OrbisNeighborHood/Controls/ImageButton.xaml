@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="OrbisNeighborHood.Controls.ImageButton"
+             x:Name="ImageButtonElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
+             xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+             mc:Ignorable="d" 
+             IsEnabledChanged="ImageButtonElement_IsEnabledChanged"
+             d:DesignHeight="35" d:DesignWidth="35">
+    <Grid>
+        <simpleControls:SimpleButton Content="" Click="SimpleButton_Click"/>
+
+        <Image Source="{Binding ElementName=ImageButtonElement, Path=ImageSource}"
+                   Margin="{Binding ElementName=ImageButtonElement, Path=ImageMargin}"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   RenderOptions.EdgeMode="Aliased"
+                   Name="ButtonImage"
+                   IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

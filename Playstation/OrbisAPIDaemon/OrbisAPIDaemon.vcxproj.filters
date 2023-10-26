@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;cc;s;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{aa16a254-34db-481d-b97e-eac33cfa7cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{b06b87f8-af79-4025-9f70-962110b59c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\API">
+      <UniqueIdentifier>{0598c453-3b95-48ce-8305-8b620916a605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API">
+      <UniqueIdentifier>{89cfb9e6-19d3-4518-8fa8-6a887dca6676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API\CmdGroups">
+      <UniqueIdentifier>{b2d415ae-d17c-4861-8f60-270946c1898e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\API\CmdGroups">
+      <UniqueIdentifier>{f01f90ad-ecbf-4be0-9cf8-8954002d692f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\PSUtils">
+      <UniqueIdentifier>{432a3d5e-fd2d-4203-bd4e-6e9933365e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\PSUtils">
+      <UniqueIdentifier>{ca6193ec-12b5-49e8-adc6-3435bd065c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API\Proto">
+      <UniqueIdentifier>{fc16373e-a251-4464-be3f-39299f17efe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\API\Proto">
+      <UniqueIdentifier>{d7aa3bd5-c1da-4e23-b0b8-d9ca48b89cea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Version.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="API.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemMonitor.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Target.h">
+      <Filter>Header Files\API\CmdGroups</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessMonitor.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Flash.h">
+      <Filter>Header Files\Utilities\PSUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Library.h">
+      <Filter>Header Files\API\CmdGroups</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\API\CmdGroups</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps.h">
+      <Filter>Header Files\API\CmdGroups</Filter>
+    </ClInclude>
+    <ClInclude Include="AppDatabase.h">
+      <Filter>Header Files\Utilities\PSUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="APIPackets.pb.h">
+      <Filter>Header Files\API\Proto</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="API.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemMonitor.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Target.cpp">
+      <Filter>Source Files\API\CmdGroups</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessMonitor.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Flash.cpp">
+      <Filter>Source Files\Utilities\PSUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Library.cpp">
+      <Filter>Source Files\API\CmdGroups</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\API\CmdGroups</Filter>
+    </ClCompile>
+    <ClCompile Include="Apps.cpp">
+      <Filter>Source Files\API\CmdGroups</Filter>
+    </ClCompile>
+    <ClCompile Include="AppDatabase.cpp">
+      <Filter>Source Files\Utilities\PSUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="APIPackets.pb.cc">
+      <Filter>Source Files\API\Proto</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="APIPackets.proto">
+      <Filter>Source Files\API\Proto</Filter>
+    </None>
+  </ItemGroup>
+</Project>

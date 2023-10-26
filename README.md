@@ -1,50 +1,45 @@
-This repo has become stale and out of date please visit the newer one [here](https://github.com/OSM-Made/Orbis-Suite-3.0). Thanks :D
-
-# Orbis-Suite
-A suite of tools used for developing things on a jailbroken PS4. Aswell as an included DLL for creating 3rd party C# applications using the OrbisLib API.
-
-![UI](https://pbs.twimg.com/media/EDNZOwDVUAAoeJF?format=jpg&name=4096x4096)
+![Header](/Assets/Header.png?raw=true)
+#
+The next version of Orbis Suite completely rewritten with a new GUI. Now launchable through a homebrew app gone is the need for a payload! Fully featured suite of tools to help aid in developing and debugging on the PS4 console. 
 
 # Features
-###### API for remote target control
-- [x] Memory Read/ Write
-- [ ] Remote Procedure Calls
-- [x] Loading / Unloading SPRX Libraries to Userland Processes
-- [x] Loading ELF's to Userland Processes
-- [x] Jail/Unjail Userland Processes
-###### Comprehensive Debugger
-- [x] Breakpoints / Watchpoints
-- [x] Register Management
-- [x] Memory view and dumper
-- [x] Instruction Disassembly
-- [ ] StopCode Decoding
-- [x] Process Management (Stop/Start/Single Step/Step Over/Step Out)
-- [ ] Process Thread Management
-- [x] Customizable Debugging environment
-###### Module Management
-- [x] Load/Reload/Unload SPRX Libraries to Userland Process
-- [x] Load ELF to Userland Process
-- [ ] Dumping Userland Processes and Libraries
-- [x] List of loaded Libraries in Userland Process
-- [x] File browser
-###### Taskbar Application
-- [x] Add/Manage saved Targets
-- [x] Open Various Orbis Suite Apps
-- [ ] Manage Power state of console
-- [x] Load/auto load payload
-- [x] Set Taskbar app to auto load on windows boot
-###### Console Output
-- [x] Read UART/Socket Prints from remote Target
-###### Orbis Neighborhood
-- [x] GUI for managing saved Targets
-###### SPRX Helper
-- [x] Easily impliment automatic fsign and ftp sprx for debugging
-###### C# DLL for easy 3rd party application Development using API
-- [x] Full access to API calls and features
-- [ ] Remote Procedure calls
+- Library / API for integrating with the Target Console.
+- User friendly and reactive UI.
+- Memory **Peek n Poker**
+- **Library Manager** (can be used to load custom Libraries!)
+- **Debugger** *Coming Soon*
+- **Console Output** (Nice filtered view of the console output.)
+- **Neighborhood** (Used for easy interaction and saving of Targets.)
+- Custom UI Elements on the Target Console.
+- Reimplimented Debug Kit features for a retail console. (Like launching homebrew from the App_Home.)
+- Many More!..
 
-###### Future Features
-- [ ] Callback for Remote Procedure Calls
-- [ ] module loader for games (auto load modules for games on start up with config to tell what to load)
-- [ ] module loader for boot (auto load kernel modules on boot. or maybe like a vsh sprx)
-- [ ] Remote video feed of screen and or screen shot feature
+# NeighborHood
+![](https://i.imgur.com/qXyssyK.png)
+![](https://i.imgur.com/CXOJsNg.png)
+![](https://i.imgur.com/B8DgWyV.png)
+
+# Orbis Toolbox
+![](https://i.imgur.com/2Ql98B9.png)
+![](https://i.imgur.com/DWbgEsN.png)
+
+# Dependencies
+
+![Open Orbis Tool Chain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
+
+![SimpleUI](https://github.com/OSM-Made/SimpleUI)
+
+![GoldHEN](https://github.com/GoldHEN/GoldHEN)
+
+# Special Thanks
+- Zenco
+- ![Alex / Skiff](https://github.com/skiff)
+- ![Flatz](https://github.com/flatz)
+- ![iMoD1998](https://github.com/iMoD1998)
+- ![ZzReApErzZ](https://github.com/Peribunt)
+- ![Synful](https://github.com/Synful)
+- ![SiSTR0](https://github.com/SiSTR0)
+- ![LightningMods](https://github.com/LightningMods)
+- ![kiwidoggie](https://github.com/kiwidoggie)
+- ![Al-Azif](https://github.com/Al-Azif)
+- Many More I may forget!

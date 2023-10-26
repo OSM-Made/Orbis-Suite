@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<!-- Define main product -->
+	<Product
+		Id="*"
+		Name="!(loc.ProductName)"
+		Language="!(loc.Language)"
+		Version="3.0"
+		Manufacturer="!(loc.Company)"
+		UpgradeCode="c01937e9-6446-4cbd-aea9-b6f913170964">
+
+		<!-- Provide package details -->
+		<Package
+		  InstallerVersion="405"
+		  InstallPrivileges="elevated"
+		  AdminImage="yes"
+		  Compressed="yes"
+		  InstallScope="perMachine"
+		  Manufacturer="!(loc.Company)"
+		  Description="!(loc.Description)"
+		  Keywords="!(loc.Keywords)"
+		  Comments="!(loc.Comments)"
+		  Languages="!(loc.Language)"/>
+		
+		<!-- Downgrade error message -->
+		<MajorUpgrade Schedule="afterInstallInitialize" AllowSameVersionUpgrades="yes" DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+		<!-- Include .cab file into .msi file -->
+		<MediaTemplate
+		  EmbedCab="yes"
+		/>
+		
+		<!--Define icons-->
+		<Icon Id="OrbisTaskbarApp.ico" SourceFile="$(var.SolutionDir)Assets\OrbisTaskbarApp\OrbisTaskbarApp.ico"/>
+		<Icon Id="OrbisLibraryManager.ico" SourceFile="$(var.SolutionDir)Assets\OrbisLibraryManager\OrbisLibraryManager.ico"/>
+		<Icon Id="OrbisTargetSettings.ico" SourceFile="$(var.SolutionDir)Assets\OrbisTargetSettings\OrbisTargetSettings.ico"/>
+		<Icon Id="OrbisNeighborhood.ico" SourceFile="$(var.SolutionDir)Assets\Neighborhood\OrbisNeighborhood.ico"/>
+		<Icon Id="OrbisConsoleOutput.ico" SourceFile="$(var.SolutionDir)Assets\OrbisConsoleOutput\OrbisConsoleOutput.ico"/>
+		<Icon Id="OrbisDebugger.ico" SourceFile="$(var.SolutionDir)Assets\Debugger\OrbisDebugger.ico"/>
+		<Icon Id="OrbisPeeknPoke.ico" SourceFile="$(var.SolutionDir)Assets\OrbisPeeknPoke\OrbisPeeknPoke.ico"/>
+
+		<!-- Define components, shortcuts, files etc... for installer -->
+		<Feature Id="ProductFeature" Title="Orbis Suite" Level="1">
+
+			<!-- Installs program files and starts windows service. -->
+			<ComponentGroupRef Id="OrbisNeighborHood"/>
+			<ComponentGroupRef Id="OrbisLibraryManager"/>
+			<ComponentGroupRef Id="OrbisPeeknPoke"/>
+			<ComponentGroupRef Id="OrbisSuiteService"/>
+			
+			<!-- Start Menu files -->
+			<Component Id="StartMenuFiles" Guid="{0FE299B0-EE20-4E20-AEA7-50B585486958}" Directory="INSTALLFOLDER">
+				
+				<!-- Install Shortcuts to the start menu. -->
+				<Shortcut Id="OrbisNeighborhoodShortcut"
+						  Name="Orbis Neighborhood"
+						  Target="[INSTALLFOLDER]\OrbisNeighborhood\OrbisNeighborhood.exe"
+						  Directory="InstallProgramMenuFolder"
+						  WorkingDirectory="INSTALLFOLDER"
+						  Icon="OrbisNeighborhood.ico"
+						  />
+				<Shortcut Id="OrbisLibraryManagerShortcut"
+						  Name="Orbis Library Manager"
+						  Target="[INSTALLFOLDER]\OrbisLibraryManager\OrbisLibraryManager.exe"
+						  Directory="InstallProgramMenuFolder"
+						  WorkingDirectory="INSTALLFOLDER"
+						  Icon="OrbisLibraryManager.ico"
+						  />
+				<Shortcut Id="OrbisPeeknPokeShortcut"
+						  Name="Orbis Peek n' Poke"
+						  Target="[INSTALLFOLDER]\OrbisPeeknPoke\OrbisPeeknPoke.exe"
+						  Directory="InstallProgramMenuFolder"
+						  WorkingDirectory="INSTALLFOLDER"
+						  Icon="OrbisPeeknPoke.ico"
+						  />
+
+				<!-- Our unique key for this component/shortcut -->
+				<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+				
+				<RemoveFolder Id="RemoveStartMenuFiles" Directory="InstallProgramMenuFolder" On="uninstall" />
+			  </Component>
+			
+			<!-- ProgramData files -->
+			<Component Id="ProgramData" Guid="{DE75F40B-1D98-414A-8574-99EF6FE1A20C}" Directory="InstallProgramDataFolder" >
+
+				<!-- Since we don't have anything to copy here yet we must force the folder generation. -->
+				<CreateFolder/>
+				
+				<RemoveFolder Id="RemoveProgramDataFiles" Directory="InstallProgramDataFolder" On="uninstall" />
+			</Component>
+			
+			<!-- Creates Product Dir in program files. -->
+			<Component Id="ProgramFiles" Guid="{0FE299B0-EE20-4E20-AEA7-50B138D46958}" Directory="INSTALLFOLDER">
+				
+				<!-- Add Reference dll -->
+				<File Id="OrbisLib" Name="OrbisLib2.dll" Source="$(var.SolutionDir)Windows\Executables\" />
+			
+				<!-- Add Package File -->
+				<File Id="PackageFile" Name="IV0000-ORBS00000_00-ORBISSUITE000000.pkg" Source="$(var.SolutionDir)Windows\Executables\" />
+			
+				<RemoveFolder Id="RemoveProgramFiles" Directory="INSTALLFOLDER" On="uninstall" />
+			</Component>
+
+			<!-- Install Windows Service. -->
+			<Component Id="InstallService" Guid="{0FE299B0-EE20-4E20-AEA7-456438D46958}" Directory="SERVICEFOLDER" >
+				<File Id="MyService.exe"
+					  Name="OrbisSuiteService.exe"
+					  Source="$(var.ProjectDir)..\..\Executables\OrbisSuiteService.exe"
+					  Vital="yes"
+					  KeyPath="yes"/>
+
+				<ServiceInstall Id="ServiceInstaller"
+								Type="ownProcess"
+								Vital="yes"
+								Name="OrbisSuiteService"
+								DisplayName="Orbis Suite Service"
+								Description="Monitoring/Managing the Orbis Suite Database and Target communication."
+								Start="auto"
+								Account="LocalSystem"
+								ErrorControl="ignore">
+
+					<util:ServiceConfig
+					FirstFailureActionType='restart'
+					SecondFailureActionType='restart'
+					ThirdFailureActionType='restart'
+					RestartServiceDelayInSeconds='30'
+					ResetPeriodInDays='1'/>
+
+				</ServiceInstall>
+				<ServiceControl Id="Service_Start" Name="OrbisSuiteService" Start="install" Wait="no" />
+				<ServiceControl Id="Service_Stop" Name="OrbisSuiteService"  Stop="both" Remove="uninstall" Wait="yes" />
+			</Component>
+		</Feature>
+	</Product>
+</Wix>

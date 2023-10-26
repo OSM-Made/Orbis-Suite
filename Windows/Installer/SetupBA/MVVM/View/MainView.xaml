@@ -1,0 +1,62 @@
+﻿<simpleControls:SimpleWindow  x:Class="SetupBA.MVVM.View.MainView"
+                              xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                              xmlns:local="clr-namespace:SetupBA" 
+                              xmlns:skins="clr-namespace:SimpleUI.Skins;assembly=SimpleUI" 
+                              xmlns:view="clr-namespace:SetupBA.MVVM.View"
+                              xmlns:viewModel="clr-namespace:SetupBA.MVVM.ViewModel"
+                              mc:Ignorable="d" 
+                              Title="Orbis Suite Installer" 
+                              Width="600" MinWidth="600" 
+                              Height="430" MinHeight="430">
+    
+    <simpleControls:SimpleWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- SimpleUI -->
+                <skins:SkinResourceDictionary/>
+                <ResourceDictionary Source="/SimpleUI;component/Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- View Models -->
+
+            <!-- Initial View -->
+            <view:InitialView x:Key="InitialViewKey"/>
+            <DataTemplate DataType="{x:Type viewModel:InitialViewModel}">
+                <ContentControl Content="{StaticResource InitialViewKey}" />
+            </DataTemplate>
+
+            <!-- License View -->
+            <view:LicenseView x:Key="LicenseViewKey"/>
+            <DataTemplate DataType="{x:Type viewModel:LicenseViewModel}">
+                <ContentControl Content="{StaticResource LicenseViewKey}" />
+            </DataTemplate>
+
+            <!-- Install View -->
+            <view:InstallView x:Key="InstallViewKey"/>
+            <DataTemplate DataType="{x:Type viewModel:InstallViewModel}">
+                <ContentControl Content="{StaticResource InstallViewKey}" />
+            </DataTemplate>
+
+            <!-- Summary View -->
+            <view:SummaryView x:Key="SummaryViewKey"/>
+            <DataTemplate DataType="{x:Type viewModel:SummaryViewModel}">
+                <ContentControl Content="{StaticResource SummaryViewKey}" />
+            </DataTemplate>
+
+            <!--=============-->
+            
+        </ResourceDictionary>
+    </simpleControls:SimpleWindow.Resources>
+
+    <Grid>
+        
+        <!-- Current View -->
+        <ContentControl Content="{Binding Path=CurrentView}"/>
+
+    </Grid>
+    
+</simpleControls:SimpleWindow>

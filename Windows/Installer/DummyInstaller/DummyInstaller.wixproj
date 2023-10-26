@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>a37095e9-80bd-4a6b-af8b-33d278cf92f3</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>DummyInstaller</OutputName>
+    <OutputType>Package</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WixVariables>
+    </WixVariables>
+    <DefineConstants>
+    </DefineConstants>
+    <LinkerAdditionalOptions>-dneighborhoodloc=..\..\..\..\Executables\OrbisNeighborHood
+-dlibrarymanagerloc=..\..\..\..\Executables\OrbisLibraryManager
+-dpeeknpokeloc=..\..\..\..\Executables\OrbisPeeknPoke
+-dserviceloc=..\..\..\..\Executables\OrbisSuiteService</LinkerAdditionalOptions>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Directories.wxs" />
+    <Compile Include="Generated\OrbisLibraryManager.wxs" />
+    <Compile Include="Generated\OrbisNeighborhood.wxs" />
+    <Compile Include="Generated\OrbisPeeknPoke.wxs" />
+    <Compile Include="Generated\OrbisSuiteService.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <!-- Before build -->
+  <Target Name="BeforeBuild">
+    <!-- Define some variables we need -->
+    <PropertyGroup>
+      <DefineConstants>BuildVersion=3.0.0</DefineConstants>
+    </PropertyGroup>
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>"C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "..\..\..\..\Executables\OrbisNeighborHood" -cg OrbisNeighborHood -gg  -var wix.neighborhoodloc -dr INSTALLFOLDER -out ..\..\Generated\OrbisNeighborhood.wxs
+"C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "..\..\..\..\Executables\OrbisLibraryManager" -cg OrbisLibraryManager -gg  -var wix.librarymanagerloc -dr INSTALLFOLDER -out ..\..\Generated\OrbisLibraryManager.wxs
+"C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "..\..\..\..\Executables\OrbisPeeknPoke" -cg OrbisPeeknPoke -gg  -var wix.peeknpokeloc -dr INSTALLFOLDER -out ..\..\Generated\OrbisPeeknPoke.wxs
+"C:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" dir "..\..\..\..\Executables\OrbisSuiteService" -cg OrbisSuiteService -gg  -var wix.serviceloc -dr INSTALLFOLDER -out ..\..\Generated\OrbisSuiteService.wxs</PreBuildEvent>
+  </PropertyGroup>
+</Project>

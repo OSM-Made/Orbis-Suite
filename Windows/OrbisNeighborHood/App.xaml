@@ -1,0 +1,15 @@
+﻿<Application x:Class="OrbisNeighborHood.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:OrbisNeighborHood"
+             xmlns:skins="clr-namespace:SimpleUI.Skins;assembly=SimpleUI">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- SimpleUI -->
+                <skins:SkinResourceDictionary/>
+                <ResourceDictionary Source="/SimpleUI;component/Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
