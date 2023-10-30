@@ -72,8 +72,8 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	int magicNumber;
 	if (!Sockets::RecvInt(s, &magicNumber))
 	{
-		Sockets::SendInt(s, 0);
-		Logger::Error("[API] Failed to recieve the magic number.\n");
+		// Spams but honestly if this fails all is lost.
+		// Logger::Error("[API] Failed to recieve the magic number.\n");
 		return;
 	}
 
