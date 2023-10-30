@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y &quot;$(ProjectDir)$(OutDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)Windows\Executables&quot;" />
+    <Exec Command="mkdir &quot;$(SolutionDir)Windows\Executables&quot;&#xD;&#xA;xcopy /y &quot;$(ProjectDir)$(OutDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)Windows\Executables&quot;" />
   </Target>
 
 </Project>

@@ -136,7 +136,7 @@
                                    Margin="0 0 5 0"
                                    ImageSource="/OrbisNeighborHood;component/Images/Locate.png"
                                    ImageMargin="4"
-                                   Click="LocateTarget_Click" Loaded="LocateTarget_Loaded"/>
+                                   Click="LocateTarget_Click"/>
 
                 <!-- Send Payload -->
                 <local:ImageButton x:Name="SendPayload"

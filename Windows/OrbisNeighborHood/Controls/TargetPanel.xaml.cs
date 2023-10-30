@@ -1,19 +1,15 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
 using OrbisNeighborHood.MVVM.ViewModel;
 using SimpleUI.Controls;
 using OrbisLib2.Common.Database.Types;
 using OrbisLib2.Common.API;
 using OrbisLib2.Targets;
-using OrbisLib2.Common.Database;
-using System.Threading.Tasks;
+using OrbisLib2.Dialog;
 
 namespace OrbisNeighborHood.Controls
 {
@@ -248,122 +244,9 @@ namespace OrbisNeighborHood.Controls
             await _thisTarget.Buzzer(BuzzerType.RingThree);
         }
 
-        private async void SendPayload_Click(object sender, RoutedEventArgs e)
+        private void SendPayload_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var binaryPath = string.Empty;
-                var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-
-                openFileDialog.Title = "Open File...";
-                openFileDialog.CheckFileExists = true;
-                openFileDialog.CheckPathExists = true;
-                openFileDialog.InitialDirectory = Properties.Settings.Default.LastLoadPath;
-                openFileDialog.Filter = "Binary files (*.sprx, *.bin, *.elf)|*.sprx;*.bin;*.elf";
-                openFileDialog.FilterIndex = 1; // Set the default filter index to the first one (BIN files)
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    binaryPath = openFileDialog.FileName;
-                    Properties.Settings.Default.LastLoadPath = Path.GetDirectoryName(openFileDialog.FileName);
-                    Properties.Settings.Default.Save();
-                }
-                else
-                    return;
-
-                // Open a handle to the file.
-                var binaryFile = File.Open(binaryPath, FileMode.Open);
-                if (!binaryFile.CanRead)
-                {
-                    SimpleMessageBox.ShowError(Window.GetWindow(this), "Failed read the file from the disk.", "Error: Failed to read the file.");
-                    binaryFile.Close();
-                    return;
-                }
-
-                // Read the binary file data.
-                byte[] PayloadBuffer = new byte[binaryFile.Length];
-                if (binaryFile.Read(PayloadBuffer, 0, (int)binaryFile.Length) != binaryFile.Length)
-                {
-                    SimpleMessageBox.ShowError(Window.GetWindow(this), "Failed read the file from the disk.", "Error: Failed to read the file.");
-                    binaryFile.Close();
-                    return;
-                }
-
-                // Close the file handle were done reading it now.
-                binaryFile.Close();
-
-                var fileExtension = Path.GetExtension(binaryPath).ToLower();
-                if (fileExtension == ".sprx")
-                {
-                    var tempSprxPath = $"/data/{Path.GetFileName(binaryPath)}";
-                    var result = await TargetManager.SelectedTarget.SendFile(PayloadBuffer, tempSprxPath);
-
-                    if (!result.Succeeded)
-                    {
-                        SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                        return;
-                    }
-
-                    // Get the Library list so we can check if its loaded already.
-                    (result, var libraryList) = await TargetManager.SelectedTarget.Debug.GetLibraries();
-                    if (!result.Succeeded)
-                    {
-                        SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                        return;
-                    }
-
-                    // Search for the library in the list and unload the sprx if already loaded.
-                    var library = libraryList.Find(x => x.Path == tempSprxPath);
-                    if (library != null)
-                    {
-                        // Try to unload the library.
-                        (result, var handle) = await TargetManager.SelectedTarget.Debug.ReloadLibrary((int)library.Handle, tempSprxPath);
-
-                        // If we failed abort here.
-                        if (!result.Succeeded)
-                        {
-                            SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                            return;
-                        }
-
-                        SimpleMessageBox.ShowInformation(Window.GetWindow(this), $"The sprx {Path.GetFileName(binaryPath)} has been reloaded with handle {handle}.", "SPRX has been reloaded!");
-                    }
-                    else
-                    {
-                        (result, int handle) = await TargetManager.SelectedTarget.Debug.LoadLibrary(tempSprxPath);
-
-                        if (!result.Succeeded || handle == -1)
-                        {
-                            SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                            return;
-                        }
-
-                        SimpleMessageBox.ShowInformation(Window.GetWindow(this), $"The sprx {Path.GetFileName(binaryPath)} has been loaded with handle {handle}.", "SPRX has been loaded!");
-
-                        // Remove the temp file.
-                        await TargetManager.SelectedTarget.DeleteFile(tempSprxPath);
-                    }
-                }
-                else if (fileExtension == ".bin")
-                {
-                    if (!await TargetManager.SelectedTarget.Payload.InjectPayload(PayloadBuffer))
-                    {
-                        SimpleMessageBox.ShowError(Window.GetWindow(this), "Failed to send payload to target please try again.", "Error: Failed to inject payload.");
-                        return;
-                    }
-
-                    SimpleMessageBox.ShowInformation(Window.GetWindow(this), "The payload has been sucessfully sent.", "Payload Sent!");
-                }
-                else if (fileExtension == ".elf")
-                {
-                    SimpleMessageBox.ShowInformation(Window.GetWindow(this), "ELF's are not currently supported.", "Failed to send ELF.");
-                }
-            }
-            catch (Exception ex)
-            {
-                SimpleMessageBox.ShowError(Window.GetWindow(this), ex.Message, "Error: Failed to load binary.");
-            }
+            LoadSomething.ShowDialog(Window.GetWindow(this));
         }
 
         private async void RestartTarget_Click(object sender, RoutedEventArgs e)

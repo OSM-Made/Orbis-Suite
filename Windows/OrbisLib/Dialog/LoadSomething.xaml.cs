@@ -56,14 +56,23 @@ namespace OrbisLib2.Dialog
                 return;
             }
 
-            // Get the process information.
-            (var result, var procInfo) = await TargetManager.SelectedTarget.Debug.GetCurrentProcess();
+            if (Path.GetExtension(path) != ".bin")
+            {
+                // Get the process information.
+                (var result, var procInfo) = await TargetManager.SelectedTarget.Debug.GetCurrentProcess();
 
-            if (!result.Succeeded || procInfo == null || procInfo.ProcessId == -1)
-                return;
+                if (!result.Succeeded || procInfo == null || procInfo.ProcessId == -1)
+                    return;
 
-            var entry = new BinaryHistory() { IsRemote = isRemote, Path = path, TitleId = procInfo.TitleId, LastLoaded = DateTime.UtcNow };
-            entry.Add();
+                var entry = new BinaryHistory() { IsRemote = isRemote, Path = path, TitleId = procInfo.TitleId, LastLoaded = DateTime.UtcNow };
+                entry.Add();
+            }
+            else
+            {
+                var entry = new BinaryHistory() { IsRemote = isRemote, Path = path, TitleId = "N/A", LastLoaded = DateTime.UtcNow };
+                entry.Add();
+            }
+            
         }
 
         private void RefreshHistory()
@@ -154,7 +163,7 @@ namespace OrbisLib2.Dialog
             }
         }
 
-        private async Task LoadSomethingLocal(string path)
+        private async Task<bool> LoadSomethingLocal(string path)
         {
             // Save to history.
             await SaveToHistory(path, false);
@@ -173,7 +182,7 @@ namespace OrbisLib2.Dialog
                         if (!result.Succeeded)
                         {
                             SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                            return;
+                            return false;
                         }
 
                         // Get the Library list so we can check if its loaded already.
@@ -181,7 +190,7 @@ namespace OrbisLib2.Dialog
                         if (!result.Succeeded)
                         {
                             SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                            return;
+                            return false;
                         }
 
                         // Search for the library in the list and unload the sprx if already loaded.
@@ -195,12 +204,10 @@ namespace OrbisLib2.Dialog
                             if (!result.Succeeded)
                             {
                                 SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                                return;
+                                return false;
                             }
 
                             SprxLoadedEvent?.Invoke(this, new SprxLoadedEventArgs(handle));
-
-                            SimpleMessageBox.ShowInformation(Window.GetWindow(this), $"The sprx {Path.GetFileName(path)} has been reloaded with handle {handle}.", "SPRX has been reloaded!");
                         }
                         else
                         {
@@ -209,12 +216,10 @@ namespace OrbisLib2.Dialog
                             if (!result.Succeeded || handle == -1)
                             {
                                 SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Error: Failed to load sprx.");
-                                return;
+                                return false;
                             }
 
                             SprxLoadedEvent?.Invoke(this, new SprxLoadedEventArgs(handle));
-
-                            SimpleMessageBox.ShowInformation(Window.GetWindow(this), $"The sprx {Path.GetFileName(path)} has been loaded with handle {handle}.", "SPRX has been loaded!");
 
                             // Remove the temp file.
                             await TargetManager.SelectedTarget.DeleteFile(tempSprxPath);
@@ -228,12 +233,10 @@ namespace OrbisLib2.Dialog
                         if (!await TargetManager.SelectedTarget.Payload.InjectPayload(binaryData))
                         {
                             SimpleMessageBox.ShowError(Window.GetWindow(this), "Failed to send payload to target please try again.", "Error: Failed to inject payload.");
-                            return;
+                            return false;
                         }
 
                         PayloadLoadedEvent?.Invoke(this, EventArgs.Empty);
-
-                        SimpleMessageBox.ShowInformation(Window.GetWindow(this), "The payload has been sucessfully sent.", "Payload Sent!");
 
                         break;
                     }
@@ -242,51 +245,60 @@ namespace OrbisLib2.Dialog
                     {
                         ElfLoadedEvent?.Invoke(this, EventArgs.Empty);
 
+                        // TODO: Support ELF loading.
                         SimpleMessageBox.ShowInformation(Window.GetWindow(this), "ELF's are not currently supported.", "Failed to send ELF.");
-
-                        break;
+                        return false;
+                        // break;
                     }
             }
+
+            return true;
         }
 
         private async Task LoadHisctoric(BinaryHistory item)
         {
-            // Get the process information.
-            (var result, var procInfo) = await TargetManager.SelectedTarget.Debug.GetCurrentProcess();
-
-            if (!result.Succeeded)
+            if (Path.GetExtension(item.Path) != ".bin")
             {
-                SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Failed to get process info");
-                return;
-            }
+                // Get the process information.
+                (var result, var procInfo) = await TargetManager.SelectedTarget.Debug.GetCurrentProcess();
 
-            // Make sure since this isnt the process we loaded this on last we want to do this.
-            if (procInfo.TitleId != item.TitleId)
-            {
-                var dialogResult = SimpleMessageBox.ShowInformation(
-                    Window.GetWindow(this),
-                    $"Are you sure you want to load {Path.GetFileName(item.Path)} on {procInfo.TitleId} it was last loaded on {item.TitleId}.",
-                    "Are you sure?",
-                    SimpleUI.SimpleMessageBoxButton.YesNo);
-
-                if (dialogResult != SimpleUI.SimpleMessageBoxResult.Yes)
+                if (!result.Succeeded)
+                {
+                    SimpleMessageBox.ShowError(Window.GetWindow(this), result.ErrorMessage, "Failed to get process info");
                     return;
+                }
+
+                // Make sure since this isnt the process we loaded this on last we want to do this.
+                if (procInfo.TitleId != item.TitleId)
+                {
+                    var dialogResult = SimpleMessageBox.ShowInformation(
+                        Window.GetWindow(this),
+                        $"Are you sure you want to load {Path.GetFileName(item.Path)} on {procInfo.TitleId} it was last loaded on {item.TitleId}.",
+                        "Are you sure?",
+                        SimpleUI.SimpleMessageBoxButton.YesNo);
+
+                    if (dialogResult != SimpleUI.SimpleMessageBoxResult.Yes)
+                        return;
+                }
             }
 
             // Load the item.
+            var loadedSomething = false;
             if (item.IsRemote)
-                LoadSomethingRemote(item.Path);
+                await LoadSomethingRemote(item.Path);
             else
-                await LoadSomethingLocal(item.Path);
+                loadedSomething = await LoadSomethingLocal(item.Path);
 
-            Close();
+            // Close the window if we loaded something.
+            if (loadedSomething)
+                Close();
         }
 
         #endregion
 
         #region Buttons
 
-        private async void HistoryList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private async void HistoryList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = ((FrameworkElement)e.OriginalSource).DataContext as BinaryHistory;
 
@@ -319,10 +331,11 @@ namespace OrbisLib2.Dialog
             Properties.Settings.Default.Save();
 
             // Try to load something.
-            await LoadSomethingLocal(binaryPath);
+            var loadedSomething = await LoadSomethingLocal(binaryPath);
 
-            // Call the original.
-            base.Button1_Click(sender, e);
+            // Call the original if we loaded something.
+            if (loadedSomething)
+                base.Button1_Click(sender, e);
         }
 
         // Browse on Target
@@ -388,7 +401,6 @@ namespace OrbisLib2.Dialog
         }
 
         #endregion
-
 
     }
 }
