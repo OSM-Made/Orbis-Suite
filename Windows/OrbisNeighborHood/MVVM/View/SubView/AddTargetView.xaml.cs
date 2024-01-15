@@ -91,25 +91,25 @@ namespace OrbisNeighborHood.MVVM.View.SubView
         private void ShowTitleIdLabels_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _newTarget.Info.ShowTitleId = Switch.IsToggled;
+            //_newTarget.StaticInfo.ShowTitleId = Switch.IsToggled;
         }
 
         private void ShowDevkitPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _newTarget.Info.ShowDevkitPanel = Switch.IsToggled;
+            //_newTarget.StaticInfo.ShowDevkitPanel = Switch.IsToggled;
         }
 
         private void ShowToolboxShortcut_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _newTarget.Info.ShowToolboxShortcut = Switch.IsToggled;
+            //_newTarget.StaticInfo.ShowToolboxShortcut = Switch.IsToggled;
         }
 
         private void ShowAppHome_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _newTarget.Info.ShowAppHome = Switch.IsToggled;
+            //_newTarget.StaticInfo.ShowAppHome = Switch.IsToggled;
         }
 
         #endregion

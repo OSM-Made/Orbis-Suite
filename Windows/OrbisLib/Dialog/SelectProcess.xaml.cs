@@ -10,7 +10,7 @@ namespace OrbisLib2.Dialog
     /// </summary>
     public partial class SelectProcess : SimpleDialog
     {
-        private static string[] DangerList = { "SceCdlgApp", "SceRemotePlay", "klogproc", "ScePfs", "SceNKWebProcess", "SceNKNetworkProcess", "SceNKUIProcess", "SceSpkProcess", "SceSpkService", "SceVencProxy.elf", "SceVoiceAndAgent", "webrtc_daemon.self", "SceMusicCoreServer", "SceSocialScreenMgr", "SceSpZeroConf", "SceCloudClientDaemon", "SceVideoCoreServer", "ScePartyDaemon", "SceGameLiveStreaming", "SceAvCapture", "GnmCompositor.elf", "SceSysCore.elf", "SceSysAvControl.elf", "usb", "SceSwd", "SceVnlru", "SceSyncer", "SceBufdaemon0", "SceBufdaemon1", "SceBufdaemon2", "SceBtDriver", "SceTrpwCtrl", "SceTrpwIntr", "SceTrpwReq", "SceSbram", "SceDaAtcev", "SceDaThrd", "SceIccThermal", "SceMd0", "SceIccnvs", "SceXptThrd", "SceGbeMtsPhyCtrl", "SceGbeMtsCtrl", "SceSflash", "SceIccNotification", "SceHdmiEvent", "SceCameraSdma", "SceCameraDriverMain", "SceHidMain", "SceHidAuth", "SceYarrow", "geom", "intr", "idle", "mini-syscore.elf", "SceAudit", "kernel", "orbis-jsc-compiler.self", "SecureWebProcess.self", "SecureUIProcess.self", "SceVdecProxy.elf", "fs_cleaner.elf", "SceVmdaemon", "ScePagedaemonX", "orbis_audiod.elf" };
+        private static string[] DangerList = { "Fusion", "SceCdlgApp", "SceRemotePlay", "klogproc", "ScePfs", "SceNKWebProcess", "SceNKNetworkProcess", "SceNKUIProcess", "SceSpkProcess", "SceSpkService", "SceVencProxy.elf", "SceVoiceAndAgent", "webrtc_daemon.self", "SceMusicCoreServer", "SceSocialScreenMgr", "SceSpZeroConf", "SceCloudClientDaemon", "SceVideoCoreServer", "ScePartyDaemon", "SceGameLiveStreaming", "SceAvCapture", "GnmCompositor.elf", "SceSysCore.elf", "SceSysAvControl.elf", "usb", "SceSwd", "SceVnlru", "SceSyncer", "SceBufdaemon0", "SceBufdaemon1", "SceBufdaemon2", "SceBtDriver", "SceTrpwCtrl", "SceTrpwIntr", "SceTrpwReq", "SceSbram", "SceDaAtcev", "SceDaThrd", "SceIccThermal", "SceMd0", "SceIccnvs", "SceXptThrd", "SceGbeMtsPhyCtrl", "SceGbeMtsCtrl", "SceSflash", "SceIccNotification", "SceHdmiEvent", "SceCameraSdma", "SceCameraDriverMain", "SceHidMain", "SceHidAuth", "SceYarrow", "geom", "intr", "idle", "mini-syscore.elf", "SceAudit", "kernel", "orbis-jsc-compiler.self", "SecureWebProcess.self", "SecureUIProcess.self", "SceVdecProxy.elf", "fs_cleaner.elf", "SceVmdaemon", "ScePagedaemonX", "orbis_audiod.elf" };
 
         public SelectProcess(Window Owner)
             : base(Owner, "Select", "Favourites", "Cancel", "Select Process")
@@ -53,7 +53,7 @@ namespace OrbisLib2.Dialog
             }
 
             // Remove self.
-            procList.RemoveAll(s => s.Name == "OrbisLibAPI");
+            procList.RemoveAll(s => s.Name == "OrbisAPIDaemon");
 
             // Remove potentially dangerious processes.
             if (!Properties.Settings.Default.ProcessAdcancedMode)

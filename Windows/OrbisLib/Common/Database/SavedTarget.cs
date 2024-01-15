@@ -38,24 +38,24 @@ namespace OrbisLib2.Common.Database
         [NotNull]
         public int PayloadPort { get; set; } = 9020;
 
-        private TargetInfo _Info;
-        public TargetInfo Info
+        private StaticInfo _StaticInfo;
+        public StaticInfo StaticInfo
         {
             get
             {
-                if (_Info == null)
+                if (_StaticInfo == null)
                 {
                     var db = new SQLiteConnection(Config.DataBasePath);
 
                     // Create the table if it doesn't exist already.
-                    db.CreateTable<TargetInfo>();
+                    db.CreateTable<StaticInfo>();
 
-                    _Info = db.Find<TargetInfo>(x => x.TargetId == Id);
-                    if (_Info == null && Id != 0)
+                    _StaticInfo = db.Find<StaticInfo>(x => x.TargetId == Id);
+                    if (_StaticInfo == null && Id != 0)
                     {
-                        _Info = new TargetInfo();
-                        _Info.TargetId = Id;
-                        db.Insert(_Info);
+                        _StaticInfo = new StaticInfo();
+                        _StaticInfo.TargetId = Id;
+                        db.Insert(_StaticInfo);
                         db.Close();
                     }
                     else
@@ -64,7 +64,34 @@ namespace OrbisLib2.Common.Database
                     }
                 }
 
-                return _Info;
+                return _StaticInfo;
+            }
+        }
+
+        private MutableInfo _MutableInfo;
+        public MutableInfo MutableInfo
+        {
+            get
+            {
+                if (_MutableInfo == null)
+                {
+                    var db = new SQLiteConnection(Config.DataBasePath);
+
+                    // Create the table if it doesn't exist already.
+                    db.CreateTable<MutableInfo>();
+
+                    _MutableInfo = db.Find<MutableInfo>(x => x.TargetId == Id);
+                    if (_MutableInfo == null && Id != 0)
+                    {
+                        _MutableInfo = new MutableInfo();
+                        _MutableInfo.TargetId = Id;
+                        db.Insert(_MutableInfo); 
+                    }
+
+                    db.Close();
+                }
+
+                return _MutableInfo;
             }
         }
 
@@ -152,10 +179,18 @@ namespace OrbisLib2.Common.Database
         public bool Remove()
         {
             var db = new SQLiteConnection(Config.DataBasePath);
-            var result = db.Delete(Info);
+
+            var result = db.Delete(StaticInfo);
             if (result <= 0)
             {
-                Console.WriteLine("Failed to delete child db TargetDetails Details.");
+                Console.WriteLine("Failed to delete child db StaticInfo.");
+                return false;
+            }
+
+            result = db.Delete(MutableInfo);
+            if (result <= 0)
+            {
+                Console.WriteLine("Failed to delete child db MutableInfo.");
                 return false;
             }
 

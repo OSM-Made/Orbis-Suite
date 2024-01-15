@@ -1,9 +1,9 @@
 ﻿using OrbisSuiteService.Service;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System.ServiceProcess;
 using NetFwTypeLib;
 using OrbisLib2.Common;
-using System.ServiceProcess;
 
 #if DEBUG
 var service = new Service();
@@ -60,10 +60,10 @@ class Service : ServiceBase
             firewallPolicy.Rules.Add(firewallRule);
         }
 #endif
-        
+
         // Create logger instance.
         var logger = _serviceProvider.GetService<ILoggerFactory>() 
-            .AddFile(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Orbis Suite\Logging\OrbisServiceLog.txt")
+            .AddFile(Config.OrbisPath + @"\Logging\OrbisServiceLog.txt")
             .CreateLogger<Program>();
 
         var dp = new Dispatcher(logger);

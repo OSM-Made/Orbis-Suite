@@ -45,70 +45,74 @@ namespace OrbisSuiteCore.Controls
         {
             var CurrentTarget = TargetManager.SelectedTarget;
 
-            if (CurrentTarget != null)
+            if(CurrentTarget == null || CurrentTarget.MutableInfo == null)
             {
-                switch (CurrentTarget.Info.Status)
-                {
-                    case TargetStatusType.Offline:
-                        CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                        CurrentTargetState.ToolTip = "Offline";
-                        break;
+                return;
+            }
 
-                    case TargetStatusType.Online:
-                        CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 140, 0));
-                        CurrentTargetState.ToolTip = "Online";
-                        break;
+            switch (CurrentTarget.MutableInfo.Status)
+            {
+                case TargetStatusType.None:
+                case TargetStatusType.Offline:
+                    CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    CurrentTargetState.ToolTip = "Offline";
+                    break;
 
-                    case TargetStatusType.APIAvailable:
-                        CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
-                        CurrentTargetState.ToolTip = "Online & API Available";
-                        break;
+                case TargetStatusType.Online:
+                    CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 140, 0));
+                    CurrentTargetState.ToolTip = "Online";
+                    break;
 
-                    default:
-                        CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                        CurrentTargetState.ToolTip = "Unknown";
-                        break;
-                }
+                case TargetStatusType.APIAvailable:
+                case TargetStatusType.DebuggingActive:
+                    CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
+                    CurrentTargetState.ToolTip = "Online & API Available";
+                    break;
 
-                CurrentTargetName.Text = CurrentTarget.IsDefault ? $"★{CurrentTarget.Name}" : CurrentTarget.Name;
+                default:
+                    CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    CurrentTargetState.ToolTip = "Unknown";
+                    break;
+            }
 
-                try
-                {
-                    if (CurrentTarget.Info.BigAppTitleID == null || !Regex.IsMatch(CurrentTarget.Info.BigAppTitleID, @"CUSA\d{5}"))
-                    {
-                        CurrentTargetTitleName.Text = "Unknown Title";
-                        CurrentTargetTitleId.Text = "-";
-                        CurrentTargetTitleImage.Source = new BitmapImage(new Uri("pack://application:,,,/OrbisSuiteCore;component/Images/DefaultTitleIcon.png"));
-                        return;
-                    }
+            CurrentTargetName.Text = CurrentTarget.IsDefault ? $"★{CurrentTarget.Name}" : CurrentTarget.Name;
 
-                    // Get the title information from the sony tmdb.
-                    var title = new TMDB(CurrentTarget.Info.BigAppTitleID);
-
-                    // Try to parse out the names and icons.
-                    var names = title.GetNames();
-                    var icons = title.GetIcons();
-
-                    // If we failed any abort now.
-                    if (names == null || icons == null)
-                    {
-                        CurrentTargetTitleName.Text = "Unknown Title";
-                        CurrentTargetTitleId.Text = "-";
-                        CurrentTargetTitleImage.Source = new BitmapImage(new Uri("pack://application:,,,/OrbisSuiteCore;component/Images/DefaultTitleIcon.png"));
-                        return;
-                    }
-
-                    // Set the new title info.
-                    CurrentTargetTitleName.Text = names[0];
-                    CurrentTargetTitleId.Text = title.GetTitleId();
-                    CurrentTargetTitleImage.Source = new BitmapImage(new Uri(icons[0]));
-                }
-                catch
+            try
+            {
+                if (CurrentTarget.MutableInfo.BigAppTitleId == null || !Regex.IsMatch(CurrentTarget.MutableInfo.BigAppTitleId, @"CUSA\d{5}"))
                 {
                     CurrentTargetTitleName.Text = "Unknown Title";
                     CurrentTargetTitleId.Text = "-";
                     CurrentTargetTitleImage.Source = new BitmapImage(new Uri("pack://application:,,,/OrbisSuiteCore;component/Images/DefaultTitleIcon.png"));
+                    return;
                 }
+
+                // Get the title information from the sony tmdb.
+                var title = new TMDB(CurrentTarget.MutableInfo.BigAppTitleId);
+
+                // Try to parse out the names and icons.
+                var names = title.GetNames();
+                var icons = title.GetIcons();
+
+                // If we failed any abort now.
+                if (names == null || icons == null)
+                {
+                    CurrentTargetTitleName.Text = "Unknown Title";
+                    CurrentTargetTitleId.Text = "-";
+                    CurrentTargetTitleImage.Source = new BitmapImage(new Uri("pack://application:,,,/OrbisSuiteCore;component/Images/DefaultTitleIcon.png"));
+                    return;
+                }
+
+                // Set the new title info.
+                CurrentTargetTitleName.Text = names[0];
+                CurrentTargetTitleId.Text = title.GetTitleId();
+                CurrentTargetTitleImage.Source = new BitmapImage(new Uri(icons[0]));
+            }
+            catch
+            {
+                CurrentTargetTitleName.Text = "Unknown Title";
+                CurrentTargetTitleId.Text = "-";
+                CurrentTargetTitleImage.Source = new BitmapImage(new Uri("pack://application:,,,/OrbisSuiteCore;component/Images/DefaultTitleIcon.png"));
             }
         }
 

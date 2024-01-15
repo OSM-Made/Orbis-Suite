@@ -1,4 +1,5 @@
-﻿using OrbisLib2.Common.Database.App;
+﻿using OrbisLib2.Common;
+using OrbisLib2.Common.Database.App;
 using OrbisLib2.Common.Database.Types;
 using OrbisLib2.General;
 using OrbisLib2.Targets;
@@ -21,6 +22,7 @@ namespace OrbisNeighborHood.Controls
     {
         public AppBrowse _App;
         private string _AppVersion;
+        private TargetStatusType _currentState = TargetStatusType.None;
 
         private AppState AppState = AppState.StateNotRunning;
         private VisibilityType Visible = VisibilityType.VT_NONE;
@@ -36,53 +38,79 @@ namespace OrbisNeighborHood.Controls
             Update(App, AppVersion);
 
             // Start background task to periodically check if this application is currently running.
-            Task.Run(() => UpdateApp());
-
-            var currentTarget = TargetManager.SelectedTarget;
-            EnableTargetOptions(currentTarget.Info.Status == TargetStatusType.APIAvailable);
+            Task.Run(UpdateApp);
+            Task.Run(UpdateProgramState);
 
             Events.TargetStateChanged += Events_TargetStateChanged;
             Events.DBTouched += Events_DBTouched;
             Events.SelectedTargetChanged += Events_SelectedTargetChanged; ;
         }
 
-        private void EnableTargetOptions(bool state)
+        private async Task UpdateProgramState()
         {
-            Dispatcher.Invoke(() =>
+            var currentTarget = TargetManager.SelectedTarget;
+            var newTargetState = currentTarget.MutableInfo.Status;
+
+            // If the current program stat matches the target state we do nothing here.
+            if (_currentState == newTargetState)
+                return;
+
+            // Update the targets state to reflect the new changes.
+            _currentState = newTargetState;
+
+            // Change the program for the new state of the target.
+            switch (newTargetState)
             {
-                if (!state)
-                {
-                    StartStop.IsEnabled = state;
-                    SuspendResume.IsEnabled = state;
-                }
+                default:
+                    break;
 
-                Visibility.IsEnabled = state;
-                ChangeIcon.IsEnabled = state;
-                SetAsFocus.IsEnabled = state;
-                Delete.IsEnabled = state;
+                case TargetStatusType.Offline:
+                case TargetStatusType.Online:
 
-                if (!state) 
-                {
-                    Update(_App, _AppVersion);
-                }
-            });
+                    Dispatcher.Invoke(() =>
+                    {
+                        StartStop.IsEnabled = false;
+                        SuspendResume.IsEnabled = false;
+                        Visibility.IsEnabled = false;
+                        ChangeIcon.IsEnabled = false;
+                        SetAsFocus.IsEnabled = false;
+                        Delete.IsEnabled = false;
+                    });
+
+                    break;
+
+                case TargetStatusType.DebuggingActive:
+                case TargetStatusType.APIAvailable:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        StartStop.IsEnabled = true;
+                        SuspendResume.IsEnabled = true;
+                        Visibility.IsEnabled = true;
+                        ChangeIcon.IsEnabled = true;
+                        SetAsFocus.IsEnabled = true;
+                        Delete.IsEnabled = true;
+
+                        Update(_App, _AppVersion);
+                    });
+
+                    break;
+            }
         }
 
-        private void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
+        private async void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
         {
-            var currentTarget = TargetManager.SelectedTarget;
-            EnableTargetOptions(currentTarget.Info.Status == TargetStatusType.APIAvailable);
+            await UpdateProgramState();
         }
 
-        private void Events_DBTouched(object? sender, DBTouchedEvent e)
+        private async void Events_DBTouched(object? sender, DBTouchedEvent e)
         {
-            var currentTarget = TargetManager.SelectedTarget;
-            EnableTargetOptions(currentTarget.Info.Status == TargetStatusType.APIAvailable);
+            await UpdateProgramState();
         }
 
-        private void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
+        private async void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
-            EnableTargetOptions(e.State == TargetStateChangedEvent.TargetState.APIAvailable);
+            await UpdateProgramState();
         }
 
         public void Update(AppBrowse App, string AppVersion)
@@ -95,7 +123,7 @@ namespace OrbisNeighborHood.Controls
             SizeElement.FieldText = Utilities.BytesToString(App.ContentSize);
 
             // Get the path to our icon and make sure it exists.
-            string iconPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\Orbis Suite\AppCache\{App.TitleId}\icon0.png";
+            string iconPath = $@"{Config.OrbisPath}\AppCache\{App.TitleId}\icon0.png";
             if(!string.IsNullOrEmpty(iconPath) && File.Exists(iconPath) && new FileInfo(iconPath).Length > 0)
             {
                 // Load and cache image in memory.
@@ -127,7 +155,7 @@ namespace OrbisNeighborHood.Controls
             {
                 var currentTarget = TargetManager.SelectedTarget;
 
-                if (currentTarget.Info.Status != TargetStatusType.APIAvailable)
+                if (currentTarget.MutableInfo.Status < TargetStatusType.APIAvailable)
                 {
                     Thread.Sleep(2000);
                     continue;

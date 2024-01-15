@@ -24,33 +24,20 @@ namespace OrbisPeeknPoke
     /// </summary>
     public partial class MainWindow : SimpleWindow
     {
+        private ILogger _logger;
+        private TargetStatusType _currentState = TargetStatusType.None;
         private List<PeekInfo> JumpList = new();
         private PeekInfo CurrentPeek;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            var test = new byte[0x200];
-            test[0] = 0xFF;
-            test[1] = 0xFF;
-            test[2] = 0xFF;
-            test[3] = 0xFF;
-
-            test[4] = 0x9A;
-            test[5] = 0x02;
-
-
-            test[12] = 0x00;
-            test[13] = 0x00;
-            test[14] = 0x8A;
-            test[15] = 0x42;
-
-            HexView.Stream = new MemoryStream(test);
         }
 
         public void Show(ILogger logger)
         {
+            _logger = logger;
+
             base.Show();
 
             DispatcherClient.Subscribe(logger);
@@ -66,13 +53,7 @@ namespace OrbisPeeknPoke
             HexView.SelectionLengthChanged += HexView_SelectionLengthChanged;
 
             // Update State
-            Task.Run(async () =>
-            {
-                if (TargetManager.SelectedTarget != null)
-                {
-                    await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
-                }
-            });
+            Task.Run(UpdateProgramState);
         }
 
         #region Events
@@ -89,109 +70,185 @@ namespace OrbisPeeknPoke
             UpdateInfoBar();
         }
 
-        private async Task EnableProgram(bool attached)
+        private async Task UpdateProgramState()
         {
             var currentTarget = TargetManager.SelectedTarget;
-            if (currentTarget.Info.Status != TargetStatusType.APIAvailable)
-                attached = false;
 
-            Dispatcher.Invoke(() =>
+            // Abort if there is no saved targets.
+            if (currentTarget == null)
+                return;
+
+            // If the current program stat matches the target state we do nothing here.
+            var newTargetState = currentTarget.MutableInfo.Status;
+            if (_currentState == newTargetState)
+                return;
+
+            _logger.LogInformation($"Target state has changed from {_currentState} to {newTargetState}.");
+
+            // Update the targets state to reflect the new changes.
+            _currentState = newTargetState;
+
+            // Change the program for the new state of the target.
+            switch (newTargetState)
             {
-                SelectBase.IsEnabled = attached;
-                Peek.IsEnabled = attached;
-                Poke.IsEnabled = attached;
+                default:
+                    break;
 
-                Int8.IsEnabled = attached;
-                UInt8.IsEnabled = attached;
-                Int16.IsEnabled = attached;
-                UInt16.IsEnabled = attached;
-                Int32.IsEnabled = attached;
-                UInt32.IsEnabled = attached;
-                Int64.IsEnabled = attached;
-                UInt64.IsEnabled = attached;
-                Float.IsEnabled = attached;
-                Double.IsEnabled = attached;
-                String.IsEnabled = attached;
-            });
+                case TargetStatusType.Offline:
+                case TargetStatusType.Online:
 
-            if (attached)
-            {
-                var baseAddress = await GetBaseAddress();
-                Dispatcher.Invoke(() =>
-                {
-                    // Fill the base address for the first time.
-                    if (BaseAddress.FieldText == string.Empty)
+                    Dispatcher.Invoke(() =>
                     {
-                        BaseAddress.FieldText = $"0x{baseAddress.ToString("X")}";
-                    }
+                        SelectBase.IsEnabled = false;
+                        Peek.IsEnabled = false;
+                        Poke.IsEnabled = false;
 
-                    HexView.ReadOnlyMode = false;
-                });
-            }
-            else
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    BaseAddress.FieldText = string.Empty;
-                    HexView.ReadOnlyMode = true;
-                });
+                        Int8.IsEnabled = false;
+                        UInt8.IsEnabled = false;
+                        Int16.IsEnabled = false;
+                        UInt16.IsEnabled = false;
+                        Int32.IsEnabled = false;
+                        UInt32.IsEnabled = false;
+                        Int64.IsEnabled = false;
+                        UInt64.IsEnabled = false;
+                        Float.IsEnabled = false;
+                        Double.IsEnabled = false;
+                        String.IsEnabled = false;
+                    });
+
+                    break;
+
+                case TargetStatusType.APIAvailable:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        SelectBase.IsEnabled = false;
+                        Peek.IsEnabled = false;
+                        Poke.IsEnabled = false;
+
+                        Int8.IsEnabled = false;
+                        UInt8.IsEnabled = false;
+                        Int16.IsEnabled = false;
+                        UInt16.IsEnabled = false;
+                        Int32.IsEnabled = false;
+                        UInt32.IsEnabled = false;
+                        Int64.IsEnabled = false;
+                        UInt64.IsEnabled = false;
+                        Float.IsEnabled = false;
+                        Double.IsEnabled = false;
+                        String.IsEnabled = false;
+
+                        BaseAddress.FieldText = string.Empty;
+                        HexView.ReadOnlyMode = true;
+                    });
+
+                    break;
+
+                case TargetStatusType.DebuggingActive:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        SelectBase.IsEnabled = true;
+                        Peek.IsEnabled = true;
+                        Poke.IsEnabled = true;
+
+                        Int8.IsEnabled = true;
+                        UInt8.IsEnabled = true;
+                        Int16.IsEnabled = true;
+                        UInt16.IsEnabled = true;
+                        Int32.IsEnabled = true;
+                        UInt32.IsEnabled = true;
+                        Int64.IsEnabled = true;
+                        UInt64.IsEnabled = true;
+                        Float.IsEnabled = true;
+                        Double.IsEnabled = true;
+                        String.IsEnabled = true;
+                    });
+
+                    var baseAddress = await GetBaseAddress();
+                    Dispatcher.Invoke(() =>
+                    {
+                        // Fill the base address for the first time.
+                        if (BaseAddress.FieldText == string.Empty)
+                        {
+                            BaseAddress.FieldText = $"0x{baseAddress.ToString("X")}";
+                        }
+
+                        HexView.ReadOnlyMode = false;
+                    });
+
+                    break;
             }
         }
 
         private async void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
-            if (e.Name != TargetManager.SelectedTarget.Name)
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
                 return;
 
-            switch (e.State)
-            {
-                case TargetStateChangedEvent.TargetState.APIAvailable:
-                    await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
-                    break;
-                case TargetStateChangedEvent.TargetState.APIUnAvailable:
-                    await EnableProgram(false);
-                    break;
-            }
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await UpdateProgramState();
         }
 
         private async void Events_ProcDie(object? sender, ProcDieEvent e)
         {
-            // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
                 return;
 
-            // Disable the attached options.
-            await EnableProgram(false);
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await UpdateProgramState();
         }
 
         private async void Events_ProcDetach(object? sender, ProcDetachEvent e)
         {
-            // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
                 return;
 
-            // Disable the attached options.
-            await EnableProgram(false);
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await UpdateProgramState();
         }
 
         private async void Events_ProcAttach(object? sender, ProcAttachEvent e)
         {
-            // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
                 return;
 
-            // Enable the attached options.
-            await EnableProgram(true);
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await UpdateProgramState();
         }
 
         private async void Events_DBTouched(object? sender, DBTouchedEvent e)
         {
-            await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
+            await UpdateProgramState();
         }
 
         private async void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
         {
-            await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
+            await UpdateProgramState();
         }
 
         #endregion

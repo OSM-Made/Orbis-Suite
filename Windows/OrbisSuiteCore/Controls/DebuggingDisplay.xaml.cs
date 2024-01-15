@@ -23,6 +23,8 @@ namespace OrbisSuiteCore.Controls
     /// </summary>
     public partial class DebuggingDisplay : UserControl
     {
+        private TargetStatusType _currentState = TargetStatusType.None;
+
         public event EventHandler<SprxLoadedEventArgs> SprxLoadedEvent;
         public event EventHandler PayloadLoadedEvent;
         public event EventHandler ElfLoadedEvent;
@@ -38,44 +40,92 @@ namespace OrbisSuiteCore.Controls
             Events.DBTouched += Events_DBTouched;
             Events.SelectedTargetChanged += Events_SelectedTargetChanged;
 
-            Task.Run(async () =>
-            {
-                var currentTarget = TargetManager.SelectedTarget;
-                await RefreshView(currentTarget.Info.IsAPIAvailable, await currentTarget.Debug.IsDebugging());
-            });
+            Task.Run(RefreshView);
         }
 
         #region Control Management
 
-        private async Task RefreshView(bool state, bool attached)
+        private async Task RefreshView()
         {
             var currentTarget = TargetManager.SelectedTarget;
 
-            if (attached)
-            {
-                (var result, var procInfo) = await currentTarget.Debug.GetCurrentProcess();
+            // Abort if there is no saved target.
+            if (currentTarget == null)
+                return;
 
-                if (result.Succeeded && procInfo.ProcessId != -1)
-                {
-                    // Set the current debugging process name and PID.
-                    Dispatcher.Invoke(() => CurrentDebuggingProccess.FieldText = $"{procInfo.Name}({procInfo.ProcessId})");
-                }
+            // If the current program stat matches the target state we do nothing here.
+            var newTargetState = currentTarget.MutableInfo.Status;
+            if (_currentState == newTargetState)
+                return;
+
+            // Update the targets state to reflect the new changes.
+            _currentState = newTargetState;
+
+            // Change the program for the new state of the target.
+            switch (newTargetState)
+            {
+                default:
+                    break;
+
+                case TargetStatusType.Offline:
+                case TargetStatusType.Online:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        AttachProcess.IsEnabled = false;
+                        LoadSomething.IsEnabled = true;
+                        RestartTarget.IsEnabled = false;
+                        ShutdownTarget.IsEnabled = false;
+
+                        DetachProcess.IsEnabled = false;
+                        KillProcess.IsEnabled = false;
+
+                        CurrentDebuggingProccess.FieldText = "N/A";
+                    });
+
+                    break;
+
+                case TargetStatusType.APIAvailable:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        AttachProcess.IsEnabled = true;
+                        LoadSomething.IsEnabled = true;
+                        RestartTarget.IsEnabled = true;
+                        ShutdownTarget.IsEnabled = true;
+
+                        DetachProcess.IsEnabled = false;
+                        KillProcess.IsEnabled = false;
+
+                        CurrentDebuggingProccess.FieldText = "N/A";
+                    });
+
+                    break;
+
+                case TargetStatusType.DebuggingActive:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        AttachProcess.IsEnabled = true;
+                        LoadSomething.IsEnabled = true;
+                        RestartTarget.IsEnabled = true;
+                        ShutdownTarget.IsEnabled = true;
+
+                        DetachProcess.IsEnabled = true;
+                        KillProcess.IsEnabled = true;
+                    });
+                    
+
+                    (var result, var procInfo) = await currentTarget.Debug.GetCurrentProcess();
+
+                    if (result.Succeeded && procInfo.ProcessId != -1)
+                    {
+                        // Set the current debugging process name and PID.
+                        Dispatcher.Invoke(() => CurrentDebuggingProccess.FieldText = $"{procInfo.Name}({procInfo.ProcessId})");
+                    }
+
+                    break;
             }
-            else
-            {
-                Dispatcher.Invoke(() => CurrentDebuggingProccess.FieldText = "N/A");
-            }
-
-            Dispatcher.Invoke(() =>
-            {
-                AttachProcess.IsEnabled = state;
-                LoadSomething.IsEnabled = state;
-                RestartTarget.IsEnabled = state;
-                ShutdownTarget.IsEnabled = state;
-
-                DetachProcess.IsEnabled = attached;
-                KillProcess.IsEnabled = attached;
-            });
         }
 
         #endregion
@@ -84,71 +134,75 @@ namespace OrbisSuiteCore.Controls
 
         private async void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
         {
-            var currentTarget = TargetManager.SelectedTarget;
-
-            // Disable the attached options.
-            await RefreshView(currentTarget.Info.Status == TargetStatusType.APIAvailable, await currentTarget.Debug.IsDebugging());
+            await RefreshView();
         }
 
         private async void Events_DBTouched(object? sender, DBTouchedEvent e)
         {
-            var currentTarget = TargetManager.SelectedTarget;
-
-            // Disable the attached options.
-            await RefreshView(currentTarget.Info.Status == TargetStatusType.APIAvailable, await currentTarget.Debug.IsDebugging());
+            await RefreshView();
         }
 
         private async void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
             var currentTarget = TargetManager.SelectedTarget;
-            if (e.Name != currentTarget.Name)
+
+            // Make sure a target is set.
+            if (currentTarget== null)
                 return;
 
-            switch (e.State)
-            {
-                case TargetStateChangedEvent.TargetState.APIAvailable:
-                    await RefreshView(true, await currentTarget.Debug.IsDebugging());
-                    break;
-                case TargetStateChangedEvent.TargetState.APIUnAvailable:
-                    await RefreshView(false, await currentTarget.Debug.IsDebugging());
-                    break;
-            }
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await RefreshView();
         }
 
         private async void Events_ProcDie(object? sender, ProcDieEvent e)
         {
             var currentTarget = TargetManager.SelectedTarget;
 
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
             if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
-            await RefreshView(currentTarget.Info.Status == TargetStatusType.APIAvailable, false);
+            await RefreshView();
         }
 
         private async void Events_ProcDetach(object? sender, ProcDetachEvent e)
         {
             var currentTarget = TargetManager.SelectedTarget;
 
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
             if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
-            await RefreshView(currentTarget.Info.Status == TargetStatusType.APIAvailable, false);
+            await RefreshView();
         }
 
         private async void Events_ProcAttach(object? sender, ProcAttachEvent e)
         {
             var currentTarget = TargetManager.SelectedTarget;
 
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
             if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Enable the attached options.
-            await RefreshView(currentTarget.Info.Status == TargetStatusType.APIAvailable, true);
+            await RefreshView();
         }
 
         #endregion
@@ -167,7 +221,7 @@ namespace OrbisSuiteCore.Controls
 
         private void LoadSomething_Click(object sender, RoutedEventArgs e)
         {
-            LoadSomething.ShowDialog(Window.GetWindow(this));
+            OrbisLib2.Dialog.LoadSomething.ShowDialog(Window.GetWindow(this));
         }
 
         private async void KillProcess_Click(object sender, RoutedEventArgs e)

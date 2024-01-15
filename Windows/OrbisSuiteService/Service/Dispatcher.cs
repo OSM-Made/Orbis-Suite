@@ -46,8 +46,15 @@ namespace OrbisSuiteService.Service
 
         public void PublishEvent(ForwardPacket Packet)
         {
-            _Logger.LogInformation($"Publishing Event: {Packet.Type}.");
-            _PipeServer.WriteAsync(Packet);
+            try
+            {
+                _Logger.LogInformation($"Publishing Event: {Packet.Type}.");
+                _PipeServer.WriteAsync(Packet);
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError($"Failed to publish event {ex.Message}.");
+            }
         }
     }
 }

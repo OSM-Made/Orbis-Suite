@@ -21,7 +21,14 @@ namespace OrbisLib2.Targets
         public async Task<bool> IsDebugging()
         {
             (var result, var currentTarget) = await GetCurrentProcessId();
-            return result.Succeeded && currentTarget != -1;
+
+            if (!result.Succeeded)
+                return false;
+
+            if (currentTarget == -1)
+                return false;
+
+            return true;
         }
 
         public async Task<ResultState> Attach(int pid)

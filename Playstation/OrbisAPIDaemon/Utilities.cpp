@@ -2,8 +2,8 @@
 #include <GoldHEN.h>
 #include <NetExt.h>
 #include "Utilities.h"
-#include <KernelInterface.h>
 #include <libnetctl.h>
+#include <FusionDriver.h>
 
 bool LoadModules()
 {
@@ -62,13 +62,6 @@ bool LoadModules()
 		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_BGFT (%llX)\n", res);
 		return false;
 	}
-
-	res = sceKernelLoadStartModule("/mnt/sandbox/ORBS30000_000/app0/libKernelInterface.sprx", 0, 0, 0, 0, 0);
-	if (res < 0)
-	{
-		Logger::Error("LoadModules(): Failed to load kernel interface (%llX)\n", res);
-		return false;
-	}
 	
 	// Start up networking interface
 	res = sceNetInit();
@@ -124,12 +117,8 @@ bool LoadModules()
 
 bool Jailbreak()
 {
-	// Load the prx.
-	sceKernelLoadStartModule("/app0/libGoldHEN.sprx", 0, 0, 0, 0, 0);
-
-	// Jailbreak the prx.
-	jailbreak_backup bk;
-	return (sys_sdk_jailbreak(&bk) == 0);
+	JailBackup bk;
+	return (Fusion::Jailbreak(getpid(), &bk) == 0);
 }
 
 bool LoadSymbol(SceKernelModule handle, const char* symbol, void** funcOut)

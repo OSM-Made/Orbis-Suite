@@ -2,9 +2,7 @@
 using OrbisLib2.Common.Helpers;
 using System.Net.Sockets;
 using OrbisLib2.Common.Dispatcher;
-using System.Windows.Threading;
 using System.Net;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace OrbisSuiteService.Service

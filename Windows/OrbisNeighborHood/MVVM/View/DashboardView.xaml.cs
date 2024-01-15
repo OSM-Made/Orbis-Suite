@@ -84,6 +84,7 @@ namespace OrbisNeighborHood.MVVM.View
                     break;
 
                 case TargetStatusType.APIAvailable:
+                case TargetStatusType.DebuggingActive:
                     ((DashboardView)d).TargetStatusElement.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
                     ((DashboardView)d).TargetStatusElement.ToolTip = "Online & API Available";
                     break;
@@ -178,17 +179,17 @@ namespace OrbisNeighborHood.MVVM.View
 
         private void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
         {
-            Dispatcher.Invoke(() => { RefreshTargetInfo(); });
+            Dispatcher.Invoke(RefreshTargetInfo);
         }
 
         private void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
-            Dispatcher.Invoke(() => { RefreshTargetInfo(); });
+            Dispatcher.Invoke(RefreshTargetInfo);
         }
 
         private void Events_DBTouched(object? sender, DBTouchedEvent e)
         {
-            Dispatcher.Invoke(() => { RefreshTargetInfo(); });
+            Dispatcher.Invoke(RefreshTargetInfo);
         }
 
         private void RefreshTargetInfo()
@@ -199,35 +200,35 @@ namespace OrbisNeighborHood.MVVM.View
             {
                 TitleString = CurrentTarget.IsDefault ? $"★{CurrentTarget.Name}" : CurrentTarget.Name;
                 TargetName = CurrentTarget.IsDefault ? $"★{CurrentTarget.Name}" : CurrentTarget.Name;
-                TargetStatus = CurrentTarget.Info.Status;
-                FirmwareVersion = CurrentTarget.Info.SoftwareVersion;
-                SDKVersion = CurrentTarget.Info.SDKVersion;
+                TargetStatus = CurrentTarget.MutableInfo.Status;
+                FirmwareVersion = CurrentTarget.MutableInfo.SoftwareVersion;
+                SDKVersion = CurrentTarget.MutableInfo.SdkVersion;
                 IPAddress = CurrentTarget.IPAddress;
-                ConsoleName = CurrentTarget.Info.ConsoleName;
+                ConsoleName = CurrentTarget.MutableInfo.ConsoleName;
                 PayloadPort = CurrentTarget.PayloadPort.ToString();
 
                 // Storage Stats.
-                HDDFreeSpace = Utilities.BytesToString(CurrentTarget.Info.HDDFreeSpace);
-                HDDUsedSpace = Utilities.BytesToString(CurrentTarget.Info.HDDUsedSpace);
-                HDDTotalSpace = Utilities.BytesToString(CurrentTarget.Info.HDDTotalSpace);
+                HDDFreeSpace = Utilities.BytesToString(CurrentTarget.MutableInfo.HddFreeSpace);
+                HDDUsedSpace = Utilities.BytesToString(CurrentTarget.MutableInfo.HddUsedSpace);
+                HDDTotalSpace = Utilities.BytesToString(CurrentTarget.MutableInfo.HddTotalSpace);
 
-                if (CurrentTarget.Info.HDDTotalSpace != 0)
-                    StorageUsagePercentage = (int)(((double)CurrentTarget.Info.HDDUsedSpace / (double)CurrentTarget.Info.HDDTotalSpace) * 100.0);
+                if (CurrentTarget.MutableInfo.HddTotalSpace != 0)
+                    StorageUsagePercentage = (int)(((double)CurrentTarget.MutableInfo.HddUsedSpace / (double)CurrentTarget.MutableInfo.HddTotalSpace) * 100.0);
                 else
                     StorageUsagePercentage = 0;
 
                 // System Stats.
-                CPUTemp = $"{CurrentTarget.Info.CPUTemp} °C";
-                SOCTemp = $"{CurrentTarget.Info.SOCTemp} °C";
-                ThreadCount = CurrentTarget.Info.ThreadCount;
-                AverageCPUUsage = CurrentTarget.Info.AverageCPUUsage;
-                TopCore = $"Core {CurrentTarget.Info.BusyCore}";
-                RamUsage = $"{CurrentTarget.Info.RamUsage} MB";
-                VRamUsage = $"{CurrentTarget.Info.VRamUsage} MB";
+                CPUTemp = $"{CurrentTarget.MutableInfo.CpuTemp} °C";
+                SOCTemp = $"{CurrentTarget.MutableInfo.SocTemp} °C";
+                ThreadCount = CurrentTarget.MutableInfo.ThreadCount;
+                AverageCPUUsage = CurrentTarget.MutableInfo.AverageCPUUsage;
+                TopCore = $"Core {CurrentTarget.MutableInfo.BusyCore}";
+                RamUsage = $"{CurrentTarget.MutableInfo.RamUsage} MB";
+                VRamUsage = $"{CurrentTarget.MutableInfo.VideoRamUsage} MB";
 
                 try
                 {
-                    if (CurrentTarget.Info.BigAppTitleID == null || !Regex.IsMatch(CurrentTarget.Info.BigAppTitleID, @"CUSA\d{5}"))
+                    if (CurrentTarget.MutableInfo.BigAppTitleId == null || !Regex.IsMatch(CurrentTarget.MutableInfo.BigAppTitleId, @"CUSA\d{5}"))
                     {
                         TitleName = "Unknown Title";
                         TitleId = "-";
@@ -237,7 +238,7 @@ namespace OrbisNeighborHood.MVVM.View
                     }
 
                     // Get the title information from the sony tmdb.
-                    var title = new TMDB(CurrentTarget.Info.BigAppTitleID);
+                    var title = new TMDB(CurrentTarget.MutableInfo.BigAppTitleId);
 
                     // Try to parse out the names and icons.
                     var names = title.GetNames();
@@ -256,7 +257,7 @@ namespace OrbisNeighborHood.MVVM.View
                     // Set the new title info.
                     TitleName = names[0];
                     TitleId = title.GetTitleId();
-                    ProcessName = $"{CurrentTarget.Info.BigAppProcessName} ({CurrentTarget.Info.BigAppPid})";
+                    ProcessName = $"{CurrentTarget.MutableInfo.BigAppProcessName} ({CurrentTarget.MutableInfo.BigAppPid})";
                     TitleImage.Source = new BitmapImage(new Uri(icons[0]));
                 }
                 catch

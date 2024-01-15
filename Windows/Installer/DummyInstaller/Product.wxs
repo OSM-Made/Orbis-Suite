@@ -85,7 +85,9 @@
 			<Component Id="ProgramData" Guid="{DE75F40B-1D98-414A-8574-99EF6FE1A20C}" Directory="InstallProgramDataFolder" >
 
 				<!-- Since we don't have anything to copy here yet we must force the folder generation. -->
-				<CreateFolder/>
+				<CreateFolder>
+					<util:PermissionEx User="Users" GenericAll="no" GenericRead="yes" GenericWrite="yes" />
+				</CreateFolder>
 				
 				<RemoveFolder Id="RemoveProgramDataFiles" Directory="InstallProgramDataFolder" On="uninstall" />
 			</Component>

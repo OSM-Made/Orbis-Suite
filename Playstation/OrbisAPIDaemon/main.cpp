@@ -2,8 +2,6 @@
 #include "API.h"
 #include "SystemMonitor.h"
 #include "ProcessMonitor.h"
-#include <KernelInterface.h>
-#include "GoldHEN.h"
 #include <SysCoreUtil.h>
 
 int main(int argc, char** arg)

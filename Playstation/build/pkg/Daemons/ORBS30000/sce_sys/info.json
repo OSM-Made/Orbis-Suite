@@ -1,4 +1,5 @@
 {
     "name": "OrbisLib API",
-    "description": "An open source API layer made by Master Odin for debugging and remote control of your PS4 using Orbis Suite."
+    "description": "An open source API layer made by Master Odin for debugging and remote control of your PS4 using Orbis Suite.",
+    "Version": "3.00"
 }

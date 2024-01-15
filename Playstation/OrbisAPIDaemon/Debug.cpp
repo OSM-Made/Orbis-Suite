@@ -4,7 +4,7 @@
 #include "Events.h"
 #include "PtraceDefs.h"
 #include "SignalDefs.h"
-#include <KernelInterface.h>
+#include <FusionDriver.h>
 
 std::mutex Debug::DebugMtx;
 bool Debug::IsDebugging;
@@ -190,10 +190,11 @@ void Debug::RWMemory(SceNetId s, bool write)
 		}
 
 		// Write the memory we recieved using the kernel.
-		if (!ReadWriteMemory(CurrentPID, (void*)packet.address(), (void*)buffer.get(), packet.length(), true))
+		auto res = Fusion::ReadWriteMemory(CurrentPID, packet.address(), (void*)buffer.get(), packet.length(), true);
+		if (res != 0)
 		{
-			Logger::Error("Debug::RWMemory(): Failed to write memory to process %i at %llX\n", CurrentPID, packet.address());
-			SendStatePacket(s, false, "Failed to write memory to process %i at %llX.", CurrentPID, packet.address());
+			Logger::Error("Debug::RWMemory(): Failed to write memory to process %i at %llX for reason %llX.\n", CurrentPID, packet.address(), res);
+			SendStatePacket(s, false, "Failed to write memory to process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			return;
 		}
 
@@ -203,10 +204,11 @@ void Debug::RWMemory(SceNetId s, bool write)
 	else
 	{
 		// Read the memory requested using the kernel.
-		if (!ReadWriteMemory(CurrentPID, (void*)packet.address(), (void*)buffer.get(), packet.length(), false))
+		auto res = Fusion::ReadWriteMemory(CurrentPID, packet.address(), (void*)buffer.get(), packet.length(), false);
+		if (res != 0)
 		{
-			Logger::Error("Debug::RWMemory(): Failed to read memory to process %i at %llX\n", CurrentPID, packet.address());
-			SendStatePacket(s, false, "Failed to read memory to process %i at %llX.", CurrentPID, packet.address());
+			Logger::Error("Debug::RWMemory(): Failed to read memory from process %i at %llX for reason %llX.\n", CurrentPID, packet.address(), res);
+			SendStatePacket(s, false, "Failed to read memory from process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			return;
 		}
 

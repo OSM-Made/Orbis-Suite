@@ -1,4 +1,5 @@
-﻿using OrbisLib2.Targets;
+﻿using OrbisLib2.Common.Database.Types;
+using OrbisLib2.Targets;
 
 namespace OrbisLib2.General
 {
@@ -6,9 +7,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public ProcInterceptEvent(Target SendingTarget)
+        public ProcInterceptEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -16,9 +17,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public ProcContinueEvent(Target SendingTarget)
+        public ProcContinueEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -26,9 +27,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public ProcDieEvent(Target SendingTarget)
+        public ProcDieEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -38,10 +39,10 @@ namespace OrbisLib2.General
 
         public int NewProcessId { get; private set; }
 
-        public ProcAttachEvent(Target SendingTarget, int NewProcessId)
+        public ProcAttachEvent(Target sendingTarget, int newProcessId)
         {
-            this.SendingTarget = SendingTarget;
-            this.NewProcessId = NewProcessId;
+            SendingTarget = sendingTarget;
+            NewProcessId = newProcessId;
         }
     }
 
@@ -49,9 +50,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public ProcDetachEvent(Target SendingTarget)
+        public ProcDetachEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -59,9 +60,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public TargetSuspendEvent(Target SendingTarget)
+        public TargetSuspendEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -69,9 +70,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public TargetResumeEvent(Target SendingTarget)
+        public TargetResumeEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -79,9 +80,9 @@ namespace OrbisLib2.General
     {
         public Target SendingTarget { get; private set; }
 
-        public TargetShutdownEvent(Target SendingTarget)
+        public TargetShutdownEvent(Target sendingTarget)
         {
-            this.SendingTarget = SendingTarget;
+            SendingTarget = sendingTarget;
         }
     }
 
@@ -92,23 +93,17 @@ namespace OrbisLib2.General
 
     public class TargetStateChangedEvent : EventArgs
     {
-        public enum TargetState
+        public Target SendingTarget { get; private set; }
+
+        public TargetStatusType PreviousState { get; private set; }
+
+        public TargetStatusType NewState { get; private set; }
+
+        public TargetStateChangedEvent(Target sendingTarget, TargetStatusType previousState, TargetStatusType newState)
         {
-            None,
-            Available,
-            UnAvailable,
-            APIAvailable,
-            APIUnAvailable,
-        };
-
-        public TargetState State { get; private set; }
-
-        public string Name { get; private set; }
-
-        public TargetStateChangedEvent(string Name, TargetState State)
-        {
-            this.Name = Name;
-            this.State = State;
+            SendingTarget = sendingTarget;
+            PreviousState = previousState;
+            NewState = newState;
         }
     }
 
@@ -116,9 +111,9 @@ namespace OrbisLib2.General
     {
         public string Name { get; private set; }
 
-        public SelectedTargetChangedEvent(string Name) 
+        public SelectedTargetChangedEvent(string name) 
         {
-            this.Name = Name;
+            Name = name;
         }
     }
 
@@ -293,29 +288,22 @@ namespace OrbisLib2.General
         }
 
         /// <summary>
-        /// Will Fire the event for Target Availability.
+        /// Event fired when the target state has changed.
         /// </summary>
-        /// <param name="Available"></param>
-        /// <param name="TargetName"></param>
-        internal static void FireTargetAvailability(bool Available, string TargetName)
+        /// <param name="IPAddr">The sending Target Address.</param>
+        /// <param name="previousState">The last state that was recognized.</param>
+        /// <param name="newState">The new state the target is transitioning to.</param>
+        internal static void FireTargetStateChanged(string IPAddr, TargetStatusType previousState, TargetStatusType newState)
         {
-            if (Available)
-                TargetStateChanged?.Invoke(null, new TargetStateChangedEvent(TargetName, TargetStateChangedEvent.TargetState.Available));
-            else
-                TargetStateChanged?.Invoke(null, new TargetStateChangedEvent(TargetName, TargetStateChangedEvent.TargetState.UnAvailable));
-        }
+            var sendingTarget = TargetManager.GetTarget(x => x.IPAddress == IPAddr);
+            if (sendingTarget != null)
+            {
+                // Update the target's mutable status.
+                sendingTarget.MutableInfo.Status = newState;
 
-        /// <summary>
-        /// Will Fire the event for Target API Availability.
-        /// </summary>
-        /// <param name="Available"></param>
-        /// <param name="TargetName"></param>
-        internal static void FireTargetAPIAvailability(bool Available, string TargetName)
-        {
-            if (Available)
-                TargetStateChanged?.Invoke(null, new TargetStateChangedEvent(TargetName, TargetStateChangedEvent.TargetState.APIAvailable));
-            else
-                TargetStateChanged?.Invoke(null, new TargetStateChangedEvent(TargetName, TargetStateChangedEvent.TargetState.APIUnAvailable));
+                // Invoke the event if registered.
+                TargetStateChanged?.Invoke(null, new TargetStateChangedEvent(sendingTarget, previousState, newState));
+            }
         }
 
         /// <summary>

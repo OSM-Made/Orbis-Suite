@@ -85,74 +85,73 @@ namespace OrbisNeighborHood.MVVM.View.SubView
         private void ShowTitleIdLabels_Loaded(object sender, RoutedEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            Switch.IsToggled = _thisTarget.Info.ShowTitleId;
-
+            //Switch.IsToggled = _thisTarget.StaticInfo.ShowTitleId;
         }
 
         private void ShowTitleIdLabels_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _thisTarget.Info.ShowTitleId = Switch.IsToggled;
-
-            var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
-            if(currentTarget != null)
-            {
-                currentTarget.SetSettings(_thisTarget.Info.ShowTitleId, _thisTarget.Info.ShowDevkitPanel, _thisTarget.Info.ShowToolboxShortcut, _thisTarget.Info.ShowAppHome);
-            }
+            //_thisTarget.StaticInfo.ShowTitleId = Switch.IsToggled;
+            //
+            //var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
+            //if(currentTarget != null)
+            //{
+            //    currentTarget.SetSettings(_thisTarget.StaticInfo.ShowTitleId, _thisTarget.StaticInfo.ShowDevkitPanel, _thisTarget.StaticInfo.ShowToolboxShortcut, _thisTarget.StaticInfo.ShowAppHome);
+            //}
         }
 
         private void ShowDevkitPanel_Loaded(object sender, RoutedEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            Switch.IsToggled = _thisTarget.Info.ShowDevkitPanel;
+            //Switch.IsToggled = _thisTarget.StaticInfo.ShowDevkitPanel;
         }
 
         private void ShowDevkitPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _thisTarget.Info.ShowDevkitPanel = Switch.IsToggled;
-
-            var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
-            if (currentTarget != null)
-            {
-                currentTarget.SetSettings(_thisTarget.Info.ShowTitleId, _thisTarget.Info.ShowDevkitPanel, _thisTarget.Info.ShowToolboxShortcut, _thisTarget.Info.ShowAppHome);
-            }
+            //_thisTarget.StaticInfo.ShowDevkitPanel = Switch.IsToggled;
+            //
+            //var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
+            //if (currentTarget != null)
+            //{
+            //    currentTarget.SetSettings(_thisTarget.StaticInfo.ShowTitleId, _thisTarget.StaticInfo.ShowDevkitPanel, _thisTarget.StaticInfo.ShowToolboxShortcut, _thisTarget.StaticInfo.ShowAppHome);
+            //}
         }
 
         private void ShowToolboxShortcut_Loaded(object sender, RoutedEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            Switch.IsToggled = _thisTarget.Info.ShowToolboxShortcut;
+            //Switch.IsToggled = _thisTarget.StaticInfo.ShowToolboxShortcut;
         }
 
         private void ShowToolboxShortcut_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _thisTarget.Info.ShowToolboxShortcut = Switch.IsToggled;
-
-            var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
-            if (currentTarget != null)
-            {
-                currentTarget.SetSettings(_thisTarget.Info.ShowTitleId, _thisTarget.Info.ShowDevkitPanel, _thisTarget.Info.ShowToolboxShortcut, _thisTarget.Info.ShowAppHome);
-            }
+            //_thisTarget.StaticInfo.ShowToolboxShortcut = Switch.IsToggled;
+            //
+            //var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
+            //if (currentTarget != null)
+            //{
+            //    currentTarget.SetSettings(_thisTarget.StaticInfo.ShowTitleId, _thisTarget.StaticInfo.ShowDevkitPanel, _thisTarget.StaticInfo.ShowToolboxShortcut, _thisTarget.StaticInfo.ShowAppHome);
+            //}
         }
 
         private void ShowAppHome_Loaded(object sender, RoutedEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            Switch.IsToggled = _thisTarget.Info.ShowAppHome;
+            //Switch.IsToggled = _thisTarget.StaticInfo.ShowAppHome;
         }
 
         private void ShowAppHome_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var Switch = (SimpleSwitch)sender;
-            _thisTarget.Info.ShowAppHome = Switch.IsToggled;
+            //_thisTarget.StaticInfo.ShowAppHome = Switch.IsToggled;
 
-            var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
-            if (currentTarget != null)
-            {
-                currentTarget.SetSettings(_thisTarget.Info.ShowTitleId, _thisTarget.Info.ShowDevkitPanel, _thisTarget.Info.ShowToolboxShortcut, _thisTarget.Info.ShowAppHome);
-            }
+            //var currentTarget = TargetManager.GetTarget(_thisTarget.Name);
+            //if (currentTarget != null)
+            //{
+            //    currentTarget.SetSettings(_thisTarget.StaticInfo.ShowTitleId, _thisTarget.StaticInfo.ShowDevkitPanel, _thisTarget.StaticInfo.ShowToolboxShortcut, _thisTarget.StaticInfo.ShowAppHome);
+            //}
         }
 
         #endregion

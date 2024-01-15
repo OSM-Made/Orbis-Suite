@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Library.h"
 #include "Debug.h"
-#include <KernelInterface.h>
-#include <GoldHEN.h>
+#include <FusionDriver.h>
+#include <ShellCode.h>
 
 void Library::LoadLibrary(SceNetId s)
 {
@@ -12,12 +12,8 @@ void Library::LoadLibrary(SceNetId s)
 	SPRXPacket packet;
 	RecieveProtoBuf(s, &packet);
 
-	// Get Process name.
-	char processName[32];
-	sceKernelGetProcessName(Debug::CurrentPID, processName);
-
 	// Load the library.
-	auto handle = sys_sdk_proc_prx_load(processName, (char*)packet.path().c_str());
+	auto handle = Fusion::LoadSprx(Debug::CurrentPID, packet.path().c_str());
 
 	// Once I can migrate from hen I can error handle here better.
 	if (handle <= 0)
@@ -40,12 +36,8 @@ void Library::UnloadLibrary(SceNetId s)
 	SPRXPacket packet;
 	RecieveProtoBuf(s, &packet);
 
-	// Get Process name.
-	char processName[32];
-	sceKernelGetProcessName(Debug::CurrentPID, processName);
-
 	// Unload the library.
-	auto result = sys_sdk_proc_prx_unload(processName, packet.handle());
+	auto result = Fusion::UnloadSprx(Debug::CurrentPID, packet.handle());
 
 	// Once I can migrate from hen I can error handle here better.
 	if (result != 0)
@@ -70,7 +62,7 @@ void Library::ReloadLibrary(SceNetId s)
 	sceKernelGetProcessName(Debug::CurrentPID, processName);
 
 	// Unload the library.
-	auto result = sys_sdk_proc_prx_unload(processName, packet.handle());
+	auto result = Fusion::UnloadSprx(Debug::CurrentPID, packet.handle());
 	if (result != 0)
 	{
 		Logger::Error("Failed to unload %d\n", packet.handle());
@@ -81,7 +73,7 @@ void Library::ReloadLibrary(SceNetId s)
 	}
 
 	// Load the library.
-	auto handle = sys_sdk_proc_prx_load(processName, (char*)packet.path().c_str());
+	auto handle = Fusion::LoadSprx(Debug::CurrentPID, packet.path().c_str());
 
 	// Once I can migrate from hen I can error handle here better.
 	if (handle <= 0)
@@ -105,7 +97,7 @@ void Library::GetLibraryList(SceNetId s)
 		return;
 
 	auto libraries = std::make_unique<OrbisLibraryInfo[]>(256);
-	int actualCount = GetLibraries(Debug::CurrentPID, libraries.get(), 256);
+	int actualCount = Fusion::GetLibraryList(Debug::CurrentPID, libraries.get(), 256);
 
 	// Populate the vector list.
 	std::vector<LibraryInfoPacket> vectorList;

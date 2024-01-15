@@ -10,6 +10,7 @@ using OrbisLib2.Common.Database.Types;
 using OrbisLib2.Common.API;
 using OrbisLib2.Targets;
 using OrbisLib2.Dialog;
+using OrbisLib2.General;
 
 namespace OrbisNeighborHood.Controls
 {
@@ -22,28 +23,30 @@ namespace OrbisNeighborHood.Controls
 
         public event EventHandler<RoutedEventArgs>? TargetChanged;
 
-        public TargetPanel(string TargetName)
+        public TargetPanel(string targetName)
         {
             InitializeComponent();
 
-            _thisTarget = TargetManager.GetTarget(TargetName);
+            _thisTarget = TargetManager.GetTarget(targetName);
             if(_thisTarget != null )
             {
-                this.TargetName = _thisTarget.Name;
-                TargetStatus = _thisTarget.Info.Status;
-                ConsoleModel = _thisTarget.Info.ModelType;
+                TargetName = _thisTarget.Name;
+                TargetStatus = _thisTarget.MutableInfo.Status;
+                ConsoleModel = _thisTarget.StaticInfo.ModelType;
                 IsDefault = _thisTarget.IsDefault;
-                FirmwareVersion = _thisTarget.Info.SoftwareVersion;
-                SDKVersion = _thisTarget.Info.SDKVersion;
+                FirmwareVersion = _thisTarget.MutableInfo.SoftwareVersion;
+                SDKVersion = _thisTarget.MutableInfo.SdkVersion;
                 IPAddress = _thisTarget.IPAddress;
-                ConsoleName = _thisTarget.Info.ConsoleName;
+                ConsoleName = _thisTarget.MutableInfo.ConsoleName;
                 PayloadPort = _thisTarget.PayloadPort.ToString();
 
-                LocateTarget.IsEnabled = _thisTarget.Info.IsAPIAvailable;
-                SendPayload.IsEnabled = _thisTarget.Info.IsAvailable;
-                RestartTarget.IsEnabled = _thisTarget.Info.IsAPIAvailable;
-                ShutdownTarget.IsEnabled = _thisTarget.Info.IsAPIAvailable;
-                SuspendTarget.IsEnabled = _thisTarget.Info.IsAPIAvailable;
+                var isApiAvailable = _thisTarget.MutableInfo.Status >= TargetStatusType.APIAvailable;
+                var isNetworkAvailable = _thisTarget.MutableInfo.Status == TargetStatusType.Online || isApiAvailable;
+                LocateTarget.IsEnabled = isApiAvailable;
+                SendPayload.IsEnabled = isNetworkAvailable;
+                RestartTarget.IsEnabled = isApiAvailable;
+                ShutdownTarget.IsEnabled = isApiAvailable;
+                SuspendTarget.IsEnabled = isApiAvailable;
             }
             else
             {
@@ -86,6 +89,7 @@ namespace OrbisNeighborHood.Controls
                     break;
 
                 case TargetStatusType.APIAvailable:
+                case TargetStatusType.DebuggingActive:
                     ((TargetPanel)d).TargetStatusElement.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
                     ((TargetPanel)d).TargetStatusElement.ToolTip = "Online & API Available";
                     break;

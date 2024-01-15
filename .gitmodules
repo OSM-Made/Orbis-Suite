@@ -35,3 +35,6 @@
 [submodule "External/SimpleUI"]
 	path = External/SimpleUI
 	url = https://github.com/OSM-Made/SimpleUI
+[submodule "Playstation/External/Fusion"]
+	path = Playstation/External/Fusion
+	url = https://github.com/OSM-Made/Fusion-2.0

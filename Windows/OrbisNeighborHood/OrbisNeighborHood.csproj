@@ -212,7 +212,6 @@
    <PackageProjectUrl>https://github.com/OSM-Made/Orbis-Suite-3.0</PackageProjectUrl>
    <RepositoryUrl>https://github.com/OSM-Made/Orbis-Suite-3.0</RepositoryUrl>
    <AssemblyVersion>3.0.0</AssemblyVersion>
-   <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

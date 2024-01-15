@@ -6,9 +6,10 @@ using System.Windows.Controls;
 using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using OrbisLib2.Targets;
 using OrbisLib2.General;
+using OrbisLib2.Common.Database.Types;
+using OrbisLib2.Common;
 
 namespace OrbisNeighborHood.MVVM.View
 {
@@ -17,6 +18,8 @@ namespace OrbisNeighborHood.MVVM.View
     /// </summary>
     public partial class AppListView : UserControl
     {
+        private static readonly string AppCachePath = Path.Combine(Config.OrbisPath, @"AppCache\");
+
         private static readonly List<string> TitleIdExlusionList = new List<string>()
         {
             "NPXS20108",
@@ -131,7 +134,7 @@ namespace OrbisNeighborHood.MVVM.View
                     Parallel.ForEach(appList, async app =>
                     {
                         var currentTarget = TargetManager.SelectedTarget;
-                        string appCachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"Orbis Suite\AppCache\");
+                        
 
                         // Make sure the titleId format is correct. Helps weed out bad entries and folders.
                         if (!Regex.IsMatch(app.TitleId, @"[a-zA-Z]{4}\d{5}"))
@@ -154,7 +157,7 @@ namespace OrbisNeighborHood.MVVM.View
                             return;
 
                         // Directory to cache stuff for app.
-                        string currentAppPath = Path.Combine(appCachePath, app.TitleId);
+                        string currentAppPath = Path.Combine(AppCachePath, app.TitleId);
 
                         // Create Directory for current app.
                         if (!Directory.Exists(currentAppPath))
@@ -163,7 +166,7 @@ namespace OrbisNeighborHood.MVVM.View
                         }
 
                         // Cache icon0.png for app if we have not already.
-                        if (!File.Exists(Path.Combine(currentAppPath, "icon0.png")) && !string.IsNullOrEmpty(app.MetaDataPath) && currentTarget.Info.IsAPIAvailable)
+                        if (!File.Exists(Path.Combine(currentAppPath, "icon0.png")) && !string.IsNullOrEmpty(app.MetaDataPath) && currentTarget.MutableInfo.Status >= TargetStatusType.APIAvailable)
                         {
                             var file = await currentTarget.GetFile($"{app.MetaDataPath}/icon0.png");
                             if (file != null && file.Length > 0) 

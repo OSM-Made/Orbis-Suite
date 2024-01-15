@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OrbisLib2.Common;
 using System;
 using System.Windows;
 
@@ -33,7 +34,7 @@ namespace OrbisLibraryManager
         protected override void OnStartup(StartupEventArgs e)
         {
             var logger = _serviceProvider.GetService<ILoggerFactory>()
-            .AddFile(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Orbis Suite\Logging\OrbisLibraryManagerLog.txt")
+            .AddFile(Config.OrbisPath + @"\Logging\OrbisLibraryManagerLog.txt")
             .CreateLogger<MainWindow>();
 
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();

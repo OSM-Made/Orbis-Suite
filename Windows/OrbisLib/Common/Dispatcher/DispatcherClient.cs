@@ -67,17 +67,17 @@ namespace OrbisLib2.Common.Dispatcher
                     Events.RaiseTargetShutdownEvent(e.Message.SenderIPAddress);
                     break;
 
-                case ForwardPacket.PacketType.TargetAvailability:
-                    Events.FireTargetAvailability(e.Message.TargetAvailability.Available, e.Message.TargetAvailability.Name);
-                    break;
-
-                case ForwardPacket.PacketType.TargetAPIAvailability:
-                    Events.FireTargetAPIAvailability(e.Message.TargetAPIAvailability.Available, e.Message.TargetAPIAvailability.Name);
+                case ForwardPacket.PacketType.TargetStateChanged:
+                    Events.FireTargetStateChanged(e.Message.SenderIPAddress, e.Message.TargetStatus.PreviousState, e.Message.TargetStatus.NewState);
                     break;
 
                 // Misc
                 case ForwardPacket.PacketType.DBTouched:
                     Events.FireDBTouched();
+                    break;
+
+                case ForwardPacket.PacketType.MutableInfoUpdated:
+                    // TODO: Mutable Info
                     break;
             }
         }

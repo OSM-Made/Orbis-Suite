@@ -1,4 +1,5 @@
 ﻿using OrbisLib2.Common.Database;
+using OrbisLib2.Common.Database.Types;
 using OrbisLib2.Common.Dispatcher;
 using OrbisLib2.Common.Helpers;
 using OrbisLib2.Targets;
@@ -8,64 +9,121 @@ namespace OrbisSuiteService.Service
     public class TargetWatcher
     {
         private Dispatcher _dispatcher;
-        private Task _TargetWatcherTask;
-        private CancellationToken _TargetWatcherCancellationToken;
 
         public TargetWatcher(Dispatcher dispatcher)
         {
             _dispatcher = dispatcher;
-            _TargetWatcherTask = Task.Run(() => DoTargetWatcher());
+            Task.Run(() => DoTargetWatcher());
         }
+
         private async Task DoTargetWatcher()
         {
             while (true)
             {
                 if(TargetManager.Targets.Count <= 0)
                 {
-                    await Task.Delay(1000, _TargetWatcherCancellationToken);
+                    await Task.Delay(1000);
                 }
 
-                Parallel.ForEach(SavedTarget.GetTargetList(), Target =>
+                Parallel.ForEach(TargetManager.Targets, async Target =>
                 {
-                    var oldAvailable = Target.Info.IsAvailable;
-                    var OldAPIAvailable = Target.Info.IsAPIAvailable;
+                    var previousState = Target.MutableInfo.Status;
+                    var pingable = Sockets.PingHost(Target.IPAddress);
+                    var apiPingable = Sockets.TestTcpConnection(Target.IPAddress, Settings.CreateInstance().APIPort);
 
-                    if(Sockets.PingHost(Target.IPAddress))
+                    if (!pingable && !apiPingable)
                     {
-                        var detail = Target.Info;
-                        detail.IsAvailable = true;
+                        Target.MutableInfo.UpdateStatus(TargetStatusType.Offline);
+                    }
+                    else if (pingable && !apiPingable)
+                    {
+                        Target.MutableInfo.UpdateStatus(TargetStatusType.Online);
+                    }
+                    else if (apiPingable)
+                    {
+                        if (await Target.Debug.IsDebugging())
+                        {
+                            Target.MutableInfo.UpdateStatus(TargetStatusType.DebuggingActive);
+                        }
+                        else
+                        {
+                            Target.MutableInfo.UpdateStatus(TargetStatusType.APIAvailable);
+                        }
                     }
 
-                    Target.Info.IsAvailable = Sockets.PingHost(Target.IPAddress);
-                    Target.Info.IsAPIAvailable = Sockets.TestTcpConnection(Target.IPAddress, Settings.CreateInstance().APIPort);
-                    Target.Info.Save();
+                    // Depending on our current state check for a state change.
+                    //switch (Target.MutableInfo.Status)
+                    //{
+                    //    case TargetStatusType.None:
+                    //    case TargetStatusType.Offline:
+                    //
+                    //        if ()
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Online);
+                    //        else
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Offline);
+                    //
+                    //        break;
+                    //
+                    //    case TargetStatusType.Online:
+                    //
+                    //        if (!Sockets.PingHost(Target.IPAddress))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Offline);
+                    //
+                    //        if (Sockets.TestTcpConnection(Target.IPAddress, Settings.CreateInstance().APIPort))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.APIAvailable);
+                    //
+                    //        break;
+                    //
+                    //    case TargetStatusType.APIAvailable:
+                    //
+                    //        if (!Sockets.PingHost(Target.IPAddress))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Offline);
+                    //
+                    //        if (!Sockets.TestTcpConnection(Target.IPAddress, Settings.CreateInstance().APIPort))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Online);
+                    //
+                    //        if (await Target.Debug.IsDebugging())
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.DebuggingActive);
+                    //
+                    //        break;
+                    //
+                    //    case TargetStatusType.DebuggingActive:
+                    //
+                    //        if (!Sockets.PingHost(Target.IPAddress))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Offline);
+                    //
+                    //        if (!Sockets.TestTcpConnection(Target.IPAddress, Settings.CreateInstance().APIPort))
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.Online);
+                    //
+                    //        if (!await Target.Debug.IsDebugging())
+                    //            Target.MutableInfo.UpdateStatus(TargetStatusType.APIAvailable);
+                    //
+                    //        break;
+                    //
+                    //}
 
-                    // Update the target info if the API is up.
-                    TargetManager.UpdateTargetInfo(Target);
-
-                    // Forward Target Availability.
-                    if (oldAvailable != Target.Info.IsAvailable)
+                    // A state change occured fire the event!
+                    if (previousState != Target.MutableInfo.Status)
                     {
-                        var Packet = new ForwardPacket(ForwardPacket.PacketType.TargetAvailability, Target.IPAddress);
-                        Packet.TargetAvailability.Available = Target.Info.IsAvailable;
-                        Packet.TargetAvailability.Name = Target.Name;
-                        _dispatcher.PublishEvent(Packet);
+                        var statePacket = new ForwardPacket(ForwardPacket.PacketType.TargetStateChanged, Target.IPAddress);
+                        statePacket.TargetStatus.PreviousState = previousState;
+                        statePacket.TargetStatus.NewState = Target.MutableInfo.Status;
+                        _dispatcher.PublishEvent(statePacket);
                     }
 
-                    // Forward API Availability.
-                    if (OldAPIAvailable != Target.Info.IsAPIAvailable)
+                    // Update Mutable Information
+                    var result = await Target.UpdateMutableInfo();
+                    if (result.Succeeded)
                     {
-                        var Packet = new ForwardPacket(ForwardPacket.PacketType.TargetAPIAvailability, Target.IPAddress);
-                        Packet.TargetAPIAvailability.Available = Target.Info.IsAPIAvailable;
-                        Packet.TargetAPIAvailability.Name = Target.Name;
-                        _dispatcher.PublishEvent(Packet);
+                        var mutableInfoPacket = new ForwardPacket(ForwardPacket.PacketType.MutableInfoUpdated, Target.IPAddress);
+                        _dispatcher.PublishEvent(mutableInfoPacket);
                     }
+
+                    // Update Static Information if not set.
+                    await Target.UpdateStaticInfo();
                 });
 
-                await Task.Delay(500, _TargetWatcherCancellationToken);
-
-                if (_TargetWatcherCancellationToken.IsCancellationRequested)
-                    break;
+                await Task.Delay(500);
             }
         }
     }

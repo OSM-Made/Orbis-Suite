@@ -1,4 +1,6 @@
-﻿namespace OrbisLib2.Common.Dispatcher
+﻿using OrbisLib2.Common.Database.Types;
+
+namespace OrbisLib2.Common.Dispatcher
 {
     [Serializable]
     internal sealed class DispatcherClientPacket
@@ -53,11 +55,11 @@
     }
 
     [Serializable]
-    public class TargetAvailability
+    public class TargetStatus
     {
-        public bool Available { get; set; }
+        public TargetStatusType PreviousState { get; set; }
 
-        public string? Name { get; set; }
+        public TargetStatusType NewState { get; set; }
     }
 
     [Serializable]
@@ -82,11 +84,11 @@
             TargetSuspend,
             TargetResume,
             TargetShutdown,
-            TargetAvailability,
-            TargetAPIAvailability,
+            TargetStateChanged,
 
             // Misc
             DBTouched,
+            MutableInfoUpdated,
         };
 
         /// <summary>
@@ -112,9 +114,7 @@
 
         public Break? Break { get; set; }
 
-        public TargetAvailability? TargetAvailability { get; set; }
-
-        public TargetAvailability? TargetAPIAvailability { get; set; }
+        public TargetStatus? TargetStatus { get; set; }
 
         public ForwardPacket(PacketType Type, string SenderIPAddress)
         {
@@ -126,8 +126,7 @@
             Print = new Print();
             SerialCom = new SerialCom();
             Break = new Break();
-            TargetAvailability = new TargetAvailability();
-            TargetAPIAvailability = new TargetAvailability();
+            TargetStatus = new TargetStatus();
         }
     }
 }

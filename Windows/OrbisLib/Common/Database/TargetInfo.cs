@@ -4,8 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace OrbisLib2.Common.Database
 {
-    [Table("TargetInfo")]
-    public class TargetInfo
+    public class StaticInfo
     {
         [PrimaryKey, AutoIncrement, NotNull]
         public int Id { get; set; }
@@ -14,76 +13,15 @@ namespace OrbisLib2.Common.Database
         public int TargetId { get; set; }
 
         /// <summary>
-        /// Will be true if a tcp connection can be achieved on the saved IP Address.
+        /// If the static data has been fetched.
         /// </summary>
-        [NotNull]
-        [Column("Available")]
-        public bool IsAvailable { get; set; } = false;
-
-        /// <summary>
-        /// Will be true if the Orbis Suite API is running on the target.
-        /// </summary>
-        [NotNull]
-        [Column("APIAvailable")]
-        public bool IsAPIAvailable { get; set; } = false;
-
-        /// <summary>
-        /// The power/API status of the target.
-        /// </summary>
-        public TargetStatusType Status
-        {
-            get
-            {
-                if (IsAPIAvailable)
-                    return TargetStatusType.APIAvailable;
-                else if (IsAvailable)
-                    return TargetStatusType.Online;
-                else
-                    return TargetStatusType.Offline;
-            }
-        }
-
-        /// <summary>
-        /// The SDK Version of the software installed on the target.
-        /// </summary>
-        [NotNull]
-        public string SDKVersion { get; set; } = "-";
-
-        /// <summary>
-        /// The full software version installed on the target.
-        /// </summary>
-        [NotNull]
-        public string SoftwareVersion { get; set; } = "-";
+        public bool IsSet { get; set; }
 
         /// <summary>
         /// The software version first installed on the target when sold.
         /// </summary>
         [NotNull]
         public string FactorySoftwareVersion { get; set; } = "-";
-
-        /// <summary>
-        /// The process index of the current big app.
-        /// </summary>
-        [NotNull]
-        public int BigAppPid { get; set; } = -1;
-
-        /// <summary>
-        /// The process name of the current big app.
-        /// </summary>
-        [NotNull]
-        public string BigAppProcessName { get; set; } = "-";
-
-        /// <summary>
-        /// The current big game titleId running on the target.
-        /// </summary>
-        [NotNull]
-        public string BigAppTitleID { get; set; } = "-";
-
-        /// <summary>
-        /// The name of the target as set on the target.
-        /// </summary>
-        [NotNull]
-        public string ConsoleName { get; set; } = "-";
 
         /// <summary>
         /// The serial number of the targets motherboard.
@@ -146,18 +84,6 @@ namespace OrbisLib2.Common.Database
         public string MACAddressWIFI { get; set; } = "-";
 
         /// <summary>
-        /// Will be true if the UART flag is set in the targets flash.
-        /// </summary>
-        [NotNull]
-        public bool UART { get; set; } = false;
-
-        /// <summary>
-        /// Will return true if the IDUMode flag is set int he targets flash.
-        /// </summary>
-        [NotNull]
-        public bool IDUMode { get; set; } = false;
-
-        /// <summary>
         /// A unique string used to identify the target.
         /// </summary>
         [NotNull]
@@ -176,103 +102,6 @@ namespace OrbisLib2.Common.Database
         public ConsoleType ConsoleType { get; set; } = 0;
 
         /// <summary>
-        /// Will be true if the Orbis Suite Debugger is attached to a process.
-        /// </summary>
-        [NotNull]
-        [Column("Attached")]
-        public bool IsAttached { get; set; } = false;
-
-        /// <summary>
-        /// The current processId being debugged by the OrbisSuite Debugger.
-        /// </summary>
-        [NotNull]
-        public int CurrentProcessId { get; set; } = 0;
-
-
-        /// <summary>
-        /// The current foreground account identifier.
-        /// </summary>
-        [NotNull]
-        public int ForegroundAccountId { get; set; } = 0;
-
-        /// <summary>
-        /// The used space on the targets hard disk.
-        /// </summary>
-        [NotNull]
-        public long HDDUsedSpace { get; set; } = 0;
-
-        /// <summary>
-        /// The free space on the targets hard disk.
-        /// </summary>
-        [NotNull]
-        public long HDDFreeSpace { get; set; } = 0;
-
-        /// <summary>
-        /// The usable size of the targets hard disk.
-        /// </summary>
-        [NotNull]
-        public long HDDTotalSpace { get; set; } = 0;
-
-        /// <summary>
-        /// The current temperature of the CPU.
-        /// </summary>
-        public int CPUTemp { get; set; } = 0;
-
-        /// <summary>
-        /// The current tempurature of the SOC.
-        /// </summary>
-        public int SOCTemp { get; set; } = 0;
-
-        /// <summary>
-        /// The current thread count.
-        /// </summary>
-        public int ThreadCount { get; set; } = 0;
-
-        /// <summary>
-        /// The current average cpu usage.
-        /// </summary>
-        public float AverageCPUUsage { get; set; } = 0.0f;
-
-        /// <summary>
-        /// The current core that is the most busy.
-        /// </summary>
-        public int BusyCore { get; set; } = 0;
-
-        /// <summary>
-        /// The current system ram usage.
-        /// </summary>
-        public int RamUsage { get; set; } = 0;
-
-        /// <summary>
-        /// The current video ram usage.
-        /// </summary>
-        public int VRamUsage { get; set; } = 0;
-
-        /// <summary>
-        /// Shows the Title number of the games on the home screen of this target.
-        /// </summary>
-        [NotNull]
-        public bool ShowTitleId { get; set; } = false;
-
-        /// <summary>
-        /// Shows the devkit information display panel that will show some information about the target like the IP Address.
-        /// </summary>
-        [NotNull]
-        public bool ShowDevkitPanel { get; set; } = false;
-
-        /// <summary>
-        /// Shows a shortcut on the Home screen that can be used to quickly access the Orbis Toolbox menu.
-        /// </summary>
-        [NotNull]
-        public bool ShowToolboxShortcut { get; set; } = false;
-
-        /// <summary>
-        /// Shows the '★APP_HOME' on the home screen that can be used to quickly launch home brew to debug it with out a pkg.
-        /// </summary>
-        [NotNull]
-        public bool ShowAppHome { get; set; } = false;
-
-        /// <summary>
         /// Saves the current information about the target to the database.
         /// </summary>
         /// <returns>Returns true if any rows were effected.</returns>
@@ -281,7 +110,7 @@ namespace OrbisLib2.Common.Database
             var db = new SQLiteConnection(Config.DataBasePath);
 
             // Create the table if it doesn't exist already.
-            db.CreateTable<TargetInfo>();
+            db.CreateTable<StaticInfo>();
 
             var result = db.Update(this);
             db.Close();

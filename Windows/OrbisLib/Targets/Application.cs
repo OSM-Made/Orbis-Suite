@@ -1,4 +1,5 @@
-﻿using OrbisLib2.Common.API;
+﻿using OrbisLib2.Common;
+using OrbisLib2.Common.API;
 using OrbisLib2.Common.Database.App;
 using OrbisLib2.Common.Helpers;
 using System.IO;
@@ -25,19 +26,19 @@ namespace OrbisLib2.Targets
 
         public string GetAppDBPath()
         {
-            var foregroundAccountId = Target.Info.ForegroundAccountId;
+            var foregroundAccountId = Target.MutableInfo.ForegroundAccountId;
             if (foregroundAccountId <= 0)
                 return string.Empty;
 
             // Create the db cache folder if it does not exist.
-            var dbCachePath = @$"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\Orbis Suite\DBCache";
+            var dbCachePath = @$"{Config.OrbisPath}\DBCache";
             if (!Directory.Exists(dbCachePath))
             {
                 Directory.CreateDirectory(dbCachePath);
             }
 
             // create a folder for this target if it does not exist yet.
-            var targetFolder = @$"{dbCachePath}\{Target.Info.MACAddressLAN.Replace(":", "-")}";
+            var targetFolder = @$"{dbCachePath}\{Target.StaticInfo.MACAddressLAN.Replace(":", "-")}";
             if (!Directory.Exists(targetFolder))
             {
                 Directory.CreateDirectory(targetFolder);
@@ -121,7 +122,7 @@ namespace OrbisLib2.Targets
                 return new List<AppBrowse>();
             }
 
-            return AppBrowse.GetAppBrowseList(databasePath, Target.Info.ForegroundAccountId);
+            return AppBrowse.GetAppBrowseList(databasePath, Target.MutableInfo.ForegroundAccountId);
         }
 
         public string GetAppInfoString(string TitleId, string Key)

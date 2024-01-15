@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using OrbisLib2.Common.Database;
+using OrbisLib2.Common.Database.Types;
 using OrbisLib2.Common.Helpers;
 using OrbisLib2.Targets;
 using System.Net.Sockets;
@@ -22,7 +23,7 @@ namespace OrbisLib2.Common.API
         public static async Task<ResultState> SendCommand(Target DesiredTarget, int TimeOut, APICommand Command, Func<Socket, Task<ResultState>>? AdditionalCommunications = null)
         {
             // If the API isnt up were just giving up here.
-            if(DesiredTarget.Info.IsAPIAvailable == false)
+            if(DesiredTarget.MutableInfo.Status < TargetStatusType.APIAvailable)
                 return new ResultState { Succeeded = false, ErrorMessage = $"The API is not available on the selected target {DesiredTarget.Name} ({DesiredTarget.IPAddress})." };
 
             try 

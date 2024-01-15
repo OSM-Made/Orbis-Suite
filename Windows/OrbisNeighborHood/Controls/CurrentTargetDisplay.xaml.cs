@@ -50,7 +50,7 @@ namespace OrbisNeighborHood.Controls
 
             if (CurrentTarget != null)
             {
-                switch (CurrentTarget.Info.Status)
+                switch (CurrentTarget.MutableInfo.Status)
                 {
                     case TargetStatusType.Offline:
                         CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
@@ -62,6 +62,7 @@ namespace OrbisNeighborHood.Controls
                         CurrentTargetState.ToolTip = "Online";
                         break;
 
+                    case TargetStatusType.DebuggingActive:
                     case TargetStatusType.APIAvailable:
                         CurrentTargetState.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
                         CurrentTargetState.ToolTip = "Online & API Available";
@@ -77,7 +78,7 @@ namespace OrbisNeighborHood.Controls
 
                 try
                 {
-                    if (CurrentTarget.Info.BigAppTitleID == null || !Regex.IsMatch(CurrentTarget.Info.BigAppTitleID, @"CUSA\d{5}"))
+                    if (CurrentTarget.MutableInfo.BigAppTitleId == null || !Regex.IsMatch(CurrentTarget.MutableInfo.BigAppTitleId, @"CUSA\d{5}"))
                     {
                         CurrentTargetTitleName.Text = "Unknown Title";
                         CurrentTargetTitleId.Text = "-";
@@ -86,7 +87,7 @@ namespace OrbisNeighborHood.Controls
                     }
 
                     // Get the title information from the sony tmdb.
-                    var title = new TMDB(CurrentTarget.Info.BigAppTitleID);
+                    var title = new TMDB(CurrentTarget.MutableInfo.BigAppTitleId);
 
                     // Try to parse out the names and icons.
                     var names = title.GetNames();

@@ -1,5 +1,4 @@
-﻿using OrbisLib2.Common.Database.Types;
-using OrbisLib2.Common.Dispatcher;
+﻿using OrbisLib2.Common.Dispatcher;
 using OrbisLib2.General;
 using OrbisLib2.Targets;
 using SimpleUI.Controls;
@@ -9,6 +8,7 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Windows.Threading;
+using OrbisLib2.Common.Database.Types;
 
 namespace OrbisLibraryManager
 {
@@ -18,6 +18,8 @@ namespace OrbisLibraryManager
     public partial class MainWindow : SimpleWindow
     {
         private ILogger _logger;
+        private TargetStatusType _currentState = TargetStatusType.None;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace OrbisLibraryManager
             {
                 if (TargetManager.SelectedTarget != null)
                 {
-                    await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
+                    await UpdateProgramState();
                 }
             });
 
@@ -104,90 +106,153 @@ namespace OrbisLibraryManager
 
         #region Events
 
-        private async Task EnableProgram(bool attached)
+        private async Task UpdateProgramState()
         {
             var currentTarget = TargetManager.SelectedTarget;
-            if (currentTarget.Info.Status != TargetStatusType.APIAvailable)
-                attached = false;
 
-            Dispatcher.Invoke(() =>
-            {
-                LoadPRX.IsEnabled = attached;
-                UnloadPRX.IsEnabled = attached;
-                ReloadPRX.IsEnabled = attached;
+            // Abort if there is no saved targets.
+            if (currentTarget == null)
+                return;
 
-                RefreshLibraries.IsEnabled = attached;
-                UnloadLibrary.IsEnabled = attached;
-                ReloadLibrary.IsEnabled = attached;
-            });
+            // If the current program stat matches the target state we do nothing here.
+            var newTargetState = currentTarget.MutableInfo.Status;
+            if (_currentState == newTargetState)
+                return;
 
-            if (attached) 
+            _logger.LogInformation($"Target state has changed from {_currentState} to {newTargetState}.");
+
+            // Update the targets state to reflect the new changes.
+            _currentState = newTargetState;
+
+            // Change the program for the new state of the target.
+            switch (newTargetState)
             {
-                await RefreshLibraryList();
-            }
-            else
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    LibraryList.ItemsSource = null;
-                });
+                default:
+                    break;
+
+                case TargetStatusType.Offline:
+                case TargetStatusType.Online:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoadPRX.IsEnabled = false;
+                        UnloadPRX.IsEnabled = false;
+                        ReloadPRX.IsEnabled = false;
+
+                        RefreshLibraries.IsEnabled = false;
+                        UnloadLibrary.IsEnabled = false;
+                        ReloadLibrary.IsEnabled = false;
+                    });
+
+                    break;
+
+                case TargetStatusType.APIAvailable:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoadPRX.IsEnabled = false;
+                        UnloadPRX.IsEnabled = false;
+                        ReloadPRX.IsEnabled = false;
+
+                        RefreshLibraries.IsEnabled = false;
+                        UnloadLibrary.IsEnabled = false;
+                        ReloadLibrary.IsEnabled = false;
+
+                        LibraryList.ItemsSource = null;
+                    });
+
+                    break;
+
+                case TargetStatusType.DebuggingActive:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoadPRX.IsEnabled = true;
+                        UnloadPRX.IsEnabled = true;
+                        ReloadPRX.IsEnabled = true;
+
+                        RefreshLibraries.IsEnabled = true;
+                        UnloadLibrary.IsEnabled = true;
+                        ReloadLibrary.IsEnabled = true;
+                    });
+
+                    await RefreshLibraryList();
+
+                    break;
             }
         }
 
         private async void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
-            if (e.Name != TargetManager.SelectedTarget.Name)
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
                 return;
 
-            switch (e.State)
-            {
-                case TargetStateChangedEvent.TargetState.APIAvailable:
-                    await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
-                    break;
-                case TargetStateChangedEvent.TargetState.APIUnAvailable:
-                    await EnableProgram(false);
-                    break;
-            }
+            // Only accept events for the selected target.
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
+                return;
+
+            await UpdateProgramState();
         }
 
         private async void Events_ProcDie(object? sender, ProcDieEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
-            await EnableProgram(false);
+            await UpdateProgramState();
         }
 
         private async void Events_ProcDetach(object? sender, ProcDetachEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
-            await EnableProgram(false);
+            await UpdateProgramState();
         }
 
         private async void Events_ProcAttach(object? sender, ProcAttachEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Enable the attached options.
-            await EnableProgram(true);
+            await UpdateProgramState();
         }
 
         private async void Events_DBTouched(object? sender, DBTouchedEvent e)
         {
-            await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
+            await UpdateProgramState();
         }
 
         private async void Events_SelectedTargetChanged(object? sender, SelectedTargetChangedEvent e)
         {
-            await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
+            await UpdateProgramState();
         }
 
         #endregion

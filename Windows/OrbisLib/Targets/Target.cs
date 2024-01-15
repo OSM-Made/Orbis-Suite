@@ -1,5 +1,6 @@
 ﻿using OrbisLib2.Common.API;
 using OrbisLib2.Common.Database;
+using OrbisLib2.Common.Database.Types;
 using OrbisLib2.Common.Helpers;
 using System.Net.Sockets;
 
@@ -69,11 +70,19 @@ namespace OrbisLib2.Targets
         }
 
 
-        public TargetInfo Info
+        public StaticInfo StaticInfo
         {
             get
             {
-                return SavedTarget.Info;
+                return SavedTarget.StaticInfo;
+            }
+        }
+
+        public MutableInfo MutableInfo
+        {
+            get
+            {
+                return SavedTarget.MutableInfo;
             }
         }
 
@@ -239,6 +248,106 @@ namespace OrbisLib2.Targets
             {
                 return await API.SendNextPacket(Sock, new FilePacket { FilePath = filePath });
             });
+        }
+
+        public async Task<ResultState> UpdateMutableInfo()
+        {
+            // TODO: Make two Info cmds ApiGetMutableInfo & ApiGetStaticInfo
+            var result = await API.SendCommand(this, 5, APICommand.ApiTargetInfo, async (sock) =>
+            {
+                var rawPacket = await sock.ReceiveSizeAsync();
+                var Packet = TargetInfoPacket.Parser.ParseFrom(rawPacket);
+
+                if (Packet == null)
+                {
+                    return new ResultState { Succeeded = false, ErrorMessage = $"Protobuf packet was null." };
+                }
+
+                var tempMutableInfo = MutableInfo;
+                tempMutableInfo.SdkVersion = $"{(Packet.SDKVersion >> 24 & 0xFF).ToString("X1")}.{(Packet.SDKVersion >> 12 & 0xFFF).ToString("X3")}.{(Packet.SDKVersion & 0xFFF).ToString("X3")}";
+                tempMutableInfo.SoftwareVersion = $"{(Packet.SoftwareVersion >> 24 & 0xFF).ToString("X1")}.{(Packet.SoftwareVersion >> 16 & 0xFF).ToString("X2")}";
+                tempMutableInfo.BigAppPid = Packet.BigApp.Pid;
+                tempMutableInfo.BigAppProcessName = Packet.BigApp.Name;
+                tempMutableInfo.BigAppTitleId = Packet.BigApp.TitleId;
+                tempMutableInfo.ConsoleName = Packet.ConsoleName;
+                tempMutableInfo.Uart = Packet.UART;
+                tempMutableInfo.IduMode = Packet.IDUMode;
+
+                // Misc
+                tempMutableInfo.ForegroundAccountId = Packet.ForegroundAccountId;
+
+                // Storage.
+                tempMutableInfo.HddUsedSpace = (long)(Packet.TotalSpace - Packet.FreeSpace);
+                tempMutableInfo.HddFreeSpace = (long)Packet.FreeSpace;
+                tempMutableInfo.HddTotalSpace = (long)Packet.TotalSpace;
+
+                // Perf Stats.
+                tempMutableInfo.CpuTemp = Packet.CPUTemp;
+                tempMutableInfo.SocTemp = Packet.SOCTemp;
+                tempMutableInfo.ThreadCount = Packet.ThreadCount;
+                tempMutableInfo.AverageCPUUsage = Packet.AverageCPUUsage;
+                tempMutableInfo.BusyCore = Packet.BusyCore;
+                if (Packet.Ram != null)
+                    tempMutableInfo.RamUsage = Packet.Ram.Used;
+                if (Packet.VRam != null)
+                    tempMutableInfo.VideoRamUsage = Packet.VRam.Used;
+
+                tempMutableInfo.Save();
+
+                return new ResultState { Succeeded = true };
+            });
+
+            // Clear out when we are not connected.
+            if (!result.Succeeded)
+            {
+                MutableInfo.CpuTemp = 0;
+                MutableInfo.SocTemp = 0;
+                MutableInfo.ThreadCount = 0;
+                MutableInfo.AverageCPUUsage = 0;
+                MutableInfo.BusyCore = 0;
+                MutableInfo.RamUsage = 0;
+                MutableInfo.VideoRamUsage = 0;
+                MutableInfo.BigAppPid = -1;
+                MutableInfo.ForegroundAccountId = 0;
+                MutableInfo.BigAppProcessName = "-";
+                MutableInfo.BigAppTitleId = "-";
+            }
+
+            return result;
+        }
+
+        public async Task<ResultState> UpdateStaticInfo()
+        {
+            if (StaticInfo.IsSet)
+                return new ResultState { Succeeded = true };
+
+            var result = await API.SendCommand(this, 5, APICommand.ApiTargetInfo, async (sock) =>
+            {
+                var rawPacket = await sock.ReceiveSizeAsync();
+                var Packet = TargetInfoPacket.Parser.ParseFrom(rawPacket);
+
+                if (Packet == null)
+                {
+                    return new ResultState { Succeeded = false, ErrorMessage = $"Protobuf packet was null." };
+                }
+
+                var staticInfo = StaticInfo;
+                staticInfo.FactorySoftwareVersion = $"{(Packet.FactorySoftwareVersion >> 24 & 0xFF).ToString("X1")}.{(Packet.FactorySoftwareVersion >> 12 & 0xFFF).ToString("X3")}.{(Packet.FactorySoftwareVersion & 0xFFF).ToString("X3")}";
+                staticInfo.MotherboardSerial = Packet.MotherboardSerial;
+                staticInfo.Serial = Packet.Serial;
+                staticInfo.Model = Packet.Model;
+                staticInfo.MACAddressLAN = Packet.MACAddressLAN.ToUpper();
+                staticInfo.MACAddressWIFI = Packet.MACAddressWIFI.ToUpper();
+                staticInfo.IDPS = Packet.IDPS;
+                staticInfo.PSID = Packet.PSID;
+                staticInfo.ConsoleType = (ConsoleType)Packet.ConsoleType;
+                staticInfo.IsSet = true;
+                staticInfo.Save();
+
+                return new ResultState { Succeeded = true };
+            });
+
+            return result;
         }
     }
 }

@@ -16,7 +16,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A39FC9BA-130E-4993-9D80-46564A892EE4}</ProjectGuid>
-    <OrbisSdkVersion>7.500</OrbisSdkVersion>
+    <OrbisSdkVersion>Default</OrbisSdkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'" Label="Configuration">
@@ -59,15 +59,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lKernelInterface_stub_weak;-lGoldHEN;-lSQLite;-lprotobuf;-lOrbisUtils2;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lSQLite;-lprotobuf;-lOrbisUtils2;-lFusionDriver;-lGoldHEN;%(AdditionalDependencies)</AdditionalDependencies>
       <Addressing Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NonAslr</Addressing>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\libKernelInterface\ORBIS_Debug;$(SolutionDir)External\StubMaker;$(SolutionDir)External\libGoldHEN\ORBIS_Debug;$(SolutionDir)External\libSQLite-ps4;A:\Protobuf;$(SolutionDir)External\OrbisUtils2\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libSQLite-ps4;A:\Protobuf;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build;$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">StripFuncsAndData</DataStripping>
+      <DuplicateStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</DuplicateStripping>
     </Link>
     <PostBuildEvent>
       <Command>py -V:3.11 $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 000000000000000000000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 del $(OutputPath)$(ProjectName).elf
 
-echo open 1.1.0.14 2121&gt;&gt; temp.txt
+echo open 1.1.0.14 1337&gt;&gt; temp.txt
 echo cd "/system/vsh/app/ORBS30000/"&gt;&gt; temp.txt
 echo send $(OutputPath)eboot.bin&gt;&gt; temp.txt
 echo quit&gt;&gt; temp.txt
@@ -79,7 +81,7 @@ del temp.txt
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;RootBuild;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</GenerateDebugInformation>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\libKernelInterface\libKernelInterface;$(SolutionDir)External\StubMaker\include;$(SolutionDir)External\libGoldHEN\libGoldHEN;$(SolutionDir)Misc;$(SolutionDir)External\libSQLite-ps4\include;A:\Protobuf\include;$(SolutionDir)External\OrbisUtils2\OrbisUtils2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker\include;$(SolutionDir)Misc;$(SolutionDir)External\libSQLite-ps4\include;A:\Protobuf\include;$(SolutionDir)External\OrbisUtils2\OrbisUtils2;$(SolutionDir)External\Fusion\libFusionDriver;$(SolutionDir)External\Fusion\Shared;$(SolutionDir)/External/libGoldHEN/libGoldHEN;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppExceptions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</CppExceptions>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</MultiProcessorCompilation>
       <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">32</ProcessorNumber>

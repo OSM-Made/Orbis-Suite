@@ -1,4 +1,5 @@
 ﻿using OrbisLib2.Common.Database.Types;
+using OrbisLib2.General;
 using OrbisLib2.Targets;
 using SimpleUI.Dialogs;
 using System.Windows;
@@ -27,11 +28,11 @@ namespace OrbisLib2.Dialog.Controls
             if (_thisTarget != null)
             {
                 this.TargetName = _thisTarget.Name;
-                TargetStatus = _thisTarget.Info.Status;
-                ConsoleModel = _thisTarget.Info.ModelType;
+                TargetStatus = _thisTarget.MutableInfo.Status;
+                ConsoleModel = _thisTarget.StaticInfo.ModelType;
                 IsDefault = _thisTarget.IsDefault;
-                FirmwareVersion = _thisTarget.Info.SoftwareVersion;
-                SDKVersion = _thisTarget.Info.SDKVersion;
+                FirmwareVersion = _thisTarget.MutableInfo.SoftwareVersion;
+                SDKVersion = _thisTarget.MutableInfo.SdkVersion;
                 IPAddress = _thisTarget.IPAddress;
                 PayloadPort = _thisTarget.PayloadPort.ToString();
             }
@@ -76,6 +77,7 @@ namespace OrbisLib2.Dialog.Controls
                     break;
 
                 case TargetStatusType.APIAvailable:
+                case TargetStatusType.DebuggingActive:
                     ((MiniTargetPanel)d).TargetStatusElement.Fill = new SolidColorBrush(Color.FromRgb(0, 128, 0));
                     ((MiniTargetPanel)d).TargetStatusElement.ToolTip = "Online & API Available";
                     break;

@@ -48,7 +48,7 @@ namespace OrbisDebugger
         private async Task EnableProgram(bool attached)
         {
             var currentTarget = TargetManager.SelectedTarget;
-            if (currentTarget.Info.Status != TargetStatusType.APIAvailable)
+            if (currentTarget.MutableInfo.Status != TargetStatusType.APIAvailable)
                 attached = false;
 
             Dispatcher.Invoke(() =>
@@ -84,8 +84,14 @@ namespace OrbisDebugger
 
         private async void Events_ProcDie(object? sender, ProcDieEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
@@ -94,8 +100,14 @@ namespace OrbisDebugger
 
         private async void Events_ProcDetach(object? sender, ProcDetachEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Disable the attached options.
@@ -104,8 +116,14 @@ namespace OrbisDebugger
 
         private async void Events_ProcAttach(object? sender, ProcAttachEvent e)
         {
+            var currentTarget = TargetManager.SelectedTarget;
+
+            // Make sure a target is set.
+            if (currentTarget == null)
+                return;
+
             // Only accept events for the selected target.
-            if (e.SendingTarget.IPAddress != TargetManager.SelectedTarget.IPAddress)
+            if (e.SendingTarget.IPAddress != currentTarget.IPAddress)
                 return;
 
             // Enable the attached options.
