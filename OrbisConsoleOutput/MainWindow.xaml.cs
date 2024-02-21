@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using OrbisLib2.Common.Dispatcher;
 using SimpleUI.Controls;
-using System.Windows.Input;
 
-namespace OrbisNeighborHood
+namespace OrbisConsoleOutput
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,7 +19,5 @@ namespace OrbisNeighborHood
             base.Show();
             DispatcherClient.Subscribe(logger);
         }
-
-
     }
 }

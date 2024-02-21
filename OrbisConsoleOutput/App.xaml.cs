@@ -4,7 +4,7 @@ using OrbisLib2.Common;
 using OrbisLib2.General;
 using System.Windows;
 
-namespace OrbisLibraryManager
+namespace OrbisConsoleOutput
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -15,6 +15,8 @@ namespace OrbisLibraryManager
 
         public App()
         {
+            var title = new TMDB("CUSA03522");
+
             IServiceCollection services = new ServiceCollection();
             services.AddSingleton<MainWindow>();
 
@@ -34,8 +36,8 @@ namespace OrbisLibraryManager
         protected override void OnStartup(StartupEventArgs e)
         {
             var logger = _serviceProvider.GetService<ILoggerFactory>()
-            .AddFile(Config.OrbisPath + @"\Logging\OrbisLibraryManagerLog.txt")
-            .CreateLogger<MainWindow>();
+                .AddFile(Config.OrbisPath + @"\Logging\OrbisConsoleOutputLog.txt")
+                .CreateLogger<MainWindow>();
 
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show(logger);

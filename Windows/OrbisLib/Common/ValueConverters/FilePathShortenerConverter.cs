@@ -13,6 +13,10 @@ namespace OrbisLib2.Common.ValueConverters
                 // Split the file path into its components
                 string[] pathParts = filePath.Split(Path.DirectorySeparatorChar);
 
+                // Ensure there is more than 3 path levels.
+                if (pathParts.Length <= 3)
+                    return value;
+
                 // Extract the last three folders, file name, and extension
                 string[] shortenedParts = pathParts[^4..]; // Use slice notation
 

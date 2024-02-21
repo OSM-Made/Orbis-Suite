@@ -43,33 +43,33 @@ void Debug::Attach(SceNetId sock)
 		Logger::Info("Attach(): Attempting to attach to %s (%d)\n", processName, pid);
 
 		// If we are currently debugging another process lets detach from it.
-		//if (!TryDetach(pid))
-		//{
-		//	Logger::Error("Attach(): TryDetach Failed. :(\n");
-		//	SendStatePacket(sock, false, "Try detach failed.");
-		//	return;
-		//}
-		//
-		//// Use ptrace to attach to begin debugging this pid.
-		//int res = ptrace(PT_ATTACH, pid, nullptr, 0);
-		//if (res != 0)
-		//{
-		//	Logger::Error("Attach(): ptrace(PT_ATTACH) failed with error %llX %s\n", __error(), strerror(errno));
-		//	SendStatePacket(sock, false, "Attach failed: %llX %s", __error(), strerror(errno));
-		//	return;
-		//}
-		//
-		//// Wait till the process haults.
-		//waitpid(pid, NULL, 0);
-		//
-		//// Attaching by default will stop execution of the remote process. Lets continue it now.
-		//res = ptrace(PT_CONTINUE, pid, (void*)1, 0);
-		//if (res != 0)
-		//{
-		//	Logger::Error("Attach(): ptrace(PT_CONTINUE) failed with error %llX %s\n", __error(), strerror(errno));
-		//	SendStatePacket(sock, false, "Continue failed: %llX %s", __error(), strerror(errno));
-		//	return;
-		//}
+		if (!TryDetach(pid))
+		{
+			Logger::Error("Attach(): TryDetach Failed. :(\n");
+			SendStatePacket(sock, false, "Try detach failed.");
+			return;
+		}
+		
+		// Use ptrace to attach to begin debugging this pid.
+		int res = ptrace(PT_ATTACH, pid, nullptr, 0);
+		if (res != 0)
+		{
+			Logger::Error("Attach(): ptrace(PT_ATTACH) failed with error %llX %s\n", __error(), strerror(errno));
+			SendStatePacket(sock, false, "Attach failed: %llX %s", __error(), strerror(errno));
+			return;
+		}
+		
+		// Wait till the process haults.
+		waitpid(pid, NULL, 0);
+		
+		// Attaching by default will stop execution of the remote process. Lets continue it now.
+		res = ptrace(PT_CONTINUE, pid, (void*)1, 0);
+		if (res != 0)
+		{
+			Logger::Error("Attach(): ptrace(PT_CONTINUE) failed with error %llX %s\n", __error(), strerror(errno));
+			SendStatePacket(sock, false, "Continue failed: %llX %s", __error(), strerror(errno));
+			return;
+		}
 
 		// Set current debugging state.
 		IsDebugging = true;
@@ -88,18 +88,6 @@ void Debug::Attach(SceNetId sock)
 
 	// Send the happy state.
 	SendStatePacket(sock, true, "");
-
-	// Mount /data/ in sandbox.
-	if (strcmp(processName, "SceShellCore"))
-	{
-		// Get app info.
-		SceAppInfo appInfo;
-		sceKernelGetAppInfo(pid, &appInfo);
-
-		// Mount data & system into sandbox
-		LinkDir("/data/", va("/mnt/sandbox/%s_000/data", appInfo.TitleId).c_str());
-		LinkDir("/system/", va("/mnt/sandbox/%s_000/system", appInfo.TitleId).c_str());
-	}
 }
 
 void Debug::Detach(SceNetId sock)
@@ -114,11 +102,7 @@ void Debug::Detach(SceNetId sock)
 		SceAppInfo appInfo;
 		sceKernelGetAppInfo(CurrentPID, &appInfo);
 
-		// Unmount the linked dirs.
-		unmount(va("/mnt/sandbox/%s_000/data", appInfo.TitleId).c_str(), MNT_FORCE);
-		unmount(va("/mnt/sandbox/%s_000/system", appInfo.TitleId).c_str(), MNT_FORCE);
-
-		//if (TryDetach(CurrentPID))
+		if (TryDetach(CurrentPID))
 		{
 			// Reset vars.
 			IsDebugging = false;
@@ -127,11 +111,11 @@ void Debug::Detach(SceNetId sock)
 			Events::SendEvent(Events::EVENT_DETACH);
 			SendStatePacket(sock, true, "");
 		}
-		//else
-		//{
-		//	Logger::Error("Failed to detach from %d\n", CurrentPID);
-		//	SendStatePacket(sock, false, "Failed to detach from %d", CurrentPID);
-		//}
+		else
+		{
+			Logger::Error("Failed to detach from %d\n", CurrentPID);
+			SendStatePacket(sock, false, "Failed to detach from %d", CurrentPID);
+		}
 	}
 }
 
@@ -235,10 +219,6 @@ void Debug::OnExit()
 	SceAppInfo appInfo;
 	sceKernelGetAppInfo(CurrentPID, &appInfo);
 
-	// Unmount the linked dirs.
-	unmount(va("/mnt/sandbox/%s_000/data", appInfo.TitleId).c_str(), MNT_FORCE);
-	unmount(va("/mnt/sandbox/%s_000/system", appInfo.TitleId).c_str(), MNT_FORCE);
-
 	// For now just detach.
 	if (!TryDetach(CurrentPID))
 	{
@@ -263,10 +243,6 @@ void Debug::OnException(int status)
 	// Get app info.
 	SceAppInfo appInfo;
 	sceKernelGetAppInfo(CurrentPID, &appInfo);
-
-	// Unmount the linked dirs.
-	unmount(va("/mnt/sandbox/%s_000/data", appInfo.TitleId).c_str(), MNT_FORCE);
-	unmount(va("/mnt/sandbox/%s_000/system", appInfo.TitleId).c_str(), MNT_FORCE);
 
 	// For now just detach.
 	if (!TryDetach(CurrentPID))
