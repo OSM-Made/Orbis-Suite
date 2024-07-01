@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:OrbisNeighborHood.Controls"
              xmlns:simpleControls="clr-namespace:SimpleUI.Controls;assembly=SimpleUI"
              mc:Ignorable="d" 
-             Width="305" Height="210"
+             Width="305" Height="305"
              d:DesignHeight="210" d:DesignWidth="305">
     
     <Border VerticalAlignment="Stretch"

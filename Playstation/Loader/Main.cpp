@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <7z/7zExtractor.h>
 #include <AppControl.h>
+#include <SystemInterface.h>
 
 #define DEBUG
 
@@ -46,7 +47,7 @@ int main(int argc, char** arg)
 	Logger::Info("Starting or Restarting OrbisLib Deamon.\n");
 	auto res = StartRestartApp("ORBS30000", nullptr, SCE_USER_SERVICE_USER_ID_EVERYONE);
 
-	if (res != 0)
+	if (res < 0)
 	{
 		Notify("Failed to start the OrbisLib Daemon. :(");
 	}

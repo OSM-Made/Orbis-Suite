@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include <FusionDriver.h>
 #include <ShellCode.h>
+#include <SystemInterface.h>
 
 void Library::LoadLibrary(SceNetId s)
 {
@@ -62,7 +63,7 @@ void Library::ReloadLibrary(SceNetId s)
 	sceKernelGetProcessName(Debug::CurrentPID, processName);
 
 	// Unload the library.
-	auto result = Fusion::UnloadSprx(Debug::CurrentPID, packet.handle());
+	auto result = UnloadSprx(Debug::CurrentPID, packet.handle());
 	if (result != 0)
 	{
 		Logger::Error("Failed to unload %d\n", packet.handle());
@@ -73,7 +74,7 @@ void Library::ReloadLibrary(SceNetId s)
 	}
 
 	// Load the library.
-	auto handle = Fusion::LoadSprx(Debug::CurrentPID, packet.path().c_str());
+	auto handle = LoadSprx(Debug::CurrentPID, packet.path().c_str());
 
 	// Once I can migrate from hen I can error handle here better.
 	if (handle <= 0)

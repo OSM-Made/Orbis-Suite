@@ -24,13 +24,13 @@ namespace OrbisLib2.Common.Database
         /// </summary>
         [NotNull, Unique]
         [Column("TargetName")]
-        public string Name { get; set; } = "-";
+        public string Name { get; set; } = null;
 
         /// <summary>
         /// The IP Address as a string.
         /// </summary>
         [NotNull, Unique]
-        public string IPAddress { get; set; } = "-";
+        public string IPAddress { get; set; } = null;
 
         /// <summary>
         /// The port used to send payloads to the saved IP Address.

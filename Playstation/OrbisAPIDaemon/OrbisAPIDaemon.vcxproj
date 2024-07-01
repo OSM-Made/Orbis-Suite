@@ -61,21 +61,13 @@
     <Link>
       <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lSQLite;-lprotobuf;-lOrbisUtils2;-lFusionDriver;-lGoldHEN;%(AdditionalDependencies)</AdditionalDependencies>
       <Addressing Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NonAslr</Addressing>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libSQLite-ps4;A:\Protobuf;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build;$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libSQLite-ps4;A:\Protobuf;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build\900_Release;$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">StripFuncsAndData</DataStripping>
       <DuplicateStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</DuplicateStripping>
     </Link>
     <PostBuildEvent>
       <Command>py -V:3.11 $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 000000000000000000000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-del $(OutputPath)$(ProjectName).elf
-
-echo open 1.1.0.14 1337&gt;&gt; temp.txt
-echo cd "/system/vsh/app/ORBS30000/"&gt;&gt; temp.txt
-echo send $(OutputPath)eboot.bin&gt;&gt; temp.txt
-echo quit&gt;&gt; temp.txt
-ftp -A -s:temp.txt
-del temp.txt
-</Command>
+del $(OutputPath)$(ProjectName).elf</Command>
     </PostBuildEvent>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;RootBuild;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -85,6 +77,7 @@ del temp.txt
       <CppExceptions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</CppExceptions>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</MultiProcessorCompilation>
       <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">32</ProcessorNumber>
+      <CppLanguageStd Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">Cpp17</CppLanguageStd>
     </ClCompile>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NDEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>

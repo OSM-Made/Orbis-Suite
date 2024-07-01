@@ -107,14 +107,12 @@ namespace OrbisLib2.Common.Database
         /// <returns>Returns true if any rows were effected.</returns>
         public bool Save()
         {
-            var db = new SQLiteConnection(Config.DataBasePath);
+            using var db = new SQLiteConnection(Config.DataBasePath);
 
             // Create the table if it doesn't exist already.
             db.CreateTable<StaticInfo>();
 
-            var result = db.Update(this);
-            db.Close();
-            return (result <= 0);
+            return db.Update(this) > 0;
         }
     }
 }

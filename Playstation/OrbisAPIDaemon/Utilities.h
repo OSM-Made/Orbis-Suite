@@ -1,7 +1,6 @@
 #pragma once
 
 bool LoadModules();
-bool Jailbreak();
 bool LoadSymbol(SceKernelModule handle, const char* symbol, void** funcOut);
 bool CopySflash();
 void SendProtobufPacket(SceNetId sock, const google::protobuf::Message& message);

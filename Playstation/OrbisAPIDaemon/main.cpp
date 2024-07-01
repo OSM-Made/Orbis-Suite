@@ -3,6 +3,7 @@
 #include "SystemMonitor.h"
 #include "ProcessMonitor.h"
 #include <SysCoreUtil.h>
+#include <SystemInterface.h>
 
 int main(int argc, char** arg)
 {

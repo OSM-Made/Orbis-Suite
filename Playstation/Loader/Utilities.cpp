@@ -36,12 +36,6 @@ bool LoadModules()
 	return true;
 }
 
-bool Jailbreak()
-{
-	jailbreak_backup bk;
-	return (sys_sdk_jailbreak(&bk) == 0);
-}
-
 void InstallDaemon(const char* Daemon, const char* libs[], int libCount)
 {
 	Logger::Info("Installing Daemon %s...\n[%s] Making Directories...\n", Daemon, Daemon);

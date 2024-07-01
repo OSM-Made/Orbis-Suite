@@ -132,7 +132,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 
 void API::Init()
 {
-	Listener = std::make_unique<SocketListener>(ListenerCallback, nullptr, API_PORT);
+	Listener = std::make_unique<SocketListener>(ListenerCallback, nullptr, nullptr, nullptr, API_PORT);
 }
 
 void API::Term()

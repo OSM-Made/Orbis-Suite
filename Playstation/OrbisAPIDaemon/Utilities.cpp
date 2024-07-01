@@ -115,12 +115,6 @@ bool LoadModules()
 	return true;
 }
 
-bool Jailbreak()
-{
-	JailBackup bk;
-	return (Fusion::Jailbreak(getpid(), &bk) == 0);
-}
-
 bool LoadSymbol(SceKernelModule handle, const char* symbol, void** funcOut)
 {
 	if (sceKernelDlsym(handle, symbol, funcOut) != 0 || *funcOut == 0)
