@@ -38,3 +38,6 @@
 [submodule "Playstation/External/--recursive"]
 	path = Playstation/External/--recursive
 	url = https://github.com/Fusion-Co/Fusion
+[submodule "Playstation/External/Fusion"]
+	path = Playstation/External/Fusion
+	url = https://github.com/Fusion-Co/Fusion
