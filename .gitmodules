@@ -20,9 +20,6 @@
 [submodule "Playstation/External/libKernelInterface"]
 	path = Playstation/External/libKernelInterface
 	url = https://github.com/OSM-Made/libKernelInterface
-[submodule "Playstation/External/OrbisUtils2"]
-	path = Playstation/External/OrbisUtils2
-	url = https://github.com/OSM-Made/OrbisUtils2
 [submodule "Playstation/External/SimpleUI"]
 	path = Playstation/External/SimpleUI
 	url = https://github.com/OSM-Made/SimpleUI
