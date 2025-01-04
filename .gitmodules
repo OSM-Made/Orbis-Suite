@@ -38,3 +38,6 @@
 [submodule "Playstation/External/Fusion"]
 	path = Playstation/External/Fusion
 	url = https://github.com/Fusion-Co/Fusion
+[submodule "Playstation/External/OrbisUtils2"]
+	path = Playstation/External/OrbisUtils2
+	url = https://github.com/OSM-Made/OrbisUtils2
