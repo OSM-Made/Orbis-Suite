@@ -17,9 +17,6 @@
 [submodule "Playstation/External/StubMaker"]
 	path = Playstation/External/StubMaker
 	url = https://github.com/OSM-Made/StubMaker
-[submodule "Playstation/External/libKernelInterface"]
-	path = Playstation/External/libKernelInterface
-	url = https://github.com/OSM-Made/libKernelInterface
 [submodule "Playstation/External/SimpleUI"]
 	path = Playstation/External/SimpleUI
 	url = https://github.com/OSM-Made/SimpleUI
