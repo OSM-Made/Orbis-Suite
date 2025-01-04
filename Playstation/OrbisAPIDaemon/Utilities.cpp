@@ -4,6 +4,8 @@
 #include "Utilities.h"
 #include <libnetctl.h>
 #include <FusionDriver.h>
+#include <SystemInterface.h>
+#include <mdbg.h>
 
 bool LoadModules()
 {
@@ -49,20 +51,29 @@ bool LoadModules()
 		return false;
 	}
 	
-	//res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_HTTP);
-	//if (res != 0)
-	//{
-	//	Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_HTTP (%llX)\n", res);
-	//	return false;
-	//}
-	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_BGFT);
 	if (res != 0)
 	{
 		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_BGFT (%llX)\n", res);
 		return false;
 	}
+
+	res = sceKernelLoadStartModule("/system/priv/lib/libmdbg_syscore.sprx", 0, 0, 0, 0, 0);
+	if (res < 0)
+	{
+		Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)\n", res);
+		ExitGraceful();
+		return 0;
+	}
 	
+	// Start debug.
+	res = sceDebugInit();
+	if (res != 0)
+	{
+		Logger::Error("LoadModules(): sceDebugInit failed (%llX)\n", res);
+		return false;
+	}
+
 	// Start up networking interface
 	res = sceNetInit();
 	if (res != 0)

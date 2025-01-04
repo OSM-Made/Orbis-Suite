@@ -27,21 +27,10 @@ int main(int argc, char** arg)
 		return 0;
 	}
 
-	auto res1 = sceKernelLoadStartModule("/system/priv/lib/libmdbg_syscore.sprx", 0, 0, 0, 0, 0);
-	if (res1 < 0)
-	{
-		Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)\n", res1);
-		ExitGraceful();
-		return 0;
-	}
-
-	auto res = sceDebugInit();
-	Logger::Info("sceDebugInit: %x\n", res);
-	
 	auto pid = GetPidByName("SceShellUI");
 	Logger::Info("SceShellUI pid: %x\n", pid);
 	
-	res = sceDebugAttachProcess(pid);
+	auto res = sceDebugAttachProcess(pid);
 	Logger::Info("sceDebugAttachProcess: %x\n", res);
 	
 	res = sceDebugResumeProcess(pid);
@@ -54,22 +43,22 @@ int main(int argc, char** arg)
 	//LoadToolbox();
 
 	// Copy back up of sflash so we can read it and not break things :)
-	//CopySflash();
-	//
-	//// Set the Name of this process so it shows up as something other than eboot.bin.
-	//sceKernelSetProcessName("OrbisAPIDaemon");
-	//
-	//// Start up the thread pool.
-	//ThreadPool::Init(10);
-	//
-	//// Log the loaded version string.
-	//Logger::Info("%s\n", ORBISLIB_BUILDSTRING);
-	//
-	//// Start up the API.
-	//API::Init();
-	//
-	//// Blocking run the system monitor.
-	//SystemMonitor::Run();
+	// CopySflash();
+	
+	// Set the Name of this process so it shows up as something other than eboot.bin.
+	sceKernelSetProcessName("OrbisAPIDaemon");
+	
+	// Start up the thread pool.
+	ThreadPool::Init(10);
+	
+	// Log the loaded version string.
+	Logger::Info("%s\n", ORBISLIB_BUILDSTRING);
+	
+	// Start up the API.
+	API::Init();
+	
+	// Blocking run the system monitor.
+	SystemMonitor::Run();
 
 	ExitGraceful();
 	return 0;
