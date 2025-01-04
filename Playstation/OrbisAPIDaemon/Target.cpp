@@ -31,13 +31,13 @@ void Target::SendTargetInfo(SceNetId sock)
 		{
 			// Get the app info using the pid.
 			SceAppInfo appInfo;
-			sceKernelGetAppInfo(i.pid, &appInfo);
+			sceKernelGetAppInfo(i.ki_pid, &appInfo);
 
 			// Using the titleId match our desired app and return the appId from the appinfo.
 			if (appInfo.AppId == bigAppAppId)
 			{
-				bigApp->set_pid(i.pid);
-				bigApp->set_name(i.name);
+				bigApp->set_pid(i.ki_pid);
+				bigApp->set_name(i.ki_comm);
 				bigApp->set_titleid(appInfo.TitleId);
 
 				break;
@@ -152,13 +152,13 @@ void Target::ProcList(SceNetId sock)
 	{
 		// Get the app info using the pid.
 		SceAppInfo appInfo;
-		sceKernelGetAppInfo(i.pid, &appInfo);
+		sceKernelGetAppInfo(i.ki_pid, &appInfo);
 
 		// Build packet.
 		ProcPacket procPacket;
 		procPacket.set_appid(appInfo.AppId);
-		procPacket.set_processid(i.pid);
-		procPacket.set_name(i.name);
+		procPacket.set_processid(i.ki_pid);
+		procPacket.set_name(i.ki_comm);
 		procPacket.set_titleid(appInfo.TitleId);
 		vectorList.push_back(procPacket);
 	}

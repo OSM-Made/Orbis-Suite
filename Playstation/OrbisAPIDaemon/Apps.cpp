@@ -99,7 +99,7 @@ int Apps::GetAppId(const char* TitleId)
 	{
 		// Get the app info using the pid.
 		SceAppInfo appInfo;
-		sceKernelGetAppInfo(i.pid, &appInfo);
+		sceKernelGetAppInfo(i.ki_pid, &appInfo);
 
 		// Using the titleId match our desired app and return the appId from the appinfo.
 		if (!strcmp(appInfo.TitleId, TitleId))

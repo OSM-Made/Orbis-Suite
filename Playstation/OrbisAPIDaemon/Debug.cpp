@@ -270,7 +270,7 @@ bool Debug::TryDetach(int pid)
 		std::vector<kinfo_proc> procList;
 		GetProcessList(procList);
 
-		if (std::find_if(procList.begin(), procList.end(), [=](const kinfo_proc& arg) { return arg.pid == pid; }) == procList.end())
+		if (std::find_if(procList.begin(), procList.end(), [=](const kinfo_proc& arg) { return arg.ki_pid == pid; }) == procList.end())
 		{
 			// Reset vars.
 			IsDebugging = false;
