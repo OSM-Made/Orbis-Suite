@@ -63,24 +63,19 @@ int main(int argc, char** arg)
 	Logger::Info("Mounting System as R/W.\n");
 	RemountReadWrite("/dev/da0x4.crypt", "/system");
 	
-	// Install all the things! :D
 	Logger::Info("Extracting OrbisLib Deamon.\n");
-	Extract7zFile("/mnt/sandbox/ORBS00000_000/app0/Daemons/ORBS30000.7z", "/system/vsh/app/");
+	Extract7zFile("/mnt/sandbox/ORBS00000_000/app0/ORBS30000.7z", "/system/vsh/app/");
+
+	Logger::Info("Making Orbis Suite Directory\n");
+	FileSystem::MakeDir("/data/Orbis Suite");
 	 
-	 Logger::Info("Extracting Orbis Toolbox.\n");
-	 Extract7zFile("/mnt/sandbox/ORBS00000_000/app0/Orbis Toolbox.7z", "/data/");
+	Logger::Info("Starting or Restarting OrbisLib Deamon.\n");
+	auto res = StartRestartApp("ORBS30000", nullptr, SCE_USER_SERVICE_USER_ID_EVERYONE);
 	 
-	 Logger::Info("Making Orbis Suite Directory\n");
-	 FileSystem::MakeDir("/data/Orbis Suite");
-	 
-	 // Launch the daemon for everyone.
-	 Logger::Info("Starting or Restarting OrbisLib Deamon.\n");
-	 auto res = StartRestartApp("ORBS30000", nullptr, SCE_USER_SERVICE_USER_ID_EVERYONE);
-	 
-	 if (res < 0)
-	 {
-	 	Notify("Failed to start the OrbisLib Daemon. :(");
-	 }
+	if (res < 0)
+	{
+		Notify("Failed to start the OrbisLib Daemon. :(");
+	}
 
 	ExitGraceful();
 	return 0;

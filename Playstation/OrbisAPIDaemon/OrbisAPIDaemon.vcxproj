@@ -48,10 +48,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
     <IntDir>$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)build\pkg\Daemons\ORBS30000\</OutDir>
+    <OutDir>$(SolutionDir)build\pkg\ORBS30000\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
-    <OutDir>$(SolutionDir)build\pkg\Daemons\ORBS30000\</OutDir>
+    <OutDir>$(SolutionDir)build\pkg\ORBS30000\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
