@@ -11,3 +11,12 @@
 [submodule "External/SimpleUI"]
 	path = External/SimpleUI
 	url = https://github.com/OSM-Made/SimpleUI
+[submodule "Playstation/External/StubMaker"]
+	path = Playstation/External/StubMaker
+	url = https://github.com/OSM-Made/StubMaker
+[submodule "Playstation/External/libUtils"]
+	path = Playstation/External/libUtils
+	url = https://github.com/AetherPS/libUtils
+[submodule "Playstation/External/libFusionDriver"]
+	path = Playstation/External/libFusionDriver
+	url = https://github.com/AetherPS/libFusionDriver

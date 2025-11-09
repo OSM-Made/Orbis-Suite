@@ -1,9 +1,39 @@
 #include "stdafx.h"
-#include <7z/7zExtractor.h>
-#include <AppControl.h>
-#include <SystemInterface.h>
 
-#define DEBUG
+bool LoadModules()
+{
+	auto res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_SYSTEM_SERVICE);
+	if (res != 0)
+	{
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_SYSTEM_SERVICE (%llX)\n", res);
+		return false;
+	}
+
+	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_USER_SERVICE);
+	if (res != 0)
+	{
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_USER_SERVICE (%llX)\n", res);
+		return false;
+	}
+
+	SceUserServiceInitializeParams userParam = { SCE_KERNEL_PRIO_FIFO_HIGHEST };
+	res = sceUserServiceInitialize(&userParam);
+	if (res != 0)
+	{
+		Logger::Error("LoadModules(): sceUserServiceInitialize failed (%llX)\n", res);
+		return false;
+	}
+
+	res = sceLncUtilInitialize();
+	if (res != 0)
+	{
+		Logger::Error("LoadModules(): sceLncUtilInitialize failed (%llX)\n", res);
+		return false;
+	}
+
+	Logger::Success("LoadModules(): Success!\n");
+	return true;
+}
 
 int main(int argc, char** arg)
 {
@@ -31,7 +61,7 @@ int main(int argc, char** arg)
 
 	// Set RW on the system directory.
 	Logger::Info("Mounting System as R/W.\n");
-	mount_large_fs("/dev/da0x4.crypt", "/system", "exfatfs", "511", MNT_UPDATE);
+	RemountReadWrite("/dev/da0x4.crypt", "/system");
 	
 	// Install all the things! :D
 	Logger::Info("Extracting OrbisLib Deamon.\n");
@@ -41,7 +71,7 @@ int main(int argc, char** arg)
 	 Extract7zFile("/mnt/sandbox/ORBS00000_000/app0/Orbis Toolbox.7z", "/data/");
 	 
 	 Logger::Info("Making Orbis Suite Directory\n");
-	 MakeDir("/data/Orbis Suite");
+	 FileSystem::MakeDir("/data/Orbis Suite");
 	 
 	 // Launch the daemon for everyone.
 	 Logger::Info("Starting or Restarting OrbisLib Deamon.\n");

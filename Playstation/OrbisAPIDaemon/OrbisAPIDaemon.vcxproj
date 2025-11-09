@@ -9,10 +9,6 @@
       <Configuration>Release</Configuration>
       <Platform>ORBIS</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="System|ORBIS">
-      <Configuration>System</Configuration>
-      <Platform>ORBIS</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A39FC9BA-130E-4993-9D80-46564A892EE4}</ProjectGuid>
@@ -30,9 +26,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='System|ORBIS'">
-    <PlatformToolset>Clang</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup Condition="'$(DebuggerFlavor)'=='ORBISDebugger'" Label="OverrideDebuggerDefaults">
