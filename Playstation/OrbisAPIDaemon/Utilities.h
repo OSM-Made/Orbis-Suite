@@ -3,7 +3,30 @@
 bool LoadModules();
 bool LoadSymbol(SceKernelModule handle, const char* symbol, void** funcOut);
 bool CopySflash();
-void SendProtobufPacket(SceNetId sock, const google::protobuf::Message& message);
+
+template<class T>
+bool SendProtobufPacket(SceNetId sock, T* message)
+{
+	// Make room for the data.
+	std::vector<uint8_t> data;
+	data.resize(message->ByteSizeLong());
+
+	// Serialize the data.
+	if (!message->SerializeToArray(data.data(), data.size()))
+	{
+		Logger::Error("Failed to serialize the protobuf message.");
+		return false;
+	}
+
+	// Send the Protobuf packet.
+	if (!Sockets::SendWithSize(sock, data.data(), data.size()))
+	{
+		Logger::Error("Failed to send the serialized protobuf packet.\n");
+		return false;
+	}
+
+	return true;
+}
 
 template<class T>
 bool RecieveProtoBuf(SceNetId sock, T* output)
@@ -12,13 +35,13 @@ bool RecieveProtoBuf(SceNetId sock, T* output)
 
 	if (rawPacket.size() <= 0)
 	{
-		Logger::Error("RecieveProtoBuf(): Failed to recieve the proto packet.\n");
+		Logger::Error("Failed to recieve the proto packet.\n");
 		return false;
 	}
 
 	if (!output->ParseFromArray(rawPacket.data(), rawPacket.size()))
 	{
-		Logger::Error("RecieveProtoBuf(): Failed to parse the proto packet.\n");
+		Logger::Error("Failed to parse the proto packet.\n");
 		return false;
 	}
 

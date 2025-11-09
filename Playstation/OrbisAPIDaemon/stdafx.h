@@ -13,24 +13,39 @@
 #include <map>
 #include <memory>
 
-// Custom linked dependancies.
+// StubMaker
 #include <KernelExt.h>
-#include <SysmoduleInternal.h>
+#include <LncUtil.h>
 #include <AppInstUtil.h>
 #include <SysCoreUtil.h>
-#include <LncUtil.h>
+#include <SysmoduleInternal.h>
 
-// Custom Utility Library
-#include <StringUtils.h>
-#include <ThreadPool.h>
+
+// libUtils
+#include <StringExt.h>
 #include <Logging.h>
 #include <Logger.h>
-#include <Process.h>
-#include <Utilities.h>
-#include <Sockets.h>
+#include <Symbol.h>
+#include <Resolver.h>
 #include <FileSystem.h>
+#include <Notify.h>
+#include <System.h>
+#include <Networking.h>
+#include <User.h>
+#include <ThreadPool.h>
+#include <Process.h>
+#include <Sockets.h>
+#include <SocketListener.h>
 
-using namespace OrbisUtils;
+// libSysInt
+#include <SystemInterface.h>
+
+// libAppCtrl
+#include <AppControl.h>
+
+// libFusionDriver
+#include <FusionDriver.h>
+#include <ShellCode.h>
 
 #include "APIPackets.pb.h"
 #include "Version.h"

@@ -85,7 +85,7 @@ void Target::SendTargetInfo(SceNetId sock)
 	memcpy(&Packet->Ram, &SystemMonitor::RAM, sizeof(MemoryInfo));
 	memcpy(&Packet->VRam, &SystemMonitor::VRAM, sizeof(MemoryInfo));*/
 
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }
 
 void Target::DoNotify(SceNetId sock)
@@ -168,7 +168,7 @@ void Target::ProcList(SceNetId sock)
 	*packet.mutable_processes() = { vectorList.begin(), vectorList.end() };
 
 	// Send the list to host.
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }
 
 void Target::SendFile(SceNetId sock)

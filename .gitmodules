@@ -20,3 +20,6 @@
 [submodule "Playstation/External/libFusionDriver"]
 	path = Playstation/External/libFusionDriver
 	url = https://github.com/AetherPS/libFusionDriver
+[submodule "Playstation/External/libprotobuf"]
+	path = Playstation/External/libprotobuf
+	url = https://github.com/thejinchao/libprotobuf

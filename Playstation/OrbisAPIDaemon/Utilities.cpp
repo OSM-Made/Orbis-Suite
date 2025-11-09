@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <GoldHEN.h>
 #include <NetExt.h>
 #include "Utilities.h"
 #include <libnetctl.h>
@@ -172,26 +171,6 @@ bool CopySflash()
 	return false;
 }
 
-void SendProtobufPacket(SceNetId sock, const google::protobuf::Message& message)
-{
-	// Make room for the data.
-	std::vector<uint8_t> data;
-	data.resize(message.ByteSizeLong());
-
-	// Serialize the data.
-	if (!message.SerializeToArray(data.data(), data.size()))
-	{
-		Logger::Error("Failed to serialize the protobuf message.\n");
-		return;
-	}
-	
-	// Send the Protobuf packet.
-	if (!Sockets::SendWithSize(sock, data.data(), data.size()))
-	{
-		Logger::Error("Failed to send the serialized protobuf packet.\n");
-	}
-}
-
 void SendStatePacket(SceNetId sock, bool succeeded, const char* fmt, ...)
 {
 	ResultState packet;
@@ -208,5 +187,5 @@ void SendStatePacket(SceNetId sock, bool succeeded, const char* fmt, ...)
 	packet.set_errormessage(buffer);
 
 	// Send it out!
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }

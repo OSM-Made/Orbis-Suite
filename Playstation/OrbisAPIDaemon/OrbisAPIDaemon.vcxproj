@@ -50,22 +50,27 @@
     <IntDir>$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)build\pkg\Daemons\ORBS30000\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
+    <OutDir>$(SolutionDir)build\pkg\Daemons\ORBS30000\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lmdbg_syscore_gen_stub;-lSceDipsw_gen_stub;-lSQLite;-lprotobuf;-lOrbisUtils2;-lFusionDriver;-lGoldHEN;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <Addressing Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NonAslr</Addressing>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libSQLite-ps4;E:\Modding\PS4\Projects\2024\Fusion Toolset\External\libprotobuf;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build\;$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libUtils\Build;$(SolutionDir)External\libFusionDriver\Build;$(SolutionDir)External\libSQLite-ps4;$(SolutionDir)External\libprotobuf\libprotobuf\lib\ps4</AdditionalLibraryDirectories>
       <DataStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">StripFuncsAndData</DataStripping>
       <DuplicateStripping Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</DuplicateStripping>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libUtils\Build;$(SolutionDir)External\libFusionDriver\Build;$(SolutionDir)External\libSQLite-ps4;$(SolutionDir)External\libprotobuf\libprotobuf\lib\ps4</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>py $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 070000000000003800000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Command>
+      <Command>py $(SolutionDir)Scripts\make_fself.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 070000000000003800000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Command>
     </PostBuildEvent>
     <ClCompile>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;RootBuild;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateDebugInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</GenerateDebugInformation>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker\include;$(SolutionDir)Misc;$(SolutionDir)External\libSQLite-ps4\include;E:\Modding\PS4\Projects\2024\Fusion Toolset\External\libprotobuf\include;$(SolutionDir)External\OrbisUtils2\OrbisUtils2;$(SolutionDir)External\Fusion\libFusionDriver;$(SolutionDir)External\Fusion\Shared;$(SolutionDir)/External/libGoldHEN/libGoldHEN;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)External\StubMaker\include;$(SolutionDir)External\libFusionDriver\External\FusionShared;$(SolutionDir)External\libFusionDriver\libFusionDriver;$(SolutionDir)External\libUtils\libUtils;$(SolutionDir)External\libUtils\libSysInt;$(SolutionDir)External\libUtils\lib7z;$(SolutionDir)External\libUtils\libAppCtrl;$(SolutionDir)External\libSQLite-ps4\include;$(SolutionDir)External\libprotobuf\libprotobuf\include</AdditionalIncludeDirectories>
       <CppExceptions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</CppExceptions>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">true</MultiProcessorCompilation>
       <ProcessorNumber Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">32</ProcessorNumber>
@@ -75,12 +80,18 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">NDEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <OptimizationLevel Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Level2</OptimizationLevel>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Use</PrecompiledHeader>
+      <CppExceptions Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">true</CppExceptions>
+      <CppLanguageStd Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Cpp17</CppLanguageStd>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">$(SolutionDir)External\StubMaker\include;$(SolutionDir)External\libFusionDriver\External\FusionShared;$(SolutionDir)External\libFusionDriver\libFusionDriver;$(SolutionDir)External\libUtils\libUtils;$(SolutionDir)External\libUtils\libSysInt;$(SolutionDir)External\libUtils\lib7z;$(SolutionDir)External\libUtils\libAppCtrl;$(SolutionDir)External\libSQLite-ps4\include;$(SolutionDir)External\libprotobuf\libprotobuf\include</AdditionalIncludeDirectories>
     </ClCompile>
     <PreLinkEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)$(ProjectName)\buildASM.bat $(SolutionDir)$(ProjectName)\ $(SolutionDir)$(ProjectName)\$(IntermediateOutputPath)</Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">call "$(SolutionDir)\Misc\Increment.bat" "Version.h" "ORBISLIB_BUILDVERSION" </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">call "$(SolutionDir)Scripts\Increment.bat" "Version.h" "ORBISLIB_BUILDVERSION" </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">call "$(SolutionDir)Scripts\Increment.bat" "Version.h" "ORBISLIB_BUILDVERSION" </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
