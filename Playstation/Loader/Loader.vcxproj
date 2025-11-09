@@ -60,10 +60,10 @@
     <Link>
       <AdditionalDependencies>-lSceLibcInternal_gen_stub_weak;-lkernel_stub_weak;-lkernel_gen_stub_weak;-lScePad_stub_weak;-lSceRtc_gen_stub_weak;-lSceNet_stub_weak;-lSceHttp_stub_weak;-lSceSystemStateMgr_gen_stub_weak;-lSceSystemService_gen_stub_weak;-lSceSysCore_gen_stub_weak;-lSceUserService_gen_stub_weak;-lSceNet_gen_stub_weak;-lSceLncUtil_gen_stub_weak;-lSceRtc_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub_weak;-lSceNetCtl_stub_weak;-lSceSysmodule_gen_stub_weak;-lSceAppInstUtil_gen_stub_weak;-lSceShellCoreUtil_gen_stub_weak;-lGoldHEN;-lOrbisUtils2;-lFusionDriver;%(AdditionalDependencies)</AdditionalDependencies>
       <Addressing Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">NonAslr</Addressing>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;$(SolutionDir)/External/StubMaker;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build\900_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(SolutionDir)/External/libGoldHEN/ORBIS_Debug;$(SolutionDir)/External/StubMaker;$(SolutionDir)External\OrbisUtils2\build;$(SolutionDir)External\Fusion\build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>py -V:3.11 $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin </Command>
+      <Command>py $(SolutionDir)Scripts\make_fself-3.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin </Command>
     </PostBuildEvent>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;RootBuild;%(PreprocessorDefinitions)</PreprocessorDefinitions>

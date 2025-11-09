@@ -58,21 +58,28 @@ bool LoadModules()
 		return false;
 	}
 
-	res = sceKernelLoadStartModule("/system/priv/lib/libmdbg_syscore.sprx", 0, 0, 0, 0, 0);
+	res = sceKernelLoadStartModule("/system/priv/lib/libSceDipsw.sprx", 0, 0, 0, 0, 0);
 	if (res < 0)
 	{
-		Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)\n", res);
-		ExitGraceful();
-		return 0;
-	}
-	
-	// Start debug.
-	res = sceDebugInit();
-	if (res != 0)
-	{
-		Logger::Error("LoadModules(): sceDebugInit failed (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load libSceDipsw.sprx (%llX)\n", res);
 		return false;
 	}
+
+	// res = sceKernelLoadStartModule("/system/priv/lib/libmdbg_syscore.sprx", 0, 0, 0, 0, 0);
+	// if (res < 0)
+	// {
+	// 	Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)\n", res);
+	// 	ExitGraceful();
+	// 	return 0;
+	// }
+	// 
+	// // Start debug.
+	// res = sceDebugInit();
+	// if (res != 0)
+	// {
+	// 	Logger::Error("LoadModules(): sceDebugInit failed (%llX)\n", res);
+	// 	return false;
+	// }
 
 	// Start up networking interface
 	res = sceNetInit();

@@ -10,7 +10,6 @@
 #include <net.h>
 #include <user_service.h>
 #include <system_service.h>
-#include <kernel.h>
 #include <map>
 #include <memory>
 
