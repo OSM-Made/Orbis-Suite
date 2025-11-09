@@ -21,7 +21,7 @@ bool SendProtobufPacket(SceNetId sock, T* message)
 	// Send the Protobuf packet.
 	if (!Sockets::SendWithSize(sock, data.data(), data.size()))
 	{
-		Logger::Error("Failed to send the serialized protobuf packet.\n");
+		Logger::Error("Failed to send the serialized protobuf packet.");
 		return false;
 	}
 
@@ -35,13 +35,13 @@ bool RecieveProtoBuf(SceNetId sock, T* output)
 
 	if (rawPacket.size() <= 0)
 	{
-		Logger::Error("Failed to recieve the proto packet.\n");
+		Logger::Error("Failed to recieve the proto packet.");
 		return false;
 	}
 
 	if (!output->ParseFromArray(rawPacket.data(), rawPacket.size()))
 	{
-		Logger::Error("Failed to parse the proto packet.\n");
+		Logger::Error("Failed to parse the proto packet.");
 		return false;
 	}
 

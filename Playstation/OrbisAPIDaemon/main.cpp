@@ -37,7 +37,7 @@ int main(int argc, char** arg)
 	ThreadPool::Init(10);
 	
 	// Log the loaded version string.
-	Logger::Info("%s\n", ORBISLIB_BUILDSTRING);
+	Logger::Info(ORBISLIB_BUILDSTRING);
 	
 	// Start up the API.
 	API::Init();

@@ -12,17 +12,17 @@ void SystemMonitor::Run()
 			break;
 
 			case SHUTDOWN_ON_GOING:
-				Logger::Info("Console is shutting down! API exiting...\n");
+				Logger::Info("Console is shutting down! API exiting...");
 				return;
 
 			case POWER_SAVING:
 			case SUSPEND_ON_GOING:
 			case MAIN_ON_STANDBY:
-				Logger::Info("Going to sleep!\n");
+				Logger::Info("Going to sleep!");
 				break;
 
 			case INITIALIZING:
-				Logger::Info("Waking up!\n");
+				Logger::Info("Waking up!");
 				break;
 		}
 

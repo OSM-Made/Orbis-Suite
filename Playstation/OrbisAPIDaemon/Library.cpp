@@ -66,7 +66,7 @@ void Library::ReloadLibrary(SceNetId s)
 	auto result = UnloadSprx(Debug::CurrentPID, packet.handle());
 	if (result != 0)
 	{
-		Logger::Error("Failed to unload %d\n", packet.handle());
+		Logger::Error("Failed to unload %d", packet.handle());
 
 		Sockets::SendInt(s, result);
 

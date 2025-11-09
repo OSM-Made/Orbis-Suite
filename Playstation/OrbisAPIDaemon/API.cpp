@@ -73,7 +73,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	if (!Sockets::RecvInt(s, &magicNumber))
 	{
 		// Spams but honestly if this fails all is lost.
-		// Logger::Error("[API] Failed to recieve the magic number.\n");
+		// Logger::Error("[API] Failed to recieve the magic number.");
 		return;
 	}
 
@@ -85,7 +85,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	if (magicNumber != 0xDEADBEEF)
 	{
 		Sockets::SendInt(s, 0);
-		Logger::Error("[API] Magic number miss match! We got %llX but we expected %llX.\n", magicNumber, 0xDEADBEEF);
+		Logger::Error("[API] Magic number miss match! We got %llX but we expected %llX.", magicNumber, 0xDEADBEEF);
 		return;
 	}
 
@@ -96,7 +96,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	InitialPacket packet;
 	if (!RecieveProtoBuf<InitialPacket>(s, &packet))
 	{
-		Logger::Error("[API] Failed to recieve the initial proto packet.\n");
+		Logger::Error("[API] Failed to recieve the initial proto packet.");
 		return;
 	}
 
@@ -104,7 +104,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	if (packet.packetversion() != PACKET_VERSION)
 	{
 		SendStatePacket(s, false, "Packet version miss match expected packet version %d.", PACKET_VERSION);
-		Logger::Error("[API] Outdated packet version recieved %d but expected version %d.\n", packet.packetversion(), PACKET_VERSION);
+		Logger::Error("[API] Outdated packet version recieved %d but expected version %d.", packet.packetversion(), PACKET_VERSION);
 		return;
 	}
 
@@ -126,7 +126,7 @@ void API::ListenerCallback(void* tdParam, SceNetId s, SceNetInAddr sin_addr)
 	else
 	{
 		SendStatePacket(s, false, "Command %d is not implemented at this time.", packet.command());
-		Logger::Error("[API] Command %d is not implemented at this time.\n", packet.command());
+		Logger::Error("[API] Command %d is not implemented at this time.", packet.command());
 	}
 }
 
