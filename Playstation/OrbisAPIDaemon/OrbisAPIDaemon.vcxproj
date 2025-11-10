@@ -48,10 +48,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
     <IntDir>$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)build\pkg\ORBS30000\</OutDir>
+    <OutDir>$(SolutionDir)build\pkg\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
-    <OutDir>$(SolutionDir)build\pkg\ORBS30000\</OutDir>
+    <OutDir>$(SolutionDir)build\pkg\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -64,7 +64,9 @@
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">$(SolutionDir)External\StubMaker;$(SolutionDir)External\libUtils\Build;$(SolutionDir)External\libFusionDriver\Build;$(SolutionDir)External\libSQLite-ps4;$(SolutionDir)External\libprotobuf\libprotobuf\lib\ps4</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>py $(SolutionDir)Scripts\make_fself.py  $(OutputPath)$(TargetName).elf  $(OutputPath)eboot.bin --paid 0x3800000000010003 --auth-info 070000000000003800000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Command>
+      <Command>py $(SolutionDir)Scripts\make_fself.py  $(OutputPath)$(TargetName).elf  $(OutputPath)ORBS30000\eboot.bin --paid 0x3800000000010003 --auth-info 070000000000003800000000001C004000FF000000000080000000000000000000000000000000000000008000400040000000000000008000000000000000080040FFFF000000F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+"C:\Program Files\7-Zip\7z.exe" a -t7z "$(OutputPath)ORBS30000.7z" "$(OutputPath)ORBS30000"</Command>
     </PostBuildEvent>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
