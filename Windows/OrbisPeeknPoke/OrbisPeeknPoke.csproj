@@ -15,18 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Drawing">
-      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\Microsoft.Expression.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleUI">
-      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\SimpleUI.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFHexaEditor">
-      <HintPath>..\..\External\WpfHexEditorControl\Sources\WPFHexaEditor\bin\Release\net70-windows\WPFHexaEditor.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BinaryTools.Elf" Version="0.3.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
@@ -36,6 +24,18 @@
   <ItemGroup>
     <ProjectReference Include="..\OrbisLib\OrbisLib2.csproj" />
     <ProjectReference Include="..\OrbisSuiteCore\OrbisSuiteCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleUI">
+      <HintPath>..\..\External\SimpleUI\SimpleUI\bin\Release\net7.0-windows10.0.22621.0\SimpleUI.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFHexaEditor">
+      <HintPath>..\..\External\WpfHexEditorControl\Sources\WPFHexaEditor\bin\Release\net7.0-windows\WPFHexaEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

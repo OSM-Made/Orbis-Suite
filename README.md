@@ -7,29 +7,28 @@ The next version of Orbis Suite completely rewritten with a new GUI. Now launcha
 - User friendly and reactive UI.
 - Memory **Peek n Poker**
 - **Library Manager** (can be used to load custom Libraries!)
-- **Debugger** *Coming Soon*
 - **Console Output** (Nice filtered view of the console output.)
 - **Neighborhood** (Used for easy interaction and saving of Targets.)
 - Custom UI Elements on the Target Console.
-- Reimplimented Debug Kit features for a retail console. (Like launching homebrew from the App_Home.)
-- Many More!..
 
 # NeighborHood
-![](https://i.imgur.com/qXyssyK.png)
-![](https://i.imgur.com/CXOJsNg.png)
-![](https://i.imgur.com/B8DgWyV.png)
+![](/Assets/Neighborhood1.png)
+![](/Assets/Neighborhood2.png)
+![](/Assets/Neighborhood3.png)
 
-# Orbis Toolbox
-![](https://i.imgur.com/2Ql98B9.png)
-![](https://i.imgur.com/DWbgEsN.png)
+# Build Requirements
+- PS4 Official SDK
+- [Wix Toolset 3.11](https://github.com/wixtoolset/wix3/releases/tag/wix3112rtm)
+- [.NET Framework 4.8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+- [.NET 7.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 
-# Dependencies
-
-![Open Orbis Tool Chain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
-
-![SimpleUI](https://github.com/OSM-Made/SimpleUI)
-
-![GoldHEN](https://github.com/GoldHEN/GoldHEN)
+# Build Instructions
+1. Ensure that the SDK is installed for .NET 7 & .NET Framework 4.8.
+2. Enrure that Wix Toolset 3.11 is installed & configured.
+3. Build dependencies found in the `\External` folder. 
+4. Restore nuget packages.
+5. Build the `OrbisAPI.sln` using the instructions found [here](/Playstation/README.md).
+6. Build the `Orbis Suite 3.0.sln` using **Visual Studio**.
 
 # Special Thanks
 - Zenco
