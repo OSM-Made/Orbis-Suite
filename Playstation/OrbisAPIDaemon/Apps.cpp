@@ -12,7 +12,7 @@ void Apps::GetDB(SceNetId Sock)
 	auto fd = sceKernelOpen(APP_DB_PATH, SCE_KERNEL_O_RDONLY, 0);
 	if (fd <= 0)
 	{
-		Logger::Error("Failed to open app database file.\n");
+		Logger::Error("Failed to open app database file.");
 		return;
 	}
 
@@ -22,7 +22,7 @@ void Apps::GetDB(SceNetId Sock)
 
 	if (stats.st_size == 0)
 	{
-		Logger::Error("Failed to get size of app database.\n");
+		Logger::Error("Failed to get size of app database.");
 		return;
 	}
 
@@ -44,7 +44,7 @@ void Apps::CheckVersion(SceNetId Sock)
 	auto currentVersion = 0;
 	if (!Sockets::RecvInt(Sock, &currentVersion))
 	{
-		Logger::Error("CheckVersion: Failed to recieve the current app version.\n");
+		Logger::Error("CheckVersion: Failed to recieve the current app version.");
 		return;
 	}
 
@@ -165,7 +165,7 @@ void Apps::StartApp(SceNetId sock)
 
 	if (auto res = sceUserServiceGetForegroundUser(&appParam.userId) != 0)
 	{
-		Logger::Error("sceUserServiceGetForegroundUser(): Failed with error %llX\n", res);
+		Logger::Error("sceUserServiceGetForegroundUser(): Failed with error %llX", res);
 		SendStatePacket(sock, false, "sceUserServiceGetForegroundUser(): Failed with error %llX.", res);
 		return;
 	}
@@ -173,7 +173,7 @@ void Apps::StartApp(SceNetId sock)
 	auto res = sceLncUtilLaunchApp(packet.titleid().c_str(), nullptr, &appParam);
 	if (res <= 0)
 	{
-		Logger::Error("sceLncUtilLaunchApp() : Failed with error %llX\n", res);
+		Logger::Error("sceLncUtilLaunchApp() : Failed with error %llX", res);
 		SendStatePacket(sock, false, "sceLncUtilLaunchApp(): Failed with error %llX.", res);
 		return;
 	}
@@ -313,7 +313,7 @@ void Apps::SetVisibility(SceNetId sock)
 	auto value = 0;
 	if (!Sockets::RecvInt(sock, &value))
 	{
-		Logger::Error("SetVisibility(): Failed to recieve value.\n");
+		Logger::Error("SetVisibility(): Failed to recieve value.");
 		SendStatePacket(sock, false, "Failed to recieve value.");
 		return;
 	}

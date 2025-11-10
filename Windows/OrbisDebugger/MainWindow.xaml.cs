@@ -68,15 +68,18 @@ namespace OrbisDebugger
 
         private async void Events_TargetStateChanged(object? sender, TargetStateChangedEvent e)
         {
-            if (e.Name != TargetManager.SelectedTarget.Name)
+            if (e.SendingTarget.Name != TargetManager.SelectedTarget.Name)
                 return;
 
-            switch (e.State)
+            switch (e.NewState)
             {
-                case TargetStateChangedEvent.TargetState.APIAvailable:
+                case TargetStatusType.APIAvailable:
+                case TargetStatusType.DebuggingActive:
                     await EnableProgram(await TargetManager.SelectedTarget.Debug.IsDebugging());
                     break;
-                case TargetStateChangedEvent.TargetState.APIUnAvailable:
+                case TargetStatusType.None:
+                case TargetStatusType.Online:
+                case TargetStatusType.Offline:
                     await EnableProgram(false);
                     break;
             }

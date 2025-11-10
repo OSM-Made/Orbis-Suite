@@ -27,7 +27,7 @@ void Debug::Attach(SceNetId sock)
 	auto pid = 0;
 	if (!Sockets::RecvInt(sock, &pid))
 	{
-		Logger::Error("Attach(): Failed to recieve the pid\n");
+		Logger::Error("Attach(): Failed to recieve the pid");
 		SendStatePacket(sock, false, "Failed to recieve the pid.");
 		return;
 	}
@@ -39,12 +39,12 @@ void Debug::Attach(SceNetId sock)
 	{
 		std::unique_lock<std::mutex> lock(DebugMtx);
 
-		Logger::Info("Attach(): Attempting to attach to %s (%d)\n", processName, pid);
+		Logger::Info("Attach(): Attempting to attach to %s (%d)", processName, pid);
 
 		// If we are currently debugging another process lets detach from it.
 		if (!TryDetach(pid))
 		{
-			Logger::Error("Attach(): TryDetach Failed. :(\n");
+			Logger::Error("Attach(): TryDetach Failed. :(");
 			SendStatePacket(sock, false, "Try detach failed.");
 			return;
 		}
@@ -53,7 +53,7 @@ void Debug::Attach(SceNetId sock)
 		int res = ptrace(PT_ATTACH, pid, nullptr, 0);
 		if (res != 0)
 		{
-			Logger::Error("Attach(): ptrace(PT_ATTACH) failed with error %llX %s\n", __error(), strerror(errno));
+			Logger::Error("Attach(): ptrace(PT_ATTACH) failed with error %llX %s", __error(), strerror(errno));
 			SendStatePacket(sock, false, "Attach failed: %llX %s", __error(), strerror(errno));
 			return;
 		}
@@ -65,7 +65,7 @@ void Debug::Attach(SceNetId sock)
 		res = ptrace(PT_CONTINUE, pid, (void*)1, 0);
 		if (res != 0)
 		{
-			Logger::Error("Attach(): ptrace(PT_CONTINUE) failed with error %llX %s\n", __error(), strerror(errno));
+			Logger::Error("Attach(): ptrace(PT_CONTINUE) failed with error %llX %s", __error(), strerror(errno));
 			SendStatePacket(sock, false, "Continue failed: %llX %s", __error(), strerror(errno));
 			return;
 		}
@@ -83,7 +83,7 @@ void Debug::Attach(SceNetId sock)
 	// Send attach event to host.
 	Events::SendEvent(Events::EVENT_ATTACH, pid);
 
-	Logger::Info("Attach(): Attached to %s(%d)\n", processName, pid);
+	Logger::Info("Attach(): Attached to %s(%d)", processName, pid);
 
 	// Send the happy state.
 	SendStatePacket(sock, true, "");
@@ -112,7 +112,7 @@ void Debug::Detach(SceNetId sock)
 		}
 		else
 		{
-			Logger::Error("Failed to detach from %d\n", CurrentPID);
+			Logger::Error("Failed to detach from %d", CurrentPID);
 			SendStatePacket(sock, false, "Failed to detach from %d", CurrentPID);
 		}
 	}
@@ -167,7 +167,7 @@ void Debug::RWMemory(SceNetId s, bool write)
 		// Recieve the data we are going to write.
 		if (!Sockets::RecvLargeData(s, buffer.get(), packet.length()))
 		{
-			Logger::Error("Debug::RWMemory(): Failed to recieve memory to write\n");
+			Logger::Error("Debug::RWMemory(): Failed to recieve memory to write");
 			SendStatePacket(s, false, " Failed to recieve memory to write.");
 			return;
 		}
@@ -176,7 +176,7 @@ void Debug::RWMemory(SceNetId s, bool write)
 		auto res = Fusion::ReadWriteMemory(CurrentPID, packet.address(), (void*)buffer.get(), packet.length(), true);
 		if (res != 0)
 		{
-			Logger::Error("Debug::RWMemory(): Failed to write memory to process %i at %llX for reason %llX.\n", CurrentPID, packet.address(), res);
+			Logger::Error("Debug::RWMemory(): Failed to write memory to process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			SendStatePacket(s, false, "Failed to write memory to process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			return;
 		}
@@ -190,7 +190,7 @@ void Debug::RWMemory(SceNetId s, bool write)
 		auto res = Fusion::ReadWriteMemory(CurrentPID, packet.address(), (void*)buffer.get(), packet.length(), false);
 		if (res != 0)
 		{
-			Logger::Error("Debug::RWMemory(): Failed to read memory from process %i at %llX for reason %llX.\n", CurrentPID, packet.address(), res);
+			Logger::Error("Debug::RWMemory(): Failed to read memory from process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			SendStatePacket(s, false, "Failed to read memory from process %i at %llX for reason %llX.", CurrentPID, packet.address(), res);
 			return;
 		}
@@ -201,7 +201,7 @@ void Debug::RWMemory(SceNetId s, bool write)
 		// Send the data we read.
 		if (!Sockets::SendLargeData(s, buffer.get(), packet.length()))
 		{
-			Logger::Error("Failed to send memory\n");
+			Logger::Error("Failed to send memory");
 			return;
 		}
 	}
@@ -209,7 +209,7 @@ void Debug::RWMemory(SceNetId s, bool write)
 
 void Debug::OnExit()
 {
-	Logger::Info("Process %d has died!\n", CurrentPID);
+	Logger::Info("Process %d has died!", CurrentPID);
 
 	// Send the event to the host that the process has died.
 	Events::SendEvent(Events::EVENT_DIE, CurrentPID);
@@ -221,7 +221,7 @@ void Debug::OnExit()
 	// For now just detach.
 	if (!TryDetach(CurrentPID))
 	{
-		Logger::Error("OnExit(): TryDetach Failed. :(\n");
+		Logger::Error("OnExit(): TryDetach Failed. :(");
 		return;
 	}
 
@@ -235,7 +235,7 @@ void Debug::OnException(int status)
 	switch (signal)
 	{
 	case SIGSTOP:
-		Logger::Info("SIGSTOP\n");
+		Logger::Info("SIGSTOP");
 		break;
 	}
 
@@ -246,7 +246,7 @@ void Debug::OnException(int status)
 	// For now just detach.
 	if (!TryDetach(CurrentPID))
 	{
-		Logger::Error("OnException(): TryDetach Failed. :(\n");
+		Logger::Error("OnException(): TryDetach Failed. :(");
 		return;
 	}
 
@@ -278,7 +278,7 @@ bool Debug::TryDetach(int pid)
 			return true;
 		}
 
-		Logger::Error("DetachProcess(): ptrace(PT_DETACH) failed with error %llX %s\n", __error(), strerror(errno));
+		Logger::Error("DetachProcess(): ptrace(PT_DETACH) failed with error %llX %s", __error(), strerror(errno));
 		return false;
 	}
 

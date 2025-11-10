@@ -16,21 +16,16 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ORBIS = Debug|ORBIS
 		Release|ORBIS = Release|ORBIS
-		System|ORBIS = System|ORBIS
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
-		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.ActiveCfg = Release|ORBIS
+		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Debug|ORBIS.Build.0 = Release|ORBIS
 		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Release|ORBIS.ActiveCfg = Release|ORBIS
 		{094342B9-8AC8-4772-97BA-D03C7D61670A}.Release|ORBIS.Build.0 = Release|ORBIS
-		{094342B9-8AC8-4772-97BA-D03C7D61670A}.System|ORBIS.ActiveCfg = System|ORBIS
-		{094342B9-8AC8-4772-97BA-D03C7D61670A}.System|ORBIS.Build.0 = System|ORBIS
-		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.ActiveCfg = Debug|ORBIS
-		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.Build.0 = Debug|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.ActiveCfg = Release|ORBIS
+		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Debug|ORBIS.Build.0 = Release|ORBIS
 		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Release|ORBIS.ActiveCfg = Release|ORBIS
 		{A39FC9BA-130E-4993-9D80-46564A892EE4}.Release|ORBIS.Build.0 = Release|ORBIS
-		{A39FC9BA-130E-4993-9D80-46564A892EE4}.System|ORBIS.ActiveCfg = System|ORBIS
-		{A39FC9BA-130E-4993-9D80-46564A892EE4}.System|ORBIS.Build.0 = System|ORBIS
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

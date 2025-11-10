@@ -21,11 +21,10 @@
     <file targ_path="sce_sys/param.sfo" orig_path="sce_sys\param.sfo" />
     <file targ_path="sce_sys/pic0.png" orig_path="sce_sys\pic0.png" />
     <file targ_path="sce_sys/pic1.png" orig_path="sce_sys\pic1.png" />
-    <file targ_path="Daemons/ORBS30000.7z" orig_path="Daemons\ORBS30000.7z" />
+    <file targ_path="ORBS30000.7z" orig_path="ORBS30000.7z" />
   </files>
   <rootdir>
     <dir targ_name="sce_module" />
     <dir targ_name="sce_sys" />
-    <dir targ_name="Daemons" />
   </rootdir>
 </psproject>

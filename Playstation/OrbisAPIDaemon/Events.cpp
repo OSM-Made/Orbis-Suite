@@ -12,7 +12,7 @@ void Events::AddHost(SceNetInAddr_t HostAddress)
 	// Add the host to the list if it does not exist already.
 	if (std::find(HostList.begin(), HostList.end(), HostAddress) == HostList.end())
 	{
-		Logger::Info("New host (%i.%i.%i.%i)\n", HostAddress & 0xFF, (HostAddress >> 8) & 0xFF, (HostAddress >> 16) & 0xFF, (HostAddress >> 24) & 0xFF);
+		Logger::Info("New host (%i.%i.%i.%i)", HostAddress & 0xFF, (HostAddress >> 8) & 0xFF, (HostAddress >> 16) & 0xFF, (HostAddress >> 24) & 0xFF);
 		HostList.push_back(HostAddress);
 	}
 }
@@ -25,7 +25,7 @@ void Events::RemoveHost(SceNetInAddr_t HostAddress)
 	// Remove this host if it exists in the list.
 	if (std::find(HostList.begin(), HostList.end(), HostAddress) != HostList.end())
 	{
-		Logger::Info("Lost host (%i.%i.%i.%i)\n", HostAddress & 0xFF, (HostAddress >> 8) & 0xFF, (HostAddress >> 16) & 0xFF, (HostAddress >> 24) & 0xFF);
+		Logger::Info("Lost host (%i.%i.%i.%i)", HostAddress & 0xFF, (HostAddress >> 8) & 0xFF, (HostAddress >> 16) & 0xFF, (HostAddress >> 24) & 0xFF);
 		std::remove(HostList.begin(), HostList.end(), HostAddress);
 	}
 }
@@ -34,7 +34,7 @@ void Events::SendEvent(int EventId, int pid)
 {
 	if (HostList.empty())
 	{
-		Logger::Error("SendEvent(): Host List Empty :(\n");
+		Logger::Error("SendEvent(): Host List Empty :(");
 		return;
 	}
 
@@ -43,7 +43,7 @@ void Events::SendEvent(int EventId, int pid)
 		// Aquire a lock for the list.
 		std::unique_lock<std::mutex> lock(HostListMtx);
 
-		Logger::Info("SendEvent(%d): Sending for host %i.%i.%i.%i\n", EventId, host & 0xFF, (host >> 8) & 0xFF, (host >> 16) & 0xFF, (host >> 24) & 0xFF);
+		Logger::Info("SendEvent(%d): Sending for host %i.%i.%i.%i", EventId, host & 0xFF, (host >> 8) & 0xFF, (host >> 16) & 0xFF, (host >> 24) & 0xFF);
 
 		auto sock = Sockets::Connect(host, EVENT_PORT, 4);
 		if (sock)
@@ -61,7 +61,7 @@ void Events::SendEvent(int EventId, int pid)
 		}
 		else
 		{
-			Logger::Error("SendEvent(): Failed to connect to host %i.%i.%i.%i\n", host & 0xFF, (host >> 8) & 0xFF, (host >> 16) & 0xFF, (host >> 24) & 0xFF);
+			Logger::Error("SendEvent(): Failed to connect to host %i.%i.%i.%i", host & 0xFF, (host >> 8) & 0xFF, (host >> 16) & 0xFF, (host >> 24) & 0xFF);
 
 			RemoveHost(host);
 		}

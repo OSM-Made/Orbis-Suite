@@ -85,7 +85,7 @@ void Target::SendTargetInfo(SceNetId sock)
 	memcpy(&Packet->Ram, &SystemMonitor::RAM, sizeof(MemoryInfo));
 	memcpy(&Packet->VRam, &SystemMonitor::VRAM, sizeof(MemoryInfo));*/
 
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }
 
 void Target::DoNotify(SceNetId sock)
@@ -168,7 +168,7 @@ void Target::ProcList(SceNetId sock)
 	*packet.mutable_processes() = { vectorList.begin(), vectorList.end() };
 
 	// Send the list to host.
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }
 
 void Target::SendFile(SceNetId sock)
@@ -185,7 +185,7 @@ void Target::SendFile(SceNetId sock)
 	if (fd <= 0)
 	{
 		SendStatePacket(sock, false, "Failed to open the file \"%s\".", packet.filepath().c_str());
-		Logger::Error("Failed to open file \"%s\".\n", packet.filepath().c_str());
+		Logger::Error("Failed to open file \"%s\".", packet.filepath().c_str());
 		return;
 	}
 
@@ -196,7 +196,7 @@ void Target::SendFile(SceNetId sock)
 	if (stats.st_size == 0)
 	{
 		SendStatePacket(sock, false, "Failed to get size of the file \"%s\".", packet.filepath().c_str());
-		Logger::Error("Failed to get size of file \"%s\"..\n", packet.filepath().c_str());
+		Logger::Error("Failed to get size of file \"%s\"..", packet.filepath().c_str());
 		return;
 	}
 
@@ -230,7 +230,7 @@ void Target::RecieveFile(SceNetId sock)
 	if (fd <= 0)
 	{
 		SendStatePacket(sock, false, "Failed to open the file \"%s\" with error 0x%llX.", packet.filepath().c_str(), fd);
-		Logger::Error("Failed to open file \"%s\" with error 0x%llX.\n", packet.filepath().c_str(), fd);
+		Logger::Error("Failed to open file \"%s\" with error 0x%llX.", packet.filepath().c_str(), fd);
 		return;
 	}
 
@@ -240,7 +240,7 @@ void Target::RecieveFile(SceNetId sock)
 	int fileSize;
 	if (!Sockets::RecvInt(sock, &fileSize))
 	{
-		Logger::Error("Failed to get the file size.\n");
+		Logger::Error("Failed to get the file size.");
 		return;
 	}
 
@@ -249,7 +249,7 @@ void Target::RecieveFile(SceNetId sock)
 
 	if (!Sockets::RecvLargeData(sock, fileData, fileSize))
 	{
-		Logger::Error("Failed to get the file data.\n");
+		Logger::Error("Failed to get the file data.");
 		return;
 	}
 
@@ -271,8 +271,8 @@ void Target::DeleteFile(SceNetId sock)
 	auto res = sceKernelUnlink(packet.filepath().c_str());
 	if (res != 0)
 	{
-		Logger::Error("Failed to delete the file \"%s\" 0x%llX.\n", packet.filepath().c_str(), res);
-		SendStatePacket(sock, false, "Failed to delete the file \"%s\" 0x%llX.\n", packet.filepath().c_str(), res);
+		Logger::Error("Failed to delete the file \"%s\" 0x%llX.", packet.filepath().c_str(), res);
+		SendStatePacket(sock, false, "Failed to delete the file \"%s\" 0x%llX.", packet.filepath().c_str(), res);
 		return;
 	}
 

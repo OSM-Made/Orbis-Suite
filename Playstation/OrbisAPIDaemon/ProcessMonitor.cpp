@@ -22,7 +22,7 @@ void ProcessMonitor::WatchThread(int pid)
 
 		if (std::find_if(procList.begin(), procList.end(), [=](const kinfo_proc& arg) { return arg.ki_pid == pid; }) == procList.end())
 		{
-			Logger::Error("Proc %d has died.\n", pid);
+			Logger::Error("Proc %d has died.", pid);
 
 			if (OnExit != nullptr)
 				OnExit();
@@ -35,7 +35,7 @@ void ProcessMonitor::WatchThread(int pid)
 		if (debuggeePid == pid)
 		{
 			int signal = WSTOPSIG(status);
-			Logger::Error("Process %d has recieved the signal %d\n", pid, signal);
+			Logger::Error("Process %d has recieved the signal %d", pid, signal);
 
 			if (OnException != nullptr)
 				OnException(status);

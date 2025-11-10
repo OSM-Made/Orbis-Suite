@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <GoldHEN.h>
 #include <NetExt.h>
 #include "Utilities.h"
 #include <libnetctl.h>
@@ -12,63 +11,63 @@ bool LoadModules()
 	auto res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_SYSTEM_SERVICE);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_SYSTEM_SERVICE (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_SYSTEM_SERVICE (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_APPINSTUTIL);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_APPINSTUTIL (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_APPINSTUTIL (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_USER_SERVICE);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_USER_SERVICE (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_USER_SERVICE (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_SYS_CORE);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_SYS_CORE (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_SYS_CORE (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_NETCTL);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_NETCTL (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_NETCTL (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_NET);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_NET (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_NET (%llX)", res);
 		return false;
 	}
 	
 	res = sceSysmoduleLoadModuleInternal(SCE_SYSMODULE_INTERNAL_BGFT);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_BGFT (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load SCE_SYSMODULE_INTERNAL_BGFT (%llX)", res);
 		return false;
 	}
 
 	res = sceKernelLoadStartModule("/system/priv/lib/libSceDipsw.sprx", 0, 0, 0, 0, 0);
 	if (res < 0)
 	{
-		Logger::Error("LoadModules(): Failed to load libSceDipsw.sprx (%llX)\n", res);
+		Logger::Error("LoadModules(): Failed to load libSceDipsw.sprx (%llX)", res);
 		return false;
 	}
 
 	// res = sceKernelLoadStartModule("/system/priv/lib/libmdbg_syscore.sprx", 0, 0, 0, 0, 0);
 	// if (res < 0)
 	// {
-	// 	Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)\n", res);
+	// 	Logger::Error("LoadModules(): Failed to load libmdbg_syscore.sprx (%llX)", res);
 	// 	ExitGraceful();
 	// 	return 0;
 	// }
@@ -77,7 +76,7 @@ bool LoadModules()
 	// res = sceDebugInit();
 	// if (res != 0)
 	// {
-	// 	Logger::Error("LoadModules(): sceDebugInit failed (%llX)\n", res);
+	// 	Logger::Error("LoadModules(): sceDebugInit failed (%llX)", res);
 	// 	return false;
 	// }
 
@@ -85,7 +84,7 @@ bool LoadModules()
 	res = sceNetInit();
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceNetInit failed\n");
+		Logger::Error("LoadModules(): sceNetInit failed");
 		return false;
 	}
 
@@ -94,7 +93,7 @@ bool LoadModules()
 	res = sceUserServiceInitialize(&userParam);
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceUserServiceInitialize failed (%llX)\n", res);
+		Logger::Error("LoadModules(): sceUserServiceInitialize failed (%llX)", res);
 		return false;
 	}
 
@@ -102,7 +101,7 @@ bool LoadModules()
 	res = sceLncUtilInitialize();
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceLncUtilInitialize failed (%llX)\n", res);
+		Logger::Error("LoadModules(): sceLncUtilInitialize failed (%llX)", res);
 		return false;
 	}
 
@@ -110,7 +109,7 @@ bool LoadModules()
 	res = sceApplicationInitialize();
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceApplicationInitialize failed (%llX)\n", res);
+		Logger::Error("LoadModules(): sceApplicationInitialize failed (%llX)", res);
 		return false;
 	}
 
@@ -118,18 +117,18 @@ bool LoadModules()
 	res = sceAppInstUtilInitialize();
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceAppInstUtilInitialize failed (%llX)\n", res);
+		Logger::Error("LoadModules(): sceAppInstUtilInitialize failed (%llX)", res);
 		return false;
 	}
 
 	res = sceNetCtlInit();
 	if (res != 0)
 	{
-		Logger::Error("LoadModules(): sceNetCtlInit failed (%llX)\n", res);
+		Logger::Error("LoadModules(): sceNetCtlInit failed (%llX)", res);
 		return false;
 	}
 
-	Logger::Success("LoadModules(): Success!\n");
+	Logger::Success("LoadModules(): Success!");
 	return true;
 }
 
@@ -137,7 +136,7 @@ bool LoadSymbol(SceKernelModule handle, const char* symbol, void** funcOut)
 {
 	if (sceKernelDlsym(handle, symbol, funcOut) != 0 || *funcOut == 0)
 	{
-		Logger::Error("Failed to load %s.\n", symbol);
+		Logger::Error("Failed to load %s.", symbol);
 		return false;
 	}
 
@@ -153,7 +152,7 @@ bool CopySflash()
 		auto buffer = (unsigned char*)malloc(4 * 1024 * 1024);
 		if (buffer == nullptr)
 		{
-			Logger::Error("failled to allocate memory for sflash read.\n");
+			Logger::Error("failled to allocate memory for sflash read.");
 			return false;
 		}
 
@@ -172,26 +171,6 @@ bool CopySflash()
 	return false;
 }
 
-void SendProtobufPacket(SceNetId sock, const google::protobuf::Message& message)
-{
-	// Make room for the data.
-	std::vector<uint8_t> data;
-	data.resize(message.ByteSizeLong());
-
-	// Serialize the data.
-	if (!message.SerializeToArray(data.data(), data.size()))
-	{
-		Logger::Error("Failed to serialize the protobuf message.\n");
-		return;
-	}
-	
-	// Send the Protobuf packet.
-	if (!Sockets::SendWithSize(sock, data.data(), data.size()))
-	{
-		Logger::Error("Failed to send the serialized protobuf packet.\n");
-	}
-}
-
 void SendStatePacket(SceNetId sock, bool succeeded, const char* fmt, ...)
 {
 	ResultState packet;
@@ -208,5 +187,5 @@ void SendStatePacket(SceNetId sock, bool succeeded, const char* fmt, ...)
 	packet.set_errormessage(buffer);
 
 	// Send it out!
-	SendProtobufPacket(sock, packet);
+	SendProtobufPacket(sock, &packet);
 }

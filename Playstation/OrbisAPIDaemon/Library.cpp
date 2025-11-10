@@ -66,7 +66,7 @@ void Library::ReloadLibrary(SceNetId s)
 	auto result = UnloadSprx(Debug::CurrentPID, packet.handle());
 	if (result != 0)
 	{
-		Logger::Error("Failed to unload %d\n", packet.handle());
+		Logger::Error("Failed to unload %d", packet.handle());
 
 		Sockets::SendInt(s, result);
 
@@ -98,7 +98,8 @@ void Library::GetLibraryList(SceNetId s)
 		return;
 
 	auto libraries = std::make_unique<OrbisLibraryInfo[]>(256);
-	int actualCount = Fusion::GetLibraryList(Debug::CurrentPID, libraries.get(), 256);
+	int actualCount = 0;
+	Fusion::GetLibraryList(Debug::CurrentPID, libraries.get(), 256, &actualCount);
 
 	// Populate the vector list.
 	std::vector<LibraryInfoPacket> vectorList;
@@ -119,5 +120,5 @@ void Library::GetLibraryList(SceNetId s)
 	*packet.mutable_libraries() = { vectorList.begin(), vectorList.end() };
 
 	// Send the list to host.
-	SendProtobufPacket(s, packet);
+	SendProtobufPacket(s, &packet);
 }
