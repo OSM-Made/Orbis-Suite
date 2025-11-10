@@ -400,27 +400,62 @@ namespace OrbisPeeknPoke
 
         private void CopyHex_Click(object sender, RoutedEventArgs e)
         {
-            HexView.CopyToClipboard(CopyPasteMode.HexaString);
+            try
+            {
+                HexView.CopyToClipboard(CopyPasteMode.HexaString);
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to copy Hex for reason \"{ex.Message}\".", "Failed to copy Hex");
+            }
         }
 
         private void CopyText_Click(object sender, RoutedEventArgs e)
         {
-            HexView.CopyToClipboard(CopyPasteMode.AsciiString);
+            try
+            {
+                HexView.CopyToClipboard(CopyPasteMode.AsciiString);
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to copy Text for reason \"{ex.Message}\".", "Failed to copy Text");
+            }
         }
 
         private void CopyCSharp_Click(object sender, RoutedEventArgs e)
         {
-            HexView.CopyToClipboard(CopyPasteMode.CSharpCode);
+            try
+            {
+                HexView.CopyToClipboard(CopyPasteMode.CSharpCode);
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to copy as C# code for reason \"{ex.Message}\".", "Failed to copy as C# code");
+            }
         }
 
         private void CopyCPP_Click(object sender, RoutedEventArgs e)
         {
-            HexView.CopyToClipboard(CopyPasteMode.CCode);
+            try
+            {
+                HexView.CopyToClipboard(CopyPasteMode.CCode);
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to copy bytes as C code for reason \"{ex.Message}\".", "Failed to copy bytes as C code");
+            }
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            HexView.SelectAll();
+            try
+            {
+                HexView.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to select all for reason \"{ex.Message}\".", "Failed to select all");
+            }
         }
 
         private async void FollowPointer_Click(object sender, RoutedEventArgs e)

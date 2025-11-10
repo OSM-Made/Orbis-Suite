@@ -53,13 +53,7 @@ namespace OrbisSuiteCore.Controls
             if (currentTarget == null)
                 return;
 
-            // If the current program stat matches the target state we do nothing here.
             var newTargetState = currentTarget.MutableInfo.Status;
-            if (_currentState == newTargetState)
-                return;
-
-            // Update the targets state to reflect the new changes.
-            _currentState = newTargetState;
 
             // Change the program for the new state of the target.
             switch (newTargetState)
@@ -118,7 +112,7 @@ namespace OrbisSuiteCore.Controls
 
                     (var result, var procInfo) = await currentTarget.Debug.GetCurrentProcess();
 
-                    if (result.Succeeded && procInfo.ProcessId != -1)
+                    if (result.Succeeded && procInfo != null && procInfo.ProcessId != -1)
                     {
                         // Set the current debugging process name and PID.
                         Dispatcher.Invoke(() => CurrentDebuggingProccess.FieldText = $"{procInfo.Name}({procInfo.ProcessId})");

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Windows.Threading;
 using OrbisLib2.Common.Database.Types;
+using System;
 
 namespace OrbisLibraryManager
 {
@@ -114,6 +115,10 @@ namespace OrbisLibraryManager
             if (currentTarget == null)
                 return;
 
+            await RefreshLibraryList();
+
+
+
             // If the current program stat matches the target state we do nothing here.
             var newTargetState = currentTarget.MutableInfo.Status;
             if (_currentState == newTargetState)
@@ -175,9 +180,6 @@ namespace OrbisLibraryManager
                         UnloadLibrary.IsEnabled = true;
                         ReloadLibrary.IsEnabled = true;
                     });
-
-                    await RefreshLibraryList();
-
                     break;
             }
         }
@@ -288,7 +290,14 @@ namespace OrbisLibraryManager
                 return;
             }
 
-            Clipboard.SetText($"{selectedLibrary.Handle}");
+            try
+            {
+                Clipboard.SetText($"{selectedLibrary.Handle}");
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to access clipboard for reason: {ex.Message}.", "Failed to access clipboard.");
+            }
         }
 
         private void CopyName_Click(object sender, RoutedEventArgs e)
@@ -300,7 +309,14 @@ namespace OrbisLibraryManager
                 return;
             }
 
-            Clipboard.SetText($"{Path.GetFileName(selectedLibrary.Path)}");
+            try
+            {
+                Clipboard.SetText($"{Path.GetFileName(selectedLibrary.Path)}");
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to access clipboard for reason: {ex.Message}.", "Failed to access clipboard.");
+            }
         }
 
         private void CopyPath_Click(object sender, RoutedEventArgs e)
@@ -312,7 +328,14 @@ namespace OrbisLibraryManager
                 return;
             }
 
-            Clipboard.SetText(selectedLibrary.Path);
+            try
+            {
+                Clipboard.SetText(selectedLibrary.Path);
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to access clipboard for reason: {ex.Message}.", "Failed to access clipboard.");
+            }
         }
 
         private void CopyTextSegment_Click(object sender, RoutedEventArgs e)
@@ -324,7 +347,14 @@ namespace OrbisLibraryManager
                 return;
             }
 
-            Clipboard.SetText($"0x{selectedLibrary.MapBase.ToString("X")}");
+            try
+            {
+                Clipboard.SetText($"0x{selectedLibrary.MapBase.ToString("X")}");
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to access clipboard for reason: {ex.Message}.", "Failed to access clipboard.");
+            }
         }
 
         private void CopyDataSegment_Click(object sender, RoutedEventArgs e)
@@ -336,7 +366,14 @@ namespace OrbisLibraryManager
                 return;
             }
 
-            Clipboard.SetText($"0x{selectedLibrary.DataBase.ToString("X")}");
+            try
+            {
+                Clipboard.SetText($"0x{selectedLibrary.DataBase.ToString("X")}");
+            }
+            catch (Exception ex)
+            {
+                SimpleMessageBox.ShowError(this, $"Failed to access clipboard for reason: {ex.Message}.", "Failed to access clipboard.");
+            }
         }
 
         private async void UnloadLibrary_Click(object sender, RoutedEventArgs e)
